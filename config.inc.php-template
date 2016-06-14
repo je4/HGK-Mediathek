@@ -1,0 +1,28 @@
+<?php
+
+$config = array();
+$config['db'] = array(
+  'host'=>'HOST',
+  'user'=>'rfid',
+  'password'=>'PASSWORD',
+  'database'=>'DATABASE'
+);
+
+$config['solarium']  = array(
+    'endpoint' => array(
+        'localhost' => array(
+            'host' => 'HOST',
+            'port' => 8983,
+            'path' => '/solr/',
+        )
+    )
+);
+
+$config['google'] = array(
+    'app' => 'APPNAME',
+    'key' => 'KEY',
+    'book' => array(  'restget' => 'https://www.googleapis.com/books/v1/volumes?key=AIzaSyDsNXE5m9mv9juuFQswIZfS_dTt-_TIH3k',
+                   ),
+)
+
+?>
