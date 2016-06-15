@@ -2,7 +2,7 @@
 
 namespace Mediathek;
 
-include '/var/www/vhosts/mediathek.fhnw.ch/html/search/init.inc.php';
+include '../init.inc.php';
 
 
 $entity = new DOAJArticleEntity( $db );
