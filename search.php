@@ -150,47 +150,7 @@ $squery->setRows( $pagesize );
 $squery->setStart( $page * $pagesize );
 
 if( $qobj->query != '*' ) {
-	// TODO: besser machen
-	$phrase = $helper->escapePhrase( $qobj->query );
-	$words = explode( ' ', $qobj->query );
-	$qstr = '';
-	$qstr .= ' (';
-	$first = true;
-	foreach( $words as $word ) {
-		if( !$first ) {
-			$qstr .= ' AND ';
-		}
-		$qstr .= 'title:'.$helper->escapePhrase( $word ).'^10';
-	}
-	$qstr .= ' )';
-	$qstr .= ' OR (';
-	$first = true;
-	foreach( $words as $word ) {
-		if( !$first ) {
-			$qstr .= ' OR ';
-		}
-		$qstr .= 'author:'.$helper->escapePhrase( $word ).'^10';
-	}
-	$qstr .= ' )';
-	$qstr .= ' OR (';
-	$first = true;
-	foreach( $words as $word ) {
-		if( !$first ) {
-			$qstr .= ' AND ';
-		}
-		$qstr .= 'content:'.$helper->escapePhrase( $word ).'^10';
-	}
-	$qstr .= ' )';
-	$qstr .= ' OR (';
-	$first = true;
-	foreach( $words as $word ) {
-		if( !$first ) {
-			$qstr .= ' OR ';
-		}
-		$qstr .= 'signature:'.$helper->escapePhrase( $word ).'^10';
-	}
-	$qstr .= ' )';
-//    $qstr = 'title:'.$phrase.'^10 author:'.$phrase.'^8 content:'.$phrase.'^3 signature:'.$phrase.'^3';
+	$qstr = Helper::buildSOLRQuery( $qobj->query );	
 }
 else
     $qstr = '*:*';
@@ -241,7 +201,6 @@ $numPages = floor( $numResults / $pagesize );
 if( $numResults % $pagesize > 0 ) $numPages++;
 
 echo "<!-- ".$qstr." (Documents: {$numResults} // Page ".($page+1)." of {$numPages}) -->\n";
-
 
 $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 
