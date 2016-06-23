@@ -8,25 +8,6 @@ include '../init.inc.php';
 $entity = new IKUVidEntity( $db );
 $solr = new SOLR( $solrclient );
 
-//$sys = '006931662';
-//$sys = '5141218';
-//$sys = '001874213';
-$sys = '009526976';
-
-/*
-$sql = "SELECT * FROM nebis_grab2";
-$rs = $db->Execute( $sql );
-$x = 0;
-foreach( $rs as $row ) {
-    $sql = "INSERT INTO nebis_grab VALUES( ".$db->qstr( $row['sys']).",".$db->qstr( utf8_encode( $row['tag'])).",".$db->qstr( utf8_encode( $row['value']))." );";
-    $db->Execute( $sql );
-    $x = ($x+1)%100;
-    if( $x == 0 ) echo '.';
-}
-$rs->Close();
-exit;
-*/
-
 
 $sql = "SELECT DISTINCT `Archiv-Nr` as id FROM source_ikuvid";
 $rs = $db->Execute( $sql );

@@ -37,7 +37,7 @@ class Helper {
             $word = trim($m, " \"\t\n\r\0\x0B");
             $ex = explode(':', $word );
             if( count($ex) > 1 ) {
-                $specific[ trim( $ex[0] )] = trim( $ex[1] );
+                $specific[ trim( array_shift( $ex ))] = trim( implode( ':', $ex ));
             }
             else {
                 $global[] = trim( $ex[0] );
@@ -54,7 +54,9 @@ class Helper {
                     break;
                 case 'title':
                 case 'source':
-                    $field[] = $key;
+                case 'location':
+                case 'signature':
+                    $fields[] = $key;
                 break;
             }
             if( count($fields) == 0 ) continue;
@@ -115,6 +117,7 @@ class Helper {
             $qstr .= ' )';
             
             $qstr .= ')';
+            
         }
         return $qstr;
     }

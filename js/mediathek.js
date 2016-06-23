@@ -9,6 +9,7 @@ var Mediathek = function( config, done ) {
     this.ambientLightColor = 0x404040;
 //	this.showSatellite = true;
     this.camJSON = null; //'[0.9993451833724976,0.015195777639746666,-0.03283816948533058,0,0.01806975156068802,0.5766857266426086,0.8167662024497986,0,0.03134870156645775,-0.816824734210968,0.5760335326194763,0,286.9632568359375,-7477.142578125,5272.96044921875,1]';
+	this.animationID = null;
 	
 	// overwrite with configuration 
 	for(var prop in config)   {
@@ -207,3 +208,17 @@ Mediathek.prototype.render = function() {
 */	
 }
 
+Mediathek.prototype.animate = function() {
+    mediathek.render();
+	var that = this;
+    this.animationID = requestAnimationFrame(function () {
+		that.animate();
+	});
+}
+
+Mediathek.prototype.stopAnimate = function() {
+	if ( this.animationID ) {
+	    cancelAnimationFrame( this.animationID );
+		this.animationID = null;
+    }
+}

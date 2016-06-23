@@ -12,6 +12,7 @@ class Session implements \SessionHandlerInterface
   private $id = null;
   private $name = null;
   private $groups = null;
+  private $certEmail = null;
  
   function __construct( $db, $server )
   {
@@ -30,7 +31,17 @@ class Session implements \SessionHandlerInterface
     $this->id = session_id();
 
     $sql = "SELECT *, UNIX_TIMESTAMP( lastaccess) AS unix_lastaccess FROM session WHERE php_session_id=".$this->db->qstr( $this->id );
+//	echo $sql;
     $row = $this->db->GetRow( $sql );
+//	var_dump( $row );
+
+	if( isset( $_SERVER['SSL_CLIENT_S_DN'])) {
+		if( $_SERVER['SSL_CLIENT_I_DN'] == 'CN=Mediathek CA,OU=Certification Authority,O=Mediathek,O=FHNW Academy of Art and Design,L=Basel,ST=Basel Stadt,C=CH'  
+			&& $_SERVER['SSL_CLIENT_VERIFY'] == 'SUCCESS' 
+			&& isset( $_SERVER['SSL_CLIENT_S_DN_Email'] ) ) {
+			$this->certEmail = $_SERVER['SSL_CLIENT_S_DN_Email'];
+		}
+	}		
     
     // Fall 1: php session ist abgelaufen
     if( $row != null && (
@@ -40,22 +51,26 @@ class Session implements \SessionHandlerInterface
         // start new session
         session_regenerate_id(); 
 		$this->id = session_id();
-        $sql = 'INSERT INTO session (`uniqueID`, `Shib-Session-ID`, `php_session_id` )
+        $sql = 'INSERT INTO session (`uniqueID`, `Shib-Session-ID`, certEmail, `php_session_id` )
             VALUES (
                 '.$this->db->qstr($this->shibGetUniqueID()).'
                 , '.$this->db->qstr($this->shibGetSessionID()).'
+                , '.$this->db->qstr($this->certEmail).'
                 , '.$this->db->qstr($this->id).'
                 )';
+//		echo $sql;
         $this->db->Execute( $sql );
     }
     // Fall 2: keine Session
     elseif( $row == null ) {
-        $sql = 'INSERT INTO session (`uniqueID`, `Shib-Session-ID`, `php_session_id` )
+        $sql = 'INSERT INTO session (`uniqueID`, `Shib-Session-ID`, certEmail, `php_session_id` )
             VALUES (
                 '.$this->db->qstr($this->shibGetUniqueID()).'
                 , '.$this->db->qstr($this->shibGetSessionID()).'
+                , '.$this->db->qstr($this->certEmail).'
                 , '.$this->db->qstr($this->id).'
                 )';
+//		echo $sql;
         $this->db->Execute( $sql );
     }
     // Fall 3: Shibboleth-Session existiert, ist aber noch nicht eingetragen
@@ -63,7 +78,8 @@ class Session implements \SessionHandlerInterface
         $sql = "UPDATE session
             SET `uniqueID`=".$this->db->qstr($this->shibGetUniqueID()).", `Shib-Session-ID`=".$this->db->qstr($this->shibGetSessionID())."
             WHERE php_session_id=".$this->db->qstr( $this->id );
-        $this->db->qstr( $sql );
+//		echo $sql;
+        $this->db->Execute( $sql );
     }
     // Fall 4: Shibboleth-Session existiert, entspricht aber nicht der gespeicherten Shib-Session-ID
     // Fall 5: Shibboleth-Session existiert, PHP Session ist abgelaufen
@@ -73,16 +89,19 @@ class Session implements \SessionHandlerInterface
     {
         // start new session
         $this->id = session_regenerate_id(); 
-        $sql = 'INSERT INTO session (`uniqueID`, `Shib-Session-ID`, `php_session_id` )
+        $sql = 'INSERT INTO session (`uniqueID`, `Shib-Session-ID`, certEmail, `php_session_id` )
             VALUES (
                 '.$this->db->qstr($this->shibGetUniqueID()).'
                 , '.$this->db->qstr($this->shibGetSessionID()).'
+                , '.$this->db->qstr($this->certEmail).'
                 , '.$this->db->qstr($this->id).'
                 )';
+//		echo $sql;
         $this->db->Execute( $sql );        
     }
     else {
         $sql = "UPDATE session SET lastaccess=NOW() WHERE php_session_id=".$this->db->qstr($this->id);
+//		echo $sql;
         $this->db->Execute( $sql ); 
     }
   }
@@ -128,6 +147,10 @@ class Session implements \SessionHandlerInterface
   public function shibGetUniqueID() {
     return isset( $this->server['uniqueID'] ) ? $this->server['uniqueID'] : null;
   }
+
+  public function shibGetMail() {
+    return isset( $this->server['mail'] ) ? $this->server['mail'] : null;
+  }
  
   public function shibGetUsername() {
     return "{$this->server['givenName']} {$this->server['surname']}";
@@ -170,16 +193,26 @@ class Session implements \SessionHandlerInterface
     foreach( explode( ';', $this->shibAffiliation()) as $grp )
         $this->groups[] = $this->shibHomeOrganization().'/'.strtolower( trim( $grp ));
         
-    $sql = "SELECT grp FROM groups WHERE uniqueID=".$this->db->qstr( $this->shibGetUniqueID());
-    $rs = $db->Execute( $sql );
+    $sql = "SELECT grp FROM groups WHERE uniqueID=".$this->db->qstr( $this->shibGetUniqueID())." OR uniqueID=".$this->db->qstr( strtolower( $this->shibGetMail()));
+    $rs = $this->db->Execute( $sql );
     foreach( $rs as $row ) {
         $this->groups[] = strtolower( trim( $row['grp'] ));
     }
     $rs->Close();
     
-    // todo: FHNW Hochschule aus OU lesen...
-    
+	if( $this->certEmail ) 
+		$this->groups[] = "certificate/mediathek";
+	
+	if( preg_match( '/OU=([A-Z]+),OU=([A-Z]+),OU=([0-9]+),OU=.+,OU=.+,DC=.+,DC=ds,DC=fhnw,DC=ch/', $_SERVER['orgunit-dn'], $matches )) {
+		$this->groups[] = "fhnw.ch:{$matches[3]}/user";
+		$this->groups[] = strtolower( "fhnw.ch:{$matches[3]}:{$matches[1]}/user" );
+	}
+		
     return $this->groups;
+  }
+  
+  public function getPageSize() {
+	return 25;
   }
   
   public function __destruct()

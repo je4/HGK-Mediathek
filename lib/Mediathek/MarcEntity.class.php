@@ -566,7 +566,8 @@ class MarcEntity implements SOLRSource {
 
     public function getAbstract() { return null; }
     public function getContent() { return null; }
-    
+    public function getMetaACL() { return array( 'global/guest' ); }
+    public function getDataACL() { return null; }
 }
 
 ?>

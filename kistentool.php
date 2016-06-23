@@ -12,19 +12,6 @@ global $db;
 
 echo mediathekheader('kiste', null);
 ?>
-<div class="modal fade" id="3DModal" tabindex="-1" role="dialog" aria-labelledby="3DModal" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-body">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <div>
-          <iframe width="100%" height="100%" style="min-height: 350px;" src="" scrolling="no"></iframe>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
 	<div class="container-fluid" style="margin-top: 0px; background-color: rgba(255, 255, 255, 0.5); padding: 20px;">
 		<div class="row" style="margin-bottom: 30px;">
 		  <div class="col-md-12">
@@ -68,6 +55,14 @@ echo mediathekheader('kiste', null);
 <?php
 
 ?>
+<script src="js/threejs/build/three.js"></script>
+<script src="js/threejs/build/TrackballControls.js"></script>
+<script src="js/threejs/build/OrbitControls.js"></script>
+<script src="js/threejs/build/CombinedCamera.js"></script>   
+<!-- script src="mediathek2.js"></script -->   
+<script src="js/mediathek.js"></script>   
+<script src="js/mediathek3d.js"></script>
+
 <script>
 
 function loadResult() {
@@ -86,9 +81,34 @@ function init() {
    $(".search-query").keyup(function() {
 	   loadResult();
    });
-   $(".search-query").change(function() {
-	   loadResult();
-   });
+   
+	$('#MTModal').on('shown.bs.modal', function (event) {
+	  var button = $(event.relatedTarget) // Button that triggered the modal
+	  var kiste = button.data('kiste') // Extract info from data-* attributes
+	  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+	  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+	  var modal = $(this)
+	  modal.find('.modal-title').html('Regal <b>' + kiste.substring( 0, 1 ) + '</b> Kiste <b>' + kiste.substring( 1 ));
+	  body = modal.find('.modal-body');
+	  body.empty();
+	  body.append( '<div class="renderer"></div>')
+
+	  renderer = modal.find( '.renderer' );
+	  renderer.height( '400px');
+	  width = body.width();
+	  renderer.width( width );
+	  init3D( kiste );
+	})
+
+	$('#MTModal').on('hidden.bs.modal', function (event) {
+	  var modal = $(this)
+	  mediathek.stopAnimate();
+	  renderer = modal.find( '.renderer' );
+	  renderer.empty();
+	  mediathek = null;
+	  mediathek3D = null;
+	})
+	
    
    
 }

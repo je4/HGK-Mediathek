@@ -28,8 +28,8 @@ $rs = $db->Execute( $sql );
 <?php
 foreach( $rs as $row ) {
 	$box = $row['marker'];
-	echo "<tr>\n";
-	echo '<td class="list" style="width: 30%;"><a style="padding: 0px;" href="#" class="btn btn-default" data-toggle="modal" data-target="#3DModal" data-3D="3d.iframe.php?box='.urlencode($box).'" >'.$box.' <i class="fa fa-street-view" aria-hidden="true"></i></a>'."</td>\n";
+	echo "<tr>\n";  // E75:Kiste
+	echo '<td class="list" style="width: 30%;"><a href="#" onClick="doSearchFull( \'location:E75:Kiste:'.$box.'\', \'\', [], [], 0, '.$session->getPageSize().' )">'.$box.'</a> <a style="padding: 0px;" href="#" class="btn btn-default" data-toggle="modal" data-target="#MTModal" data-kiste="'.urlencode(str_replace( '_', '', $box)).'" > <i class="fa fa-street-view" aria-hidden="true"></i></a>'."</td>\n";
 	echo '<td class="list" style="width: 30%;">'.htmlspecialchars(utf8_encode($row['signatur']))."</td>\n";
 	echo '<td class="list" style="width: 40%;">'.htmlspecialchars(utf8_encode($row['itemid']))."</td>\n";
 	echo "</tr>\n";

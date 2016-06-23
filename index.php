@@ -213,6 +213,8 @@ function init() {
 }
 </script>   
 <?php
+//echo "<pre>".print_r( $_SERVER )."</pre>\n";
+
 echo mediathekfooter();
 ?>
 

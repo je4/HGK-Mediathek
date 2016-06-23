@@ -26,6 +26,7 @@ namespace Mediathek;
 
 interface SOLRSource {
     public function getID();
+	public function getOriginalID();
     public function getSource();
 	public function getOpenAccess();
 	public function getLocations();
@@ -48,6 +49,10 @@ interface SOLRSource {
     public function getCluster();
     public function getMeta();
     public function getOnline();
+	public function getEmbedded();
+    public function getMetaACL();
+    public function getDataACL();
+
 }
 
 ?>

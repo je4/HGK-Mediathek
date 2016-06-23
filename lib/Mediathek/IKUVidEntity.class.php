@@ -47,7 +47,29 @@ class IKUVidEntity implements SOLRSource {
     private $signatures = null;
     private $online = false;
     
-    
+    static $done = array(
+		3020,
+		3021,
+		3052,
+		3057,
+		3058,
+		3063,
+		3065,
+		3067,
+		3070,
+		3072,
+		3073,
+		3075,
+		3079,
+		3081,
+		3098,
+		3100,
+		3101,
+		6286,
+		6407,
+	);
+
+
     function __construct( \ADOConnection $db ) {
         $this->db = $db;
     }
@@ -82,10 +104,18 @@ class IKUVidEntity implements SOLRSource {
     public function getID() {
         return $this->idprefix.$this->id; 
     }
+	
+	public function getOriginalID() {
+		return $this->id;
+	}
     
     public function getSource() {
         return 'IKUVid';
     }
+	
+	public function getEmbedded() {
+		return array_search(intval($this->id), IKUVidEntity::$done ) !== false;
+	}
 
 	public function getOpenAccess() {
 		return false;
@@ -200,7 +230,7 @@ class IKUVidEntity implements SOLRSource {
     }
     
     public function getOnline() {
-        return true;
+		return array_search($this->id, IKUVidEntity::$done ) !== false;
     }
 
    public function getAbstract() {
@@ -209,7 +239,10 @@ class IKUVidEntity implements SOLRSource {
         return strlen( $bem ) ? $bem : null;    
     }
    public function getContent() { return null; }    
-   public function getCodes() { return array(); }    
+   public function getCodes() { return array(); }
+   
+    public function getMetaACL() { return array( 'global/guest' ); }
+    public function getDataACL() { return array( 'certificate/mediathek' ); }
 }
 
 ?>

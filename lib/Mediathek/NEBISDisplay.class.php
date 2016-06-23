@@ -110,9 +110,11 @@ echo $search->desktopCards();
             </td>
             <td class="detail">
                 <div class="collapse" id="coll_<?php echo $this->doc->id; ?>">
-<?php			
-				for( $i = 1; $i < count( $authors ); $i++ ) {
-					echo ($i>1?"; ":"").htmlspecialchars( $authors[$i] );
+<?php
+				$first = true;
+				foreach( $authors as $author ) {
+					echo ($first?"":"; ").htmlspecialchars( $author );
+					$first = false;
 				}
 ?>					
 				
@@ -134,7 +136,7 @@ echo $search->desktopCards();
 					if( substr( $sig, 0, 10 ) == 'nebis:E75:' ) echo 'Signatur: '.htmlspecialchars( substr( $sig, 10 ))."<br />\n";
 				$locations = $entity->getLocations();
 				foreach( $locations as $loc ) 
-				if( substr( $loc, 0, 4 ) == 'E75:' ) echo 'Standort: Regal <b>'.$loc{10}.'</b> Kiste <b>'.htmlspecialchars( str_replace( '_', '', substr( $loc, 12 ))).' <a style="padding: 0px;" href="#" class="btn btn-default" data-toggle="modal" data-target="#3DModal" data-3D="3d.iframe.php?box='.urlencode(substr( $loc, 10 )).'" ><i class="fa fa-street-view" aria-hidden="true"></i></a></b><br />'."\n";
+				if( substr( $loc, 0, 4 ) == 'E75:' ) echo 'Standort: Regal <b>'.$loc{10}.'</b> Kiste <b>'.htmlspecialchars( str_replace( '_', '', substr( $loc, 12 ))).' <a style="padding: 0px;" href="#" class="btn btn-default" data-toggle="modal" data-target="#MTModal" data-kiste="'.urlencode(str_replace( '_', '', substr( $loc, 10 ))).'" ><i class="fa fa-street-view" aria-hidden="true"></i></a></b><br />'."\n";
 				$notes = $entity->getGeneralNote();
 				foreach( $notes as $note ) 
 					echo 'Anmerkung: '.htmlspecialchars( $note )."<br />\n";

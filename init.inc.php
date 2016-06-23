@@ -32,4 +32,5 @@ $googleservice = new Google_Service_Books($googleclient);
 
 $session = new Mediathek\Session( $db, $_SERVER );
 
+//print_r( $session->getGroups());
 ?>

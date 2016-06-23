@@ -29,9 +29,6 @@ function searchbar( $query, $area ) {
 						<i class="fa fa-search" aria-hidden="true"></i>
 					</button>
 				  </span>
-				  <form style="visibility: hidden;" id="searchform" action="#" method="post">
-					<input type="hidden" id="searchjson" name="query" value="" />
-				  </form>
 			</div>
 <?php
     $html = ob_get_contents();

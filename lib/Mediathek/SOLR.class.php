@@ -67,6 +67,7 @@ class SOLR {
         $doc = $update->createDocument();
         
         $doc->id = $src->getID();
+        $doc->setField( 'originalid', $src->getOriginalID());
         $doc->setField( 'source', $src->getSource());
         $doc->setField( 'openaccess', $src->getOpenAccess());
 		foreach( $src->getLocations() as $loc )
@@ -102,6 +103,7 @@ class SOLR {
             $doc->addField( 'code', $code);
         
         $doc->setField( 'online', $src->getOnline());
+        $doc->setField( 'embedded', $src->getEmbedded());
         
         $update->addDocuments( array( $doc ));
         if( $commit )

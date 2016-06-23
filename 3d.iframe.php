@@ -132,14 +132,6 @@ function init() {
 				mediathek.controls.target = box.position;				
 				
 			});
-			
-			$( document ).dblclick(function() {
-				data = mediathek3D.theData;
-				alert( data );
-				//alert( mediathek.getCamJSON() );
-				//$('.downloadCamera').click();
-				//$('.downloadCanvas').click();
-			});
 		}
 	);
 		
@@ -147,7 +139,7 @@ function init() {
 
 
 function animate() {
-    requestAnimationFrame(animate);
+    requestAnimationFrame(function() animate);
     mediathek.render();
 }
 
