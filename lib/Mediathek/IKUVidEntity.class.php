@@ -242,7 +242,9 @@ class IKUVidEntity implements SOLRSource {
    public function getCodes() { return array(); }
    
     public function getMetaACL() { return array( 'global/guest' ); }
-    public function getDataACL() { return array( 'certificate/mediathek' ); }
+    public function getContentACL() { return array( 'certificate/mediathek' ); }
+    public function getPreviewACL() { return array( 'location/fhnw' ); }
+
 }
 
 ?>

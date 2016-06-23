@@ -51,7 +51,8 @@ interface SOLRSource {
     public function getOnline();
 	public function getEmbedded();
     public function getMetaACL();
-    public function getDataACL();
+    public function getContentACL();
+    public function getPreviewACL();
 
 }
 

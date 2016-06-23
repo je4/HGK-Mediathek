@@ -13,9 +13,15 @@ class Session implements \SessionHandlerInterface
   private $name = null;
   private $groups = null;
   private $certEmail = null;
+  
+  private $subnets = array();
  
   function __construct( $db, $server )
   {
+	$this->subnets[] = new IPv6Net( "10.0.0.0/8" );
+	$this->subnets[] = new IPv6Net( "192.168.0.0/16" );
+	$this->subnets[] = new IPv6Net( "147.86.0.0/19" );
+
     $this->db = $db;
     $this->server = $server;
     session_set_save_handler( $this, true );
@@ -208,6 +214,13 @@ class Session implements \SessionHandlerInterface
 		$this->groups[] = strtolower( "fhnw.ch:{$matches[3]}:{$matches[1]}/user" );
 	}
 		
+	foreach( $this->subnets as $sub ) {
+	  if( $sub->contains( $_SERVER['REMOTE_ADDR'])) {
+		$this->groups[] = "location/fhnw";
+		break;
+	  }
+	}
+	
     return $this->groups;
   }
   
