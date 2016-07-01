@@ -31,7 +31,8 @@ class Session implements \SessionHandlerInterface
   }
   
    public function startSession() {
- 
+	global $_SERVER;
+	
     session_start();
     
     $this->id = session_id();
@@ -57,24 +58,26 @@ class Session implements \SessionHandlerInterface
         // start new session
         session_regenerate_id(); 
 		$this->id = session_id();
-        $sql = 'INSERT INTO session (`uniqueID`, `Shib-Session-ID`, certEmail, `php_session_id` )
+        $sql = 'INSERT INTO session (`uniqueID`, `Shib-Session-ID`, certEmail, `php_session_id`, clientip )
             VALUES (
                 '.$this->db->qstr($this->shibGetUniqueID()).'
                 , '.$this->db->qstr($this->shibGetSessionID()).'
                 , '.$this->db->qstr($this->certEmail).'
                 , '.$this->db->qstr($this->id).'
+                , '.$this->db->qstr($_SERVER['REMOTE_ADDR']).'
                 )';
 //		echo $sql;
         $this->db->Execute( $sql );
     }
     // Fall 2: keine Session
     elseif( $row == null ) {
-        $sql = 'INSERT INTO session (`uniqueID`, `Shib-Session-ID`, certEmail, `php_session_id` )
+        $sql = 'INSERT INTO session (`uniqueID`, `Shib-Session-ID`, certEmail, `php_session_id`, clientip )
             VALUES (
                 '.$this->db->qstr($this->shibGetUniqueID()).'
                 , '.$this->db->qstr($this->shibGetSessionID()).'
                 , '.$this->db->qstr($this->certEmail).'
                 , '.$this->db->qstr($this->id).'
+                , '.$this->db->qstr($_SERVER['REMOTE_ADDR']).'
                 )';
 //		echo $sql;
         $this->db->Execute( $sql );
@@ -95,12 +98,13 @@ class Session implements \SessionHandlerInterface
     {
         // start new session
         $this->id = session_regenerate_id(); 
-        $sql = 'INSERT INTO session (`uniqueID`, `Shib-Session-ID`, certEmail, `php_session_id` )
+        $sql = 'INSERT INTO session (`uniqueID`, `Shib-Session-ID`, certEmail, `php_session_id`, clientip )
             VALUES (
                 '.$this->db->qstr($this->shibGetUniqueID()).'
                 , '.$this->db->qstr($this->shibGetSessionID()).'
                 , '.$this->db->qstr($this->certEmail).'
                 , '.$this->db->qstr($this->id).'
+                , '.$this->db->qstr($_SERVER['REMOTE_ADDR']).'
                 )';
 //		echo $sql;
         $this->db->Execute( $sql );        
@@ -188,17 +192,27 @@ class Session implements \SessionHandlerInterface
   }
   
   function getGroups() {
-    if( !$this->isLoggedIn() ) return array('global/guest');
+	global $_SERVER;
+	
+//    if( !$this->isLoggedIn() ) return array('global/guest');
     
     if( $this->groups != null ) return $this->groups;
     
-    $this->groups = array( 'global/guest', 'global/user', $this->shibHomeOrganization().'/user');
-	$dept = $this->shibDepartement();
-	if( $dept != null ) 
-		$this->groups[] = $this->shibHomeOrganization().':'.$dept.'/user';
-    foreach( explode( ';', $this->shibAffiliation()) as $grp )
-        $this->groups[] = $this->shibHomeOrganization().'/'.strtolower( trim( $grp ));
-        
+    $this->groups = array( 'global/guest', 'global/user' );
+	if( $this->isLoggedIn()) {
+	  $this->groups[] = $this->shibHomeOrganization().'/user';
+	  $dept = $this->shibDepartement();
+	  if( $dept != null ) 
+		  $this->groups[] = $this->shibHomeOrganization().':'.$dept.'/user';
+	  foreach( explode( ';', $this->shibAffiliation()) as $grp )
+		  $this->groups[] = $this->shibHomeOrganization().'/'.strtolower( trim( $grp ));
+		  
+	  if( preg_match( '/OU=([A-Z]+),OU=([A-Z]+),OU=([0-9]+),OU=.+,OU=.+,DC=.+,DC=ds,DC=fhnw,DC=ch/', $_SERVER['orgunit-dn'], $matches )) {
+		  $this->groups[] = "fhnw.ch:{$matches[3]}/user";
+		  $this->groups[] = strtolower( "fhnw.ch:{$matches[3]}:{$matches[1]}/user" );
+	  }
+		  
+	}
     $sql = "SELECT grp FROM groups WHERE uniqueID=".$this->db->qstr( $this->shibGetUniqueID())." OR uniqueID=".$this->db->qstr( strtolower( $this->shibGetMail()));
     $rs = $this->db->Execute( $sql );
     foreach( $rs as $row ) {
@@ -209,11 +223,6 @@ class Session implements \SessionHandlerInterface
 	if( $this->certEmail ) 
 		$this->groups[] = "certificate/mediathek";
 	
-	if( preg_match( '/OU=([A-Z]+),OU=([A-Z]+),OU=([0-9]+),OU=.+,OU=.+,DC=.+,DC=ds,DC=fhnw,DC=ch/', $_SERVER['orgunit-dn'], $matches )) {
-		$this->groups[] = "fhnw.ch:{$matches[3]}/user";
-		$this->groups[] = strtolower( "fhnw.ch:{$matches[3]}:{$matches[1]}/user" );
-	}
-		
 	foreach( $this->subnets as $sub ) {
 	  if( $sub->contains( $_SERVER['REMOTE_ADDR'])) {
 		$this->groups[] = "location/fhnw";
@@ -222,6 +231,14 @@ class Session implements \SessionHandlerInterface
 	}
 	
     return $this->groups;
+  }
+  
+  public function inGroup( $grp ) {
+	$grp = strtolower( $grp );
+	foreach( $this->getGroups() as $g ) {
+	  if( $g == $grp ) return true;
+	}
+	return false;
   }
   
   public function getPageSize() {

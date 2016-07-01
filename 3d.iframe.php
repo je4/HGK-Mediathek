@@ -39,6 +39,7 @@ SELECT sys, substring(value, 4, 14 ) FROM `mediathekmarc` WHERE `tag` LIKE '949'
 <script src="js/threejs/build/OrbitControls.js"></script>
 <script src="js/threejs/build/CombinedCamera.js"></script>   
 <!-- script src="mediathek2.js"></script -->   
+<script src="js/mediathek_helper.js"></script>   
 <script src="js/mediathek.js"></script>   
 <script src="js/mediathek3d.js"></script>   
 

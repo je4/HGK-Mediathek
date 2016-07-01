@@ -75,13 +75,13 @@ class IPv6Net
 	private static function inet_ntogmp( $addr )
 	{
 		// 16*8 == 128
-		$gmp = gmp_init( 0 );
+		$gmp = \gmp_init( 0 );
 		for( $bits = 0; $bits < 16; $bits++ )
 		{
 			$byte = ord( $addr[15-$bits] );
 			for( $b = 0; $b < 8; $b++ )
 			{
-				gmp_setbit( $gmp, $bits*8+$b, $byte & (1<<$b) );
+				\gmp_setbit( $gmp, $bits*8+$b, $byte & (1<<$b) );
 			}
 		}
 		
@@ -97,7 +97,7 @@ class IPv6Net
 	 */
 	private static function inet_gmptofull( $gmp )
 	{
-		$str = gmp_strval( $gmp, 16 );
+		$str = \gmp_strval( $gmp, 16 );
 		for( $i = strlen( $str ); $i < 32; $i++ )
 		{
 			$str = '0'.$str;
@@ -125,7 +125,7 @@ class IPv6Net
 			$byte = 0;
 			for( $b = 0; $b < 8; $b++ )
 			{
-				if( gmp_testbit( $gmp, (15-$bits)*8+$b ))
+				if( \gmp_testbit( $gmp, (15-$bits)*8+$b ))
 				{
 					$byte |= 1<<$b;
 				}
@@ -223,9 +223,9 @@ class IPv6Net
 	public function getNetworkIPv4()
 	{
 		if( !$this->valid ) { return null; }
-		if( gmp_cmp( '4294967295', $this->net_addr_long ) > 0 )
+		if( \gmp_cmp( '4294967295', $this->net_addr_long ) > 0 )
 		{
-			return gmp_strval( $this->net_addr_long );
+			return \gmp_strval( $this->net_addr_long );
 		}
 		else
 		{
@@ -240,9 +240,9 @@ class IPv6Net
 	public function getBroadcastIPv4()
 	{
 		if( !$this->valid ) { return null; }
-		if( gmp_cmp( '4294967295', $this->net_broadcast_long ) > 0 )
+		if( \gmp_cmp( '4294967295', $this->net_broadcast_long ) > 0 )
 		{
-			return gmp_strval( $this->net_broadcast_long );
+			return \gmp_strval( $this->net_broadcast_long );
 		}
 		else
 		{
@@ -293,7 +293,7 @@ class IPv6Net
 	public function size()
 	{
 		if( !$this->valid ) { return 0; }
-		return gmp_intval( gmp_add( $this->net_broadcast_long, gmp_neg( $this->net_addr_long )));
+		return \gmp_intval( \gmp_add( $this->net_broadcast_long, \gmp_neg( $this->net_addr_long )));
 	}
 
 	/*!
@@ -311,7 +311,7 @@ class IPv6Net
 		$addr = @inet_pton( $ip );
 		if( $addr === false ) return false;
 		$gmp = $this->inet_ntogmp( $addr );
-		return( gmp_cmp( $this->net_addr_long, $gmp ) <= 0 && gmp_cmp( $gmp, $this->net_broadcast_long ) <= 0 );		
+		return( \gmp_cmp( $this->net_addr_long, $gmp ) <= 0 && \gmp_cmp( $gmp, $this->net_broadcast_long ) <= 0 );		
 	}
 	
 	/*!
@@ -337,7 +337,7 @@ class IPv6Net
 			if( $this->ipv4 && $this->net_mask_bits != 0 ){
 				$this->net_mask_bits += 96;
 			}
-			$this->net_mask_long = gmp_mul( gmp_sub( gmp_pow( 2, $this->net_mask_bits ), 1 ), gmp_pow( 2, 128-$this->net_mask_bits ));
+			$this->net_mask_long = \gmp_mul( \gmp_sub( gmp_pow( 2, $this->net_mask_bits ), 1 ), \gmp_pow( 2, 128-$this->net_mask_bits ));
 			//			echo gmp_strval( $this->net_mask_long, 2 )."<br />\n";
 			$this->net_mask = $this->inet_gmpton($this->net_mask_long);
 		}
@@ -345,13 +345,13 @@ class IPv6Net
 		{
 			$this->net_mask = inet_pton($mask);
 			$this->net_mask_long = $this->inet_ntogmp($this->netmask);
-			$this->net_mask_bits = gmp_scan0( $this->net_mask_long, 0 );
+			$this->net_mask_bits = \gmp_scan0( $this->net_mask_long, 0 );
 		}
 			
 		// normalize it...
-		$this->net_addr_long = gmp_and( $this->net_addr_long, $this->net_mask_long );
+		$this->net_addr_long = \gmp_and( $this->net_addr_long, $this->net_mask_long );
 		$this->net_addr = $this->inet_gmpton( $this->net_addr_long );
-		$this->net_broadcast_long = gmp_or( $this->net_addr_long, gmp_sub( gmp_pow( 2, 128-$this->net_mask_bits ), 1 ));
+		$this->net_broadcast_long = \gmp_or( $this->net_addr_long, \gmp_sub( \gmp_pow( 2, 128-$this->net_mask_bits ), 1 ));
 		$this->net_broadcast = $this->inet_gmpton($this->net_broadcast_long );
 	}
 
@@ -372,13 +372,13 @@ class IPv6Net
 
 		$iNetmaskDiff = $iNetMaskBits - $this->net_mask_bits;
 
-		$rStep = gmp_pow(2, 128-$iNetMaskBits);
-		$rCurr = gmp_add($this->net_addr_long, gmp_mul($iStartAt, $rStep));
+		$rStep = \gmp_pow(2, 128-$iNetMaskBits);
+		$rCurr = \gmp_add($this->net_addr_long, \gmp_mul($iStartAt, $rStep));
 
 		for ($i=0;$i<$iMaxValues; $i++) {
-			if ( gmp_cmp($rCurr, $this->net_broadcast_long) > 0) break;
+			if ( \gmp_cmp($rCurr, $this->net_broadcast_long) > 0) break;
 			$aRet[] = inet_ntop($this->inet_gmpton($rCurr))."/$iNetMaskBits";
-			$rCurr = gmp_add($rCurr, $rStep);
+			$rCurr = \gmp_add($rCurr, $rStep);
 		}
 		return $aRet;
 	}

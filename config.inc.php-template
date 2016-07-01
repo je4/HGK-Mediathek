@@ -25,4 +25,12 @@ $config['google'] = array(
                    ),
 )
 
+$config['media'] = array(
+    'picintern' => 'https://ba14ns21403.fhnw.ch/pics/intern',
+    'picopen' => 'https://ba14ns21403.fhnw.ch/pics/open',
+    'videocert' => 'https://ba14ns21403.fhnw.ch/video/cert',
+    'videoopen' => 'https://ba14ns21403.fhnw.ch/video/open',
+    
+);
+
 ?>

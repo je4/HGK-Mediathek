@@ -1,4 +1,13 @@
 
+html {
+	min-height: 100%;
+}
+
+body {
+	min-width: 100%;
+	min-height: 100%;
+}
+
 .bw {
     background-color: black;
     color: white;
@@ -30,4 +39,18 @@ td.detail {
 	content: attr(data-website) "\0040" attr(data-user);
 	unicode-bidi: bidi-override;
 	direction: rtl;
+}
+
+.facet {
+	border: 3px solid black;
+	padding-left:5px;
+}
+.marker {
+    z-index: 10;
+    background: black;
+	position: relative;
+	top: -5px; 
+	left: 0px; 
+	width: 40px; 
+	height: 10px;
 }

@@ -47,7 +47,9 @@ function navbar( $current, $area ) {
     </li>
 	<?php } else { ?>
 	<li class="nav-item<?php if( $current == 'login' ) echo ' active'; ?>">
-		<a class="nav-link" href="#"><?php echo htmlentities( $session->shibGetUsername()); ?><?php if( $current == 'login' ) echo ' <span class="sr-only">(current)</span>'; ?></a>
+		<a style="padding: 0px;" href="#" class="nav-link" data-toggle="modal" data-target="#MTModal" data-user="<?php echo htmlentities( $session->shibGetUsername()); ?>" >
+			<?php echo htmlentities( $session->shibGetUsername()); ?><?php if( $current == 'login' ) echo ' <span class="sr-only">(current)</span>'; ?>
+		</a>
     </li>
 	<?php } ?>
 	</li>	

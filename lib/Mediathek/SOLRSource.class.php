@@ -28,6 +28,7 @@ interface SOLRSource {
     public function getID();
 	public function getOriginalID();
     public function getSource();
+    public function getType();
 	public function getOpenAccess();
 	public function getLocations();
     public function getTitle();    

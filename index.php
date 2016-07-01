@@ -51,7 +51,7 @@ echo mediathekheader('home', null);
 </div>
 
 
-	<div class="container-fluid" style="margin-top: 0px; background-color: rgba(255, 255, 255, 0.5); padding: 20px;">
+	<div class="container-fluid" style="margin-top: 0px; padding: 20px;">
 		<div class="row" style="margin-bottom: 30px;">
 		  <div class="col-md-12">
 			<div class="jumbotron jumbotron-fluid" style="background: url('img/mt_small.jpg') no-repeat center center;
@@ -161,7 +161,8 @@ echo mediathekheader('home', null);
 		  </div>
    		  <div class="col-md-3" style="background-color: transparent;">
 			<div style="; font-weight: bold;">Öffnungszeiten & Information</div>
-			<div class="bw" style="padding:5px;">
+			<div class="facet" style="">
+				<div class="marker" style=""></div>
 				<p><b>Öffnungszeiten während des Semesters</b><br />
 				Montag bis Freitag, 10.00 bis 18.00 Uhr</p>
 
@@ -177,13 +178,15 @@ echo mediathekheader('home', null);
 				Wir danken Ihnen für Ihr Verständnis</p>
 -->
 			<div style="padding-top: 8px; font-weight: bold;">Auskünfte</div>
-				<div class="bw" style="padding:5px;">
+				<div class="facet" style="">
+				<div class="marker" style=""></div>
 				<p>Info-Theke: +41 (0)61 228 41 84<br />
 				Mail: <span class="e-mail" data-user="kgh.kehtaidem" data-website="hc.wnhf"></span></p>
 			</div>
 
 			<div style="padding-top: 8px; font-weight: bold;">Ansprechpersonen</div>
-				<div class="bw" style="padding:5px;">
+				<div class="facet" style="">
+				<div class="marker" style=""></div>
 				<p>Dr. Tabea Lurk<br />
 				Leitung Mediathek<br />
 				Mail: <span class="e-mail" data-user="krul.aebat" data-website="hc.wnhf"></span><br />
@@ -202,7 +205,7 @@ echo mediathekheader('home', null);
 
 	
 <?php
-
+include( 'bgimage.inc.php' );
 ?>
 <script>
 

@@ -48,11 +48,19 @@ class IKUVidEntity implements SOLRSource {
     private $online = false;
     
     static $done = array(
+		3005,
+		3010,
+		3014,
+		3015,
+		3017,
 		3020,
 		3021,
+		3027,
+		3050,
 		3052,
 		3057,
 		3058,
+		3062,
 		3063,
 		3065,
 		3067,
@@ -62,9 +70,32 @@ class IKUVidEntity implements SOLRSource {
 		3075,
 		3079,
 		3081,
+		3083,
+		3085,
+		3088,
+		3089,
+		3090,
+		3092,
 		3098,
+		3099,
 		3100,
 		3101,
+		3103,
+		3104,
+		3106,
+		3108,
+		3114,
+		3127,
+		3128,
+		3131,
+		3132,
+		3133,
+		3160,
+		3189,
+		3205,
+		3223,
+		6158,
+		6159,
 		6286,
 		6407,
 	);
@@ -93,7 +124,7 @@ class IKUVidEntity implements SOLRSource {
     function loadFromDatabase( string $id, string $idprefix ) {
         $this->reset();
         
-        $this->id = str_pad($id, 9, '0', STR_PAD_LEFT );;
+        $this->id = $id;
         $this->idprefix = $idprefix;
         
         $sql = "SELECT * FROM `".self::$videotable."` WHERE `Archiv-Nr` = ".$this->db->qstr( $id );
@@ -102,7 +133,7 @@ class IKUVidEntity implements SOLRSource {
     }
     
     public function getID() {
-        return $this->idprefix.$this->id; 
+        return $this->idprefix.str_pad($this->id, 9, '0', STR_PAD_LEFT ); 
     }
 	
 	public function getOriginalID() {
@@ -113,8 +144,13 @@ class IKUVidEntity implements SOLRSource {
         return 'IKUVid';
     }
 	
+    public function getType() {
+		return "MovingImage";
+	}
+
+	
 	public function getEmbedded() {
-		return array_search(intval($this->id), IKUVidEntity::$done ) !== false;
+		return array_search($this->id, IKUVidEntity::$done ) !== false;
 	}
 
 	public function getOpenAccess() {

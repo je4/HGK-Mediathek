@@ -12,7 +12,7 @@ global $db;
 
 echo mediathekheader('kiste', null);
 ?>
-	<div class="container-fluid" style="margin-top: 0px; background-color: rgba(255, 255, 255, 0.5); padding: 20px;">
+	<div class="container-fluid" style="margin-top: 0px; padding: 20px;">
 		<div class="row" style="margin-bottom: 30px;">
 		  <div class="col-md-12">
 			<div class="jumbotron jumbotron-fluid" style="background: url('img/mt_3d.png') no-repeat center center;
@@ -63,6 +63,9 @@ echo mediathekheader('kiste', null);
 <script src="js/mediathek.js"></script>   
 <script src="js/mediathek3d.js"></script>
 
+<?php
+include( 'bgimage.inc.php' );
+?>
 <script>
 
 function loadResult() {
@@ -85,6 +88,9 @@ function init() {
 	$('#MTModal').on('shown.bs.modal', function (event) {
 	  var button = $(event.relatedTarget) // Button that triggered the modal
 	  var kiste = button.data('kiste') // Extract info from data-* attributes
+	  if ( typeof kiste == 'undefined' ) {
+        return;
+      }
 	  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
 	  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
 	  var modal = $(this)
@@ -102,6 +108,11 @@ function init() {
 
 	$('#MTModal').on('hidden.bs.modal', function (event) {
 	  var modal = $(this)
+	  var button = $(event.relatedTarget) // Button that triggered the modal
+	  var kiste = button.data('kiste') // Extract info from data-* attributes
+	  if ( typeof kiste == 'undefined' ) {
+        return;
+      }
 	  mediathek.stopAnimate();
 	  renderer = modal.find( '.renderer' );
 	  renderer.empty();

@@ -69,6 +69,7 @@ class SOLR {
         $doc->id = $src->getID();
         $doc->setField( 'originalid', $src->getOriginalID());
         $doc->setField( 'source', $src->getSource());
+        $doc->setField( 'type', $src->getType());
         $doc->setField( 'openaccess', $src->getOpenAccess());
 		foreach( $src->getLocations() as $loc )
 			$doc->addField( 'location', $loc );
@@ -85,6 +86,12 @@ class SOLR {
             $doc->setField( 'metagz', base64_encode( $metagz ));
             $doc->setField( 'metatext', ( $meta ));
 		}
+        foreach( $src->getMetaACL() as $acl )
+           $doc->addField( 'acl_meta', $acl );
+        foreach( $src->getContentACL() as $acl )
+           $doc->addField( 'acl_content', $acl );
+        foreach( $src->getPreviewACL() as $acl )
+           $doc->addField( 'acl_preview', $acl );
         foreach( $src->getAuthors() as $author )
            $doc->addField( 'author', /* utf8_encode */($author ));
         foreach( /* SOLR::buildTag */($src->getTags()) as $tag )

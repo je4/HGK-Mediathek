@@ -19,7 +19,7 @@ $id = isset( $_REQUEST['id'] ) ? strtolower( trim( $_REQUEST['id'] )) : null;
 
 echo mediathekheader('detail', null);
 ?>
-	<div class="container-fluid" style="margin-top: 0px; background-color: rgba(255, 255, 255, 0.5); padding: 20px;">
+	<div class="container-fluid" style="margin-top: 0px; padding: 20px;">
 		<div class="row" style="margin-bottom: 30px;">
 		  <div class="col-md-offset-2 col-md-8">
 <?php
@@ -27,44 +27,50 @@ echo mediathekheader('detail', null);
 $squery = $solrclient->createSelect();
 $helper = $squery->getHelper();
 
+
+?>
+		</div>
+	   </div>
+<?php
 $qstr = 'id:'.$id;
 $squery->setQuery( $qstr );
 
 $rs = $solrclient->select( $squery );
 $numResults = $rs->getNumFound();
-echo "<!-- ".$qstr." (Documents: {$numResults} -->\n";
-
+echo "<!-- ".$qstr." (Documents: {$numResults}) -->\n";
+if( $numResults > 0 ) foreach( $rs as $doc ) {
 ?>
-		</div>
-	   </div>
-		
 	   <div class="row">
 		  <div class="col-md-9">
 		  <a href="search.php?q=<?php echo urlencode( $q ); ?>&page=<?php echo $page; ?>&pagesize=<?php echo $pagesize; ?>">back to search</a><br />
 <?php
-if( $numResults > 0 ) foreach( $rs as $doc ) {
-        $class = '\\Mediathek\\'.$doc->source.'Display';
+	$class = '\\Mediathek\\'.$doc->source.'Display';
 
-        $output = new $class($doc, null, $db);
-        $html = $output->detailView();
-		echo $html;
-}
+	$output = new $class($doc, null, $db);
+	$html = $output->detailView();
+	echo $html;
+
 ?>
 		  </div>
    		  <div class="col-md-3" style="background-color: transparent;">
 		  </div>
 
 	   </div>
+<?php
+}
+?>
 	</div>
 
 	
 <?php
-
+include( 'bgimage.inc.php' );
 ?>
 <script>
 
 function init() {
-
+$('.carousel-shot').carousel({
+  interval: 2000
+})
 }
 </script>   
 <?php

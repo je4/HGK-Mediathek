@@ -27,6 +27,10 @@ function mediathekheader( $current, $area ) {
    <link href="css/tether-theme-basic.min.css" rel="stylesheet">
    <link href="css/mediathek.css" rel="stylesheet">
    
+<?php if( $current == 'detail' ) { ?>	
+   <link href="css/video-js.css" rel="stylesheet">
+<?php } ?>
+
    <style type="text/css">
 <?php if( $current == '' ) { ?>	
 		body {

@@ -81,7 +81,19 @@ class DOAJEntity implements SOLRSource {
     public function getID() {
         return $this->idprefix.'-'.$this->id; 
     }
-    
+	
+	public function getOriginalID() {
+		return $this->id;
+	}
+    	
+    public function getType() {
+		return "Journal";
+	}
+
+    public function getEmbedded() {
+		return false;
+	}
+
     public function getSource() {
         return 'DOAJ';
     }
@@ -238,8 +250,8 @@ class DOAJEntity implements SOLRSource {
    public function getContent() { return null; }
    
     public function getMetaACL() { return array( 'global/guest' ); }
-    public function getDataACL() { return null; }
-
+    public function getContentACL() { return array(); }
+    public function getPreviewACL() { return array(); }
 }
 
 ?>

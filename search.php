@@ -52,9 +52,9 @@ function buildPagination() {
     
 ?>
   <ul class="pager">
-    <li class="<?php echo $page <= 0 ? "disabled" : ""; ?>"><a href="#" style="border: none;" onclick="<?php if( $page >0 ) echo "pageSearch( '{$q}', ".($page-1).", {$pagesize} );"; ?>"><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
-	<li><input type="text" style="width: 30px;" class="page" value="<?php echo ($page+1); ?>"> / <?php echo $numPages; ?></li>
-    <li class="<?php echo $page >= $numPages-1 ? "disabled" : ""; ?>"><a href="#" style="border: none;" onclick="<?php if( $page < $numPages-1 ) echo "pageSearch( '{$q}', ".($page+1).", {$pagesize} );"; ?>"><i class="fa fa-chevron-right" aria-hidden="true"></i></a></li>
+    <li class="<?php echo $page <= 0 ? "disabled" : ""; ?>"><a href="#" style="border: none; background-color: transparent;" onclick="<?php if( $page >0 ) echo "pageSearch( '{$q}', ".($page-1).", {$pagesize} );"; ?>"><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
+	<li><input type="text" class="page" value="<?php echo ($page+1); ?>" style="width: 30px; background-color: transparent; border: 2px solid black;"> / <?php echo $numPages; ?></li>
+    <li class="<?php echo $page >= $numPages-1 ? "disabled" : ""; ?>"><a href="#" style="border: none; background-color: transparent;" onclick="<?php if( $page < $numPages-1 ) echo "pageSearch( '{$q}', ".($page+1).", {$pagesize} );"; ?>"><i class="fa fa-chevron-right" aria-hidden="true"></i></a></li>
   </ul>
 </nav>
 <?php
@@ -125,7 +125,7 @@ if( $qobj->query == '' ) $qobj->query = '*';
 echo mediathekheader('search', $qobj->area);
 ?>
 
-	<div class="container-fluid" style="margin-top: 0px; background-color: rgba(255, 255, 255, 0.5); padding: 20px;">
+	<div class="container-fluid" style="margin-top: 0px; padding: 20px;">
 		<div class="row" style="margin-bottom: 30px;">
 		  <div class="col-md-offset-2 col-md-8">
 <?php
@@ -142,6 +142,14 @@ if( $qobj->query != '*' ) {
 }
 else
     $qstr = '*:*';
+    
+$acl_query = '';
+foreach( $session->getGroups() as $grp ) {
+	if( strlen( $acl_query ) > 0 ) $acl_query .= ' OR';
+	$acl_query .= ' acl_meta:'.$helper->escapePhrase($grp);
+}
+$squery->createFilterQuery('acl_meta')->setQuery($acl_query);
+
 switch( $qobj->area ) {
     case 'oa':
         $squery->createFilterQuery('openaccess')->setQuery('openaccess:true');
@@ -153,6 +161,9 @@ switch( $qobj->area ) {
 
 if( @is_array( $qobj->facets->source )) {
     $squery->createFilterQuery('source')->addTag('source')->setQuery('source:('.implode(' ', $qobj->facets->source).')'	);	
+}
+if( @is_array( $qobj->facets->embedded )) {
+    $squery->createFilterQuery('embedded')->addTag('embedded')->setQuery('embedded:('.implode(' ', $qobj->facets->embedded).')'	);	
 }
 if( @is_array( $qobj->facets->cluster )) {
 	$_qstr = 'cluster:(';
@@ -176,10 +187,14 @@ $squery->setQuery( $qstr );
 
 $facetSetSource = $squery->getFacetSet();
 $facetSetSource->createFacetField('source')->setField('source')->addExclude('source');
+$facetSetEmbedded = $squery->getFacetSet();
+$facetSetEmbedded->createFacetField('embedded')->setField('embedded')->addExclude('embedded');
 //$facetSetLicense = $squery->getFacetSet();
 //$facetSetLicense->createFacetField('license')->setField('license')->addExclude('license');
 $facetSetCluster = $squery->getFacetSet();
 $facetSetCluster->createFacetField('cluster')->setField('cluster')->addExclude('cluster');
+//$facetSetAcl = $squery->getFacetSet();
+//$facetSetAcl->createFacetField('acl')->setField('acl')->addExclude('acl');
 
 
 
@@ -213,8 +228,10 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 			  </table>
 		  </div>
    		  <div class="col-md-3" style="background-color: transparent;">
+			<div style="">
 			<span style="; font-weight: bold;">Katalog</span><br />
-			<div class="bw" style="padding:5px;">
+			<div class="facet" style="">
+				<div class="marker" style=""></div>
 <?php
 				$facetSource = $rs->getFacetSet()->getFacet('source');
 				foreach ($facetSource as $value => $count) {
@@ -229,9 +246,34 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 				}
 ?>
 			</div>
+			</div>
 
+			<div style="">
+			<span style="; font-weight: bold;">Eigene Inhalte</span><br />
+			<div class="facet" style="">
+				<div class="marker" style=""></div>
+<?php
+				$facetEmbedded = $rs->getFacetSet()->getFacet('embedded');
+				foreach ($facetEmbedded as $value => $count) {
+					if( $count == 0 ) continue;
+?>	
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" class="facet" id="embedded" value="<?php echo htmlentities($value); ?>" <?php if( @is_array( $qobj->facets->embedded ) && array_search($value, $qobj->facets->embedded) !== false ) echo " checked"; ?>>
+						<?php echo htmlspecialchars( $value ).' ('.$count.')'; ?>
+					</label>
+				</div>	
+<?php			
+				}
+
+?>
+			</div>
+			</div>
+
+			<div style="">
 			<span style="; font-weight: bold;">Keywords</span><br />
-			<div class="bw" style="padding:5px;">
+			<div class="facet" style="">
+				<div class="marker" style=""></div>
 <?php
 				$facetCluster = $rs->getFacetSet()->getFacet('cluster');
 				foreach ($facetCluster as $value => $count) {
@@ -247,8 +289,10 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 				}
 ?>
 			</div>
+			</div>
 
 <?php if( false ) { ?>		
+			<div style="">
 			<span style="; font-weight: bold;">Lizenz</span><br />
 			<div class="bw" style="padding:5px;">
 <?php
@@ -266,6 +310,7 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 				}
 ?>
 			</div>
+			</div>
 <?php } ?>			
 		  </div>
 
@@ -274,7 +319,7 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 
 	
 <?php
-
+include( 'bgimage.inc.php' );
 ?>
 <script>
 
@@ -288,11 +333,16 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 	
 
 function init() {
-	initSearch("<?php echo $qobj->area; ?>");
+
+	 initSearch("<?php echo $qobj->area; ?>");
 
 	$('#MTModal').on('shown.bs.modal', function (event) {
 	  var button = $(event.relatedTarget) // Button that triggered the modal
 	  var kiste = button.data('kiste') // Extract info from data-* attributes
+		if ( typeof kiste == 'undefined' ) {
+		  return;
+		}
+	  
 	  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
 	  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
 	  var modal = $(this)
@@ -310,6 +360,11 @@ function init() {
 
 	$('#MTModal').on('hidden.bs.modal', function (event) {
 	  var modal = $(this)
+	  var button = $(event.relatedTarget) // Button that triggered the modal
+	  var kiste = button.data('kiste') // Extract info from data-* attributes
+		if ( typeof kiste == 'undefined' ) {
+		  return;
+		}
 	  mediathek.stopAnimate();
 	  renderer = modal.find( '.renderer' );
 	  renderer.empty();
@@ -325,6 +380,7 @@ function init() {
 		}
 	 });
 
+	 
 }
 </script>   
 

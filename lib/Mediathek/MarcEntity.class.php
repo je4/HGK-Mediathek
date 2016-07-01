@@ -44,6 +44,7 @@ class MarcEntity implements SOLRSource {
     private $urls = null;
     private $signatures = null;
     private $online = false;
+	private $codes = null;
 	private $db = null;
     
     
@@ -131,9 +132,26 @@ class MarcEntity implements SOLRSource {
         return $this->idprefix.$this->id; 
     }
     
+    public function getOriginalID() {
+        return $this->id; 
+    }
+	
     public function getSource() {
         return 'NEBIS';
     }
+
+    public function getType() {
+		foreach( $this->getCodes() as $code ) {
+			if( strncmp( $code, 'ISSN', 4) == 0)
+				return 'Journal';
+		}
+		return "Book";
+	}
+
+    public function getEmbedded() {
+		return false;
+	}
+
     
 	public function getOpenAccess() {
 		return false;
@@ -540,6 +558,7 @@ class MarcEntity implements SOLRSource {
     }
 
     public function getCodes() {
+		if( $this->codes != null ) return $this->codes;
         $codes = array();
         $xpath = new \DOMXPath($this->xml);
          // 60017        
@@ -561,13 +580,14 @@ class MarcEntity implements SOLRSource {
              if( $code == null ) continue;
              $codes[] = ($entry->getAttribute('tag') == '020' ? 'ISBN:' : 'ISSN:' ).$code; 
          }
+		 $this->codes = $codes;
          return $codes;
     }
 
     public function getAbstract() { return null; }
     public function getContent() { return null; }
     public function getMetaACL() { return array( 'global/guest' ); }
-    public function getDataACL() { return null; }
-}
+    public function getContentACL() { return array(); }
+    public function getPreviewACL() { return array(); }}
 
 ?>

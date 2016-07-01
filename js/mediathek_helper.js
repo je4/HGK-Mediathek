@@ -1,6 +1,5 @@
 
 var searcharea = "all";
-
 function facetSearch( q, facet, value, add ) {
 	if( add ) 
 	{
@@ -209,13 +208,22 @@ function init3D( box ) {
                     case 40: // down
 						py--;
 						break;
+					case 80: // p
+						px = Math.round(mediathek.camera.position.x / gridWidth);
+						py = Math.round(mediathek.camera.position.y / gridWidth);
+						pz = Math.round(mediathek.camera.position.z / gridWidth);
+						break;
                 }
 				mediathek.camera.position.set( px*gridWidth, py*gridWidth, pz*gridWidth );
 				mediathek.camera.up = new THREE.Vector3(0,0,1);
 				box = mediathek3D.boxes[hash.substring(0, 4)];
-				mediathek.controls.target = box.position;				
+				mediathek.controls.target.copy( box.position );				
 				
 			});
 		}
 	);
+}
+
+function  initBoxes(c) {
+	
 }
