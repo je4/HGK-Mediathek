@@ -26,7 +26,7 @@ function initSearch( area ) {
            searcharea = param;
 	   });
 	
-	$('#search').click( function(e) {
+	$('#searchbutton').click( function(e) {
 	   doSearch( 0, 12 );
 	});
 	
@@ -189,35 +189,45 @@ function init3D( box ) {
 				if ( mediathek == null ) {
                     return;
                 }
+				var set = false;
 				switch ( event.which ) {
                     case 33: // PgUp
 						pz++;
+						set = true;
 						break;
                     case 34: // PgDown
 						pz--;
+						set = true;
 						break;
                     case 39: // ->
 						px++;
+						set = true;
 						break;
                     case 37: // <-
 						px--;
+						set = true;
 						break;
                     case 38: // up
 						py++;
+						set = true;
 						break;
                     case 40: // down
 						py--;
+						set = true;
 						break;
 					case 80: // p
 						px = Math.round(mediathek.camera.position.x / gridWidth);
 						py = Math.round(mediathek.camera.position.y / gridWidth);
 						pz = Math.round(mediathek.camera.position.z / gridWidth);
+						set = true;
 						break;
                 }
-				mediathek.camera.position.set( px*gridWidth, py*gridWidth, pz*gridWidth );
-				mediathek.camera.up = new THREE.Vector3(0,0,1);
-				box = mediathek3D.boxes[hash.substring(0, 4)];
-				mediathek.controls.target.copy( box.position );				
+				if ( set ) {
+					mediathek.camera.position.set( px*gridWidth, py*gridWidth, pz*gridWidth );
+					mediathek.camera.up = new THREE.Vector3(0,0,1);
+					box = mediathek3D.boxes[hash.substring(0, 4)];
+					mediathek.controls.target.copy( box.position );				
+                }
 				
 			});
 		}

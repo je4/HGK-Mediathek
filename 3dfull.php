@@ -69,10 +69,16 @@ function init() {
 	$("textarea").keyup(function(e) {
 		var code = e.keyCode ? e.keyCode : e.which;
 		if (code == 13) {  // Enter keycode
-			alert( $(this).val());
+//			alert( $(this).val());
 			mediathek.setCamJSON($(this).val());
 		}
-	 });		
+	 });
+	
+	$(window).on('hashchange',function(){ 
+		hash = window.location.hash.substring( 1 );
+		mediathek3D.clearHighlight();
+		mediathek3D.boxHighlight( hash.substring( 0, 4), true );
+	});
 }
 
 
@@ -114,13 +120,13 @@ function onWindowResize() {
 		var canvas = $('.renderer').children( 'canvas' ).first();
 		var dt = canvas[0].toDataURL('image/png');
 		$('.downloadCanvas').attr( 'href', dt );
-		$('.downloadCanvas').attr( 'download',  hash + ".png" );
+		$('.downloadCanvas').attr( 'download',  window.location.hash.substring( 1 ) + ".png" );
 		
 	});
 	$('.downloadCamera').click( function() {
 		var canvas = $('.renderer').children( 'canvas' ).first();
 		$('.downloadCamera').attr( 'href', URL.createObjectURL(new Blob([mediathek.getCamJSON()], {type: "text/json"}) ));
-		$('.downloadCamera').attr( 'download',  hash + ".json" );
+		$('.downloadCamera').attr( 'download',  window.location.hash.substring( 1 ) + ".json" );
 		
 	});
 

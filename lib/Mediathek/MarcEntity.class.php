@@ -53,19 +53,20 @@ class MarcEntity implements SOLRSource {
     }
 
     private function reset() {
-        $this->id = null;
-        $this->idprefix = null;
-        $this->xml = null;
-        $this->barcode = null;
-        $this->signature = null;
-        $this->authors = null;
-        $this->loans = null;
-        $this->tags = null;
-        $this->licenses = null;
-        $this->urls = null;
-        $this->signatures = null;
-        $this->online = false;
-        
+		$this->xml = null;
+		$this->id = null;
+		$this->idprefix = null;
+		$this->barcode = null;
+		$this->signature = null;
+		$this->loans = null;
+		$this->authors = null;
+		$this->tags = null;
+		$this->cluster = null;
+		$this->licenses = null;
+		$this->urls = null;
+		$this->signatures = null;
+		$this->online = false;
+		$this->codes = null;
     }
     
 	function loadFromXML( $xml, $id, $idprefix ) {

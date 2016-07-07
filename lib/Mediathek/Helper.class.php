@@ -47,7 +47,8 @@ class Helper {
         
         foreach( $specific as $key=>$word ) {
             $fields = array();
-            switch( $key ) {
+            switch( strtolower( $key )) {
+				case 'publisher':
                 case 'author':
                     $fields[] = 'author';
                     $fields[] = 'publisher';
@@ -58,6 +59,10 @@ class Helper {
                 case 'signature':
                     $fields[] = $key;
                 break;
+				case 'kiste':
+					$word = 'E75:Kiste:'.$word;
+                    $fields[] = 'location';
+					break;
             }
             if( count($fields) == 0 ) continue;
             $first = true;

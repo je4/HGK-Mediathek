@@ -1,7 +1,7 @@
 <?php
 namespace Mediathek;
 
-require 'navbar.inc.php';
+//require 'navbar.inc.php';
 require 'searchbar.inc.php';
 require 'header.inc.php';
 require 'footer.inc.php';
@@ -53,7 +53,7 @@ function buildPagination() {
 ?>
   <ul class="pager">
     <li class="<?php echo $page <= 0 ? "disabled" : ""; ?>"><a href="#" style="border: none; background-color: transparent;" onclick="<?php if( $page >0 ) echo "pageSearch( '{$q}', ".($page-1).", {$pagesize} );"; ?>"><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
-	<li><input type="text" class="page" value="<?php echo ($page+1); ?>" style="width: 30px; background-color: transparent; border: 2px solid black;"> / <?php echo $numPages; ?></li>
+	<li><input type="text" class="setpage" value="<?php echo ($page+1); ?>" style="padding-right: 3px; text-align: right; width: 45px; background-color: transparent; border: 1px solid #004824;"> / <?php echo $numPages; ?></li>
     <li class="<?php echo $page >= $numPages-1 ? "disabled" : ""; ?>"><a href="#" style="border: none; background-color: transparent;" onclick="<?php if( $page < $numPages-1 ) echo "pageSearch( '{$q}', ".($page+1).", {$pagesize} );"; ?>"><i class="fa fa-chevron-right" aria-hidden="true"></i></a></li>
   </ul>
 </nav>
@@ -122,14 +122,32 @@ if( $qobj->query == '' ) $qobj->query = '*';
 // if( $qobj ) $session->storeQuery( md5( $qobj->query ));
 
 
-echo mediathekheader('search', $qobj->area);
+echo mediathekheader('search', 'Mediathek - Suche - '.$qobj->query, $qobj->area);
 ?>
+<div class="home-btn"><i class="ion-android-close"></i></div>
+<div class="setting-btn"><i class="<?php echo $session->isLoggedIn() ? 'ion-ios-settings-strong': 'ion-log-in'; ?>"></i></div>
 
-	<div class="container-fluid" style="margin-top: 0px; padding: 20px;">
+<div id="fullsearch" class="fullsearch-page container-fluid page">
+    <div class="row">
+            <!--( a ) Profile Page Fixed Image Portion -->
+
+            <div class="image-container col-md-1 col-sm-12">
+                <div class="mask">
+                </div>
+                <div style="left: 20%;" class="main-heading">
+                    <h1>Suche</h1>
+                </div>
+            </div>
+
+            <!--( b ) Profile Page Content -->
+
+            <div class="content-container col-md-11 col-sm-12">
+                <div class="clearfix">
+                    <h2 class="small-heading">Mediathek der Künste</h2>
+
+	<div class="container-fluid" style="margin-top: 0px; padding: 0px 20px 20px 20px;">
 		<div class="row" style="margin-bottom: 30px;">
 		  <div class="col-md-offset-2 col-md-8">
-<?php
-?>
 <?php
 
 $squery = $solrclient->createSelect();
@@ -166,7 +184,7 @@ if( @is_array( $qobj->facets->embedded )) {
     $squery->createFilterQuery('embedded')->addTag('embedded')->setQuery('embedded:('.implode(' ', $qobj->facets->embedded).')'	);	
 }
 if( @is_array( $qobj->facets->cluster )) {
-	$_qstr = 'cluster:(';
+	$_qstr = 'cluster_ss:(';
 	foreach( $qobj->facets->cluster as $clu ) {
 		$_qstr .= ' '.$helper->escapePhrase( $clu );
 	}
@@ -192,7 +210,7 @@ $facetSetEmbedded->createFacetField('embedded')->setField('embedded')->addExclud
 //$facetSetLicense = $squery->getFacetSet();
 //$facetSetLicense->createFacetField('license')->setField('license')->addExclude('license');
 $facetSetCluster = $squery->getFacetSet();
-$facetSetCluster->createFacetField('cluster')->setField('cluster')->addExclude('cluster');
+$facetSetCluster->createFacetField('cluster')->setField('cluster_ss')->addExclude('cluster');
 //$facetSetAcl = $squery->getFacetSet();
 //$facetSetAcl->createFacetField('acl')->setField('acl')->addExclude('acl');
 
@@ -234,36 +252,49 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 				<div class="marker" style=""></div>
 <?php
 				$facetSource = $rs->getFacetSet()->getFacet('source');
+				$i = 0;
 				foreach ($facetSource as $value => $count) {
 ?>	
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" class="facet" id="source" value="<?php echo htmlentities($value); ?>" <?php if( @is_array( $qobj->facets->source ) && array_search($value, $qobj->facets->source) !== false ) echo " checked"; ?>>
-						<?php echo $sourcemap[strtolower($value)].' ('.$count.')'; ?>
-					</label>
-				</div>				
-<?php			
+						<div class="checkbox checkbox-green">
+							<input class="facet" type="checkbox" id="source" value="<?php echo htmlentities($value); ?>" <?php if( @is_array( $qobj->facets->source ) && array_search($value, $qobj->facets->source) !== false ) echo " checked"; ?>>
+							<label for="source<?php echo $i; ?>">
+								<?php echo htmlspecialchars( $value ).' ('.$count.')'; ?>
+							</label>
+						</div>
+<!--						
+						<?php if( $i ) echo "<br />"; ?><input type="checkbox" id="source<?php echo $i; ?>" class="css-checkbox" value="<?php echo htmlentities($value); ?>" <?php if( @is_array( $qobj->facets->source ) && array_search($value, $qobj->facets->source) !== false ) echo " checked"; ?>>
+						<label for="source<?php echo $i; ?>" name="source<?php echo $i; ?>_lbl" class="css-label lite-x-green"><?php echo htmlspecialchars( $value ).' ('.$count.')'; ?></label>
+-->						
+<?php					
+					$i++;
 				}
 ?>
 			</div>
 			</div>
 
 			<div style="">
-			<span style="; font-weight: bold;">Eigene Inhalte</span><br />
+			<span style="; font-weight: bold;">Eigener digitaler Bestand</span><br />
 			<div class="facet" style="">
-				<div class="marker" style=""></div>
+				<div class="marker"></div>
 <?php
 				$facetEmbedded = $rs->getFacetSet()->getFacet('embedded');
+				$i = 0;
 				foreach ($facetEmbedded as $value => $count) {
-					if( $count == 0 ) continue;
+					//if( (@is_array( $qobj->facets->embedded ) && array_search($value, $qobj->facets->embedded) !== false ) === false && $count == 0 ) continue;
+					if( $value == 'false' ) continue;
 ?>	
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" class="facet" id="embedded" value="<?php echo htmlentities($value); ?>" <?php if( @is_array( $qobj->facets->embedded ) && array_search($value, $qobj->facets->embedded) !== false ) echo " checked"; ?>>
-						<?php echo htmlspecialchars( $value ).' ('.$count.')'; ?>
-					</label>
-				</div>	
-<?php			
+						<div class="checkbox checkbox-green">
+							<input class="facet" type="checkbox" id="embedded" value="<?php echo htmlentities($value); ?>" <?php if( @is_array( $qobj->facets->embedded ) && array_search($value, $qobj->facets->embedded) !== false ) echo " checked"; ?>>
+							<label for="embedded<?php echo $i; ?>">
+								<?php echo htmlspecialchars( 'direkt verfügbar' ).' ('.$count.')'; ?>
+							</label>
+						</div>
+<!--						
+						<?php if( $i ) echo "<br />"; ?><input type="checkbox" id="embedded<?php echo $i; ?>" class="css-checkbox" value="<?php echo htmlentities($value); ?>" <?php if( @is_array( $qobj->facets->embedded ) && array_search($value, $qobj->facets->embedded) !== false ) echo " checked"; ?>>
+						<label for="embedded<?php echo $i; ?>" name="embedded<?php echo $i; ?>_lbl" class="css-label lite-x-green"><?php echo htmlspecialchars( $value ).' ('.$count.')'; ?></label>
+-->						
+<?php				
+					$i++;
 				}
 
 ?>
@@ -276,50 +307,54 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 				<div class="marker" style=""></div>
 <?php
 				$facetCluster = $rs->getFacetSet()->getFacet('cluster');
+				$i = 0;
 				foreach ($facetCluster as $value => $count) {
-					if( $count == 0 ) continue;
+					if( (@is_array( $qobj->facets->cluster ) && array_search($value, $qobj->facets->cluster) !== false ) === false && $count == 0 ) continue;
 ?>	
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" class="facet" id="cluster" value="<?php echo htmlentities($value); ?>" <?php if( @is_array( $qobj->facets->cluster ) && array_search($value, $qobj->facets->cluster) !== false ) echo " checked"; ?>>
-						<?php echo htmlspecialchars( $value ).' ('.$count.')'; ?>
-					</label>
-				</div>	
+					<div class="checkbox checkbox-green">
+						<input class="facet" type="checkbox" id="cluster" value="<?php echo htmlentities($value); ?>" <?php if( @is_array( $qobj->facets->cluster ) && array_search($value, $qobj->facets->cluster) !== false ) echo " checked"; ?>>
+						<label for="cluster<?php echo $i; ?>">
+							<?php echo htmlspecialchars( $value ).' ('.$count.')'; ?>
+						</label>
+					</div>
+<!--
+				<input type="checkbox" id="cluster<?php echo $i; ?>" class="css-checkbox" value="<?php echo htmlentities($value); ?>" <?php if( @is_array( $qobj->facets->cluster ) && array_search($value, $qobj->facets->cluster) !== false ) echo " checked"; ?>>
+				<label for="cluster<?php echo $i; ?>" name="cluster<?php echo $i; ?>_lbl" class="css-label lite-x-green"><?php echo htmlspecialchars( $value ).' ('.$count.')'; ?></label>
+-->				
 <?php			
+					$i++;
 				}
 ?>
 			</div>
 			</div>
-
-<?php if( false ) { ?>		
-			<div style="">
-			<span style="; font-weight: bold;">Lizenz</span><br />
-			<div class="bw" style="padding:5px;">
-<?php
-				$facetSource = $rs->getFacetSet()->getFacet('license');
-				foreach ($facetSource as $value => $count) {
-					if( $count == 0 ) continue;
-?>	
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" class="facet" id="license" value="<?php echo htmlentities($value); ?>" <?php if( @is_array( $qobj->facets->license ) && array_search($value, $qobj->facets->license) !== false ) echo " checked"; ?>>
-						<?php echo htmlspecialchars( $value ).' ('.$count.')'; ?>
-					</label>
-				</div>				
-<?php			
-				}
-?>
-			</div>
-			</div>
-<?php } ?>			
 		  </div>
 
 	   </div>
 	</div>
+	<div class="footer clearfix">
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1 col-xs-10 col-xs-offset-1">
+				<div class="row">
+					<div class="col-md-6 col-sm-12 col-xs-12">
+						<p class="copyright">Copyright &copy; 2016
+							<a href="#">Mediathek der Künste</a>
+						</p>
+					</div>
 
+					<div class="col-md-6 col-sm-12 col-xs-12">
+						<p class="author">
+							<a href="http://www.fhnw.ch/hgk" target="_blank">HGK FHNW</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+</div>
 	
 <?php
-include( 'bgimage.inc.php' );
+//include( 'bgimage.inc.php' );
 ?>
 <script>
 
@@ -336,43 +371,7 @@ function init() {
 
 	 initSearch("<?php echo $qobj->area; ?>");
 
-	$('#MTModal').on('shown.bs.modal', function (event) {
-	  var button = $(event.relatedTarget) // Button that triggered the modal
-	  var kiste = button.data('kiste') // Extract info from data-* attributes
-		if ( typeof kiste == 'undefined' ) {
-		  return;
-		}
-	  
-	  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-	  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-	  var modal = $(this)
-	  modal.find('.modal-title').html('Regal <b>' + kiste.substring( 0, 1 ) + '</b> Kiste <b>' + kiste.substring( 1 ));
-	  body = modal.find('.modal-body');
-	  body.empty();
-	  body.append( '<div class="renderer"></div>')
-
-	  renderer = modal.find( '.renderer' );
-	  renderer.height( '400px');
-	  width = body.width();
-	  renderer.width( width );
-	  init3D( kiste );
-	})
-
-	$('#MTModal').on('hidden.bs.modal', function (event) {
-	  var modal = $(this)
-	  var button = $(event.relatedTarget) // Button that triggered the modal
-	  var kiste = button.data('kiste') // Extract info from data-* attributes
-		if ( typeof kiste == 'undefined' ) {
-		  return;
-		}
-	  mediathek.stopAnimate();
-	  renderer = modal.find( '.renderer' );
-	  renderer.empty();
-	  mediathek = null;
-	  mediathek3D = null;
-	})
-	
-	 $('.page').keypress(function (e) {
+	 $('.setpage').keypress(function (e) {
 		if (e.which == 13) {
           var page = this.value;
 		  pageSearch( '<?php echo $q; ?>', parseInt( page )-1, <?php echo $pagesize; ?> );
@@ -380,6 +379,27 @@ function init() {
 		}
 	 });
 
+	$('body').on('click', '.setting-btn', function () {
+		<?php if( $session->isLoggedIn()) { ?>
+		var modal = $('#MTModal');
+		modal.find('.modal-title').text( '<?php echo htmlspecialchars( $session->shibGetUsername()); ?>' );
+		var content = <?php 
+		echo "'<p>".htmlspecialchars( $session->shibHomeOrganization())."<br />'
+			 +'".htmlspecialchars( $session->shibGetMail()) ."<br />'
+			 +'<ul>'";
+		foreach( $session->getGroups() as $grp ) {
+			echo "+'<li>".htmlspecialchars( $grp )."</li>'";
+		}
+		echo "+'</ul>'";
+?>;		
+		modal.find( '.modal-body' ).html( content );
+		modal.modal('show');
+		<?php } else { ?>
+		window.location="auth/?target=<?php echo urlencode( $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']); ?>";
+		<?php } ?>
+		
+	});
+	 
 	 
 }
 </script>   

@@ -33,10 +33,167 @@ class NEBISDisplay extends DisplayEntity {
     }
     
 	public function detailView() {
-        global $config, $googleservice, $googleclient;
+        global $config, $googleservice, $googleclient, $solrclient, $db, $urlparams, $pagesize;
         $html = '';
+$cfg = array(
+                   'indent'         => true,
+                   'output-xml'   => true,
+                   'input-xml' => true,
+                   'wrap'           => 150);
+        
+		$entity = new MarcEntity($this->db);
+		$entity->loadFromXML( $this->data, substr( $this->doc->id, strlen( $this->doc->source)), $this->doc->source );
+		$authors = array_unique( $entity->getAuthors());
+
+		$squery = $solrclient->createSelect();
+		$helper = $squery->getHelper();
+
+		
+        // Tidy
+        $tidy = new \Tidy;
+        $tidy->parseString($this->data, $cfg, 'utf8');
+        $tidy->cleanRepair();
+         //echo "<!--\n".$tidy."\n-->\n";
+        
+        // Output
+//        echo $tidy;
+		$kiste = null;
+		foreach( $this->doc->location as $loc ) {
+		  if( substr( $loc, 0, 10 ) == 'E75:Kiste:' ) {
+			  $kiste = substr( $loc, 10 );
+			  break;
+		  }
+		} 
+
         ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
 ?>		
+		<div class="row">
+			<div class="col-md-3">
+				<div style="">
+				<span style="; font-weight: bold;">Aktuelles Buch</span><br />
+					<div class="facet" style="">
+						<div class="marker" style=""></div>
+							<b><?php echo htmlspecialchars( $entity->getTitle()); ?></b><br />
+							<?php 
+							$i = 0;
+							foreach( $authors as $author ) { 
+								if( $i > 0) echo "; "; ?>
+									<a href="javascript:doSearchFull('author:&quot;<?php echo trim( $author ); ?>&quot;', '', [], [], 0, <?php echo $pagesize; ?> );">
+										<?php echo htmlspecialchars( $author ); ?>
+									</a>
+								<?php				
+								$i++;
+							}
+							//echo htmlspecialchars( implode( '; ', $authors )); 
+							?>
+							
+							<br />
+<?php
+							$publisher = $entity->getPublisher();
+							$city = $entity->getCity();
+							$year = $entity->getYear();
+							if( $city ) echo htmlspecialchars( $city ).': '; 
+							if( $publisher ) { ?>
+									<a href="javascript:doSearchFull('publisher:&quot;<?php echo trim( $publisher ); ?>&quot;', '', [], [], 0, <?php echo $pagesize; ?> );">
+										<?php echo htmlspecialchars( $publisher ); ?>
+									</a>
+							<?php }
+							if( $year ) echo htmlspecialchars( $year ).'.';
+							if( $city || $year || $publisher ) echo "<br />\n";
+
+							$codes = $entity->getCodes();
+							if( is_array( $codes )) foreach( $codes as $code ) 
+								echo htmlspecialchars( str_replace( ':', ': ', $code ))."<br />\n";
+							
+							$signatures = $this->doc->signature;
+							if( is_array( $signatures )) foreach( $signatures as $sig ) 
+								if( substr( $sig, 0, 10 ) == 'nebis:E75:' ) echo 'Signatur: <a href="redir.php?id='.urlencode( $this->doc->id ).'&url='.urlencode( 'http://opac.nebis.ch/F?func=find-c&ccl_term=SYS%3D'.urlencode($this->doc->originalid)).'" target="_blank">'.htmlspecialchars( substr( $sig, 10 ))."</a><br />\n";
+
+?>							
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div style="">
+				<span style="; font-weight: bold;">Raumübersicht</span><br />
+					<div class="facet" style="">
+						<div class="marker" style=""></div>
+						<div class="renderer"></div>
+					</div>
+				</div>
+<?php
+//        echo '<pre>'.nl2br( htmlspecialchars( $tidy )).'</pre>';
+
+?>				
+			</div>
+			<div class="col-md-3">
+				<div style="">
+				<span style="; font-weight: bold;">Themen</span><br />
+					<div class="facet" style="">
+						<div class="marker" style=""></div>
+<?php
+						foreach( $entity->getCluster() as $cl ) {
+//							echo htmlspecialchars( $cl ).'<br />';
+?>
+							<div class="checkbox checkbox-green">
+								<input class="facet" type="checkbox" id="cluster" value="<?php echo htmlentities($cl); ?>">
+								<label for="cluster<?php echo $i; ?>">
+									<?php echo htmlspecialchars( $cl ); ?>
+								</label>
+							</div>
+<?php							
+						}
+?>							
+					</div>
+				</div>
+				<div style="">
+				<span style="; font-weight: bold;">Kontext</span><br />
+					<div class="facet" style="">
+						<div class="marker" style=""></div>
+					</div>
+				</div>
+				<div style="">
+				<span style="; font-weight: bold;">Systematik</span><br />
+					<div class="facet" style="">
+						<div class="marker" style=""></div>
+					</div>
+				</div>
+			</div>
+		</div>
+<?php
+if( $kiste ) {
+?>
+		<div class="row">
+			<div class="col-md-9">
+				<div style="">
+				<span style="; font-weight: bold;">Weitere Bücher in Kiste <?php echo $kiste; ?></span><br />
+					<div class="facet" style="">
+						<div class="marker" style=""></div>
+<?php						
+	$squery->setRows( 500 );
+	$squery->setStart( 0 );
+	$qstr = 'location:'.$helper->escapePhrase( 'E75:Kiste:'.$kiste );
+	$squery->setQuery( $qstr );
+	$rs = $solrclient->select( $squery );
+	$numResults = $rs->getNumFound();
+	$numPages = floor( $numResults / 500 );
+	if( $numResults % 500 > 0 ) $numPages++;
+
+	echo "<!-- ".$qstr." (Documents: {$numResults} // Page ".(1)." of {$numPages}) -->\n";
+
+	$res = new DesktopResult( $rs, 0, 500, $db, $urlparams );
+	echo $res->getResult();
+
+?>					
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-md-3">
+			</div>
+		</div>
+<?php } ?>
+<!--
 		<div style="background:  #f5f2f0;">
 			<div class="row">
 				<div class="col-md-12">
@@ -48,17 +205,35 @@ class NEBISDisplay extends DisplayEntity {
 					<div class="card-columns">
 <?php
 
-$search = new ContextSearchGoogle( $this->doc, $this->db, 'book');
+//$search = new ContextSearchGoogle( $this->doc, $this->db, 'book');
 
 
-echo $search->desktopCards();
+//echo $search->desktopCards();
 ?>
 
 					</div>
 				</div>
 			</div>
 		</div>
+-->
+		<script>
+			function initNEBIS() {
+			  var renderer = $( '.renderer' );
+			  renderer.height( '400px');
+			  //var width = body.width();
+			  ///renderer.width( width );
+			  init3D( '<?php 
+			  foreach( $this->doc->location as $loc ) {
+				  if( substr( $loc, 0, 10 ) == 'E75:Kiste:' ) {
+					  echo str_replace( '_', '', substr( $loc, 10 ));
+					  break;
+				  }
+			  } 
+			  ?>'  );
 
+			}
+		</script>
+		
 <?php
         $html .= ob_get_contents();
         ob_end_clean();
@@ -150,9 +325,16 @@ echo $search->desktopCards();
 				}
 				
 				echo "ID: ".$this->doc->id."<br />\n";
-?>				
-<?php			
-?>				
+				$inKiste = false;
+				if( is_array( $this->doc->location )) foreach( $this->doc->location as $loc ) {
+					if( substr( $loc, 0, strlen( 'E75:Kiste:' )) == 'E75:Kiste:' ) {
+						$inKiste = true; 
+						break;
+					}
+				}
+				if( $inKiste ) { ?>
+					<a href="detail.php?<?php echo "id=".urlencode( $this->doc->id ); foreach( $this->urlparams as $key=>$val ) echo '&'.$key.'='.urlencode($val); ?>"><i class="fa fa-folder-open" aria-hidden="true"></i> Details</a><br />
+<?php			} ?>				
 				<p />
 					<!-- <a href="detail.php?<?php echo "id=".urlencode( $this->doc->id ); foreach( $this->urlparams as $key=>$val ) echo '&'.$key.'='.urlencode($val); ?>">Detail</a><br /> -->
                     <!-- <pre><?php echo ( htmlspecialchars( $tidy )); ?></pre> -->

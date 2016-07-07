@@ -3,19 +3,28 @@ global $session;
 
 function mediathekfooter() {
     ob_start();
-	if( DEBUG ) {
+	if( DEBUG && false ) { 
 		echo "<pre>".print_r( $_SERVER, true )."</pre>";
+		echo "<pre>".print_r( $_REQUEST, true )."</pre>";
 	}
 ?>
   
-	<script src="js/jquery.min.js"></script>
-	<script src="js/tether.min.js"></script>  
-	<script src="js/bootstrap.js"></script>  
-	<script src="js/md5.min.js"></script>  
-	<script src="js/mediathek_helper.js"></script>  
+    <script type="text/javascript" src="assets/js/jquery-2.1.3.min.js"></script>
+    <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="assets/js/modernizr.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.easing.min.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.mixitup.min.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.popup.min.js"></script>
+    <script type="text/javascript" src="assets/js/owl.carousel.min.js"></script>
+    <script type="text/javascript" src="assets/js/contact.js"></script>
+    <script type="text/javascript" src="assets/js/script.js"></script>
+    <script type="text/javascript" src="js/mediathek_helper.js"></script>
+    <script type="text/javascript" src="js/mediathek_gui.js"></script>
+	<script type="text/javascript" src="js/md5.min.js"></script>  
 	
 	<script language="javascript">
 	   $( document ).ready(function() {
+		   return;
 		   init();
 		   	$('#MTModal').on('shown.bs.modal', function (event) {
 				var button = $(event.relatedTarget) // Button that triggered the modal

@@ -58,9 +58,9 @@ class Autoloader
     public static function load($class)
     {
         //echo $class."\n";
-        if (substr($class, 0, 9) == 'Mediathek') {
+        if (substr($class, 0, 9) == __NAMESPACE__) {
             $class = str_replace(
-                array('Mediathek', '\\'),
+                array(__NAMESPACE__, '\\'),
                 array('', '/'),
                 $class
             );

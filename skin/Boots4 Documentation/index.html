@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<title>Boots4 :: Portfolio Template - Documentation</title>
+
+	<!-- CSS -->
+	<!-- Bootstrap core CSS -->
+	<link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Raleway:100,300,400">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:100,300,400">
+
+	<link href="assets/css/prettify.css" rel="stylesheet">
+
+	<!-- Custom styles CSS -->
+	<link href="assets/css/style.css" rel="stylesheet">
+
+</head>
+<body>
+
+	<div class="container main">
+		<div class="row">
+
+			<div class="col-md-3">
+
+				<div class="sidebar hidden-print my_affix" role="complementary" data-spy="affix" data-offset-top="100" data-offset-bottom="200">
+					<ul class="nav sidenav">
+                        <li class="active"><a href="#introduction">Introduction</a></li>
+                        <li><a href="#feature">Template Features</a></li>
+                        <li><a href="#start">Getting Started</a></li>
+                        <li><a href="#preloading">Preloading</a></li>
+                        <li><a href="#header">Home Screen</a></li>
+                        <li><a href="#closeButton">Section Closing Button</a></li>
+                        <li><a href="#aboutus">About Us</a></li>
+                        <li><a href="#Portfolio">Portfolio</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#contact">Contact Section</a></li>
+                        <li><a href="#contact-form">Working Contact form</a></li>
+                        <li><a href="#footer">Footer Section</a></li>
+                        <li><a href="#attribution">Attribution</a></li>
+                        <li><a href="#changelog">Changelog</a></li>
+                    </ul>
+				</div>
+
+			</div>
+
+			<div class="col-md-9">
+
+				<section class="header" id="introduction">
+					<h1><a href="../index.html" target="_blink">Boots4 :: Portfolio Template</a> - Documentation</h1>
+				</section>
+				<br/><br/>
+				<section class="section">
+					<div class="well-lg alert alert-success">
+						<h4>Good Day!</h4>
+						<p>Thank you for choosing our Portfolio template - <strong>Boots4</strong>. If you have any questions please feel free to submit a ticket in our website <a target="_blank" href="https://themewagon.com/wagon_tickets/">here</a>.</p>
+					</div>
+
+					<!-- Customization -->
+
+
+
+					<!-- template featurs -->
+
+					<h2 id="feature">Template Features</h2>
+
+					<ul>
+						<li><strong>Single Page Template</strong></li>
+						<li><strong>Easy to customize:</strong> background, content</li>
+						<li>Fully responsive</li>
+						<li>Ionicons Icons <strong>400+ icons</strong></li>
+                        <li>Owl Carousel <strong>Slider</strong></li>
+						<li>Powered by Twitter Bootstrap</li>
+						<li>Smooth animation</li>
+						<li>Working <strong>Contact form</strong> with validation</li>
+						<li><strong>Well Documented</strong></li>
+						<li>Clear &amp; Neat Design</li>
+						<li><strong>Accurate HTML code</strong> with comments</li>
+					</ul>
+
+					<!-- end of template featurs -->
+
+
+
+
+
+
+					<!-- getting started -->
+
+					<h2 id="start">Getting Started</h2>
+						
+					<p>Unzip the downloaded folder and find out the <strong>assets</strong>. There are all the template files in this folder. You can open the following files for viewing in browser.</p>
+					
+                    <ol>
+                        <li>
+                            <strong>css</strong>&nbsp;&mdash; folder with css files.
+                        </li>
+                        <li>
+                            <strong>img</strong>&nbsp;&mdash; folder with image files and png Icon.
+                        </li>
+                        <li>
+                            <strong>js</strong>&nbsp;&mdash; folder with Javascript files.
+                        </li>
+                        
+                        <li>
+                            <strong>index.html</strong>&nbsp;&mdash; the only html file contains all feature of this single page awesome template.
+                        </li>
+                        
+                    </ol>
+
+					<!-- end of getting started -->
+
+					<!-- navbar -->
+                    <!-- Preloader Section -->
+                    <h2 id="preloading">Preloading Section</h2>
+                    <p>In <strong>index.html</strong> file . HTML structure of the preloading Section. This code placed just after the <pre><strong>&lt;body&gt;</strong></p></pre>
+                    <pre class="prettyprint lang-basic">
+&lt;div id="preloader" style="display: none;"&gt;
+    &lt;div class="loader"&gt;
+        &lt;span&gt;&lt;/span&gt;
+        &lt;span&gt;&lt;/span&gt;
+        &lt;span&gt;&lt;/span&gt;
+        &lt;span&gt;&lt;/span&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+                    </pre>
+                    <!-- End of preloader section -->
+
+                    <!-- HomeScreen section -->
+					<h2 id="header">Home Screen Section</h2>
+					<p>In <strong>index.html</strong> file . HTML structure of the <strong>Home Screen Section</strong></p>
+
+					<pre class="prettyprint lang-basic">
+                        <pre>&lt;div class="home-page"&gt;
+    
+    &lt;!-- Introduction --&gt;
+    
+    &lt;div class="introduction"&gt;
+        &lt;!-- &lt;div class="mask"&gt;
+        &lt;/div&gt; --&gt;
+        &lt;div class="intro-content"&gt;
+            &lt;!-- &lt;h1&gt;HELLO&lt;br&gt;
+            I'M &lt;span&gt;JOHN&lt;/span&gt; DOE&lt;/h1&gt; --&gt;
+            &lt;h1&gt;
+                Hi, We are
+            &lt;/h1&gt; 
+            &lt;span&gt;boots&lt;/span&gt;&lt;span class="number"&gt;4&lt;/span&gt;
+            &lt;p class="slogan-text text-capitalize"&gt;leading creative tech company&lt;/p&gt;
+
+            &lt;div class="social-media hidden-xs"&gt;
+                &lt;a href="#" class="fa fa-facebook" data-toggle="tooltip" title="Facebook"&gt;&lt;/a&gt;
+                &lt;a href="#" class="fa fa-twitter" data-toggle="tooltip" title="Twitter"&gt;&lt;/a&gt;
+                &lt;a href="#" class="fa fa-plus" data-toggle="tooltip" title="Google+"&gt;&lt;/a&gt;
+                &lt;a href="#" class="fa fa-linkedin" data-toggle="tooltip" title="Linkedin"&gt;&lt;/a&gt;
+                &lt;a href="#" class="fa fa-behance" data-toggle="tooltip" title="Behance"&gt;&lt;/a&gt;
+                &lt;a href="#" class="fa fa-flickr" data-toggle="tooltip" title="Flicker"&gt;&lt;/a&gt;
+                &lt;a href="#" class="fa fa-instagram" data-toggle="tooltip" title="Instagram"&gt;&lt;/a&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        
+        &lt;!-- Social Media Icons [ END ] --&gt;
+    &lt;/div&gt;
+    
+    &lt;!-- Navigation Menu --&gt;
+    
+    &lt;div class="menu"&gt;
+        &lt;div data-url_target="about_us" class="profile-btn menu_button"&gt;
+            &lt;img alt="" src="assets/img/about.jpg" style="width:100%; height:100%;"&gt;
+            &lt;div class="mask"&gt;
+            &lt;/div&gt;
+            &lt;div class="heading"&gt;
+                &lt;i class="ion-ios-people-outline hidden-xs"&gt;&lt;/i&gt;
+                &lt;h2&gt;About Us&lt;/h2&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        
+        &lt;!-- Single Navigation Menu Button --&gt;
+        
+        &lt;div data-url_target="portfolio" class="portfolio-btn menu_button"&gt;
+            &lt;img alt="" src="assets/img/portfolio.jpg"&gt;
+            &lt;div class="mask"&gt;
+            &lt;/div&gt;
+            &lt;div class="heading"&gt;
+                &lt;i class="ion-ios-briefcase-outline hidden-xs"&gt;&lt;/i&gt;
+                &lt;h2&gt;Portfolio&lt;/h2&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        
+        &lt;!-- Single Navigation Menu Button [ END ]  --&gt;
+        
+        &lt;div data-url_target="service" class="service-btn menu_button"&gt;
+            &lt;img alt="" src="assets/img/service.jpg"&gt;
+            &lt;div class="mask"&gt;
+            &lt;/div&gt;
+            &lt;div class="heading"&gt;
+                &lt;i class="ion-ios-lightbulb-outline hidden-xs"&gt;&lt;/i&gt;
+                &lt;h2&gt;Services&lt;/h2&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        
+        &lt;!-- Single Navigation Menu Button [ END ]  --&gt;
+        
+        &lt;div data-url_target="contact" class="contact-btn menu_button"&gt;
+            &lt;img alt="" src="assets/img/contact.jpg"&gt;
+            &lt;div class="mask"&gt;
+            &lt;/div&gt;
+            &lt;div class="heading"&gt;
+                &lt;i class="ion-ios-chatboxes-outline hidden-xs"&gt;&lt;/i&gt;
+                &lt;h2&gt;Contact&lt;/h2&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        
+        &lt;!-- Single Navigation Menu Button [ END ]  --&gt;
+        
+    &lt;/div&gt;
+&lt;/div&gt;</pre>
+                    </pre>
+
+					<!-- end of HomeScreen -->
+                    <!-- Close Button -->
+                    <h2 id="closeButton">Close Button</h2>
+                    <p>In <strong>index.html</strong> file. This code placed just under the end of <strong>Home Screen Section</strong>. This button shows on every section to close this section and back to the<strong>Homescreen Section </strong> </p>
+                    <pre class="prettyprint lang-basic">
+&lt;div class="close-btn"&gt;&lt;/div&gt;
+                    </pre>
+                    <!-- Close Button End-->
+					<!-- About US -->
+
+					<h2 id="aboutus">About Us</h2>
+					<p>In <strong>index.html</strong> file. HTML structure of the About Section</p>
+<pre class="prettyprint lang-basic">
+    <pre>&lt;div id="about_us" class="profile-page container-fluid page"&gt;
+    &lt;div class="row"&gt;
+        &lt;!--( a ) Profile Page Fixed Image Portion --&gt;
+
+        &lt;div class="image-container col-md-3 col-sm-12"&gt;
+            &lt;div class="mask"&gt;
+            &lt;/div&gt;
+            &lt;div class="main-heading"&gt;
+                &lt;h1&gt;About us&lt;/h1&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;!--( b ) Profile Page Content --&gt;
+
+        &lt;div class="content-container col-md-9 col-sm-12"&gt;
+
+            &lt;!--( A ) Story of Glory --&gt;
+
+            &lt;div class="clearfix"&gt;
+                &lt;h2 class="small-heading"&gt;LEARN ABOUT US&lt;/h2&gt;
+                &lt;div class="row"&gt;
+                    &lt;div class="col-lg-10 col-lg-offset-1 col-xs-10 col-xs-offset-1"&gt;
+                        &lt;div class="row"&gt;
+                            &lt;div class="col-md-6 col-sm-12"&gt;
+                                &lt;div class="video embed-responsive embed-responsive-4by3"&gt;
+                                    &lt;iframe class="embed-responsive-item" src="https://www.youtube.com/embed/qTSDL94_Y7M" allowfullscreen&gt;&lt;/iframe&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+
+                            &lt;div class="col-md-6 col-sm-12"&gt;
+                                &lt;div class="about-us-desc"&gt;
+                                    &lt;p&gt;
+                                        Quisque in tempor sapien, et cursus neque. Nunc pulvinar diam ac dapibus mollis. Etiam id iaculis lorem. Donec bibendum volutpat ante, eu consequat nisi suscipit at. Etiam interdum augue dolor
+                                    &lt;/p&gt;
+                                    &lt;p&gt;
+                                        Faliquam hendrerit a augue in suscipit. Pellen tesque id erat quis sapien a dignissim sollicitu din. Nulla B-4 mattis tortor sit amet lorem dolor  amer sollicitudin aliquam dignissim so much.
+                                        Ut cursus massa at urnaac assin got pressed hadrtits lis estie. Sed aliquamellus tae ultrices condimentum, the Bootstrap 4 leo massa mollis estiegittis miristum nu endrerit a augue in su cipit.Pe lla eo massa mlli joss mama.
+                                    &lt;/p&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;!--( B ) What Can I Do --&gt;
+
+            &lt;div class="clearfix"&gt;
+                &lt;h2 class="small-heading"&gt;OUR FUN FACTS&lt;/h2&gt;
+                &lt;div class="row"&gt;
+                    &lt;div class="col-md-10 col-md-offset-1 col-xs-10 col-xs-offset-1"&gt;
+                        &lt;div class="row"&gt;
+                            &lt;div class="services col-md-4  col-xs-12"&gt;
+                                &lt;div class="facts"&gt;
+                                    &lt;div class="facts-overlay"&gt;
+                                        &lt;i class="fa fa-code fa-3x"&gt;&lt;/i&gt;
+                                        &lt;p class="count"&gt;1956628&lt;/p&gt;
+                                        &lt;p class="text-capitalize"&gt;lines of code&lt;/p&gt;
+                                    &lt;/div&gt;
+
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+
+                            &lt;!-- Single Service Item [ END ]  --&gt;
+
+                            &lt;div class="services col-md-4  col-xs-12"&gt;
+                                &lt;div class="facts"&gt;
+                                    &lt;div class="facts-overlay"&gt;
+                                        &lt;i class="fa fa-coffee fa-3x"&gt;&lt;/i&gt;
+                                        &lt;p class="count"&gt;1473&lt;/p&gt;
+                                        &lt;p class="text-capitalize"&gt;cups of coffee&lt;/p&gt;
+                                    &lt;/div&gt;
+
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+
+                            &lt;!-- Single Service Item [ END ]  --&gt;
+
+                            &lt;div class="services col-md-4  col-xs-12"&gt;
+                                &lt;div class="facts"&gt;
+                                    &lt;div class="facts-overlay"&gt;
+                                        &lt;i class="fa fa-cubes fa-3x"&gt;&lt;/i&gt;
+                                        &lt;p class="count"&gt;500&lt;/p&gt;
+                                        &lt;p class="text-capitalize"&gt;projects delivered&lt;/p&gt;
+                                    &lt;/div&gt;
+
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+
+                            &lt;!-- Single Service Item [ END ]  --&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+
+
+            &lt;div class="clearfix full-height"&gt;
+                &lt;h2 class="small-heading"&gt;MEET THE TEAM&lt;/h2&gt;
+                &lt;div class="row"&gt;
+                    &lt;div class="col-md-10 col-md-offset-1 col-xs-10 col-xs-offset-1"&gt;
+                        &lt;div class="row"&gt;
+                            &lt;div class="col-md-4 col-xs-12"&gt;
+                                &lt;div class="team-member-box center-block text-center"&gt;
+                                    &lt;img src="assets/img/team_member1.jpg" class="img-responsive"&gt;
+                                    &lt;h4 class="text-capitalize"&gt;loras tyrel&lt;/h4&gt;
+                                    &lt;p class="text-uppercase"&gt;founder and ceo&lt;/p&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;div class="col-md-4 col-xs-12"&gt;
+                                &lt;div class="team-member-box center-block text-center"&gt;
+                                    &lt;img src="assets/img/team_member2.jpg" class="img-responsive"&gt;
+                                    &lt;h4 class="text-capitalize"&gt;john snow&lt;/h4&gt;
+                                    &lt;p class="text-uppercase"&gt;head of attorney&lt;/p&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;div class="col-md-4 col-xs-12"&gt;
+                                &lt;div class="team-member-box center-block text-center"&gt;
+                                    &lt;img src="assets/img/team_member3.jpg" class="img-responsive"&gt;
+                                    &lt;h4 class="text-capitalize"&gt;sansa stark&lt;/h4&gt;
+                                    &lt;p class="text-uppercase"&gt;creative coder&lt;/p&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;!--( D ) Footer --&gt;
+
+            &lt;div class="footer clearfix"&gt;
+                &lt;div class="row"&gt;
+                    &lt;div class="col-md-10 col-md-offset-1 col-xs-10 col-xs-offset-1"&gt;
+                        &lt;div class="row"&gt;
+                            &lt;div class="col-md-6 col-sm-12 col-xs-12"&gt;
+                                &lt;p class="copyright"&gt;Copyright &amp;copy; 2015
+                                    &lt;a href="#"&gt;Your Company&lt;/a&gt;
+                                &lt;/p&gt;
+                            &lt;/div&gt;
+
+                            &lt;div class="col-md-6 col-sm-12 col-xs-12"&gt;
+                                &lt;p class="author"&gt;
+                                    Theme by &lt;a href="https://themewagon.com/" target="_blank"&gt;ThemeWagon&lt;/a&gt;
+                                &lt;/p&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</pre>    
+</pre>
+
+					<!-- end of Blog Section -->
+
+
+					<!-- Sidebar section -->
+
+					<h2 id="Portfolio">Portfolio Section</h2>
+					<p>In <strong>index.html</strong> file. HTML structure of the Portfolio Section</p>
+					<pre class="prettyprint lang-basic">
+&lt;div id="portfolio" class="portfolio-page container-fluid page" style="display: block;"&gt;
+
+        &lt;div class="row"&gt;
+
+            &lt;!--( a ) Portfolio Page Fixed Image Portion --&gt;
+            
+            &lt;div class="image-container col-md-3 col-sm-12"&gt;
+                &lt;div class="mask"&gt;
+                &lt;/div&gt;
+                &lt;div class="main-heading"&gt;
+                    &lt;h1&gt;Portfolio&lt;/h1&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;!--( b ) Portfolio Page Content --&gt;
+            
+            &lt;div class="content-container col-md-9 col-sm-12"&gt;
+                
+                &lt;!--( A ) Portfolio --&gt;
+                
+                &lt;div class="portfolio clearfix full-height"&gt;
+                    &lt;h2 class="small-heading"&gt;PORTFOLIO&lt;/h2&gt;
+
+                    &lt;div class="row"&gt;
+                        &lt;div class="col-md-10 col-md-offset-1 col-xs-10 col-xs-offset-1"&gt;
+                            &lt;div class="project-container"&gt;
+                                &lt;div class="row"&gt;
+                                    &lt;div class="project-controls"&gt;
+                                        &lt;button class="filter active" data-filter="all"&gt;All&lt;/button&gt;
+                                        &lt;button class="filter" data-filter=".graphic-design"&gt;Graphic Design&lt;/button&gt;
+                                        &lt;button class="filter" data-filter=".web-design"&gt;Web Designs&lt;/button&gt;
+                                        &lt;button class="filter" data-filter=".app-development"&gt;App Development&lt;/button&gt;
+                                    &lt;/div&gt;
+                                    
+                                    &lt;!-- Portfolio Control Buttons [ END ] --&gt;
+                                    
+                                    &lt;div id="projects" class="projet-items clearfix"&gt;
+                                        
+                                        &lt;!-- Portfolio Image --&gt;
+                                        
+                                        &lt;div class="col-lg-4 col-md-6 col-sm-4 col-xs-6 mix graphic-design" style="display: inline-block;"&gt;
+                                            &lt;div class="project"&gt;
+                                                &lt;img src="assets/img/portfolio/thumbs/image_1.jpg" alt=""&gt;
+                                                &lt;div class="ovrly"&gt;
+                                                &lt;/div&gt;
+                                                &lt;div class="buttons"&gt;
+                                                    &lt;a href="#" class="fa fa-link"&gt;&lt;/a&gt;
+                                                    &lt;a href="#portfolio-1" class="fa fa-search show-popup"&gt;&lt;/a&gt;
+                                                &lt;/div&gt;
+                                            &lt;/div&gt;
+                                        &lt;/div&gt;
+                                        
+                                        &lt;!-- Popup Content --&gt;
+                                        
+                                        &lt;div class="pop-up-box" id="portfolio-1"&gt;
+                                            &lt;img alt="" src="assets/img/portfolio/image_1.jpg" class=" hidden-xs"&gt;
+                                            &lt;div class="popup-content"&gt;
+                                                &lt;h3&gt;PROJECT NAME&lt;/h3&gt;
+                                                &lt;p&gt;
+                                                    Quisque in tempor sapien, et cursus neque. Nunc pulvinar diam ac dapibus mollis. Etiam id iaculis lorem. Donec bibendum volutpat ante, eu consequat nisi suscipit at. Etiam interdum augue dolor, id auctor felis volutpat sed. Phasellus id ex ultrices, tempus leo eget, volutpat diam. In sit amet magna faucibus, molestie nisi in, hendrerit libero. Morbi auctor velit sagittis, elementum lorem eget, imperdiet nisl.
+                                                &lt;/p&gt;
+                                                &lt;a href="#"&gt;PREVIEW&lt;/a&gt;
+                                            &lt;/div&gt;
+                                        &lt;/div&gt;
+                                        
+                                        &lt;!-- Single Portfolio Item [ END ] --&gt;
+                                        
+                                        
+                                        
+                                        &lt;!-- Portfolio Image --&gt;
+                                        
+                                        &lt;div class="col-lg-4 col-md-6 col-sm-4 col-xs-6 mix web-design" style="display: inline-block;"&gt;
+                                            &lt;div class="project"&gt;
+                                                &lt;img src="assets/img/portfolio/thumbs/image_2.jpg" alt=""&gt;
+                                                &lt;div class="ovrly"&gt;
+                                                &lt;/div&gt;
+                                                &lt;div class="buttons"&gt;
+                                                    &lt;a href="#" class="fa fa-link"&gt;&lt;/a&gt;
+                                                    &lt;a href="#portfolio-2" class="fa fa-search show-popup"&gt;&lt;/a&gt;
+                                                &lt;/div&gt;
+                                            &lt;/div&gt;
+                                        &lt;/div&gt;
+                                        
+                                        &lt;!-- Popup Content --&gt;
+                                        
+                                        &lt;div class="pop-up-box" id="portfolio-2"&gt;
+                                            &lt;img alt="" src="assets/img/portfolio/image_2.jpg" class=" hidden-xs"&gt;
+                                            &lt;div class="popup-content"&gt;
+                                                &lt;h3&gt;PROJECT NAME&lt;/h3&gt;
+                                                &lt;p&gt;
+                                                    Quisque in tempor sapien, et cursus neque. Nunc pulvinar diam ac dapibus mollis. Etiam id iaculis lorem. Donec bibendum volutpat ante, eu consequat nisi suscipit at. Etiam interdum augue dolor, id auctor felis volutpat sed. Phasellus id ex ultrices, tempus leo eget, volutpat diam. In sit amet magna faucibus, molestie nisi in, hendrerit libero. Morbi auctor velit sagittis, elementum lorem eget, imperdiet nisl.
+                                                &lt;/p&gt;
+                                                &lt;a href="#"&gt;PREVIEW&lt;/a&gt;
+                                            &lt;/div&gt;
+                                        &lt;/div&gt;
+                                        
+                                        &lt;!-- Single Portfolio Item [ END ] --&gt;
+                                        
+                                        
+                                        
+                                        &lt;!-- Portfolio Image --&gt;
+                                        
+                                        &lt;div class="col-lg-4 col-md-6 col-sm-4 col-xs-6 mix app-development" style="display: inline-block;"&gt;
+                                            &lt;div class="project"&gt;
+                                                &lt;img src="assets/img/portfolio/thumbs/image_3.jpg" alt=""&gt;
+                                                &lt;div class="ovrly"&gt;
+                                                &lt;/div&gt;
+                                                &lt;div class="buttons"&gt;
+                                                    &lt;a href="#" class="fa fa-link"&gt;&lt;/a&gt;
+                                                    &lt;a href="#portfolio-3" class="fa fa-search show-popup"&gt;&lt;/a&gt;
+                                                &lt;/div&gt;
+                                            &lt;/div&gt;
+                                        &lt;/div&gt;
+                                        
+                                        &lt;!-- Popup Content --&gt;
+                                        
+                                        &lt;div class="pop-up-box" id="portfolio-3"&gt;
+                                            &lt;img alt="" src="assets/img/portfolio/image_3.jpg" class=" hidden-xs"&gt;
+                                            &lt;div class="popup-content"&gt;
+                                                &lt;h3&gt;PROJECT NAME&lt;/h3&gt;
+                                                &lt;p&gt;
+                                                    Quisque in tempor sapien, et cursus neque. Nunc pulvinar diam ac dapibus mollis. Etiam id iaculis lorem. Donec bibendum volutpat ante, eu consequat nisi suscipit at. Etiam interdum augue dolor, id auctor felis volutpat sed. Phasellus id ex ultrices, tempus leo eget, volutpat diam. In sit amet magna faucibus, molestie nisi in, hendrerit libero. Morbi auctor velit sagittis, elementum lorem eget, imperdiet nisl.
+                                                &lt;/p&gt;
+                                                &lt;a href="#"&gt;PREVIEW&lt;/a&gt;
+                                            &lt;/div&gt;
+                                        &lt;/div&gt;
+                                        
+                                        &lt;!-- Single Portfolio Item [ END ] --&gt;
+                                        
+                                        
+                                        
+                                        &lt;!-- Portfolio Image --&gt;
+                                        
+                                        &lt;div class="col-lg-4 col-md-6 col-sm-4 col-xs-6 mix graphic-design" style="display: inline-block;"&gt;
+                                            &lt;div class="project"&gt;
+                                                &lt;img src="assets/img/portfolio/thumbs/image_4.jpg" alt=""&gt;
+                                                &lt;div class="ovrly"&gt;
+                                                &lt;/div&gt;
+                                                &lt;div class="buttons"&gt;
+                                                    &lt;a href="#" class="fa fa-link"&gt;&lt;/a&gt;
+                                                    &lt;a href="#portfolio-4" class="fa fa-search show-popup"&gt;&lt;/a&gt;
+                                                &lt;/div&gt;
+                                            &lt;/div&gt;
+                                        &lt;/div&gt;
+                                        
+                                        &lt;!-- Popup Content --&gt;
+                                        
+                                        &lt;div class="pop-up-box" id="portfolio-4"&gt;
+                                            &lt;img alt="" src="assets/img/portfolio/image_4.jpg" class=" hidden-xs"&gt;
+                                            &lt;div class="popup-content"&gt;
+                                                &lt;h3&gt;PROJECT NAME&lt;/h3&gt;
+                                                &lt;p&gt;
+                                                    Quisque in tempor sapien, et cursus neque. Nunc pulvinar diam ac dapibus mollis. Etiam id iaculis lorem. Donec bibendum volutpat ante, eu consequat nisi suscipit at. Etiam interdum augue dolor, id auctor felis volutpat sed. Phasellus id ex ultrices, tempus leo eget, volutpat diam. In sit amet magna faucibus, molestie nisi in, hendrerit libero. Morbi auctor velit sagittis, elementum lorem eget, imperdiet nisl.
+                                                &lt;/p&gt;
+                                                &lt;a href="#"&gt;PREVIEW&lt;/a&gt;
+                                            &lt;/div&gt;
+                                        &lt;/div&gt;
+                                        
+                                        &lt;!-- Single Portfolio Item [ END ] --&gt;
+                                        
+                                        
+                                        
+                                        &lt;!-- Portfolio Image --&gt;
+                                        
+                                        &lt;div class="col-lg-4 col-md-6 col-sm-4 col-xs-6 mix web-design" style="display: inline-block;"&gt;
+                                            &lt;div class="project"&gt;
+                                                &lt;img src="assets/img/portfolio/thumbs/image_5.jpg" alt=""&gt;
+                                                &lt;div class="ovrly"&gt;
+                                                &lt;/div&gt;
+                                                &lt;div class="buttons"&gt;
+                                                    &lt;a href="#" class="fa fa-link"&gt;&lt;/a&gt;
+                                                    &lt;a href="#portfolio-5" class="fa fa-search show-popup"&gt;&lt;/a&gt;
+                                                &lt;/div&gt;
+                                            &lt;/div&gt;
+                                        &lt;/div&gt;
+                                        
+                                        &lt;!-- Popup Content --&gt;
+                                        
+                                        &lt;div class="pop-up-box" id="portfolio-5"&gt;
+                                            &lt;img alt="" src="assets/img/portfolio/image_5.jpg" class=" hidden-xs"&gt;
+                                            &lt;div class="popup-content"&gt;
+                                                &lt;h3&gt;PROJECT NAME&lt;/h3&gt;
+                                                &lt;p&gt;
+                                                    Quisque in tempor sapien, et cursus neque. Nunc pulvinar diam ac dapibus mollis. Etiam id iaculis lorem. Donec bibendum volutpat ante, eu consequat nisi suscipit at. Etiam interdum augue dolor, id auctor felis volutpat sed. Phasellus id ex ultrices, tempus leo eget, volutpat diam. In sit amet magna faucibus, molestie nisi in, hendrerit libero. Morbi auctor velit sagittis, elementum lorem eget, imperdiet nisl.
+                                                &lt;/p&gt;
+                                                &lt;a href="#"&gt;PREVIEW&lt;/a&gt;
+                                            &lt;/div&gt;
+                                        &lt;/div&gt;
+                                        
+                                        &lt;!-- Single Portfolio Item [ END ] --&gt;
+                                        
+                                        
+                                        
+                                        &lt;!-- Portfolio Image --&gt;
+                                        
+                                        &lt;div class="col-lg-4 col-md-6 col-sm-4 col-xs-6 mix app-development" style="display: inline-block;"&gt;
+                                            &lt;div class="project"&gt;
+                                                &lt;img src="assets/img/portfolio/thumbs/image_6.jpg" alt=""&gt;
+                                                &lt;div class="ovrly"&gt;
+                                                &lt;/div&gt;
+                                                &lt;div class="buttons"&gt;
+                                                    &lt;a href="#" class="fa fa-link"&gt;&lt;/a&gt;
+                                                    &lt;a href="#portfolio-6" class="fa fa-search show-popup"&gt;&lt;/a&gt;
+                                                &lt;/div&gt;
+                                            &lt;/div&gt;
+                                        &lt;/div&gt;
+                                        
+                                        &lt;!-- Popup Content --&gt;
+                                        
+                                        &lt;div class="pop-up-box" id="portfolio-6"&gt;
+                                            &lt;img alt="" src="assets/img/portfolio/image_6.jpg" class=" hidden-xs"&gt;
+                                            &lt;div class="popup-content"&gt;
+                                                &lt;h3&gt;PROJECT NAME&lt;/h3&gt;
+                                                &lt;p&gt;
+                                                    Quisque in tempor sapien, et cursus neque. Nunc pulvinar diam ac dapibus mollis. Etiam id iaculis lorem. Donec bibendum volutpat ante, eu consequat nisi suscipit at. Etiam interdum augue dolor, id auctor felis volutpat sed. Phasellus id ex ultrices, tempus leo eget, volutpat diam. In sit amet magna faucibus, molestie nisi in, hendrerit libero. Morbi auctor velit sagittis, elementum lorem eget, imperdiet nisl.
+                                                &lt;/p&gt;
+                                                &lt;a href="#"&gt;PREVIEW&lt;/a&gt;
+                                            &lt;/div&gt;
+                                        &lt;/div&gt;
+                                        
+                                        &lt;!-- Single Portfolio Item [ END ] --&gt;
+                                        
+                                        
+                                        
+                                        &lt;!-- Portfolio Image --&gt;
+                                        
+                                        &lt;div class="col-lg-4 col-md-6 col-sm-4 col-xs-6 mix web-design" style="display: inline-block;"&gt;
+                                            &lt;div class="project"&gt;
+                                                &lt;img src="assets/img/portfolio/thumbs/image_7.jpg" alt=""&gt;
+                                                &lt;div class="ovrly"&gt;
+                                                &lt;/div&gt;
+                                                &lt;div class="buttons"&gt;
+                                                    &lt;a href="#" class="fa fa-link"&gt;&lt;/a&gt;
+                                                    &lt;a href="#portfolio-7" class="fa fa-search show-popup"&gt;&lt;/a&gt;
+                                                &lt;/div&gt;
+                                            &lt;/div&gt;
+                                        &lt;/div&gt;
+                                        
+                                        &lt;!-- Popup Content --&gt;
+                                        
+                                        &lt;div class="pop-up-box" id="portfolio-7"&gt;
+                                            &lt;img alt="" src="assets/img/portfolio/image_7.jpg" class=" hidden-xs"&gt;
+                                            &lt;div class="popup-content"&gt;
+                                                &lt;h3&gt;PROJECT NAME&lt;/h3&gt;
+                                                &lt;p&gt;
+                                                    Quisque in tempor sapien, et cursus neque. Nunc pulvinar diam ac dapibus mollis. Etiam id iaculis lorem. Donec bibendum volutpat ante, eu consequat nisi suscipit at. Etiam interdum augue dolor, id auctor felis volutpat sed. Phasellus id ex ultrices, tempus leo eget, volutpat diam. In sit amet magna faucibus, molestie nisi in, hendrerit libero. Morbi auctor velit sagittis, elementum lorem eget, imperdiet nisl.
+                                                &lt;/p&gt;
+                                                &lt;a href="#"&gt;PREVIEW&lt;/a&gt;
+                                            &lt;/div&gt;
+                                        &lt;/div&gt;
+                                        
+                                        &lt;!-- Single Portfolio Item [ END ] --&gt;
+                                        
+                                        
+                                        
+                                        &lt;!-- Portfolio Image --&gt;
+                                        
+                                        &lt;div class="col-lg-4 col-md-6 col-sm-4 col-xs-6 mix graphic-design" style="display: inline-block;"&gt;
+                                            &lt;div class="project"&gt;
+                                                &lt;img src="assets/img/portfolio/thumbs/image_8.jpg" alt=""&gt;
+                                                &lt;div class="ovrly"&gt;
+                                                &lt;/div&gt;
+                                                &lt;div class="buttons"&gt;
+                                                    &lt;a href="#" class="fa fa-link"&gt;&lt;/a&gt;
+                                                    &lt;a href="#portfolio-8" class="fa fa-search show-popup"&gt;&lt;/a&gt;
+                                                &lt;/div&gt;
+                                            &lt;/div&gt;
+                                        &lt;/div&gt;
+                                        
+                                        &lt;!-- Popup Content --&gt;
+                                        
+                                        &lt;div class="pop-up-box" id="portfolio-8"&gt;
+                                            &lt;img alt="" src="assets/img/portfolio/image_8.jpg" class=" hidden-xs"&gt;
+                                            &lt;div class="popup-content"&gt;
+                                                &lt;h3&gt;PROJECT NAME&lt;/h3&gt;
+                                                &lt;p&gt;
+                                                    Quisque in tempor sapien, et cursus neque. Nunc pulvinar diam ac dapibus mollis. Etiam id iaculis lorem. Donec bibendum volutpat ante, eu consequat nisi suscipit at. Etiam interdum augue dolor, id auctor felis volutpat sed. Phasellus id ex ultrices, tempus leo eget, volutpat diam. In sit amet magna faucibus, molestie nisi in, hendrerit libero. Morbi auctor velit sagittis, elementum lorem eget, imperdiet nisl.
+                                                &lt;/p&gt;
+                                                &lt;a href="#"&gt;PREVIEW&lt;/a&gt;
+                                            &lt;/div&gt;
+                                        &lt;/div&gt;
+                                        
+                                        &lt;!-- Single Portfolio Item [ END ] --&gt;
+                                        
+                                        
+                                        
+                                        &lt;!-- Portfolio Image --&gt;
+                                        
+                                        &lt;div class="col-lg-4 col-md-6 col-sm-4 col-xs-6 mix app-development" style="display: inline-block;"&gt;
+                                            &lt;div class="project"&gt;
+                                                &lt;img src="assets/img/portfolio/thumbs/image_9.jpg" alt=""&gt;
+                                                &lt;div class="ovrly"&gt;
+                                                &lt;/div&gt;
+                                                &lt;div class="buttons"&gt;
+                                                    &lt;a href="#" class="fa fa-link"&gt;&lt;/a&gt;
+                                                    &lt;a href="#portfolio-9" class="fa fa-search show-popup"&gt;&lt;/a&gt;
+                                                &lt;/div&gt;
+                                            &lt;/div&gt;
+                                        &lt;/div&gt;
+                                        
+                                        &lt;!-- Popup Content --&gt;
+                                        
+                                        &lt;div class="pop-up-box" id="portfolio-9"&gt;
+                                            &lt;img alt="" src="assets/img/portfolio/image_9.jpg" class=" hidden-xs"&gt;
+                                            &lt;div class="popup-content"&gt;
+                                                &lt;h3&gt;PROJECT NAME&lt;/h3&gt;
+                                                &lt;p&gt;
+                                                    Quisque in tempor sapien, et cursus neque. Nunc pulvinar diam ac dapibus mollis. Etiam id iaculis lorem. Donec bibendum volutpat ante, eu consequat nisi suscipit at. Etiam interdum augue dolor, id auctor felis volutpat sed. Phasellus id ex ultrices, tempus leo eget, volutpat diam. In sit amet magna faucibus, molestie nisi in, hendrerit libero. Morbi auctor velit sagittis, elementum lorem eget, imperdiet nisl.
+                                                &lt;/p&gt;
+                                                &lt;a href="#"&gt;PREVIEW&lt;/a&gt;
+                                            &lt;/div&gt;
+                                        &lt;/div&gt;
+                                        
+                                        &lt;!-- Single Portfolio Item [ END ] --&gt;
+                                        
+                                        
+                                        
+                                        &lt;!-- Portfolio Image --&gt;
+                                        
+                                        &lt;div class="col-lg-4 col-md-6 col-sm-4 col-xs-6 mix web-design" style="display: inline-block;"&gt;
+                                            &lt;div class="project"&gt;
+                                                &lt;img src="assets/img/portfolio/thumbs/image_10.jpg" alt=""&gt;
+                                                &lt;div class="ovrly"&gt;
+                                                &lt;/div&gt;
+                                                &lt;div class="buttons"&gt;
+                                                    &lt;a href="#" class="fa fa-link"&gt;&lt;/a&gt;
+                                                    &lt;a href="#portfolio-10" class="fa fa-search show-popup"&gt;&lt;/a&gt;
+                                                &lt;/div&gt;
+                                            &lt;/div&gt;
+                                        &lt;/div&gt;
+                                        
+                                        &lt;!-- Popup Content --&gt;
+                                        
+                                        &lt;div class="pop-up-box" id="portfolio-10"&gt;
+                                            &lt;img alt="" src="assets/img/portfolio/image_10.jpg" class=" hidden-xs"&gt;
+                                            &lt;div class="popup-content"&gt;
+                                                &lt;h3&gt;PROJECT NAME&lt;/h3&gt;
+                                                &lt;p&gt;
+                                                    Quisque in tempor sapien, et cursus neque. Nunc pulvinar diam ac dapibus mollis. Etiam id iaculis lorem. Donec bibendum volutpat ante, eu consequat nisi suscipit at. Etiam interdum augue dolor, id auctor felis volutpat sed. Phasellus id ex ultrices, tempus leo eget, volutpat diam. In sit amet magna faucibus, molestie nisi in, hendrerit libero. Morbi auctor velit sagittis, elementum lorem eget, imperdiet nisl.
+                                                &lt;/p&gt;
+                                                &lt;a href="#"&gt;PREVIEW&lt;/a&gt;
+                                            &lt;/div&gt;
+                                        &lt;/div&gt;
+                                        
+                                        &lt;!-- Single Portfolio Item [ END ] --&gt;
+                                        
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                            
+                &lt;/div&gt;
+                
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+     
+                    </pre>
+
+					<!-- end of Portfolio section -->
+
+					<h2 id="services">Services Section</h2>
+					<p>In <strong>index.html</strong>  HTML structure of Services section.</p>
+					<pre class="prettyprint lang-basic">
+&lt;div id="service" class="service-page container-fluid page" style="display: block;"&gt;
+        &lt;div class="row"&gt;
+            &lt;!--( a ) Portfolio Page Fixed Image Portion --&gt;
+            
+            &lt;div class="image-container col-md-3 col-sm-12"&gt;
+                &lt;div class="mask"&gt;
+                &lt;/div&gt;
+                &lt;div class="main-heading"&gt;
+                    &lt;h1&gt;Service&lt;/h1&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            
+            &lt;!--( b ) Portfolio Page Content --&gt;
+            
+            &lt;div class="content-container col-md-9 col-sm-12"&gt;
+                
+                &lt;!--( A ) Portfolio --&gt;
+                
+                &lt;div class="clearfix"&gt;
+                    &lt;h2 class="small-heading"&gt;WHAT WE DO BEST&lt;/h2&gt;
+                    &lt;div class="row"&gt;
+                        &lt;div class="col-md-10 col-md-offset-1 col-xs-10 col-xs-offset-1"&gt;
+                            &lt;div class="row"&gt;
+
+                                &lt;div class="col-md-4 col-sm-6 col-xs-12"&gt;
+                                    &lt;div class="faq-desc-item"&gt;
+                                        &lt;div class="flip-container text-center" ontouchstart="this.classList.toggle('hover');"&gt;
+                                            &lt;div class="flipper"&gt;
+                                                &lt;div class="front"&gt;
+                                                    &lt;i class="fa fa-mobile"&gt;&lt;/i&gt;
+                                                    &lt;h5&gt;Applications&lt;/h5&gt;
+                                                &lt;/div&gt;
+                                                &lt;div class="back"&gt;
+                                                    &lt;h5&gt;Applications&lt;/h5&gt;
+                                                    &lt;p&gt;Mozilla Web Developer, MooTools &amp; jQuery Consultant, MooTools Core Developer, Javascript Fanatic, CSS Tinkerer, PHP Hacker, and web lover.&lt;/p&gt;
+                                                &lt;/div&gt;
+                                            &lt;/div&gt;
+                                        &lt;/div&gt;
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+
+                                &lt;div class="col-md-4 col-sm-6 col-xs-12"&gt;
+                                    &lt;div class="faq-desc-item"&gt;
+                                        &lt;div class="flip-container text-center" ontouchstart="this.classList.toggle('hover');"&gt;
+                                            &lt;div class="flipper"&gt;
+                                                &lt;div class="front"&gt;
+                                                    &lt;i class="fa fa-lightbulb-o"&gt;&lt;/i&gt;
+                                                    &lt;h5&gt;Productions&lt;/h5&gt;
+                                                &lt;/div&gt;
+                                                &lt;div class="back"&gt;
+                                                    &lt;!-- &lt;i class="fa fa-lightbulb-o fa-fw"&gt;&lt;/i&gt; --&gt;
+                                                    &lt;h5&gt;Productions&lt;/h5&gt;
+                                                    &lt;p&gt;Mozilla Web Developer, MooTools &amp; jQuery Consultant, MooTools Core Developer, Javascript Fanatic, CSS Tinkerer, PHP Hacker, and web lover.&lt;/p&gt;
+                                                &lt;/div&gt;
+                                            &lt;/div&gt;
+                                        &lt;/div&gt;
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+
+                                &lt;div class="col-md-4 col-sm-6 col-xs-12"&gt;
+                                    &lt;div class="faq-desc-item"&gt;
+                                        &lt;div class="flip-container text-center" ontouchstart="this.classList.toggle('hover');"&gt;
+                                            &lt;div class="flipper"&gt;
+                                                &lt;div class="front"&gt;
+                                                    &lt;i class="fa fa-paint-brush"&gt;&lt;/i&gt;
+                                                    &lt;h5&gt;Web Designing&lt;/h5&gt;
+                                                &lt;/div&gt;
+                                                &lt;div class="back"&gt;
+                                                    &lt;!-- &lt;i class="fa fa-paint-brush fa-fw"&gt;&lt;/i&gt; --&gt;
+                                                    &lt;h5&gt;Web Designing&lt;/h5&gt;
+                                                    &lt;p&gt;Mozilla Web Developer, MooTools &amp; jQuery Consultant, MooTools Core Developer, Javascript Fanatic, CSS Tinkerer, PHP Hacker, and web lover.&lt;/p&gt;
+                                                &lt;/div&gt;
+                                            &lt;/div&gt;
+                                        &lt;/div&gt;
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+
+
+
+                &lt;div class="clearfix"&gt;
+                    &lt;h2 class="small-heading"&gt;CHOSSE YOUR PLAN&lt;/h2&gt;
+                    &lt;div class="row"&gt;
+                        &lt;div class="col-md-10 col-md-offset-1 col-xs-10 col-xs-offset-1"&gt;
+                            &lt;div class="row"&gt;
+                                &lt;div class="col-md-6 col-sm-6 col-xs-12 price-catagory"&gt;
+                                    &lt;div class="price-box"&gt;
+                                        &lt;p class="pricing-catagory-name"&gt;Basic&lt;/p&gt;
+                                        &lt;p&gt;&lt;span class="price"&gt;$19&lt;/span&gt;/Month&lt;/p&gt;
+                                        &lt;ul&gt;
+                                            &lt;li&gt;15 Projects&lt;/li&gt;
+                                            &lt;li&gt;30 GB Storage&lt;/li&gt;
+                                            &lt;li class="unavailabe"&gt;Unlimited Data Transfer&lt;/li&gt;
+                                            &lt;li class="unavailabe"&gt;50 GB Bandwith&lt;/li&gt;
+                                            &lt;li class="unavailabe"&gt;Enhanced Security&lt;/li&gt;
+                                        &lt;/ul&gt;
+
+                                        &lt;a href="#" class="btn"&gt;learn more&lt;/a&gt;
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+                                &lt;div class="col-md-6 col-sm-6 col-xs-12 price-catagory"&gt;
+                                    &lt;div class="price-box"&gt;
+                                        &lt;p class="pricing-catagory-name"&gt;Business&lt;/p&gt;
+                                        &lt;p&gt;&lt;span class="price"&gt;$29&lt;/span&gt;/Month&lt;/p&gt;
+                                        &lt;ul&gt;
+                                            &lt;li&gt;15 Projects&lt;/li&gt;
+                                            &lt;li&gt;30 GB Storage&lt;/li&gt;
+                                            &lt;li&gt;Unlimited Data Transfer&lt;/li&gt;
+                                            &lt;li class="unavailabe"&gt;50 GB Bandwith&lt;/li&gt;
+                                            &lt;li class="unavailabe"&gt;Enhanced Security&lt;/li&gt;
+                                        &lt;/ul&gt;
+
+                                        &lt;a href="#" class="btn"&gt;learn more&lt;/a&gt;
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+                                &lt;div class="col-md-6 col-sm-6 col-xs-12 price-catagory"&gt;
+                                    &lt;div class="price-box"&gt;
+                                        &lt;p class="pricing-catagory-name"&gt;Premium&lt;/p&gt;
+                                        &lt;p&gt;&lt;span class="price"&gt;$39&lt;/span&gt;/Month&lt;/p&gt;
+                                        &lt;ul&gt;
+                                            &lt;li&gt;15 Projects&lt;/li&gt;
+                                            &lt;li&gt;30 GB Storage&lt;/li&gt;
+                                            &lt;li&gt;Unlimited Data Transfer&lt;/li&gt;
+                                            &lt;li&gt;50 GB Bandwith&lt;/li&gt;
+                                            &lt;li class="unavailabe"&gt;Enhanced Security&lt;/li&gt;
+                                        &lt;/ul&gt;
+
+                                        &lt;a href="#" class="btn"&gt;learn more&lt;/a&gt;
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+                                &lt;div class="col-md-6 col-sm-6 col-xs-12 price-catagory"&gt;
+                                    &lt;div class="price-box"&gt;
+                                        &lt;p class="pricing-catagory-name"&gt;Ultimate&lt;/p&gt;
+                                        &lt;p&gt;&lt;span class="price"&gt;$49&lt;/span&gt;/Month&lt;/p&gt;
+                                        &lt;ul&gt;
+                                            &lt;li&gt;15 Projects&lt;/li&gt;
+                                            &lt;li&gt;30 GB Storage&lt;/li&gt;
+                                            &lt;li&gt;Unlimited Data Transfer&lt;/li&gt;
+                                            &lt;li&gt;50 GB Bandwith&lt;/li&gt;
+                                            &lt;li&gt;Enhanced Security&lt;/li&gt;
+                                        &lt;/ul&gt;
+
+                                        &lt;a href="#" class="btn"&gt;learn more&lt;/a&gt;
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;!-- end: pricing section --&gt;
+
+
+                &lt;div class="clearfix full-height"&gt;
+                    &lt;h2 class="small-heading"&gt;OUR VALUABLE CLIENTS&lt;/h2&gt;
+                    &lt;div class="row"&gt;
+                        &lt;div class="col-md-10 col-md-offset-1 col-xs-10 col-xs-offset-1"&gt;
+                            &lt;div id="sponsor-list" class="owl-carousel owl-theme" style="opacity: 1; display: block;"&gt;
+
+                                &lt;div class="owl-wrapper-outer"&gt;&lt;div class="owl-wrapper" style="width: 4740px; left: 0px; display: block; transition: all 1000ms ease; transform: translate3d(0px, 0px, 0px);"&gt;&lt;div class="owl-item" style="width: 395px;"&gt;&lt;div class="item"&gt;
+                                    &lt;img src="assets/img/sponsor1.png" alt="sponsor1" class="center-block" style="width: 165px; height: 127px;"&gt;
+                                &lt;/div&gt;&lt;/div&gt;&lt;div class="owl-item" style="width: 395px;"&gt;&lt;div class="item"&gt;
+                                    &lt;img src="assets/img/sponsor2.png" alt="sponsor2" class="center-block" style="width: 165px; height: 127px;"&gt;
+                                &lt;/div&gt;&lt;/div&gt;&lt;div class="owl-item" style="width: 395px;"&gt;&lt;div class="item"&gt;
+                                    &lt;img src="assets/img/sponsor3.png" alt="sponsor3" class="center-block" style="width: 165px; height: 127px;"&gt;
+                                &lt;/div&gt;&lt;/div&gt;&lt;div class="owl-item" style="width: 395px;"&gt;&lt;div class="item"&gt;
+                                    &lt;img src="assets/img/sponsor4.png" alt="sponsor4" class="center-block" style="width: 165px; height: 127px;"&gt;
+                                &lt;/div&gt;&lt;/div&gt;&lt;div class="owl-item" style="width: 395px;"&gt;&lt;div class="item"&gt;
+                                    &lt;img src="assets/img/sponsor5.png" alt="sponsor5" class="center-block" style="width: 165px; height: 127px;"&gt;
+                                &lt;/div&gt;&lt;/div&gt;&lt;div class="owl-item" style="width: 395px;"&gt;&lt;div class="item"&gt;
+                                    &lt;img src="assets/img/sponsor6.png" alt="sponsor6" class="center-block" style="width: 165px; height: 127px;"&gt;
+                                &lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;   
+
+                            &lt;div class="owl-controls clickable"&gt;&lt;div class="owl-pagination"&gt;&lt;div class="owl-page active"&gt;&lt;span class=""&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class="owl-page"&gt;&lt;span class=""&gt;&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt; &lt;!--  / #sponsor-list /.owl-carousel --&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;!-- end: valuable clients --&gt;
+
+            &lt;/div&gt;
+        &lt;/div&gt;  
+    &lt;/div&gt;
+                    </pre>
+
+                    <!-- end of Services Section -->
+
+
+					<!-- Contact section -->
+
+					<h2 id="contact">Contact Section</h2>
+					
+                    <p>
+                        To change the Map location please open assets/js/script.js and change the following line: <span>
+                                <pre class="prettyprint lang-basic">center: new google.maps.LatLng(24.909439, 91.833800),</pre>
+                            </span> with your location latitute and langitude.
+                    </p>
+
+                    <p>In <strong>index.html</strong> file. HTML structure of the Contact Section</p>
+
+					<pre class="prettyprint lang-basic">
+&lt;div id="contact" class="contact-page container-fluid page" style="display: block;"&gt;
+    &lt;div class="row"&gt;
+        &lt;!--( a ) Contact Page Fixed Image Portion --&gt;
+        
+        &lt;div class="image-container col-md-3 col-sm-12"&gt;
+            &lt;div class="mask"&gt;
+            &lt;/div&gt;
+            &lt;div class="main-heading"&gt;
+                &lt;h1&gt;contact&lt;/h1&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        
+        &lt;!--( b ) Contact Page Content --&gt;
+        
+        &lt;div class="content-container col-md-9 col-sm-12"&gt;
+            
+            &lt;!--( A ) Contact Form --&gt;
+            
+            &lt;div class="clearfix full-height"&gt;
+                &lt;h2 class="small-heading"&gt;COME IN TOUCH&lt;/h2&gt;
+                &lt;div class="row"&gt;
+                    &lt;div class="col-md-10 col-md-offset-1 col-xs-10 col-xs-offset-1"&gt;
+                        &lt;div class="contact-info"&gt;
+                            &lt;div class="row"&gt;
+                                &lt;div class="col-md-6"&gt;
+                                    &lt;div class="data"&gt;
+                                        &lt;i class="fa fa-map-marker"&gt;&lt;/i&gt;
+                                        &lt;span&gt;
+                                            House -3, Road-2, Block - F, &lt;br&gt;
+                                             Akhalia Ghat R/A, Sylhet. &lt;br&gt;
+                                        &lt;/span&gt;
+                                    &lt;/div&gt;
+
+                                    &lt;div class="data"&gt;
+                                        &lt;i class="fa fa-envelope"&gt;&lt;/i&gt;
+                                        &lt;span&gt;
+                                            hello@boots4.com
+                                        &lt;/span&gt;
+                                    &lt;/div&gt;
+
+                                    &lt;div class="data"&gt;
+                                        &lt;i class="fa fa-phone"&gt;&lt;/i&gt;
+                                        &lt;span&gt;
+                                            +880 12345 - 67890
+                                        &lt;/span&gt;
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+                                &lt;div class="col-md-6"&gt;
+                                    &lt;div id="map-canvas" style="position: relative; overflow: hidden; transform: translateZ(0px); background-color: rgb(229, 227, 223);"&gt;&lt;div class="gm-style" style="position: absolute; left: 0px; top: 0px; overflow: hidden; width: 100%; height: 100%; z-index: 0;"&gt;&lt;div style="position: absolute; left: 0px; top: 0px; overflow: hidden; width: 100%; height: 100%; z-index: 0; cursor: url(&quot;https://maps.gstatic.com/mapfiles/openhand_8_8.cur&quot;) 8 8, default;"&gt;&lt;div style="position: absolute; left: 0px; top: 0px; z-index: 1; width: 100%; transform-origin: 0px 0px 0px; transform: matrix(1, 0, 0, 1, 0, 0);"&gt;&lt;div style="transform: translateZ(0px); position: absolute; left: 0px; top: 0px; z-index: 100; width: 100%;"&gt;&lt;div style="position: absolute; left: 0px; top: 0px; z-index: 0;"&gt;&lt;div aria-hidden="true" style="position: absolute; left: 0px; top: 0px; z-index: 1; visibility: inherit;"&gt;&lt;div style="width: 256px; height: 256px; transform: translateZ(0px); position: absolute; left: -213px; top: -98px;"&gt;&lt;/div&gt;&lt;div style="width: 256px; height: 256px; transform: translateZ(0px); position: absolute; left: 43px; top: -98px;"&gt;&lt;/div&gt;&lt;div style="width: 256px; height: 256px; transform: translateZ(0px); position: absolute; left: 43px; top: 158px;"&gt;&lt;/div&gt;&lt;div style="width: 256px; height: 256px; transform: translateZ(0px); position: absolute; left: 299px; top: -98px;"&gt;&lt;/div&gt;&lt;div style="width: 256px; height: 256px; transform: translateZ(0px); position: absolute; left: 299px; top: 158px;"&gt;&lt;/div&gt;&lt;div style="width: 256px; height: 256px; transform: translateZ(0px); position: absolute; left: -213px; top: 158px;"&gt;&lt;/div&gt;&lt;div style="width: 256px; height: 256px; transform: translateZ(0px); position: absolute; left: 555px; top: -98px;"&gt;&lt;/div&gt;&lt;div style="width: 256px; height: 256px; transform: translateZ(0px); position: absolute; left: 555px; top: 158px;"&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div style="transform: translateZ(0px); position: absolute; left: 0px; top: 0px; z-index: 101; width: 100%;"&gt;&lt;/div&gt;&lt;div style="transform: translateZ(0px); position: absolute; left: 0px; top: 0px; z-index: 102; width: 100%;"&gt;&lt;/div&gt;&lt;div style="transform: translateZ(0px); position: absolute; left: 0px; top: 0px; z-index: 103; width: 100%;"&gt;&lt;div style="position: absolute; left: 0px; top: 0px; z-index: -1;"&gt;&lt;div aria-hidden="true" style="position: absolute; left: 0px; top: 0px; z-index: 1; visibility: inherit;"&gt;&lt;div style="width: 256px; height: 256px; overflow: hidden; transform: translateZ(0px); position: absolute; left: -213px; top: -98px;"&gt;&lt;canvas draggable="false" height="256" width="256" style="-webkit-user-select: none; position: absolute; left: 0px; top: 0px; height: 256px; width: 256px;"&gt;&lt;/canvas&gt;&lt;/div&gt;&lt;div style="width: 256px; height: 256px; overflow: hidden; transform: translateZ(0px); position: absolute; left: 43px; top: -98px;"&gt;&lt;/div&gt;&lt;div style="width: 256px; height: 256px; overflow: hidden; transform: translateZ(0px); position: absolute; left: 43px; top: 158px;"&gt;&lt;/div&gt;&lt;div style="width: 256px; height: 256px; overflow: hidden; transform: translateZ(0px); position: absolute; left: 299px; top: -98px;"&gt;&lt;/div&gt;&lt;div style="width: 256px; height: 256px; overflow: hidden; transform: translateZ(0px); position: absolute; left: 299px; top: 158px;"&gt;&lt;/div&gt;&lt;div style="width: 256px; height: 256px; overflow: hidden; transform: translateZ(0px); position: absolute; left: -213px; top: 158px;"&gt;&lt;/div&gt;&lt;div style="width: 256px; height: 256px; overflow: hidden; transform: translateZ(0px); position: absolute; left: 555px; top: -98px;"&gt;&lt;/div&gt;&lt;div style="width: 256px; height: 256px; overflow: hidden; transform: translateZ(0px); position: absolute; left: 555px; top: 158px;"&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div style="position: absolute; z-index: 0; transform: translateZ(0px); left: 0px; top: 0px;"&gt;&lt;div style="overflow: hidden;"&gt;&lt;/div&gt;&lt;/div&gt;&lt;div style="position: absolute; left: 0px; top: 0px; z-index: 0;"&gt;&lt;div aria-hidden="true" style="position: absolute; left: 0px; top: 0px; z-index: 1; visibility: inherit;"&gt;&lt;div style="transform: translateZ(0px); position: absolute; left: -213px; top: -98px; transition: opacity 200ms ease-out;"&gt;&lt;img src="https://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i16!2i49485!3i28083!4i256!2m3!1e0!2sm!3i335000000!3m9!2sen-GB!3sUS!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0&amp;token=108912" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"&gt;&lt;/div&gt;&lt;div style="transform: translateZ(0px); position: absolute; left: 43px; top: -98px; transition: opacity 200ms ease-out;"&gt;&lt;img src="https://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i16!2i49486!3i28083!4i256!2m3!1e0!2sm!3i335000000!3m9!2sen-GB!3sUS!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0&amp;token=69191" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"&gt;&lt;/div&gt;&lt;div style="transform: translateZ(0px); position: absolute; left: 43px; top: 158px; transition: opacity 200ms ease-out;"&gt;&lt;img src="https://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i16!2i49486!3i28084!4i256!2m3!1e0!2sm!3i335000000!3m9!2sen-GB!3sUS!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0&amp;token=105212" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"&gt;&lt;/div&gt;&lt;div style="transform: translateZ(0px); position: absolute; left: 299px; top: -98px; transition: opacity 200ms ease-out;"&gt;&lt;img src="https://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i16!2i49487!3i28083!4i256!2m3!1e0!2sm!3i335000000!3m9!2sen-GB!3sUS!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0&amp;token=29470" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"&gt;&lt;/div&gt;&lt;div style="transform: translateZ(0px); position: absolute; left: 299px; top: 158px; transition: opacity 200ms ease-out;"&gt;&lt;img src="https://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i16!2i49487!3i28084!4i256!2m3!1e0!2sm!3i335000000!3m9!2sen-GB!3sUS!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0&amp;token=65491" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"&gt;&lt;/div&gt;&lt;div style="transform: translateZ(0px); position: absolute; left: -213px; top: 158px; transition: opacity 200ms ease-out;"&gt;&lt;img src="https://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i16!2i49485!3i28084!4i256!2m3!1e0!2sm!3i335000000!3m9!2sen-GB!3sUS!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0&amp;token=13862" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"&gt;&lt;/div&gt;&lt;div style="transform: translateZ(0px); position: absolute; left: 555px; top: -98px; transition: opacity 200ms ease-out;"&gt;&lt;img src="https://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i16!2i49488!3i28083!4i256!2m3!1e0!2sm!3i335000000!3m9!2sen-GB!3sUS!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0&amp;token=120820" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"&gt;&lt;/div&gt;&lt;div style="transform: translateZ(0px); position: absolute; left: 555px; top: 158px; transition: opacity 200ms ease-out;"&gt;&lt;img src="https://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i16!2i49488!3i28084!4i256!2m3!1e0!2sm!3i335000000!3m9!2sen-GB!3sUS!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0&amp;token=25770" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div style="position: absolute; left: 0px; top: 0px; z-index: 2; width: 100%; height: 100%;"&gt;&lt;/div&gt;&lt;div style="position: absolute; left: 0px; top: 0px; z-index: 3; width: 100%; transform-origin: 0px 0px 0px; transform: matrix(1, 0, 0, 1, 0, 0);"&gt;&lt;div style="transform: translateZ(0px); position: absolute; left: 0px; top: 0px; z-index: 104; width: 100%;"&gt;&lt;/div&gt;&lt;div style="transform: translateZ(0px); position: absolute; left: 0px; top: 0px; z-index: 105; width: 100%;"&gt;&lt;/div&gt;&lt;div style="transform: translateZ(0px); position: absolute; left: 0px; top: 0px; z-index: 106; width: 100%;"&gt;&lt;/div&gt;&lt;div style="transform: translateZ(0px); position: absolute; left: 0px; top: 0px; z-index: 107; width: 100%;"&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div style="padding: 15px 21px; border: 1px solid rgb(171, 171, 171); font-family: Roboto, Arial, sans-serif; color: rgb(34, 34, 34); box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 16px; z-index: 10000002; display: none; width: 256px; height: 148px; position: absolute; left: 142px; top: 35px; background-color: white;"&gt;&lt;div style="padding: 0px 0px 10px; font-size: 16px;"&gt;Map Data&lt;/div&gt;&lt;div style="font-size: 13px;"&gt;Map data ©2016 Google&lt;/div&gt;&lt;div style="width: 13px; height: 13px; overflow: hidden; position: absolute; opacity: 0.7; right: 12px; top: 12px; z-index: 10000; cursor: pointer;"&gt;&lt;img src="https://maps.gstatic.com/mapfiles/api-3/images/mapcnt6.png" draggable="false" style="position: absolute; left: -2px; top: -336px; width: 59px; height: 492px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="gmnoprint" style="z-index: 1000001; position: absolute; right: 72px; bottom: 0px; width: 122px;"&gt;&lt;div draggable="false" class="gm-style-cc" style="-webkit-user-select: none; height: 14px; line-height: 14px;"&gt;&lt;div style="opacity: 0.7; width: 100%; height: 100%; position: absolute;"&gt;&lt;div style="width: 1px;"&gt;&lt;/div&gt;&lt;div style="width: auto; height: 100%; margin-left: 1px; background-color: rgb(245, 245, 245);"&gt;&lt;/div&gt;&lt;/div&gt;&lt;div style="position: relative; padding-right: 6px; padding-left: 6px; font-family: Roboto, Arial, sans-serif; font-size: 10px; color: rgb(68, 68, 68); white-space: nowrap; direction: ltr; text-align: right; vertical-align: middle; display: inline-block;"&gt;&lt;a style="color: rgb(68, 68, 68); text-decoration: none; cursor: pointer; display: none;"&gt;Map Data&lt;/a&gt;&lt;span&gt;Map data ©2016 Google&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="gmnoscreen" style="position: absolute; right: 0px; bottom: 0px;"&gt;&lt;div style="font-family: Roboto, Arial, sans-serif; font-size: 11px; color: rgb(68, 68, 68); direction: ltr; text-align: right; background-color: rgb(245, 245, 245);"&gt;Map data ©2016 Google&lt;/div&gt;&lt;/div&gt;&lt;div class="gmnoprint gm-style-cc" draggable="false" style="z-index: 1000001; -webkit-user-select: none; height: 14px; line-height: 14px; position: absolute; right: 0px; bottom: 0px;"&gt;&lt;div style="opacity: 0.7; width: 100%; height: 100%; position: absolute;"&gt;&lt;div style="width: 1px;"&gt;&lt;/div&gt;&lt;div style="width: auto; height: 100%; margin-left: 1px; background-color: rgb(245, 245, 245);"&gt;&lt;/div&gt;&lt;/div&gt;&lt;div style="position: relative; padding-right: 6px; padding-left: 6px; font-family: Roboto, Arial, sans-serif; font-size: 10px; color: rgb(68, 68, 68); white-space: nowrap; direction: ltr; text-align: right; vertical-align: middle; display: inline-block;"&gt;&lt;a href="https://www.google.com/intl/en-GB_US/help/terms_maps.html" target="_blank" style="text-decoration: none; cursor: pointer; color: rgb(68, 68, 68);"&gt;Terms of Use&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;div draggable="false" class="gm-style-cc" style="-webkit-user-select: none; height: 14px; line-height: 14px; display: none; position: absolute; right: 0px; bottom: 0px;"&gt;&lt;div style="opacity: 0.7; width: 100%; height: 100%; position: absolute;"&gt;&lt;div style="width: 1px;"&gt;&lt;/div&gt;&lt;div style="width: auto; height: 100%; margin-left: 1px; background-color: rgb(245, 245, 245);"&gt;&lt;/div&gt;&lt;/div&gt;&lt;div style="position: relative; padding-right: 6px; padding-left: 6px; font-family: Roboto, Arial, sans-serif; font-size: 10px; color: rgb(68, 68, 68); white-space: nowrap; direction: ltr; text-align: right; vertical-align: middle; display: inline-block;"&gt;&lt;a target="_new" title="Report errors in the road map or imagery to Google" href="https://www.google.com/maps/@24.9070063,91.8400549,16z/data=!10m1!1e1!12b1?source=apiv3&amp;rapsrc=apiv3" style="font-family: Roboto, Arial, sans-serif; font-size: 10px; color: rgb(68, 68, 68); text-decoration: none; position: relative;"&gt;Report a map error&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="gmnoprint" draggable="false" controlwidth="28" controlheight="93" style="margin: 10px; -webkit-user-select: none; position: absolute; bottom: 107px; right: 28px;"&gt;&lt;div class="gmnoprint" controlwidth="28" controlheight="55" style="position: absolute; left: 0px; top: 38px;"&gt;&lt;div draggable="false" style="-webkit-user-select: none; box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px; border-radius: 2px; cursor: pointer; width: 28px; height: 55px; background-color: rgb(255, 255, 255);"&gt;&lt;div title="Zoom in" style="position: relative; width: 28px; height: 27px; left: 0px; top: 0px;"&gt;&lt;div style="overflow: hidden; position: absolute; width: 15px; height: 15px; left: 7px; top: 6px;"&gt;&lt;img src="https://maps.gstatic.com/mapfiles/api-3/images/tmapctrl.png" draggable="false" style="position: absolute; left: 0px; top: 0px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none; width: 120px; height: 54px;"&gt;&lt;/div&gt;&lt;/div&gt;&lt;div style="position: relative; overflow: hidden; width: 67%; height: 1px; left: 16%; top: 0px; background-color: rgb(230, 230, 230);"&gt;&lt;/div&gt;&lt;div title="Zoom out" style="position: relative; width: 28px; height: 27px; left: 0px; top: 0px;"&gt;&lt;div style="overflow: hidden; position: absolute; width: 15px; height: 15px; left: 7px; top: 6px;"&gt;&lt;img src="https://maps.gstatic.com/mapfiles/api-3/images/tmapctrl.png" draggable="false" style="position: absolute; left: 0px; top: -15px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none; width: 120px; height: 54px;"&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div controlwidth="28" controlheight="28" style="box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px; border-radius: 2px; width: 28px; height: 28px; cursor: url(&quot;https://maps.gstatic.com/mapfiles/openhand_8_8.cur&quot;) 8 8, default; position: absolute; left: 0px; top: 0px; background-color: rgb(255, 255, 255);"&gt;&lt;div style="position: absolute; left: 1px; top: 1px;"&gt;&lt;/div&gt;&lt;div style="position: absolute; left: 1px; top: 1px;"&gt;&lt;div aria-label="Street View Pegman Control" style="width: 26px; height: 26px; overflow: hidden; position: absolute; left: 0px; top: 0px;"&gt;&lt;img src="https://maps.gstatic.com/mapfiles/api-3/images/cb_scout5.png" draggable="false" style="position: absolute; left: -147px; top: -26px; width: 215px; height: 835px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"&gt;&lt;/div&gt;&lt;div aria-label="Pegman is on top of the Map" style="width: 26px; height: 26px; overflow: hidden; position: absolute; left: 0px; top: 0px; visibility: hidden;"&gt;&lt;img src="https://maps.gstatic.com/mapfiles/api-3/images/cb_scout5.png" draggable="false" style="position: absolute; left: -147px; top: -52px; width: 215px; height: 835px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"&gt;&lt;/div&gt;&lt;div aria-label="Street View Pegman Control" style="width: 26px; height: 26px; overflow: hidden; position: absolute; left: 0px; top: 0px; visibility: hidden;"&gt;&lt;img src="https://maps.gstatic.com/mapfiles/api-3/images/cb_scout5.png" draggable="false" style="position: absolute; left: -147px; top: -78px; width: 215px; height: 835px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="gmnoprint" controlwidth="28" controlheight="0" style="display: none; position: absolute;"&gt;&lt;div title="Rotate map 90 degrees" style="width: 28px; height: 28px; overflow: hidden; position: absolute; border-radius: 2px; box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px; cursor: pointer; display: none; background-color: rgb(255, 255, 255);"&gt;&lt;img src="https://maps.gstatic.com/mapfiles/api-3/images/tmapctrl4.png" draggable="false" style="position: absolute; left: -141px; top: 6px; width: 170px; height: 54px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"&gt;&lt;/div&gt;&lt;div class="gm-tilt" style="width: 28px; height: 28px; overflow: hidden; position: absolute; border-radius: 2px; box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px; top: 0px; cursor: pointer; background-color: rgb(255, 255, 255);"&gt;&lt;img src="https://maps.gstatic.com/mapfiles/api-3/images/tmapctrl4.png" draggable="false" style="position: absolute; left: -141px; top: -13px; width: 170px; height: 54px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="gmnoprint" style="margin: 10px; z-index: 0; position: absolute; cursor: pointer; left: 0px; top: 0px;"&gt;&lt;div class="gm-style-mtc" style="float: left;"&gt;&lt;div draggable="false" title="Show street map" style="direction: ltr; overflow: hidden; text-align: center; position: relative; color: rgb(0, 0, 0); font-family: Roboto, Arial, sans-serif; -webkit-user-select: none; font-size: 11px; padding: 8px; border-bottom-left-radius: 2px; border-top-left-radius: 2px; -webkit-background-clip: padding-box; box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px; font-weight: 500; background-color: rgb(255, 255, 255); background-clip: padding-box;"&gt;Map&lt;/div&gt;&lt;div style="z-index: -1; padding: 2px; border-bottom-left-radius: 2px; border-bottom-right-radius: 2px; box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px; position: absolute; left: 0px; top: 0px; text-align: left; display: none; background-color: white;"&gt;&lt;div draggable="false" title="Show street map with terrain" style="color: rgb(0, 0, 0); font-family: Roboto, Arial, sans-serif; -webkit-user-select: none; font-size: 11px; padding: 6px 8px 6px 6px; direction: ltr; text-align: left; white-space: nowrap; background-color: rgb(255, 255, 255);"&gt;&lt;span role="checkbox" style="box-sizing: border-box; position: relative; line-height: 0; font-size: 0px; margin: 0px 5px 0px 0px; display: inline-block; border: 1px solid rgb(198, 198, 198); border-radius: 1px; width: 13px; height: 13px; vertical-align: middle; background-color: rgb(255, 255, 255);"&gt;&lt;div style="position: absolute; left: 1px; top: -2px; width: 13px; height: 11px; overflow: hidden; display: none;"&gt;&lt;img src="https://maps.gstatic.com/mapfiles/mv/imgs8.png" draggable="false" style="position: absolute; left: -52px; top: -44px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none; width: 68px; height: 67px;"&gt;&lt;/div&gt;&lt;/span&gt;&lt;label style="vertical-align: middle; cursor: pointer;"&gt;Terrain&lt;/label&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="gm-style-mtc" style="float: left;"&gt;&lt;div draggable="false" title="Show satellite imagery" style="direction: ltr; overflow: hidden; text-align: center; position: relative; color: rgb(86, 86, 86); font-family: Roboto, Arial, sans-serif; -webkit-user-select: none; font-size: 11px; padding: 8px; border-bottom-right-radius: 2px; border-top-right-radius: 2px; -webkit-background-clip: padding-box; box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px; border-left-width: 0px; background-color: rgb(255, 255, 255); background-clip: padding-box;"&gt;Satellite&lt;/div&gt;&lt;div style="z-index: -1; padding: 2px; border-bottom-left-radius: 2px; border-bottom-right-radius: 2px; box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px; position: absolute; right: 0px; top: 0px; text-align: left; display: none; background-color: white;"&gt;&lt;div draggable="false" title="Show imagery with street names" style="color: rgb(0, 0, 0); font-family: Roboto, Arial, sans-serif; -webkit-user-select: none; font-size: 11px; padding: 6px 8px 6px 6px; direction: ltr; text-align: left; white-space: nowrap; background-color: rgb(255, 255, 255);"&gt;&lt;span role="checkbox" style="box-sizing: border-box; position: relative; line-height: 0; font-size: 0px; margin: 0px 5px 0px 0px; display: inline-block; border: 1px solid rgb(198, 198, 198); border-radius: 1px; width: 13px; height: 13px; vertical-align: middle; background-color: rgb(255, 255, 255);"&gt;&lt;div style="position: absolute; left: 1px; top: -2px; width: 13px; height: 11px; overflow: hidden;"&gt;&lt;img src="https://maps.gstatic.com/mapfiles/mv/imgs8.png" draggable="false" style="position: absolute; left: -52px; top: -44px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none; width: 68px; height: 67px;"&gt;&lt;/div&gt;&lt;/span&gt;&lt;label style="vertical-align: middle; cursor: pointer;"&gt;Labels&lt;/label&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div style="margin-left: 5px; margin-right: 5px; z-index: 1000000; position: absolute; left: 0px; bottom: 0px;"&gt;&lt;a target="_blank" href="https://maps.google.com/maps?ll=24.907006,91.840055&amp;z=16&amp;t=m&amp;hl=en-GB&amp;gl=US&amp;mapclient=apiv3" title="Click to see this area on Google Maps" style="position: static; overflow: visible; float: none; display: inline;"&gt;&lt;div style="width: 66px; height: 26px; cursor: pointer;"&gt;&lt;img src="https://maps.gstatic.com/mapfiles/api-3/images/google4.png" draggable="false" style="position: absolute; left: 0px; top: 0px; width: 66px; height: 26px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px;"&gt;&lt;/div&gt;&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                                
+                        &lt;/div&gt;
+
+                        &lt;div class="row"&gt;
+                            &lt;form id="contactForm" class="contact-form" method="post" action="php/contact.php"&gt;
+                                
+                                &lt;div class="col-md-6 col-sm-6"&gt;
+                                    &lt;div class="form-group"&gt;
+                                        &lt;input name="name" type="text" class="form-control" id="name" required="required" placeholder="  Name"&gt;
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+
+                                &lt;div class="col-md-6 col-sm-6"&gt;
+                                    &lt;div class="form-group"&gt;
+                                        &lt;input name="email" type="email" class="form-control" id="email" required="required" placeholder="  Email"&gt;
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+
+                                &lt;div class="col-md-12 col-sm-12"&gt;
+                                    &lt;textarea name="massage" type="text" class="form-control" id="message" rows="5" required="required" placeholder="  Message"&gt;&lt;/textarea&gt;
+                                &lt;/div&gt;
+                                
+                                &lt;div class="col-md-4 col-xs-12"&gt;
+                                    &lt;input type="submit" id="cfsubmit" class="btn btn-send" value="Say Hello"&gt;
+                                &lt;/div&gt;
+                                &lt;div id="contactFormResponse" class="col-md-8 col-xs-12"&gt;&lt;/div&gt;
+                            &lt;/form&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+                    </pre>
+
+					<!-- end of contact section -->
+
+
+					<!-- working contact form -->
+
+                    <h2 id="contact-form">Working Contact form</h2>
+                    <p>Open the file <strong>contact-form.php</strong> and in <strong>line 46 and 47</strong> enter your data:</p>
+
+                    <pre class="prettyprint lang-basic">
+// Your email
+$to = 'info@themewagon.com';
+$subject = 'Contact Form : Women Entrepreneur -  Youtube Marketer Responsive HTML5 Template';
+                    </pre>
+<br/>
+                    <h4>If Contact form form not working</h4>
+                    <p>You need to check is PHP mail() function working.</p>
+<p>
+<textarea class="form-control" rows="4" style="widht:100%">
+<?php
+    mail('you@yourmail.com','Test mail','The mail function is working!');
+    echo 'Mail sent!';
+?>
+</textarea>
+</p>
+                    <ul>
+                    <li>Save this code as mailtest.php</li>
+                        <li>change you@yourmail.com to your e-mail address</li>
+                        <li>upload mailtest.php to your server</li>
+                        <li>open mailtest.php in your browser (http://yourwebsite.com/mailtest.php)</li>
+                        <li>check your inbox to see if a test message arrived.</li>
+                    </ul>
+                    <strong>If it works:</strong>
+
+                    <ul>
+                        <li>double-check your form script for errors (like e-mail address misspelling)</li>
+                        <li>use the same e-mail address as your form recipient</li>
+                        <li>double-check your SPAM filters and SPAM/Junk/Bulk mailboxes</li>
+                    </ul>
+
+                    <strong>If it not</strong>
+
+                    <p>Contact your host and ask them to check PHP mail() setting.</p>
+
+                    <!-- end of working contact form -->
+
+                    <!-- Footer Section -->
+                    <h2 id="footer">Footer Section</h2>
+                    <p>In <strong>index.html</strong> , HTML structure of the Footer Section. This code placed just before the <strong>Javascript</strong> code and link.</p>
+                     <pre class="prettyprint lang-basic">
+&lt;!-- Footer --&gt;
+                
+&lt;div class="footer clearfix"&gt;
+    &lt;div class="row"&gt;
+        &lt;div class="col-md-10 col-md-offset-1 col-xs-10 col-xs-offset-1"&gt;
+            &lt;div class="row"&gt;
+                &lt;div class="col-md-6 col-sm-12 col-xs-12"&gt;
+                    &lt;p class="copyright"&gt;Copyright © 2015 
+                        &lt;a href="#"&gt;Your Company&lt;/a&gt;
+                    &lt;/p&gt;
+                &lt;/div&gt;
+
+                &lt;div class="col-md-6 col-sm-12 col-xs-12"&gt;
+                    &lt;p class="author"&gt;
+                        Theme by &lt;a href="https://themewagon.com/" target="_blank"&gt;ThemeWagon&lt;/a&gt;
+                    &lt;/p&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;      
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!--End Of Footer --&gt;
+
+&lt;!-- Javascript files --&gt;
+    &lt;!-- jQuery --&gt;
+                     </pre>
+                    <!-- end of Footer Section -->
+
+
+
+					<!-- attributions -->
+
+					<h2 id="attribution">Attribution</h2>
+					<p>Following libraries and plugins are used in Women Entrepreneur template:</p>
+					<ul>
+                        <li><a href="https://jquery.com/" target="_blank">jQuery</a></li>
+                        <li><a href="http://getbootstrap.com" target="_blank">Bootstrap</a></li>
+                        <li><a href="https://www.google.com/fonts" target="_blank">Google Fonts</a> </li>
+                        <li><a href="http://ionicons.com/" target="_blank">ionicons</a></li>
+                        <li><a href="http://www.owlcarousel.owlgraphic.com/index.html" target="_blank">Owl Carousel 2</a></li>
+                    </ul>
+
+					<!-- end of attributions -->
+
+
+
+
+
+					<!-- changelog -->
+
+					<h2 id="changelog">Changelog</h2>
+                    <p> Version 1.2</p>
+<pre class="prettyprint">
+- Safari, chrome Mobile browser issue fixed
+</pre>
+                    <p> Version 1.1</p>
+<pre class="prettyprint">
+- Fix relative urls
+- Added Documentation
+</pre>
+
+					<p> Version 1.0</p>
+					<pre class="prettyprint">- Initial Release</pre>
+
+					<!-- end of changelog -->
+						
+				</section>
+
+			</div>
+		</div>
+	</div>
+
+	<!-- Javascript files -->
+	<!-- jQuery -->
+	<script src="assets/js/jquery-1.11.0.min.js"></script>
+	<!-- Bootstrap JS -->
+	<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+	<!--HL -->
+	<script src="assets/js/prettify/prettify.js"></script>
+	<!-- Custom scripts -->
+	<script src="assets/js/custom.js"></script>
+
+</body>
+</html>

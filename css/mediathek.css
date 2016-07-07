@@ -1,3 +1,194 @@
+/*-----------------------------------
+   1 ) Font Import From Google Fonts
+  -----------------------------------*/
+
+@import url(https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic);
+
+
+/* ------------------------------------
+   Styles from wordpress
+   ------------------------------------ */
+.alignleft {
+    float: left;
+    margin: 0.375em 1.75em 1.75em 0;
+}
+
+.alignright {
+    float: right;
+    margin: 0.5em 0 0.5em 1em;
+}
+
+.aligncenter {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+body, button, input, select, textarea, p {
+    color: #1a1a1a;
+    /* font-family: Merriweather, Georgia, serif; */
+	font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-size: 1rem;
+    line-height: 1.75;
+}
+
+/* ------------------------------------
+   END Styles from wordpress
+   ------------------------------------ */   
+
+   
+/*----------------------
+   2 ) Preloader Styles
+  ----------------------*/
+
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #142426; /* #1a1b23; */
+    z-index: 10000;
+}
+
+.loader {
+    position: absolute;
+    width: 42px;
+    height: 42px;
+    -webkit-animation: preloader_6 5s infinite linear;
+    animation: preloader_6 5s infinite linear;
+    left: 50%;
+    top: 50%;
+    margin-left: -21px;
+    margin-top: -21px;
+}
+
+.loader span {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    background: red;
+    display: block;
+    -webkit-animation: preloader_6_span 1s infinite linear;
+    animation: preloader_6_span 1s infinite linear;
+}
+
+.loader span:nth-child(1) {
+    background: #c9f200;
+}
+
+.loader span:nth-child(2) {
+    left: 44px;
+    background: #0066ff;
+    -webkit-animation-delay: .2s;
+    animation-delay: .2s;
+}
+
+.loader span:nth-child(3) {
+    top: 44px;
+    background: #fe0070;
+    -webkit-animation-delay: .4s;
+    animation-delay: .4s;
+}
+
+.loader span:nth-child(4) {
+    top: 44px;
+    left: 44px;
+    background: #00ff00;
+    -webkit-animation-delay: .6s;
+    animation-delay: .6s;
+}
+
+@-webkit-keyframes preloader_6_span {
+    0% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+    50% {
+        -webkit-transform: scale(0.5);
+        transform: scale(0.5);
+    }
+    100% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+}
+
+@keyframes preloader_6_span {
+    0% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+    50% {
+        -webkit-transform: scale(0.5);
+        transform: scale(0.5);
+    }
+    100% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+}
+
+
+
+.back-btn,
+.close-btn,
+.home-btn {
+    z-index: 1000;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    position: fixed;
+    right: 3%;
+    top: 10px;
+	font-size: 40px;
+	text-align: center;
+	vertical-align: middle;
+	color: white;
+	padding: 0px;
+}
+
+.setting-btn {
+    z-index: 1000;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    position: fixed;
+    right: 3%;
+    top: 50px;
+	font-size: 40px;
+	text-align: center;
+	vertical-align: middle;
+	color: white;
+	padding: 0px;
+}
+
+   
+.introduction {
+	background-color: rgba(255, 255, 255, 0.4);
+	background: url(../img/mt_full.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.intro-content {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.intro-content span {
+    color: black;
+	text-shadow: 4px 4px 6px rgba(255,255,255,0.8);
+}
+
+.intro-content h1 {
+    margin-bottom: 15px; /* -15px;  JE */
+	color: black;
+	text-shadow: 3px 3px 4px rgba(255,255,255,0.8);
+}
+
 
 html {
 	min-height: 100%;
@@ -9,7 +200,7 @@ body {
 }
 
 .bw {
-    background-color: black;
+    background-color: #004824;
     color: white;
 }
 
@@ -21,7 +212,11 @@ a.entity {
 td.list {
     padding-top: 0.25rem;
     padding-bottom: 0.25rem;
-    border-top: 2px solid black;
+    border-top: 2px solid #004824;
+}
+
+tr:first-child > td {
+    border-top: none;
 }
 
 td.detail {
@@ -32,7 +227,7 @@ td.detail {
 
 .pager li>a {
     border-radius: 0;
-    color: black;
+    color: #004824;
 }
 
 .e-mail:before {
@@ -42,15 +237,168 @@ td.detail {
 }
 
 .facet {
-	border: 3px solid black;
+	border: 2px solid #004824;
 	padding-left:5px;
 }
+
 .marker {
-    z-index: 10;
-    background: black;
+    /* z-index: 10; */
+    background: white;
 	position: relative;
 	top: -5px; 
 	left: 0px; 
 	width: 40px; 
 	height: 10px;
 }
+
+.marker:after {
+    position: absolute;
+    font-family: 'FontAwesome';
+    font-size: 35px;
+    content: "\f107";
+    left: 0%;
+    bottom: 17px;
+    background-color: transparent;
+    padding: 0px 10px;
+	color: #004824;
+	height: 20px;
+}
+
+
+.news-page,
+.about-page,
+.search-page,
+.info-page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.footer a {
+    text-decoration: none;
+    color: #5F9EA0;
+    transition: all 0.4s ease-in-out;
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    -ms-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+}
+
+/* -------------------------------------
+ * Full Search
+ * ------------------------------------- */
+
+
+ .fullsearch-page button {
+	border: 1px solid #004824;
+	line-height: 1.5;
+    padding: 14px 28px;
+	background-color: #004824;
+	color: white;
+}
+
+.fullsearch-page .image-container {
+    background: url(../assets/img/portfolio_featured.png);
+    background-size: cover;
+    background-position: bottom;
+}
+.fullsearch-page .footer {
+    background-color: #004824;
+}
+
+/* -------------------------------------
+ * Search
+ * ------------------------------------- */
+ 
+
+ .search-page button {
+	border: 1px solid #004824;
+	line-height: 1.5;
+    padding: 14px 28px;
+	background-color: #004824;
+	color: white;
+}
+ 
+.search-page .image-container {
+    background: url(../assets/img/portfolio_featured.png);
+    background-size: cover;
+    background-position: bottom;
+}
+.search-page .footer {
+    background-color: #004824;
+}
+
+/*
+.search-page .footer a {
+    color: #004824;
+}
+*/
+
+/* -------------------------------------
+ * About
+ * ------------------------------------- */
+ 
+ .about-page .image-container {
+    background: url(../assets/img/about_us_featured.png);
+    background-size: cover;
+    background-position: bottom;
+}
+
+ .about-page .footer {
+    background-color: #01213B;
+}
+
+.about-page .flipper i {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background-color: rgb(35, 46, 52);
+    color: white;
+    margin-top: 40px;
+    font-size: 25px;
+    border-color: #fff;
+    line-height: 58px;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    margin-left: -29px;
+    margin-top: -29px;
+    display: block;
+}
+
+.about-page .flip-container {
+    -webkit-perspective: 1000;
+    -o-perspective: 1000;
+    perspective: 1000;
+}
+
+.about-page .flip-container:hover .flipper,
+.about-page .flip-container.hover .flipper {
+    -webkit-transform: rotateY(180deg);
+    -ms-transform: rotate(-180deg);
+    -sand-transform: rotate(-180deg);
+    transform: rotateY(180deg);
+}
+
+.about-page .flip-container,
+.about-page .front,
+.about-page .back {
+    height: auto;
+    min-height: 350px;
+}
+
+.about-page .flipper {
+    -webkit-transition: 0.6s;
+    -webkit-transform-style: preserve-3d;
+    -moz-transition: 0.6s;
+    -moz-transform-style: preserve-3d;
+    -o-transition: 0.6s;
+    -o-transform-style: preserve-3d;
+    -webkit-transition: 0.6s;
+    transition: 0.6s;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    position: relative;
+}
+

@@ -8,217 +8,292 @@ require 'footer.inc.php';
 
 include( 'init.inc.php' );
 
+
 global $db;
 
-echo mediathekheader('home', null);
+$qobj = new \stdClass();
+	$qobj->query = '';
+	$qobj->area = 'all';
+	$qobj->filter = array();
+	$qobj->facets = array();
+
+echo mediathekheader('home', 'Willkommen in der Mediathek der Künste', null);
 ?>
 
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content bw">
-		<div class="modal-header">
-				<button type="button" class="close bw" data-dismiss="modal" aria-label="Close">
-				  <span aria-hidden="true">&times;</span>
-				</button>
-				<h4 class="modal-title">Impressum</h4>
-			</div>
-			<div class="modal-body">
-				<p><b>Anfragen</b><br />
-				Für Anfragen wenden Sie sich bitte an die Mediathek HGK (FHNW):</p>
+    <!-- home-page -->
+    
+    <div class="home-page">
+        
+        <!-- Introduction -->
+        
+        <div class="introduction">
+            <!-- <div class="mask">
+            </div> -->
+            <div class="intro-content">
+                <!-- <h1>HELLO<br>
+                I'M <span>JOHN</span> DOE</h1> -->
+                <h1 style="text-shadow: 2px 2px 3px rgba(255,255,255,0.8);">
+                    Mediathek der
+                </h1> 
+                <span style="">Künste</span><span class="number"></span>
+                <p class="slogan-text text-capitalize" style=""><img style="position: static; top: auto; left: auto; width: 350px;" src="img/fhnw.png" /></p>
 
-				<p><b>Kontaktadresse</b><br />
-				Fachhochschule Nordwestschweiz FHNW<br />
-				Hochschule für Gestaltung und Kunst<br />
-				Mediathek<br />
-				Freilager Platz 1<br />
-				4023 Basel</p>
-
-				<p><b>Redaktion</b><br />
-				Tabea Lurk, Mediathek HGK</p>
-
-				<p><b>Systemverantwortlich</b><br />
-				Jürgen Enge, HGK ICT</p>
-
-				<p><b>Programmierung und Gestaltung</b><br />
-				info-age GmbH, Basel 2016</p>			
-				
-				<p><b>Bildmaterial</b><br />
-				Fotos: Laurids Jensen 2016<br />
-				3D Modell: info-age GmbH, Basel 2016</p>
-			</div>
-	  </div>
-  </div>
-</div>
-
-
-	<div class="container-fluid" style="margin-top: 0px; padding: 20px;">
-		<div class="row" style="margin-bottom: 30px;">
-		  <div class="col-md-12">
-			<div class="jumbotron jumbotron-fluid" style="background: url('img/mt_small.jpg') no-repeat center center;
-			-webkit-background-size: cover;
-			-moz-background-size: cover;
-			background-size: cover;
-			-o-background-size: cover;">
-				<div class="container" style="background-color: rgba(255, 255, 255, 0.9);">
-					<h1>Herzlich Willkommen in der Mediathek der Künste</h1>
-					<p>Die Mediathek der HGK stellt wissenschaftliche Literatur und elektronische Medien aus den 
-					Bereichen Bildende Kunst, Design, Designtheorie, Innenarchitektur und Szenografie zur Verfügung. 
-					Sie richtet sich an Studierende, Dozierende und Forschende der HGK, der FHNW sowie externe Interessierte. 
-					Die Mediathek ist dem <i class="fa fa-external-link" aria-hidden="true"></i><a href="http://www.nebis.ch/Verbund/NEBIS-Bibliotheken" target="_blank">NEBIS - Netzwerk von Bibliotheken und Informationsstellen in der Schweiz</a>
-					angeschlossen. Ihre Benutzung ist kostenlos.</p>
-				</div>
-			</div>	
-		<div class="row" style="margin-bottom: 30px;">
-		  <div class="col-md-offset-2 col-md-8">
-<?php
-	echo searchbar(null, null);
-?>
-			</div>
-		</div>
-			
-		</div>
-	   </div>
-		
-	   <div class="row">
-		  <div class="col-md-9">
-		  
-			<table class="table" style="table-layout: fixed;">
-				<tr>
-					<td class="list" style="text-align: right; width: 30%;">
-						<b>Einschreibung &nbsp;<i class="fa fa-pencil-square-o" aria-hidden="true"></i></b>
-					</td>
-					<td class="list" style="width: 70%;">
-						<p>Die Mediathek schaltet <b>Angehörigen der FHNW</b> ihre FH-Cards für die Bibliotheksnutzung frei. 
-						Wer bereits in einer <i class="fa fa-external-link" aria-hidden="true"></i><a href="https://www.informationsverbund.ch/21.0.html" target="_blank">IDS-Bibliothek</a> eingeschrieben ist, braucht keine separate Anmeldung. 
-						Die Benutzerausweise und Passworte sind auch im NEBIS gültig.</p>
-						<p><b>Erstnutzende</b> füllen zuvor bitte das <i class="fa fa-external-link" aria-hidden="true"></i><a href="http://opac.nebis.ch/F/5LD4CQ98TPTJ7HST3XHD8SXU5GSHAUNRIBSMQVKPJ62SXBB6YC-01421?func=file&amp=&amp=&amp=&file_name=bor-new&local_base=nebis&CON_LNG=GER&pds_handle=GUEST" target="_blank">Einschreibeformular</a> aus.<br />
-						Wir empfehlen die Mediathek (FHNW-GE) als Stammbibliothek.</p>
-						<p><b>Externe Benutzerinnen und Benutzer</b>, die in keine NEBIS- oder IDS-Bibliothek eingeschrieben 
-						sind, registrieren sich ebenfalls online über das NEBIS-Einschreibeformular und erhalten in der 
-						Mediathek dann einen NEBIS-Bibliotheksausweis. Bei der ersten Ausleihe werden die amtlichen Angaben überprüft. 
-						Die Anmeldung und Benutzung ist kostenlos.</p>
-					
-					</td>
-				</tr>
-				<tr>
-					<td class="list" style="text-align: right; width: 30%;">
-						<b>Benutzerkonto &nbsp;<i class="fa fa-indent" aria-hidden="true"></i> </b>
-					</td>
-					<td class="list" style="width: 70%;">
-						<p>Das <i class="fa fa-external-link" aria-hidden="true"></i><a href="https://login.library.ethz.ch/pds?func=load-login&calling_system=primo&institute=N00&isMobile=false&url=http://recherche.nebis.ch:80/primo_library/libweb/action/login.do?targetURL=http%3a%2f%2frecherche.nebis.ch%3a80%2fprimo_library%2flibweb%2faction%2fmyAccountMenu.do%3fvid%3dNEBIS%26amp%3bfromLink%3dgotoMyAccountUI%26amp%3bdscnt%3d0%26amp%3bdstmp%3d1465846963455%26amp%3binitializeIndex%3dtrue" target="_blank">Benutzungskonto</a> bietet jederzeit online einen Überblick über aktuelle Bestellungen, Reservationen, 
-						Gebühren sowie die jeweiligen Ausleihen inkl. Leihfristen. Auch die Adressdaten (E-Mail-, Telefonnummer, 
-						Wohn-/Korrespondenzadresse können bequem online verändert werden.</p>
-					</td>
-				</tr>
-				<tr>
-					<td class="list" style="text-align: right; width: 30%;">
-						<b>Gebühren &nbsp;<i class="fa fa-btc" aria-hidden="true"></i></b>
-					</td>
-					<td class="list" style="width: 70%;">
-						<p><b>Basisleistungen</b></p>
-						<p><table>
-							<tr><td style="padding: 1px 5px 1px 1px; width: 70%;">Ausleihe im NEBIS-Verbund via Online-Katalog</td><td style="padding: 1px 1px 1px 5px; width: 30%;">kostenlos</td></tr>
-							<tr><td style="padding: 1px 5px 1px 1px; width: 70%;">Benutzungsausweis</td><td style="padding: 1px 1px 1px 5px; width: 30%;">kostenlos</td></tr>
-						</table></p>
-						<p><b>Mahnung nach Ablauf der Leihfrist pro Dokument</b></p>
-						<p><table>
-							<tr><td style="padding: 1px 5px 1px 1px; width: 70%;">Erinnerung / Rückruf</td><td style="padding: 1px 1px 1px 5px; width: 30%;">kostenlos</td></tr>
-							<tr><td style="padding: 1px 5px 1px 1px; width: 70%;">1. Mahnung (nach 10 Arbeitstagen)</td><td style="padding: 1px 1px 1px 5px; width: 30%;">CHF 10,-</td></tr>
-							<tr><td style="padding: 1px 5px 1px 1px; width: 70%;">2. Mahnung (nach weiteren 10 Arbeitstagen)</td><td style="padding: 1px 1px 1px 5px; width: 30%;">CHF 20,-</td></tr>
-							<tr><td style="padding: 1px 5px 1px 1px; width: 70%;">3. Mahnung (nach weiteren 10 Arbeitstagen, mit Kontosperrung)</td><td style="padding: 1px 1px 1px 5px; width: 30%;">CHF 35,-</td></tr>
-						</table></p>
-						<p>Bitte überprüfen Sie regelmässig den Stand der Ausleihen in Ihrem Benutzungskonto. Der Versand der Erinnerungen ist 
-						eine Zusatzdienstleistung, für deren Erhalt (Spam-Filter etc.) wir keine Gewähr übernehmen können. Siehe <a href="http://www.nebis.ch/FAQ">NEBIS FAQ</a></p>
-						<p><b>Ersatzbeschaffung</b></p>
-						<p>Beim Verlust eines Mediums wird eine Ersatzbeschaffung veranlasst. Die Ersatzbeschaffung kann entweder von der 
-						Mediathek oder vom Nutzer durchgeführt werden. Zusätzlich entfällt eine Bearbeitungsgebühr von CHF 20.-/Medium, 
-						welche der Benutzerin oder dem Benutzer belastet wird.</p>
-						<p>Beschafft die Mediathek die Ersatzdokumente, kommen zur Bearbeitungsgebühr (CHF 20.-) die Kosten des Dokuments hinzu.</p>
-						<p>(Alle Beträge inkl. Mehrwertsteuer)</p>
-					</td>
-				</tr>
-				<tr>
-					<td class="list" style="text-align: right; width: 30%;">
-						<b>Sonderleistungen &nbsp;<i class="fa fa-plus-square" aria-hidden="true"></i></b>
-					</td>
-					<td class="list" style="width: 70%;">
-						<p>Anschaffungsvorschläge werden via E-Mail (<span class="e-mail" data-user="kgh.kehtaidem" data-website="hc.wnhf"></span>) vorgebracht.</p>
-						<p>Medien der Zentralbibliothek Zürich (ZB) können in die Mediathek zur Ansicht bestellt werden.</p>
-						<p>Bitte beachten: es ist nur eine Konsultation vor Ort (inkl. Scannen / Kopieren) aber keine Ausleihe möglich.</p>
-						<p>ZB-Medien, und nur diese, werden via E-Mail (<span class="e-mail" data-user="kgh.kehtaidem" data-website="hc.wnhf"></span>) bestellt. Bitte geben Sie Autor, Titel, Jahr und Signatur im Bestellmail an.</p>
-					</td>
-				</tr>
-				<tr>
-					<td class="list" style="text-align: right; width: 30%;">
-						<b><i class="fa fa-info" aria-hidden="true"></i></b>
-					</td>
-					<td class="list" style="width: 70%;">
-						<p><a style="padding: 0px;" class="btn" data-toggle="modal" data-target=".bd-example-modal-lg"><b>Impressum</b></a></p>
-						
-					</td>
-				</tr>
-			</table>
-		  </div>
-   		  <div class="col-md-3" style="background-color: transparent;">
-			<div style="; font-weight: bold;">Öffnungszeiten & Information</div>
-			<div class="facet" style="">
-				<div class="marker" style=""></div>
-				<p><b>Öffnungszeiten während des Semesters</b><br />
-				Montag bis Freitag, 10.00 bis 18.00 Uhr</p>
-
-				<p><b>Sommeröffnungszeiten 18.06.2016 - 15.08.2016</b><br />
-				Montag bis Freitag, 10.00 bis 14.00 Uhr</p>
-
-				<p>Wenn der Haupteingang des Hochhauses D während der Öffnungszeiten der Mediathek geschlossen ist, können Sie das Thekenpersonal 
-				anrufen (+41 (0)61 228 41 84). Sie werden dann abgeholt und eingelassen.</p>
-			</div>
-<!--			<div style="padding-top: 5px; font-weight: bold;">Sonderschliessungen</div>
-				<div class="bw" style="padding:5px;">
-				<p><b>Aktuell nicht genutzt</b><br />
-				Wir danken Ihnen für Ihr Verständnis</p>
+<!--
+                <div class="social-media hidden-xs">
+                    <a href="#" class="fa fa-facebook" data-toggle="tooltip" title="Facebook"></a>
+                    <a href="#" class="fa fa-twitter" data-toggle="tooltip" title="Twitter"></a>
+                    <a href="#" class="fa fa-plus" data-toggle="tooltip" title="Google+"></a>
+                    <a href="#" class="fa fa-linkedin" data-toggle="tooltip" title="Linkedin"></a>
+                    <a href="#" class="fa fa-behance" data-toggle="tooltip" title="Behance"></a>
+                    <a href="#" class="fa fa-flickr" data-toggle="tooltip" title="Flicker"></a>
+                    <a href="#" class="fa fa-instagram" data-toggle="tooltip" title="Instagram"></a>
+                </div>
 -->
-			<div style="padding-top: 8px; font-weight: bold;">Auskünfte</div>
-				<div class="facet" style="">
-				<div class="marker" style=""></div>
-				<p>Info-Theke: +41 (0)61 228 41 84<br />
-				Mail: <span class="e-mail" data-user="kgh.kehtaidem" data-website="hc.wnhf"></span></p>
-			</div>
+            </div>
+            
+            <!-- Social Media Icons [ END ] -->
+        </div>
+        
+        <!-- Navigation Menu -->
+        
+        <div class="menu">
+            <div data-url_target="about" class="profile-btn menu_button">
+                <img alt="" src="assets/img/about.jpg" style="width:100%; height:100%;">
+                <div class="mask">
+                </div>
+                <div class="heading">
+                    <i class="ion-ios-people-outline hidden-xs"></i>
+                    <h2>Über uns</h2>
+                </div>
+            </div>
+            
+            <!-- Single Navigation Menu Button -->
+            
+            <div data-url_target="search" class="portfolio-btn menu_button">
+                <img alt="" src="assets/img/portfolio.jpg">
+                <div class="mask">
+                </div>
+                <div class="heading">
+                    <i class="ion-ios-search hidden-xs"></i>
+                    <h2>Suche</h2>
+                </div>
+            </div>
+            
+            <!-- Single Navigation Menu Button [ END ]  -->
+            
+            <div data-url_target="contact" class="contact-btn menu_button">
+                <img alt="" src="assets/img/contact.jpg">
+                <div class="mask">
+                </div>
+                <div class="heading">
+                    <i class="ion-ios-chatboxes-outline hidden-xs"></i>
+                    <h2>News</h2>
+                </div>
+            </div>
+            
+            <!-- Single Navigation Menu Button [ END ]  -->
+            
+            <div data-url_target="info" class="service-btn menu_button">
+                <img alt="" src="assets/img/service.jpg">
+                <div class="mask">
+                </div>
+                <div class="heading">
+                    <i class="ion-information hidden-xs"></i>
+                    <h2>Info</h2>
+                </div>
+            </div>
+            
+            <!-- Single Navigation Menu Button [ END ]  -->
+            
+        </div>
+    </div>
+    
+    <!--
+    4 ) Close Button
+    -->
+    
+    <div class="close-btn"><i class="ion-android-close"></i></div>
 
-			<div style="padding-top: 8px; font-weight: bold;">Ansprechpersonen</div>
-				<div class="facet" style="">
-				<div class="marker" style=""></div>
-				<p>Dr. Tabea Lurk<br />
-				Leitung Mediathek<br />
-				Mail: <span class="e-mail" data-user="krul.aebat" data-website="hc.wnhf"></span><br />
-				T +41 61 228 43 65</p>
-				<p>Jessica Baumann<br />
-				I & D Fachfrau; Medienbearbeitung<br />
-				Mail: <span class="e-mail" data-user="nnamuab.acissej" data-website="hc.wnhf"></span><br />
-				+41 (0)61 228 40 47</p>
 
-			</div>
+	<div id="content"></div>  
 
-		</div>
-
-	   </div>
-	</div>
-
+<?php include( 'loader/search.load.php' ); ?>	
 	
-<?php
-include( 'bgimage.inc.php' );
-?>
+    <!--
+    8 ) Contact Page
+    -->
+    
+    <div id="contact" class="contact-page container-fluid page">
+        <div class="row">
+            <!--( a ) Contact Page Fixed Image Portion -->
+            
+            <div class="image-container col-md-3 col-sm-12">
+                <div class="mask">
+                </div>
+                <div class="main-heading">
+                    <h1>contact</h1>
+                </div>
+            </div>
+            
+            <!--( b ) Contact Page Content -->
+            
+            <div class="content-container col-md-9 col-sm-12">
+                
+                <!--( A ) Contact Form -->
+                
+                <div class="clearfix full-height">
+                    <h2 class="small-heading">COME IN TOUCH</h2>
+                    <div class="row">
+                        <div class="col-md-10 col-md-offset-1 col-xs-10 col-xs-offset-1">
+                            <div class="contact-info">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="data">
+                                            <i class="fa fa-map-marker"></i>
+                                            <span>
+                                                House -3, Road-2, Block - F, <br>
+                                                 Akhalia Ghat R/A, Sylhet. <br>
+                                            </span>
+                                        </div>
+
+                                        <div class="data">
+                                            <i class="fa fa-envelope"></i>
+                                            <span>
+                                                hello@boots4.com
+                                            </span>
+                                        </div>
+
+                                        <div class="data">
+                                            <i class="fa fa-phone"></i>
+                                            <span>
+                                                +880 12345 - 67890
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div id="map-canvas"></div>
+                                    </div>
+                                </div>
+                                    
+                            </div>
+
+                            <div class="row">
+                                <form  id="contactForm" class="contact-form" method="post" action="php/contact.php">
+                                    
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="form-group">
+                                            <input  name="name" type="text" class="form-control" id="name" required="required" placeholder="  Name">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="form-group">
+                                            <input name="email" type="email" class="form-control" id="email" required="required" placeholder="  Email">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 col-sm-12">
+                                        <textarea name="massage" type="text" class="form-control" id="message" rows="5" required="required" placeholder="  Message"></textarea>
+                                    </div>
+                                    
+                                    <div class="col-md-4 col-xs-12">
+                                        <input type="submit" id="cfsubmit" class="btn btn-send" value="Say Hello">
+                                    </div>
+                                    <div id="contactFormResponse" class="col-md-8 col-xs-12"></div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- ( D ) Footer -->
+                
+                <div class="footer clearfix">
+                    <div class="row">
+                        <div class="col-md-10 col-md-offset-1 col-xs-10 col-xs-offset-1">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 col-xs-12">
+                                    <p class="copyright">Copyright &copy; 2015 
+                                        <a href="#">Your Company</a>
+                                    </p>
+                                </div>
+
+                                <div class="col-md-6 col-sm-12 col-xs-12">
+                                    <p class="author">
+                                        Theme by <a href="https://themewagon.com/" target="_blank">ThemeWagon</a>
+                                    </p>
+                                </div>
+                            </div>      
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!--  
+    9 ) Javascript
+    - -->
+	
 <script>
 
+	var q = {
+		query: '<?php echo $qobj->query; ?>',
+		area: '<?php echo $qobj->area; ?>',
+		filter: [],
+		facets: {},
+	}
+
+	
 
 function init() {
-	initSearch("all");  
 
+    var mapCanvas = document.getElementById('map-canvas');
+    var mapOptions = {
+        center: new google.maps.LatLng(40.565934, -122.388118),
+        zoom: 16,
+        scrollwheel: false,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    var map = new google.maps.Map(mapCanvas, mapOptions)
+
+    var marker = new google.maps.Marker({ 
+            position: new google.maps.LatLng(40.565234, -122.388118),
+            title:"Boots4 Office"
+        });
+
+        // To add the marker to the map, call setMap();
+        marker.setMap(map);
+
+    //google.maps.event.addDomListener(window, 'load', initialize);
+
+	
 }
 </script>   
-<?php
-//echo "<pre>".print_r( $_SERVER )."</pre>\n";
+	
+    
+    <script type="text/javascript" src="assets/js/jquery-2.1.3.min.js"></script>
+    <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="assets/js/modernizr.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.easing.min.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.mixitup.min.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.popup.min.js"></script>
+    <script type="text/javascript" src="assets/js/owl.carousel.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script type="text/javascript" src="assets/js/contact.js"></script>
+    <script type="text/javascript" src="assets/js/script.js"></script>
+    <script type="text/javascript" src="js/md5.js"></script>
+    <script type="text/javascript" src="js/mediathek_helper.js"></script>
+    <script type="text/javascript" src="js/mediathek_gui.js"></script>
+	
+	<script src="js/threejs/build/three.js"></script>
+	<script src="js/threejs/build/TrackballControls.js"></script>
+	<script src="js/threejs/build/OrbitControls.js"></script>
+	<script src="js/threejs/build/CombinedCamera.js"></script>   
+	<!-- script src="mediathek2.js"></script -->   
+	<script src="js/mediathek.js"></script>   
+	<script src="js/mediathek3d.js"></script>	
 
-echo mediathekfooter();
-?>
 
-  
+</body>
+</html>

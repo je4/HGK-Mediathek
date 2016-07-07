@@ -9,6 +9,10 @@ include 'lib/adodb5/adodb.inc.php';
 include 'vendor/autoload.php';
 require 'lib/Mediathek/Autoloader.php';
 require 'lib/Phpoaipmh/Autoloader.php';
+require 'lib/Psr/Autoloader.php';
+require 'lib/GuzzleHttp/Autoloader.php';
+require 'lib/HalExplorer/Autoloader.php';
+require 'lib/SimpleHal/Autoloader.php';
 
 include 'lib/Google/autoload.php';
 
@@ -18,6 +22,10 @@ include 'config.inc.php';
 
 \Mediathek\Autoloader::register();
 \Phpoaipmh\Autoloader::register();
+\Psr\Autoloader::register();
+\GuzzleHttp\Autoloader::register();
+//\HalExplorer\Autoloader::register();
+\Stormsys\SimpleHal\Autoloader::register();
 
 $db = NewAdoConnection( 'mysqli' );
 $db->PConnect( $config['db']['host'], $config['db']['user'], $config['db']['password'], $config['db']['database'] );

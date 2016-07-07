@@ -146,6 +146,10 @@ class Session implements \SessionHandlerInterface
     }
   }
   
+  public function getID() {
+	return $this->id;
+  }
+  
   public function isLoggedIn() {
     return $this->shibGetSessionID() != null;
   }

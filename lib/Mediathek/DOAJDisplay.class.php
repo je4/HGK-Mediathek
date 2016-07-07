@@ -67,7 +67,7 @@ class DOAJDisplay extends DisplayEntity {
                     <?php if( strlen( $this->metadata['Journal license'] )) echo 'Lizenz: '.htmlspecialchars( $this->metadata['Journal license'] )."<br />\n"; ?>
                     <?php if( strlen( $this->metadata['Journal ISSN (print version)'] )) echo 'ISSN: '.htmlspecialchars( $this->metadata['Journal ISSN (print version)'] )."<br />\n"; ?>
                     <?php if( strlen( $this->metadata['Journal EISSN (online version)'] )) echo 'EISSN: '.htmlspecialchars( $this->metadata['Journal EISSN (online version)'] )."<br />\n"; ?>
-                    <?php if( strlen( $this->metadata['Journal URL'] )) echo 'URL: <i class="fa fa-external-link" aria-hidden="true"></i><a href="'.$this->metadata['Journal URL'].'" target="_blank">'.htmlspecialchars( $this->metadata['Journal URL'] )."</a><br />\n"; ?>
+                    <?php if( strlen( $this->metadata['Journal URL'] )) echo 'URL: <i class="fa fa-external-link" aria-hidden="true"></i><a href="redir.php?id='.urlencode( $this->doc->id ).'&url='.urlencode($this->metadata['Journal URL']).'" target="_blank">'.htmlspecialchars( $this->metadata['Journal URL'] )."</a><br />\n"; ?>
 					
 					ID: <?php echo $this->doc->id; ?>
 					<p>

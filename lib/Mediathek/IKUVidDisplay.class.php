@@ -136,6 +136,12 @@ class IKUVidDisplay extends DisplayEntity {
   </a>
 </div>
 -->
+		<script>
+			function initIKUVid() {
+				
+			}
+		</script>
+
 <?php
 
 //		echo "<code>".nl2br(str_replace( ' ', '&nbsp;', print_r( $this->metadata, true )))	."</code>\n";
@@ -153,7 +159,7 @@ class IKUVidDisplay extends DisplayEntity {
                     <?php echo htmlspecialchars( $this->doc->author[0] ); ?>
                 </a>
             </td>
-            <td class="list" style="width: 5%;"><i class="fa fa-file-video-o"></i></td>
+            <td class="list" style="width: 5%; font-size: 20px;"><i class="ion-ios-videocam"></i></td>
             <td class="list" style="width: 70%;">
                 <a class="entity" href="#coll_<?php echo $this->doc->id; ?>" data-toggle="collapse" aria-expanded="false" aria-controls="coll_<?php echo $this->doc->id; ?>">
                     <?php echo htmlspecialchars( $this->doc->title ); ?>
@@ -171,7 +177,7 @@ class IKUVidDisplay extends DisplayEntity {
                     <?php if( strlen( $this->metadata['Dauer'] )) echo 'Dauer: '.htmlspecialchars( $this->metadata['Dauer'] )."<br />\n"; ?>
 					<!--<i class="fa fa-external-link" aria-hidden="true"></i> <a href="http://www.imdb.com/find?ref_=nv_sr_fn&q=<?php echo urlencode(trim($this->metadata['Titel1'] )); ?>&s=all" target="_blank"><img src="img/imdb.png"></a><br /> -->
 					ID: <?php echo $this->doc->id; ?><br />
-					<a href="detail.php?<?php echo "id=".urlencode( $this->doc->id ); foreach( $this->urlparams as $key=>$val ) echo '&'.$key.'='.urlencode($val); ?>">Detail</a><br />
+					<a href="detail.php?<?php echo "id=".urlencode( $this->doc->id ); foreach( $this->urlparams as $key=>$val ) echo '&'.$key.'='.urlencode($val); ?>"><i class="fa fa-folder-open" aria-hidden="true"></i> Details</a><br />
 
                 </div>
             </td>
