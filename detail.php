@@ -26,7 +26,9 @@ $urlparams = array( 'q'=>$q,
 
 $squery = $solrclient->createSelect();
 $helper = $squery->getHelper();
-$qstr = 'id:'.$id;
+if( $id ) $qstr = 'id:'.$id;
+else if( $barcode ) $qstr = 'signature:'.$helper->escapePhrase( 'barcode:E75:'.$barcode);
+else $qstr = "id:none";
 $squery->setQuery( $qstr );
 
 $rs = $solrclient->select( $squery );
@@ -57,15 +59,7 @@ echo mediathekheader('search', 'Mediathek - Detail - '.($doc ? $doc->title : '')
                 <div class="clearfix full-height">
                     <h2 class="small-heading">Mediathek der Künste</h2>
 
-	<div class="container-fluid" style="margin-top: 0px; padding: 0px 20px 20px 20px;">
-		<div class="row" style="margin-bottom: 30px;">
-		  <div class="col-md-offset-2 col-md-8">
-<?php
-
-
-?>
-		</div>
-	   </div>
+					<div class="container-fluid" style="margin-top: 0px; padding: 0px 20px 20px 20px;">
 <?php
 if( $numResults > 0 ) foreach( $rs as $doc ) {
 ?>
@@ -76,13 +70,13 @@ if( $numResults > 0 ) foreach( $rs as $doc ) {
 	$output = new $class($doc, null, $db);
 	$html = $output->detailView();
 	echo $html;
-
 ?>
-
 <?php
 }
 ?>
-	</div>
+					</div>
+				</div>
+			</div>
 	<div class="footer clearfix">
 		<div class="row">
 			<div class="col-md-10 col-md-offset-1 col-xs-10 col-xs-offset-1">
@@ -102,7 +96,7 @@ if( $numResults > 0 ) foreach( $rs as $doc ) {
 			</div>
 		</div>
 	</div>
-	</div>
+</div>
 </div>
 	
 <?php

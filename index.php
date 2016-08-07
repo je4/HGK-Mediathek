@@ -58,8 +58,8 @@ echo mediathekheader('home', 'Willkommen in der Mediathek der Künste', null);
         
         <div class="menu">
             <div data-url_target="about" class="profile-btn menu_button">
-                <img alt="" src="assets/img/about.jpg" style="width:100%; height:100%;">
-                <div class="mask">
+                <img alt="" src="img/m_about.png" style="width:100%; height:100%;">
+                <div class="mask" style="background: rgba( 119, 147, 60, 0.9);">
                 </div>
                 <div class="heading">
                     <i class="ion-ios-people-outline hidden-xs"></i>
@@ -70,20 +70,20 @@ echo mediathekheader('home', 'Willkommen in der Mediathek der Künste', null);
             <!-- Single Navigation Menu Button -->
             
             <div data-url_target="search" class="portfolio-btn menu_button">
-                <img alt="" src="assets/img/portfolio.jpg">
-                <div class="mask">
+                <img alt="" src="img/m_search_inv.png">
+                <div class="mask" style="background: rgba( 162, 22, 152, 0.9);">
                 </div>
                 <div class="heading">
                     <i class="ion-ios-search hidden-xs"></i>
-                    <h2>Suche</h2>
+                    <h2>Recherche</h2>
                 </div>
             </div>
             
             <!-- Single Navigation Menu Button [ END ]  -->
             
             <div data-url_target="contact" class="contact-btn menu_button">
-                <img alt="" src="assets/img/contact.jpg">
-                <div class="mask">
+                <img alt="" src="img/m_info.png">
+                <div class="mask" style="background: rgba( 10, 92, 41, 0.9);">
                 </div>
                 <div class="heading">
                     <i class="ion-ios-chatboxes-outline hidden-xs"></i>
@@ -94,8 +94,8 @@ echo mediathekheader('home', 'Willkommen in der Mediathek der Künste', null);
             <!-- Single Navigation Menu Button [ END ]  -->
             
             <div data-url_target="info" class="service-btn menu_button">
-                <img alt="" src="assets/img/service.jpg">
-                <div class="mask">
+                <img alt="" src="img/m_news_inv.png">
+                <div class="mask" style="background: rgba( 23, 56, 80, 0.9);">
                 </div>
                 <div class="heading">
                     <i class="ion-information hidden-xs"></i>

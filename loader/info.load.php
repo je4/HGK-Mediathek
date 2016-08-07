@@ -44,7 +44,7 @@ $response = $explorer->makeRequest( 'get', 'pages/4');
 
                 <!--( B ) What Can I Do -->
 
-                <div class="clearfix full-height">
+                <div class="clearfix">
                     <h2 class="small-heading"> <?php echo $pages->{'title'}->{'rendered'}; ?></h2>
                     <div class="row">
                         <div class="col-md-10 col-md-offset-1 col-xs-12">
@@ -62,7 +62,7 @@ foreach( $pages as $page ) {
 
                 <!--( B ) What Can I Do -->
 
-                <div class="clearfix full-height">
+                <div class="clearfix">
                     <h2 class="small-heading"> <?php echo $page->{'title'}->{'rendered'}; ?></h2>
                     <div class="row">
                         <div class="col-md-10 col-md-offset-1 col-xs-12">

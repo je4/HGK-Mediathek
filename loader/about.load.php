@@ -54,7 +54,13 @@ $page = new Resource($client, $uriTemplateProcessor, $uriJoiner, $apiRootUrl);
 										</div>
 										<div class="back">
 											<h5>Ausleihe</h5>
-											<p>Der ausleihbare Buch- und Medienbestand wird vor Ort und über den <a href="http://www.nebis.ch">NEBIS</a> verliehen.</p>
+											<p>Die Mediathek ist Lesesaal, Lernraum und Freihandmagazin zugleich. Daher können fast alle Bücher, Zeitschriften und
+											Datenträger vor der Ausleihe am Ort angeschaut werden. Die Ausleihe erfolgt am Selbstverbucher, die Rückgabe an der Theke.
+											Bestellung und Fernleihe werden über das <a href="http://www.nebis.ch">NEBIS-Portal</a> abgewickelt.
+<!--
+												
+												Der ausleihbare Buch- und Medienbestand wird vor Ort und über den <a href="http://www.nebis.ch">NEBIS</a> verliehen.</p>
+-->											
 										</div>
 									</div>
 								</div>

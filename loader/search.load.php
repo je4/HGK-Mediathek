@@ -31,7 +31,7 @@ $page = new Resource($client, $uriTemplateProcessor, $uriJoiner, $apiRootUrl);
                 <div class="mask">
                 </div>
                 <div class="main-heading">
-                    <h1>Suche</h1>
+                    <h1>Recherche</h1>
                 </div>
             </div>
 

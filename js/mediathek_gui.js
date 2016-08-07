@@ -279,7 +279,7 @@ $(document).ready(function () {
 	  renderer.height( '400px');
 	  var width = body.width();
 	  renderer.width( width );
-	  init3D( kiste );
+	  init3D( kiste, null );
 	})
 
 	$('#MTModal').on('hidden.bs.modal', function (event) {

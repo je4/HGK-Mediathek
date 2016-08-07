@@ -59,7 +59,8 @@ function mediathekheader( $current, $title, $area ) {
 
 
 <body>
-    
+<?php if( $current == 'home' ) { ?>
+	
     <!-- Preloader -->
     
     <div id="preloader">
@@ -70,6 +71,7 @@ function mediathekheader( $current, $title, $area ) {
             <span></span>
         </div>
     </div>
+<?php } ?>
 
 	<!-- hidden search form for searchbar -->
 	<form style="visibility: hidden;" id="searchform" action="#" method="post">

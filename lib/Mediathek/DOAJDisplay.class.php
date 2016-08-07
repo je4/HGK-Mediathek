@@ -71,7 +71,8 @@ class DOAJDisplay extends DisplayEntity {
 					
 					ID: <?php echo $this->doc->id; ?>
 					<p>
-					<a href="detail.php?<?php echo "id=".urlencode( $this->doc->id ); foreach( $this->urlparams as $key=>$val ) echo '&'.$key.'='.urlencode($val); ?>">Detail</a><br />
+					<!-- <a href="detail.php?<?php echo "id=".urlencode( $this->doc->id ); foreach( $this->urlparams as $key=>$val ) echo '&'.$key.'='.urlencode($val); ?>">Detail</a><br />
+					-->
                     
                 </div>
             </td>

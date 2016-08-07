@@ -324,7 +324,7 @@ class MarcEntity implements SOLRSource {
 								$src = 'bulrvm';
 							break; 
 							case '7':
-								$src = $subfields['2'];
+								if( array_key_exists( '2', $subfields )) $src = $subfields['2'];
 							break;
 							default:
 								$src = 'unknown';

@@ -36,11 +36,13 @@ echo "letzter Inventarisierungszeitraum: {$row['start']}";
 if( $row['start'] != $row['end'] ) echo " - {$row['end']}";
 echo "</p>\n";
 
-$sql = "SELECT DISTINCT signaturgroup, signaturgroup.name FROM inventory2, code_sig, signaturgroup WHERE id=signaturgroup AND itemid=barcode AND marker=".$db->qstr($kiste)." ORDER BY signaturgroup.name ASC";
+$sql = "SELECT DISTINCT ag.signaturgroup, sg.name FROM inventory2, ARC_group ag, signaturgroup sg WHERE id=signaturgroup AND itemid=Strichcode AND marker=".$db->qstr($kiste)." ORDER BY sg.name ASC";
 echo "<!-- {$sql} -->\n";
 $rs = $db->Execute( $sql );
 foreach( $rs as $row ) {
-	$sql = "SELECT MIN(signatur) AS start, MAX(signatur) AS end , COUNT(*) AS num FROM inventory2, ARC, signaturgroup WHERE signaturgroup={$row['signaturgroup']} AND id=signaturgroup AND itemid=Strichcode AND marker=".$db->qstr($kiste)." GROUP BY signaturgroup";
+	$sql = "SELECT MIN(Signatur) AS start, MAX(Signatur) AS end , COUNT(*) AS num
+        FROM inventory2 i, ARC_group ag, signaturgroup sg
+            WHERE ag.signaturgroup={$row['signaturgroup']} AND sg.id=ag.signaturgroup AND itemid=Strichcode AND marker=".$db->qstr($kiste)." GROUP BY ag.signaturgroup";
 	echo "<!-- {$sql} -->\n";
 	$row2 = $db->GetRow( $sql );
 	echo htmlspecialchars( utf8_encode( "{$row2['start']}" ));

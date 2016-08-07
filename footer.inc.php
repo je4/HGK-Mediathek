@@ -25,6 +25,9 @@ function mediathekfooter() {
 	<script language="javascript">
 	   $( document ).ready(function() {
 		   return;
+		
+		
+		
 		   init();
 		   	$('#MTModal').on('shown.bs.modal', function (event) {
 				var button = $(event.relatedTarget) // Button that triggered the modal

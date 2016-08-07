@@ -14,16 +14,25 @@ echo "<p>Anzahl Medien: {$row['num']}<br />\n";
 echo "letzter Inventarisierungszeitraum: {$row['start']}";
 if( $row['start'] != $row['end'] ) echo " - {$row['end']}";
 echo "</p>\n";
-$sql = "SELECT DISTINCT signaturgroup, signaturgroup.name FROM inventory2, code_sig, signaturgroup WHERE id=signaturgroup AND itemid=barcode AND marker LIKE ".$db->qstr(str_replace("00", "__", $reihe))." ORDER BY signaturgroup.name ASC";
+$sql = "SELECT DISTINCT signaturgroup, signaturgroup.name, signaturgroup.descr, signaturgroup.signatursys
+        FROM inventory2, ARC_group, signaturgroup
+        WHERE id=signaturgroup AND itemid=Strichcode AND marker LIKE ".$db->qstr(str_replace("00", "__", $reihe))."
+        ORDER BY signaturgroup.name ASC";
 echo "<!-- {$sql} -->\n";
 $rs = $db->Execute( $sql );
 foreach( $rs as $row ) {
-	$sql = "SELECT MIN(signatur) AS start, MAX(signatur) AS end , COUNT(*) AS num FROM inventory2, code_sig, signaturgroup WHERE signaturgroup={$row['signaturgroup']} AND id=signaturgroup AND itemid=barcode AND marker  LIKE ".$db->qstr(str_replace("00", "__", $reihe))." GROUP BY signaturgroup";
+	$sql = "SELECT MIN(signatur) AS start, MAX(signatur) AS end , COUNT(*) AS num
+    FROM inventory2, ARC_group, signaturgroup
+    WHERE signaturgroup={$row['signaturgroup']} AND id=signaturgroup AND itemid=Strichcode AND marker  LIKE ".$db->qstr(str_replace("00", "__", $reihe))." GROUP BY signaturgroup";
 	echo "<!-- {$sql} -->\n";
 	$row2 = $db->GetRow( $sql );
 echo htmlspecialchars( utf8_encode( "[{$row['signaturgroup']}] {$row2['start']}" ));
 	if( $row2['end'] != $row2['start'] ) 
 		echo "&nbsp;&nbsp;-&nbsp;&nbsp;".htmlspecialchars( utf8_encode( "{$row2['end']}"))." ({$row2['num']})";
+	if( strlen( $row['descr']))
+		echo " // ".htmlspecialchars( $row['name'] )." - ".htmlspecialchars( $row['descr'] )."";
+	else
+		echo " // {{$row['signatursys']}}";
 	echo "<br />\n";
 }
 $rs->Close();

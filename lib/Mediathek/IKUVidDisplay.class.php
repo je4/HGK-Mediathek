@@ -44,98 +44,69 @@ class IKUVidDisplay extends DisplayEntity {
 		
         ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
 ?>
-<h3><?php if( isset( $this->metadata['Autor Regie'] )) echo htmlspecialchars( $this->metadata['Autor Regie'].': ' ); echo htmlentities( $this->metadata['Titel1'] );?> <span style="font-size: 80%;"><?php echo htmlspecialchars( $this->metadata['Produktionsjahr'] );?></span></h3>
-<h4><?php if( isset( $this->metadata['Titel2'] )) echo htmlspecialchars( $this->metadata['Titel2'].'.' );?>
-	<span style="font-size: 80%;"><?php if( isset( $this->metadata['Dauer'] )) echo htmlspecialchars( $this->metadata['Dauer'] );?>
-	<?php if( isset( $this->metadata['Land'] )) echo htmlspecialchars( $this->metadata['Land'] );?>
-	</span></h4>
+<div class="row">
+	<div class="col-md-3">
+		<span style="; font-weight: bold;">Aktueller Film</span><br>
+		<div class="facet" style="">
+			<div class="marker" style=""></div>
+			<h3><?php if( isset( $this->metadata['Autor Regie'] )) echo htmlspecialchars( $this->metadata['Autor Regie'].': ' ); echo htmlentities( $this->metadata['Titel1'] );?> <span style="font-size: 80%;"><?php echo htmlspecialchars( $this->metadata['Produktionsjahr'] );?></span></h3>
+			<h4><?php if( isset( $this->metadata['Titel2'] )) echo htmlspecialchars( $this->metadata['Titel2'].'.' );?>
+			<span style="font-size: 80%;"><?php if( isset( $this->metadata['Dauer'] )) echo htmlspecialchars( $this->metadata['Dauer'] );?>
+			<?php if( isset( $this->metadata['Land'] )) echo htmlspecialchars( $this->metadata['Land'] );?>
+			</span></h4>
+		</div>
+	</div>
+	<div class="col-md-9">
 <?php
 		
 		//print_r( $session->getGroups());
 		// Fall 1
 		if( !$loggedin /* && !$cert */ ) {
 ?>
-<div class="media">
-	<a class="media-left" href="#">
-			<!--
-			<video id="my-video" class="video-js" autoplay controls preload="auto" width="188" height="150"
-			poster="<?php echo $config['media']['picopen'].'/'.intval($this->doc->originalid).'.00001.thumb.png'; ?>" data-setup="{}">
-			  <source src="<?php echo $config['media']['videoopen'].'/'.intval($this->doc->originalid).'.thumb.mp4'; ?>" type='video/mp4'>
-			  <p class="vjs-no-js">
-				To view this video please enable JavaScript, and consider upgrading to a web browser that
-				<a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-			  </p>
-			</video>
-			-->
-			<img class="media-left" src="<?php echo $config['media']['picopen'].'/'.intval($this->doc->originalid).'.00001.thumb.png'; ?>" />
-	</a>
-	<div class="media-body">
-		<p><?php echo htmlspecialchars( $this->metadata['Bemerkungen'] ); ?></p>
+	<span style="; font-weight: bold;"></span><br>
+	<div class="facet" style="">
+		<div class="marker" style=""></div>
+			<div class="media">
+			<a class="media-left" href="#">
+				<img class="media-left" src="<?php echo $config['media']['picopen'].'/'.intval($this->doc->originalid).'.00001.thumb.png'; ?>" />
+			</a>
+			<div class="media-body">
+				<p><?php echo htmlspecialchars( $this->metadata['Bemerkungen'] ); ?></p>
+			</div>
+		</div>
 	</div>
-</div>
 
 <?php
 		}
 		elseif( $session->inGroup( 'certificate/mediathek') && $this->doc->embedded ) {
 ?>
-  <video id="my-video" class="video-js" controls preload="auto" width="720" height="576"
-  poster="<?php echo $config['media']['picintern'].'/'.intval($this->doc->originalid).'.00001.big.png'; ?>" data-setup="{}">
-    <source src="<?php echo $config['media']['videocert'].'/'.intval($this->doc->originalid).'.mp4'; ?>" type='video/mp4'>
-    <p class="vjs-no-js">
-      To view this video please enable JavaScript, and consider upgrading to a web browser that
-      <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-    </p>
-  </video>
-  
+	<span style="; font-weight: bold;">Film abspielen</span><br>
+	<div class="facet" style="min-width: 740px; text-align: center;">
+		<div class="marker" style=""></div>
+		<video id="my-video" class="video-js" controls preload="auto" width="720" height="576"
+		poster="<?php echo $config['media']['picintern'].'/'.intval($this->doc->originalid).'.00001.big.png'; ?>" data-setup="{}">
+		  <source src="<?php echo $config['media']['videocert'].'/'.intval($this->doc->originalid).'.mp4'; ?>" type='video/mp4'>
+		  <p class="vjs-no-js">
+			To view this video please enable JavaScript, and consider upgrading to a web browser that
+			<a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+		  </p>
+		</video>
+	</div>  
 <?php
 		}
 
 ?>
-<p>
-&nbsp;<br />
+<br />
+<div class="facet" style="padding-bottom: 5px;">
+	<div class="marker" style=""></div>
 <img src="<?php echo $config['media']['picopen'].'/'.intval($this->doc->originalid).'.00005.thumb.png'; ?>" />
 <img src="<?php echo $config['media']['picopen'].'/'.intval($this->doc->originalid).'.00010.thumb.png'; ?>" />
 <img src="<?php echo $config['media']['picopen'].'/'.intval($this->doc->originalid).'.00015.thumb.png'; ?>" />
 <img src="<?php echo $config['media']['picopen'].'/'.intval($this->doc->originalid).'.00020.thumb.png'; ?>" />
 <img src="<?php echo $config['media']['picopen'].'/'.intval($this->doc->originalid).'.00025.thumb.png'; ?>" />
-</p>
-
-<!--
-<div id="carousel-shot" class="carousel slide" data-ride="carousel" style="width:188px;">
-  <ol class="carousel-indicators">
-    <li data-target="#carousel-shot" data-slide-to="0" class="active"></li>
-    <li data-target="#carousel-shot" data-slide-to="1"></li>
-    <li data-target="#carousel-shot" data-slide-to="2"></li>
-    <li data-target="#carousel-shot" data-slide-to="3"></li>
-    <li data-target="#carousel-shot" data-slide-to="4"></li>
-  </ol>
-  <div class="carousel-inner" role="listbox">
-    <div class="carousel-item active">
-      <img src="<?php echo $config['media']['picopen'].'/'.intval($this->doc->originalid).'.00005.thumb.png'; ?>" alt="Videoshot #1">
-    </div>
-    <div class="carousel-item">
-      <img src="<?php echo $config['media']['picopen'].'/'.intval($this->doc->originalid).'.00010.thumb.png'; ?>" alt="Videoshot #2">
-    </div>
-    <div class="carousel-item">
-      <img src="<?php echo $config['media']['picopen'].'/'.intval($this->doc->originalid).'.00015.thumb.png'; ?>" alt="Videoshot #3">
-    </div>
-    <div class="carousel-item">
-      <img src="<?php echo $config['media']['picopen'].'/'.intval($this->doc->originalid).'.00020.thumb.png'; ?>" alt="Videoshot #4">
-    </div>
-    <div class="carousel-item">
-      <img src="<?php echo $config['media']['picopen'].'/'.intval($this->doc->originalid).'.00025.thumb.png'; ?>" alt="Videoshot #5">
-    </div>
-  </div>
-  <a class="left carousel-control" href="#carousel-shot" role="button" data-slide="prev">
-    <span class="icon-prev" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="right carousel-control" href="#carousel-shot" role="button" data-slide="next">
-    <span class="icon-next" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
 </div>
--->
+	</div>
+</div>
 		<script>
 			function initIKUVid() {
 				

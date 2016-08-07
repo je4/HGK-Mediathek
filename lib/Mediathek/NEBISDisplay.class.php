@@ -127,25 +127,32 @@ $cfg = array(
 ?>				
 			</div>
 			<div class="col-md-3">
+<?php 	if( is_array( $this->doc->cluster_ss ))  { ?>		
 				<div style="">
 				<span style="; font-weight: bold;">Themen</span><br />
 					<div class="facet" style="">
 						<div class="marker" style=""></div>
 <?php
-						foreach( $entity->getCluster() as $cl ) {
+						foreach( $this->doc->cluster_ss as $cl ) {
+//						foreach( $entity->getCluster() as $cl ) {
 //							echo htmlspecialchars( $cl ).'<br />';
 ?>
-							<div class="checkbox checkbox-green">
+								<label>
+									<a href="javascript:doSearchFull('', '', [], {cluster: ['<?php echo htmlspecialchars( $cl ); ?>']}, 0, <?php echo $pagesize; ?> );"><?php echo htmlspecialchars( $cl ); ?></a>
+								</label><br />
+								
+							<!-- <div class="checkbox checkbox-green">
 								<input class="facet" type="checkbox" id="cluster" value="<?php echo htmlentities($cl); ?>">
 								<label for="cluster<?php echo $i; ?>">
 									<?php echo htmlspecialchars( $cl ); ?>
 								</label>
-							</div>
+							</div> -->
 <?php							
 						}
 ?>							
 					</div>
 				</div>
+						<?php  } ?>				
 				<div style="">
 				<span style="; font-weight: bold;">Kontext</span><br />
 					<div class="facet" style="">
@@ -216,20 +223,26 @@ if( $kiste ) {
 			</div>
 		</div>
 -->
+<?php 
+  $box = '';
+  $boxjson = '';
+  foreach( $this->doc->location as $loc ) {
+	  if( substr( $loc, 0, 10 ) == 'E75:Kiste:' ) {
+		  $box = str_replace( '_', '', substr( $loc, 10 ));
+		  break;
+	  }
+  }
+  if( file_exists( $config['3djsondir']."/{$box}.json" )) {
+	  $boxjson = file_get_contents( $config['3djsondir']."/{$box}.json" );
+  }
+?>
 		<script>
 			function initNEBIS() {
 			  var renderer = $( '.renderer' );
 			  renderer.height( '400px');
 			  //var width = body.width();
 			  ///renderer.width( width );
-			  init3D( '<?php 
-			  foreach( $this->doc->location as $loc ) {
-				  if( substr( $loc, 0, 10 ) == 'E75:Kiste:' ) {
-					  echo str_replace( '_', '', substr( $loc, 10 ));
-					  break;
-				  }
-			  } 
-			  ?>'  );
+			  init3D( '<?php echo $box; ?>', '<?php echo $boxjson; ?>'  );
 
 			}
 		</script>

@@ -299,12 +299,12 @@ td.detail {
 }
 
 .fullsearch-page .image-container {
-    background: url(../assets/img/portfolio_featured.png);
+    background: url(../img/graphite.png);
     background-size: cover;
     background-position: bottom;
 }
 .fullsearch-page .footer {
-    background-color: #004824;
+    background-color: #46494f;
 }
 
 /* -------------------------------------

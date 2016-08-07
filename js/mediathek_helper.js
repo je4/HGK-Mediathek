@@ -144,7 +144,7 @@ var py = -5;
 var pz = 5;
 var gridWidth = 500;
 
-function init3D( box ) {
+function init3D( box, camJSON ) {
 	hash = box.substring(0, 4);
 	
 	mediathek = new Mediathek( {
@@ -177,13 +177,17 @@ function init3D( box ) {
 			mediathek.animate();
 			
 			object.renderBoxes(0);
-			
-			mediathek3D.boxHighlight( hash.substring( 0, 4), true );
-			mediathek.camera.position.set( px*gridWidth, py*gridWidth, pz*gridWidth );
-			mediathek.camera.up = new THREE.Vector3(0,0,1);
-			box = mediathek3D.boxes[hash.substring( 0, 4)];
-			mediathek.controls.target.copy( box.position );
-	
+
+			if( camJSON == null ) {
+				mediathek3D.boxHighlight( hash.substring( 0, 4), true );
+				mediathek.camera.position.set( px*gridWidth, py*gridWidth, pz*gridWidth );
+				mediathek.camera.up = new THREE.Vector3(0,0,1);
+				box = mediathek3D.boxes[hash.substring( 0, 4)];
+				mediathek.controls.target.copy( box.position );
+			}
+			else {
+				mediathek.setCamJSON( camJSON );
+			}
 			$(document).keyup( function( event ) {
 				console.log( event.which );
 				if ( mediathek == null ) {

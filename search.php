@@ -132,7 +132,7 @@ echo mediathekheader('search', 'Mediathek - Suche - '.$qobj->query, $qobj->area)
             <!--( a ) Profile Page Fixed Image Portion -->
 
             <div class="image-container col-md-1 col-sm-12">
-                <div class="mask">
+                <div class="mask" style="background-color: rgba(0, 0, 0, 0.15);">
                 </div>
                 <div style="left: 20%;" class="main-heading">
                     <h1>Suche</h1>
@@ -185,8 +185,10 @@ if( @is_array( $qobj->facets->embedded )) {
 }
 if( @is_array( $qobj->facets->cluster )) {
 	$_qstr = 'cluster_ss:(';
+	$first = true;
 	foreach( $qobj->facets->cluster as $clu ) {
-		$_qstr .= ' '.$helper->escapePhrase( $clu );
+		$_qstr .= ($first?'':' AND').' '.$helper->escapePhrase( $clu );
+		$first = false;
 	}
 	$_qstr .= ' )';
     $squery->createFilterQuery('cluster')->addTag('cluster')->setQuery($_qstr);
@@ -210,7 +212,7 @@ $facetSetEmbedded->createFacetField('embedded')->setField('embedded')->addExclud
 //$facetSetLicense = $squery->getFacetSet();
 //$facetSetLicense->createFacetField('license')->setField('license')->addExclude('license');
 $facetSetCluster = $squery->getFacetSet();
-$facetSetCluster->createFacetField('cluster')->setField('cluster_ss')->addExclude('cluster');
+$facetSetCluster->createFacetField('cluster')->setField('cluster_ss'); //->addExclude('cluster');
 //$facetSetAcl = $squery->getFacetSet();
 //$facetSetAcl->createFacetField('acl')->setField('acl')->addExclude('acl');
 
@@ -302,7 +304,7 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 			</div>
 
 			<div style="">
-			<span style="; font-weight: bold;">Keywords</span><br />
+			<span style="; font-weight: bold;">Themen</span><br />
 			<div class="facet" style="">
 				<div class="marker" style=""></div>
 <?php
@@ -312,18 +314,30 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 					if( (@is_array( $qobj->facets->cluster ) && array_search($value, $qobj->facets->cluster) !== false ) === false && $count == 0 ) continue;
 ?>	
 					<div class="checkbox checkbox-green">
-						<input class="facet" type="checkbox" id="cluster" value="<?php echo htmlentities($value); ?>" <?php if( @is_array( $qobj->facets->cluster ) && array_search($value, $qobj->facets->cluster) !== false ) echo " checked"; ?>>
+						<input class="facet" type="checkbox" id="cluster" value="<?php echo htmlentities($value); ?>" <?php if( @is_array( $qobj->facets->cluster ) && array_search($value, $qobj->facets->cluster) !== false ) { echo " checked"; } ?>>
 						<label for="cluster<?php echo $i; ?>">
 							<?php echo htmlspecialchars( $value ).' ('.$count.')'; ?>
 						</label>
 					</div>
-<!--
-				<input type="checkbox" id="cluster<?php echo $i; ?>" class="css-checkbox" value="<?php echo htmlentities($value); ?>" <?php if( @is_array( $qobj->facets->cluster ) && array_search($value, $qobj->facets->cluster) !== false ) echo " checked"; ?>>
-				<label for="cluster<?php echo $i; ?>" name="cluster<?php echo $i; ?>_lbl" class="css-label lite-x-green"><?php echo htmlspecialchars( $value ).' ('.$count.')'; ?></label>
--->				
 <?php			
 					$i++;
 				}
+//				var_dump( $facetCluster );
+				if( isset( $qobj->facets->cluster ))
+					foreach( $qobj->facets->cluster as $value ) {
+//						echo "check: ".$value;
+						if( array_key_exists( $value, $facetCluster->getValues() )) {
+							continue;
+						}
+?>	
+					<div class="checkbox checkbox-green">
+						<input class="facet" type="checkbox" id="cluster" value="<?php echo htmlentities($value); ?>" checked >
+						<label for="cluster<?php echo $i; ?>">
+							<?php echo htmlspecialchars( $value ); ?>
+						</label>
+					</div>
+<?php								
+					}
 ?>
 			</div>
 			</div>
