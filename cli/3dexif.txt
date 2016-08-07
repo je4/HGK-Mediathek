@@ -1,0 +1,3 @@
+add Exif.Image.ImageDescription	Ascii	"3D-Model by Juergen Enge / Software by info-age GmbH, Basel"
+add Exif.Photo.UserComment	Ascii	"3D-Model by Juergen Enge / Software by info-age GmbH, Basel"
+add Exif.Image.Copyright	Ascii	"Copyright, Mediathek HGK Basel, 2016. Licensed under CC-BY-SA (http://creativecommons.org/licenses/by-sa/4.0/)"

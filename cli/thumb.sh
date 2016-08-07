@@ -1,0 +1,1 @@
+convert ./S/b/S307b.png -thumbnail x162 -crop 230x162+6+0 -sharpen 4 -strokewidth 0 -fill "rgba( 0, 0, 0 , 0.35 )" -draw "rectangle 0,0 230,20" -draw "rectangle 0,147 230,162" -font Arial -fill white -pointsize 12 label:"Reihe S Box 307 b" thumbs/S307b.png
