@@ -100,6 +100,10 @@ function doSearchFull(query, area, filter, facets, page, pagesize ) {
 
 	$.post( 'query.load.php', {query: json}, function(md5sum) {
 			//alert(md5sum);
+			if( md5sum == null ) {
+				alert( "invalid query" );
+				return;
+			}
 			var plist = window.location.pathname.split( '/' );
 			plist.pop();
 			var pathname = plist.join( '/');
