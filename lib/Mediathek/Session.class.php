@@ -179,8 +179,8 @@ class Session implements \SessionHandlerInterface
   }
  
   public function shibDepartement() {
-	  if( preg_match( "/OU=([A-Za-z0-9]+),OU=([A-Z]+),OU=([0-9]+),[a-zA-Z,=],DC=fhnw,DC=ch/", $this->server['orgunit-dn'], $matches )) {
-		  return $matches[1].$matches[2].$matches[3];
+	  if( preg_match( "/OU=([A-Za-z0-9]+)(,OU=([A-Z]+))?,OU=([0-9]+),[a-zA-Z,=],DC=fhnw,DC=ch/", $this->server['orgunit-dn'], $matches )) {
+		  return $matches[1].$matches[2].$matches[4];
 	  }
 	  return null;
   }

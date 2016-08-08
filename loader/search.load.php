@@ -28,7 +28,7 @@ $page = new Resource($client, $uriTemplateProcessor, $uriJoiner, $apiRootUrl);
             <!--( a ) Profile Page Fixed Image Portion -->
 
             <div class="image-container col-md-3 col-sm-12">
-                <div class="mask">
+                <div class="mask" style="background: none;">
                 </div>
                 <div class="main-heading">
                     <h1>Recherche</h1>

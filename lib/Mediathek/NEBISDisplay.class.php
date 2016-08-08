@@ -73,7 +73,7 @@ $cfg = array(
 				<span style="; font-weight: bold;">Aktuelles Buch</span><br />
 					<div class="facet" style="">
 						<div class="marker" style=""></div>
-							<b><?php echo htmlspecialchars( $entity->getTitle()); ?></b><br />
+							<b><?php echo htmlspecialchars( str_replace( '>>', '', str_replace( '<<', '', $entity->getTitle()))); ?></b><br />
 							<?php 
 							$i = 0;
 							foreach( $authors as $author ) { 
@@ -289,7 +289,7 @@ if( $kiste ) {
             <td class="list" style="width: 5%;"><i class="fa fa-book"></i></td>
             <td class="list" style="width: 70%;">
                 <a class="entity" href="#coll_<?php echo $this->doc->id; ?>" data-toggle="collapse" aria-expanded="false" aria-controls="coll_<?php echo $this->doc->id; ?>">
-                    <?php echo htmlspecialchars( $entity->getTitle() ); ?>
+                    <?php echo htmlspecialchars( str_replace( '>>', '', str_replace( '<<', '', $entity->getTitle())) ); ?>
                 </a>        
             </td>
         </tr>

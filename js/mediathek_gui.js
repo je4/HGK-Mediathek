@@ -258,7 +258,6 @@ $(document).ready(function () {
 		});
 
 	$('#fullsearch').fadeIn(1200);
-	 initSearch('');
 	
 	$('#MTModal').on('shown.bs.modal', function (event) {
 	  var button = $(event.relatedTarget) // Button that triggered the modal
@@ -299,7 +298,7 @@ $(document).ready(function () {
     /*  ----------------------------------------
          da suche
         ----------------------------------------  */
-		initSearch( '' );
+//		initSearch( '' );
  		
 		
     /*  ----------------------------------------

@@ -97,6 +97,20 @@ function doSearchFull(query, area, filter, facets, page, pagesize ) {
 	}
 
 	var json = JSON.stringify( q );
+
+	$.post( 'query.load.php', {query: json}, function(md5sum) {
+			//alert(md5sum);
+			var plist = window.location.pathname.split( '/' );
+			plist.pop();
+			var pathname = plist.join( '/');
+			var url = window.location.origin + pathname + '/search.php?q='+encodeURIComponent( md5sum )+'&page='+page+'&pagesize='+pagesize;
+			window.location.href = url;
+		}
+	);
+
+	return;
+		
+	
 	$('#searchjson').val( json );
     
     var md5sum = md5( json );

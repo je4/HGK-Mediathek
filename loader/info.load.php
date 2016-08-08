@@ -26,12 +26,12 @@ $explorer->setAdapter($adapter)->setBaseUrl("https://mediathek.hgk.fhnw.ch/wordp
 $response = $explorer->makeRequest( 'get', 'pages/4');
 */
 ?>
-<div id="info" class="service-page container-fluid page">
+<div id="info" class="info-page container-fluid page">
     <div class="row">
             <!--( a ) Profile Page Fixed Image Portion -->
 
             <div class="image-container col-md-3 col-sm-12">
-                <div class="mask">
+                <div class="mask" style="background: none;">
                 </div>
                 <div class="main-heading">
                     <h1>Information</h1>

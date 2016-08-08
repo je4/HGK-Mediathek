@@ -321,7 +321,7 @@ td.detail {
 }
  
 .search-page .image-container {
-    background: url(../assets/img/portfolio_featured.png);
+    background: url(../img/search400x400.png);
     background-size: cover;
     background-position: bottom;
 }
@@ -336,11 +336,40 @@ td.detail {
 */
 
 /* -------------------------------------
+ * Info
+ * ------------------------------------- */
+ 
+ .info-page .image-container {
+    background: url(../img/info400x400.png);
+    background-size: cover;
+    background-position: bottom;
+}
+
+ .info-page .footer {
+    background-color: #01213B;
+}
+
+/* -------------------------------------
+ * News
+ * ------------------------------------- */
+ 
+ .news-page .image-container {
+    background: url(../img/news400x400.png);
+    background-size: cover;
+    background-position: bottom;
+}
+
+ .news-page .footer {
+    background-color: #01213B;
+}
+
+
+/* -------------------------------------
  * About
  * ------------------------------------- */
  
  .about-page .image-container {
-    background: url(../assets/img/about_us_featured.png);
+    background: url(../img/about400x400.png);
     background-size: cover;
     background-position: bottom;
 }
