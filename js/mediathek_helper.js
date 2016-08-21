@@ -100,6 +100,11 @@ function navbarSearch(page, pagesize) {
 }
 
 function doSearchFull(query, area, filter, facets, page, pagesize ) {
+	
+	if( typeof facets.source == 'undefined' ) {
+		facets["source"] = ["NEBIS"];
+	}
+	
 	var q = {
 		query: query,
 		area: area,
