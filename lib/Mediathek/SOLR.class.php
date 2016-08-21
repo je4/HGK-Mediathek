@@ -79,10 +79,16 @@ class SOLR {
         $doc->setField( 'year', $src->getYear());
         $doc->setField( 'abstract', $src->getAbstract());
         $meta = $src->getMeta();
+			if( $meta == null ) {
+				echo "no meta error\n";
+			}
         if( $meta != null ) {
-			$metagz = gzencode( $meta );
+//			print_r( $meta );
+			$metagz = @gzencode( $meta );
 			//echo $metagz;
-			
+			if( $metagz === false ) {
+				echo "gzencode error\n";
+			}
             $doc->setField( 'metagz', base64_encode( $metagz ));
             $doc->setField( 'metatext', ( $meta ));
 		}

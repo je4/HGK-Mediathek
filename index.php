@@ -36,8 +36,18 @@ echo mediathekheader('home', 'Willkommen in der Mediathek der Künste', null);
                     Mediathek der
                 </h1> 
                 <span style="">Künste</span><span class="number"></span>
-                <p class="slogan-text text-capitalize" style=""><img style="position: static; top: auto; left: auto; width: 350px;" src="img/fhnw.png" /></p>
-
+<!--                <p class="slogan-text text-capitalize" style=""><img style="position: static; top: auto; left: auto; width: 150px;" src="img/fhnw.png" /></p>
+-->
+				<p> 
+				<div class="input-group" style="width: 100%;">
+					  <input type="text" id="searchtext0" class="form-control" value="">
+					  <span class="input-group-btn">
+						<button class="" id="searchbutton0" type="button">
+							<i class="fa fa-search" aria-hidden="true"></i>
+						</button>
+					  </span>
+				</div>
+				</p>
 <!--
                 <div class="social-media hidden-xs">
                     <a href="#" class="fa fa-facebook" data-toggle="tooltip" title="Facebook"></a>
@@ -135,7 +145,8 @@ echo mediathekheader('home', 'Willkommen in der Mediathek der Künste', null);
 	
 
 function init() {
-
+	initSearch("");
+/*
     var mapCanvas = document.getElementById('map-canvas');
     var mapOptions = {
         center: new google.maps.LatLng(40.565934, -122.388118),
@@ -155,7 +166,7 @@ function init() {
 
     //google.maps.event.addDomListener(window, 'load', initialize);
 
-	
+*/	
 }
 </script>   
 	

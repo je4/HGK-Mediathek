@@ -1,0 +1,308 @@
+<?php
+/**
+ * This file is part of MediathekMiner.
+ * MediathekMiner is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published
+ * by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+ * Foobar is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details
+ *
+ * You should have received a copy of the GNU General Public License along with Foobar. If not, see http://www.gnu.org/licenses/.
+ *
+ *
+ * @package     Mediathek
+ * @subpackage  NEBISDisplay
+ * @author      Juergen Enge (juergen@info-age.net)
+ * @copyright   (C) 2016 Academy of Art and Design FHNW
+ * @license     http://www.gnu.org/licenses/gpl-3.0
+ * @link        http://mediathek.fhnw.ch
+ * 
+ */
+
+/**
+ * @namespace
+ */
+
+namespace Mediathek;
+
+class EZBDisplay extends DisplayEntity {
+    
+    public function __construct( $doc, $urlparams, $db ) {
+        parent::__construct( $doc, $urlparams, $db );
+
+        $this->db = $db;
+    }
+    
+	public function detailView() {
+		
+        global $config, $googleservice, $googleclient, $solrclient, $db, $urlparams, $pagesize;
+        $html = '';
+$cfg = array(
+                   'indent'         => true,
+                   'output-xml'   => true,
+                   'input-xml' => true,
+                   'wrap'           => 150);
+        
+		$entity = new MarcEntity($this->db);
+		$entity->loadFromXML( $this->data, substr( $this->doc->id, strlen( $this->doc->source)), $this->doc->source );
+		$authors = array_unique( $entity->getAuthors());
+
+		$squery = $solrclient->createSelect();
+		$helper = $squery->getHelper();
+
+		
+        // Tidy
+        $tidy = new \Tidy;
+        $tidy->parseString($this->data, $cfg, 'utf8');
+        $tidy->cleanRepair();
+         //echo "<!--\n".$tidy."\n-->\n";
+        
+        // Output
+//        echo $tidy;
+		$kiste = null;
+		foreach( $this->doc->location as $loc ) {
+		  if( substr( $loc, 0, 10 ) == 'E75:Kiste:' ) {
+			  $kiste = substr( $loc, 10 );
+			  break;
+		  }
+		} 
+
+        ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
+?>		
+		<div class="row">
+			<div class="col-md-3">
+				<div style="">
+				<span style="; font-weight: bold;">Aktuelles Buch</span><br />
+					<div class="facet" style="">
+						<div class="marker" style=""></div>
+							<b><?php echo htmlspecialchars( str_replace( '>>', '', str_replace( '<<', '', $entity->getTitle()))); ?></b><br />
+							<?php 
+							$i = 0;
+							foreach( $authors as $author ) { 
+								if( $i > 0) echo "; "; ?>
+									<a href="javascript:doSearchFull('author:&quot;<?php echo trim( $author ); ?>&quot;', '', [], [], 0, <?php echo $pagesize; ?> );">
+										<?php echo htmlspecialchars( $author ); ?>
+									</a>
+								<?php				
+								$i++;
+							}
+							//echo htmlspecialchars( implode( '; ', $authors )); 
+							?>
+							
+							<br />
+<?php
+							$publisher = $entity->getPublisher();
+							$city = $entity->getCity();
+							$year = $entity->getYear();
+							if( $city ) echo htmlspecialchars( $city ).': '; 
+							if( $publisher ) { ?>
+									<a href="javascript:doSearchFull('publisher:&quot;<?php echo trim( $publisher ); ?>&quot;', '', [], [], 0, <?php echo $pagesize; ?> );">
+										<?php echo htmlspecialchars( $publisher ); ?>
+									</a>
+							<?php }
+							if( $year ) echo htmlspecialchars( $year ).'.';
+							if( $city || $year || $publisher ) echo "<br />\n";
+
+							$codes = $entity->getCodes();
+							if( is_array( $codes )) foreach( $codes as $code ) 
+								echo htmlspecialchars( str_replace( ':', ': ', $code ))."<br />\n";
+							
+							$signatures = $this->doc->signature;
+							if( is_array( $signatures )) foreach( $signatures as $sig ) 
+								if( substr( $sig, 0, 10 ) == 'nebis:E75:' ) echo 'Signatur: <a href="redir.php?id='.urlencode( $this->doc->id ).'&url='.urlencode( 'http://opac.nebis.ch/F?func=find-c&ccl_term=SYS%3D'.urlencode($this->doc->originalid)).'" target="_blank">'.htmlspecialchars( substr( $sig, 10 ))."</a><br />\n";
+
+?>							
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div style="">
+				<span style="; font-weight: bold;">Raumübersicht</span><br />
+					<div class="facet" style="">
+						<div class="marker" style=""></div>
+						<div class="renderer"></div>
+					</div>
+				</div>
+<?php
+//        echo '<pre>'.nl2br( htmlspecialchars( $tidy )).'</pre>';
+
+?>				
+			</div>
+			<div class="col-md-3">
+<?php 	if( is_array( $this->doc->cluster_ss ))  { ?>		
+				<div style="">
+				<span style="; font-weight: bold;">Themen</span><br />
+					<div class="facet" style="">
+						<div class="marker" style=""></div>
+<?php
+						foreach( $this->doc->cluster_ss as $cl ) {
+//						foreach( $entity->getCluster() as $cl ) {
+//							echo htmlspecialchars( $cl ).'<br />';
+?>
+								<label>
+									<a href="javascript:doSearchFull('', '', [], {cluster: ['<?php echo htmlspecialchars( $cl ); ?>']}, 0, <?php echo $pagesize; ?> );"><?php echo htmlspecialchars( $cl ); ?></a>
+								</label><br />
+								
+							<!-- <div class="checkbox checkbox-green">
+								<input class="facet" type="checkbox" id="cluster" value="<?php echo htmlentities($cl); ?>">
+								<label for="cluster<?php echo $i; ?>">
+									<?php echo htmlspecialchars( $cl ); ?>
+								</label>
+							</div> -->
+<?php							
+						}
+?>							
+					</div>
+				</div>
+						<?php  } ?>				
+				<div style="">
+				<span style="; font-weight: bold;">Kontext</span><br />
+					<div class="facet" style="">
+						<div class="marker" style=""></div>
+					</div>
+				</div>
+				<div style="">
+				<span style="; font-weight: bold;">Systematik</span><br />
+					<div class="facet" style="">
+						<div class="marker" style=""></div>
+					</div>
+				</div>
+			</div>
+		</div>
+<?php
+if( $kiste ) {
+?>
+		<div class="row">
+			<div class="col-md-9">
+				<div style="">
+				<span style="; font-weight: bold;">Weitere Bücher in Kiste <?php echo $kiste; ?></span><br />
+					<div class="facet" style="">
+						<div class="marker" style=""></div>
+<?php						
+	$squery->setRows( 500 );
+	$squery->setStart( 0 );
+	$qstr = 'location:'.$helper->escapePhrase( 'E75:Kiste:'.$kiste );
+	$squery->setQuery( $qstr );
+	$rs = $solrclient->select( $squery );
+	$numResults = $rs->getNumFound();
+	$numPages = floor( $numResults / 500 );
+	if( $numResults % 500 > 0 ) $numPages++;
+
+	echo "<!-- ".$qstr." (Documents: {$numResults} // Page ".(1)." of {$numPages}) -->\n";
+
+	$res = new DesktopResult( $rs, 0, 500, $db, $urlparams );
+	echo $res->getResult();
+
+?>					
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-md-3">
+			</div>
+		</div>
+<?php } ?>
+<!--
+		<div style="background:  #f5f2f0;">
+			<div class="row">
+				<div class="col-md-12">
+				<h4>Google Books</h4>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card-columns">
+<?php
+
+//$search = new ContextSearchGoogle( $this->doc, $this->db, 'book');
+
+
+//echo $search->desktopCards();
+?>
+
+					</div>
+				</div>
+			</div>
+		</div>
+-->
+<?php 
+  $box = '';
+  $boxjson = '';
+  foreach( $this->doc->location as $loc ) {
+	  if( substr( $loc, 0, 10 ) == 'E75:Kiste:' ) {
+		  $box = str_replace( '_', '', substr( $loc, 10 ));
+		  break;
+	  }
+  }
+  if( file_exists( $config['3djsondir']."/{$box}.json" )) {
+	  $boxjson = file_get_contents( $config['3djsondir']."/{$box}.json" );
+  }
+?>
+		<script>
+			function initNEBIS() {
+			  var renderer = $( '.renderer' );
+			  renderer.height( '400px');
+			  //var width = body.width();
+			  ///renderer.width( width );
+			  init3D( '<?php echo $box; ?>', '<?php echo $boxjson; ?>'  );
+
+			}
+		</script>
+		
+<?php
+        $html .= ob_get_contents();
+        ob_end_clean();
+		return $html;
+	}
+	
+    public function desktopList() {
+        global $config, $googleservice, $googleclient;
+        $html = '';
+		
+		$entity = new EZBEntity($this->db);
+		$entity->loadFromArray( (array)json_decode( $this->data ), $this->doc->source );
+
+        ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
+?>
+        <tr>
+            <td rowspan="2" class="list" style="text-align: right; width: 25%;">
+                <a class="entity" href="#coll_<?php echo $this->doc->id; ?>" data-toggle="collapse" aria-expanded="false" aria-controls="coll_<?php echo $this->doc->id; ?>">
+					<?php echo htmlspecialchars( $entity->getPublisher()  ); ?>
+                </a>
+            </td>
+            <td class="list" style="width: 5%;"><i class="fa fa-newspaper-o"></i></td>
+            <td class="list" style="width: 70%;">
+                <a class="entity" href="#coll_<?php echo $this->doc->id; ?>" data-toggle="collapse" aria-expanded="false" aria-controls="coll_<?php echo $this->doc->id; ?>">
+                    <?php echo htmlspecialchars( $entity->getTitle() ); ?>
+                </a>        
+            </td>
+        </tr>
+        <tr>
+            <td colspan="1" class="detail">
+            </td>
+            <td class="detail">
+                <div class="collapse" id="coll_<?php echo $this->doc->id; ?>">
+				
+<?php			
+				$codes = $entity->getCodes();
+				foreach( $codes as $code ) 
+					echo htmlspecialchars( $code )."<br />\n";
+				
+				if( is_array( $this->doc->url )) foreach( $this->doc->url as $u ) {
+					$us = explode( ':', $u );
+					if( substr( $us[1], 0, 4 ) == 'http' ) {
+						$url = substr( $u, strlen( $us[0])+1 );
+						echo "{$us[0]}: <i class=\"fa fa-external-link\" aria-hidden=\"true\"></i><a href=\"redir.php?id=".urlencode( $this->doc->id ).'&url='.urlencode( $url )."\" target=\"blank\">{$url}</a><br />\n";
+					}
+				}
+				
+				echo "ID: ".$this->doc->id."<br />\n";
+?>
+                </div>
+            </td>
+        </tr>
+<?php
+        $html .= ob_get_contents();
+        ob_end_clean();
+        return $html;
+    }
+}

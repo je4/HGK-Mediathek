@@ -28,9 +28,10 @@ $topicmap = array(
 	'index:curriculumobjective'=>'Lehrplanziel',	
 );
 
-$sourcemap = array( 'nebis' => 'HGK NEBIS-Bestand',
-				    'doaj' => 'Directory of Open Access Journals',
-					'ikuvid' => 'Videosammlung Institut Kunst',
+$sourcemap = array( 'NEBIS' => 'NEBIS-Bestand HGK',
+				    'DOAJ' => 'Directory of Open Access Journals',
+					'IKUVid' => 'Videosammlung Institut Kunst',
+					'EZB' => 'Elektronische Zeitschriften Datenbank',
 				  );
 
 // get request values
@@ -178,7 +179,13 @@ switch( $qobj->area ) {
 }
 
 if( @is_array( $qobj->facets->source )) {
-    $squery->createFilterQuery('source')->addTag('source')->setQuery('source:('.implode(' ', $qobj->facets->source).')'	);	
+	$q = "";
+	foreach( $qobj->facets->source as $src ) {
+		if( $q != '' ) $q .= ' OR ';
+		if( $src == 'NEBIS' ) $q .= ' (source:'.$helper->escapePhrase( $src ).' AND signature:'.$helper->escapePhrase('nebis:E75:*' ).')';
+		else $q .= ' (source:'.$helper->escapePhrase( $src ).')';
+	}
+    $squery->createFilterQuery('source')->addTag('source')->setQuery( $q	);	
 }
 if( @is_array( $qobj->facets->embedded )) {
     $squery->createFilterQuery('embedded')->addTag('embedded')->setQuery('embedded:('.implode(' ', $qobj->facets->embedded).')'	);	
@@ -234,6 +241,7 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 		
 	   <div class="row">
 		  <div class="col-md-9">
+			<div class="clearfix full-height">
 			  
 
 <?php
@@ -246,10 +254,11 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 	}
 ?>
 			  </table>
+			</div>
 		  </div>
    		  <div class="col-md-3" style="background-color: transparent;">
 			<div style="">
-			<span style="; font-weight: bold;">Katalog</span><br />
+			<span style="; font-weight: bold;">Kataloge</span><br />
 			<div class="facet" style="">
 				<div class="marker" style=""></div>
 <?php
@@ -260,7 +269,7 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 						<div class="checkbox checkbox-green">
 							<input class="facet" type="checkbox" id="source" value="<?php echo htmlentities($value); ?>" <?php if( @is_array( $qobj->facets->source ) && array_search($value, $qobj->facets->source) !== false ) echo " checked"; ?>>
 							<label for="source<?php echo $i; ?>">
-								<?php echo htmlspecialchars( $value ).' ('.$count.')'; ?>
+								<?php echo htmlspecialchars( $sourcemap[$value] ).' ('.$count.')'; ?>
 							</label>
 						</div>
 <!--						
@@ -395,16 +404,7 @@ function init() {
 
 	$('body').on('click', '.setting-btn', function () {
 		<?php if( $session->isLoggedIn()) { ?>
-		var modal = $('#MTModal');
-		modal.find('.modal-title').text( '<?php echo htmlspecialchars( $session->shibGetUsername()); ?>' );
-		var content = <?php 
-		echo "'<p>".htmlspecialchars( $session->shibHomeOrganization())."<br />'
-			 +'".htmlspecialchars( $session->shibGetMail()) ."<br />'
-			 +'<ul>'";
-		foreach( $session->getGroups() as $grp ) {
-			echo "+'<li>".htmlspecialchars( $grp )."</li>'";
-		}
-		echo "+'</ul>'";
+		window.location="settings.php";
 ?>;		
 		modal.find( '.modal-body' ).html( content );
 		modal.modal('show');

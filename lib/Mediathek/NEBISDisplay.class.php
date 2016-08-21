@@ -58,7 +58,7 @@ $cfg = array(
         // Output
 //        echo $tidy;
 		$kiste = null;
-		foreach( $this->doc->location as $loc ) {
+		if( is_array( $this->doc->location )) foreach( $this->doc->location as $loc ) {
 		  if( substr( $loc, 0, 10 ) == 'E75:Kiste:' ) {
 			  $kiste = substr( $loc, 10 );
 			  break;
@@ -116,7 +116,7 @@ $cfg = array(
 			<div class="col-md-6">
 				<div style="">
 				<span style="; font-weight: bold;">Raumübersicht</span><br />
-					<div class="facet" style="">
+					<div class="facet" style="padding: 0px;">
 						<div class="marker" style=""></div>
 						<div class="renderer"></div>
 					</div>
@@ -153,7 +153,7 @@ $cfg = array(
 					</div>
 				</div>
 						<?php  } ?>				
-				<div style="">
+<!--				<div style="">
 				<span style="; font-weight: bold;">Kontext</span><br />
 					<div class="facet" style="">
 						<div class="marker" style=""></div>
@@ -166,6 +166,7 @@ $cfg = array(
 					</div>
 				</div>
 			</div>
+-->
 		</div>
 <?php
 if( $kiste ) {
@@ -226,7 +227,7 @@ if( $kiste ) {
 <?php 
   $box = '';
   $boxjson = '';
-  foreach( $this->doc->location as $loc ) {
+  if( is_array( $this->doc->location )) foreach( $this->doc->location as $loc ) {
 	  if( substr( $loc, 0, 10 ) == 'E75:Kiste:' ) {
 		  $box = str_replace( '_', '', substr( $loc, 10 ));
 		  break;
@@ -333,7 +334,7 @@ if( $kiste ) {
 					$us = explode( ':', $u );
 					if( substr( $us[1], 0, 4 ) == 'http' ) {
 						$url = substr( $u, strlen( $us[0])+1 );
-						echo "{$us[0]}: <i class=\"fa fa-external-link\" aria-hidden=\"true\"></i><a href=\"{$url}\">{$url}</a><br />\n";
+						echo "{$us[0]}: <i class=\"fa fa-external-link\" aria-hidden=\"true\"></i><a href=\"redir.php?id=".urlencode( $this->doc->id ).'&url='.urlencode( $url )."\" target=\"blank\">{$url}</a><br />\n";
 					}
 				}
 				

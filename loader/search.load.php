@@ -51,9 +51,11 @@ $page = new Resource($client, $uriTemplateProcessor, $uriJoiner, $apiRootUrl);
                    <h2 class="small-heading">Mediathek der Künste</h2>
                     <div class="row">
                         <div class="col-md-10 col-md-offset-1 col-xs-12">
-							<p><b>Mediensuche</b></p>
+							<p><b>Online Katalog der Mediathek HGK</b><br />
+							Bücher, Artikel, E-Books, E-Journals</p>
 							<?php echo searchbar('', 'all' ); ?><br />
-							<p><b>Kistensuche</b></p>
+							<p><b>Standortsuche</b><br />
+							Auskunft über das Regal und die Box, in der sich ein Medium befindet</p>
 							<input name="kiste" type="text" class="form-control" id="kiste" required="required" placeholder="Signatur eingeben">
 							<script>
 						   </script>
@@ -61,6 +63,7 @@ $page = new Resource($client, $uriTemplateProcessor, $uriJoiner, $apiRootUrl);
                         </div>
                     </div>
                 </div>
+<!--
                 <div class="clearfix">
                    <h2 class="small-heading">Zeitschriften</h2>
                     <div class="row">
@@ -90,6 +93,7 @@ $page = new Resource($client, $uriTemplateProcessor, $uriJoiner, $apiRootUrl);
 						</div>
                     </div>
                 </div>
+-->
 <?php				
 
 $apiRootUrl = 'https://mediathek.hgk.fhnw.ch/wordpress/wp-json/wp/v2/pages?parent=58';

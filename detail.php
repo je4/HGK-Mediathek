@@ -38,7 +38,7 @@ $doc = ( $numResults > 0 ) ? $rs->getDocuments()[0] : null;
 	
 echo mediathekheader('search', 'Mediathek - Detail - '.($doc ? $doc->title : '').' ['.$id.']', '');
 ?>
-<div class="back-btn"><i class="ion-android-arrow-back"></i></div>
+<div class="back-btn"><i class="ion-ios-search"></i></div>
 <div class="setting-btn"><i class="<?php echo $session->isLoggedIn() ? 'ion-ios-settings-strong': 'ion-log-in'; ?>"></i></div>
 
 <div id="fullsearch" class="fullsearch-page container-fluid page">
@@ -111,19 +111,7 @@ function init() {
 
 	$('body').on('click', '.setting-btn', function () {
 		<?php if( $session->isLoggedIn()) { ?>
-		var modal = $('#MTModal');
-		modal.find('.modal-title').text( '<?php echo htmlspecialchars( $session->shibGetUsername()); ?>' );
-		var content = <?php 
-		echo "'<p>".htmlspecialchars( $session->shibHomeOrganization())."<br />'
-			 +'".htmlspecialchars( $session->shibGetMail()) ."<br />'
-			 +'<ul>'";
-		foreach( $session->getGroups() as $grp ) {
-			echo "+'<li>".htmlspecialchars( $grp )."</li>'";
-		}
-		echo "+'</ul>'";
-?>;		
-		modal.find( '.modal-body' ).html( content );
-		modal.modal('show');
+		window.location="settings.php";
 		<?php } else { ?>
 		window.location="auth/?target=<?php echo urlencode( $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']); ?>";
 		<?php } ?>

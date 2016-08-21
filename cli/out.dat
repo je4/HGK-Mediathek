@@ -1,0 +1,612 @@
+Title: Journal of Molecular Modeling
+Tags: Array
+(
+    [0] => index:medium:ezb/b7c516e4ecc24f06ca73cecf54e7644c/Chemie und Pharmazie
+)
+Cluster: Array
+(
+    [0] => Chemie und Pharmazie
+)
+Authors: Array
+(
+)
+Loans: Array
+(
+)
+Licenses: Array
+(
+    [0] => restricted
+)
+Signatures: Array
+(
+)
+URLs: Array
+(
+    [0] => bibl:http://link.springer.com/journal/894
+    [1] => frontdoor:http://www.bibliothek.uni-regensburg.de/ezeit/?1284729&bibid=FHNW
+    [2] => journal:http://link.springer.com/journal/894
+)
+Delete query for ezb000000001 executed
+Query status: 0
+Query time: 30
+Array
+(
+    [Titel] => Journal of Molecular Modeling
+    [Ampelfarbe] => 2
+    [Verlag] => Springer
+    [Fach] => Chemie und Pharmazie
+    [E-ISSN] => 0948-5023
+    [P-ISSN] => 1610-2940
+    [ZDB-Nummer] => 1284729-x
+    [EZB-Id] => 1
+    [bibliographische URL(s)] => http://link.springer.com/journal/894
+    [VolltextURL] => 
+    [FrontdoorURL] => http://www.bibliothek.uni-regensburg.de/ezeit/?1284729&bibid=FHNW
+    [Link zur Zeitschrift] => http://link.springer.com/journal/894
+    [Typ] => Volltext, Online und Druckausgabe
+    [Preistyp] => kostenlos mit Druckausgabe
+    [Zugangsbedingung] => Subscription
+    [Erster Jahrgang] => 1
+    [Erstes Heft] => 1
+    [Erstes Jahr] => 1995
+    [Letzter Jahrgang] => 0
+    [Letztes Heft] => 0
+    [Letztes Jahr] => 
+    [] => 
+)
+string(670) "{"Titel":"Journal of Molecular Modeling","Ampelfarbe":"2","Verlag":"Springer","Fach":"Chemie und Pharmazie","E-ISSN":"0948-5023","P-ISSN":"1610-2940","ZDB-Nummer":"1284729-x","EZB-Id":"1","bibliographische URL(s)":"http:\/\/link.springer.com\/journal\/894","VolltextURL":"","FrontdoorURL":"http:\/\/www.bibliothek.uni-regensburg.de\/ezeit\/?1284729&bibid=FHNW","Link zur Zeitschrift":"http:\/\/link.springer.com\/journal\/894","Typ":"Volltext, Online und Druckausgabe","Preistyp":"kostenlos mit Druckausgabe","Zugangsbedingung":"Subscription","Erster Jahrgang":"1","Erstes Heft":"1","Erstes Jahr":"1995","Letzter Jahrgang":"0","Letztes Heft":"0","Letztes Jahr":"","":""}"
+{"Titel":"Journal of Molecular Modeling","Ampelfarbe":"2","Verlag":"Springer","Fach":"Chemie und Pharmazie","E-ISSN":"0948-5023","P-ISSN":"1610-2940","ZDB-Nummer":"1284729-x","EZB-Id":"1","bibliographische URL(s)":"http:\/\/link.springer.com\/journal\/894","VolltextURL":"","FrontdoorURL":"http:\/\/www.bibliothek.uni-regensburg.de\/ezeit\/?1284729&bibid=FHNW","Link zur Zeitschrift":"http:\/\/link.springer.com\/journal\/894","Typ":"Volltext, Online und Druckausgabe","Preistyp":"kostenlos mit Druckausgabe","Zugangsbedingung":"Subscription","Erster Jahrgang":"1","Erstes Heft":"1","Erstes Jahr":"1995","Letzter Jahrgang":"0","Letztes Heft":"0","Letztes Jahr":"","":""}Insert query for ezb000000001 executed
+Query status: 0
+Query time: 1
+Title: Analyst, The
+Tags: Array
+(
+    [0] => index:medium:ezb/b7c516e4ecc24f06ca73cecf54e7644c/Chemie und Pharmazie
+)
+Cluster: Array
+(
+    [0] => Chemie und Pharmazie
+)
+Authors: Array
+(
+)
+Loans: Array
+(
+)
+Licenses: Array
+(
+    [0] => restricted
+)
+Signatures: Array
+(
+)
+URLs: Array
+(
+    [0] => bibl:http://xlink.rsc.org/?genre=journal&issn=1364-5528
+    [1] => frontdoor:http://www.bibliothek.uni-regensburg.de/ezeit/?1472713&bibid=FHNW
+    [2] => journal:http://xlink.rsc.org/?genre=journal&issn=1364-5528
+)
+Delete query for ezb000000003 executed
+Query status: 0
+Query time: 24
+Array
+(
+    [Titel] => Analyst, The
+    [Ampelfarbe] => 2
+    [Verlag] => Royal Society of Chemistry (RSC)
+    [Fach] => Chemie und Pharmazie
+    [E-ISSN] => 1364-5528
+    [P-ISSN] => 0003-2654
+    [ZDB-Nummer] => 1472713-4
+    [EZB-Id] => 3
+    [bibliographische URL(s)] => http://xlink.rsc.org/?genre=journal&issn=1364-5528
+    [VolltextURL] => 
+    [FrontdoorURL] => http://www.bibliothek.uni-regensburg.de/ezeit/?1472713&bibid=FHNW
+    [Link zur Zeitschrift] => http://xlink.rsc.org/?genre=journal&issn=1364-5528
+    [Typ] => Volltext, Online und Druckausgabe
+    [Preistyp] => kostenlos mit Druckausgabe
+    [Zugangsbedingung] => Subscription
+    [Erster Jahrgang] => 1
+    [Erstes Heft] => 0
+    [Erstes Jahr] => 1876
+    [Letzter Jahrgang] => 0
+    [Letztes Heft] => 0
+    [Letztes Jahr] => 
+    [] => 
+)
+string(703) "{"Titel":"Analyst, The","Ampelfarbe":"2","Verlag":"Royal Society of Chemistry (RSC)","Fach":"Chemie und Pharmazie","E-ISSN":"1364-5528","P-ISSN":"0003-2654","ZDB-Nummer":"1472713-4","EZB-Id":"3","bibliographische URL(s)":"http:\/\/xlink.rsc.org\/?genre=journal&issn=1364-5528","VolltextURL":"","FrontdoorURL":"http:\/\/www.bibliothek.uni-regensburg.de\/ezeit\/?1472713&bibid=FHNW","Link zur Zeitschrift":"http:\/\/xlink.rsc.org\/?genre=journal&issn=1364-5528","Typ":"Volltext, Online und Druckausgabe","Preistyp":"kostenlos mit Druckausgabe","Zugangsbedingung":"Subscription","Erster Jahrgang":"1","Erstes Heft":"0","Erstes Jahr":"1876","Letzter Jahrgang":"0","Letztes Heft":"0","Letztes Jahr":"","":""}"
+{"Titel":"Analyst, The","Ampelfarbe":"2","Verlag":"Royal Society of Chemistry (RSC)","Fach":"Chemie und Pharmazie","E-ISSN":"1364-5528","P-ISSN":"0003-2654","ZDB-Nummer":"1472713-4","EZB-Id":"3","bibliographische URL(s)":"http:\/\/xlink.rsc.org\/?genre=journal&issn=1364-5528","VolltextURL":"","FrontdoorURL":"http:\/\/www.bibliothek.uni-regensburg.de\/ezeit\/?1472713&bibid=FHNW","Link zur Zeitschrift":"http:\/\/xlink.rsc.org\/?genre=journal&issn=1364-5528","Typ":"Volltext, Online und Druckausgabe","Preistyp":"kostenlos mit Druckausgabe","Zugangsbedingung":"Subscription","Erster Jahrgang":"1","Erstes Heft":"0","Erstes Jahr":"1876","Letzter Jahrgang":"0","Letztes Heft":"0","Letztes Jahr":"","":""}Insert query for ezb000000003 executed
+Query status: 0
+Query time: 1
+Title: Analytical Communications (1997-1999)
+Tags: Array
+(
+    [0] => index:medium:ezb/b7c516e4ecc24f06ca73cecf54e7644c/Chemie und Pharmazie
+)
+Cluster: Array
+(
+    [0] => Chemie und Pharmazie
+)
+Authors: Array
+(
+)
+Loans: Array
+(
+)
+Licenses: Array
+(
+    [0] => restricted
+)
+Signatures: Array
+(
+)
+URLs: Array
+(
+    [0] => bibl:http://xlink.rsc.org/?genre=journal&issn=1364-5536
+    [1] => frontdoor:http://www.bibliothek.uni-regensburg.de/ezeit/?1495496&bibid=FHNW
+    [2] => journal:http://xlink.rsc.org/?genre=journal&issn=1364-5536
+)
+Delete query for ezb000000004 executed
+Query status: 0
+Query time: 30
+Array
+(
+    [Titel] => Analytical Communications (1997-1999)
+    [Ampelfarbe] => 1
+    [Verlag] => Royal Society of Chemistry (RSC)
+    [Fach] => Chemie und Pharmazie
+    [E-ISSN] => 1364-5536
+    [P-ISSN] => 0144-557X;1359-7337
+    [ZDB-Nummer] => 1495496-5
+    [EZB-Id] => 4
+    [bibliographische URL(s)] => http://xlink.rsc.org/?genre=journal&issn=1364-5536
+    [VolltextURL] => 
+    [FrontdoorURL] => http://www.bibliothek.uni-regensburg.de/ezeit/?1495496&bibid=FHNW
+    [Link zur Zeitschrift] => http://xlink.rsc.org/?genre=journal&issn=1364-5536
+    [Typ] => Volltext, Online und Druckausgabe
+    [Preistyp] => kostenlos
+    [Zugangsbedingung] => frei zug&auml;nglich
+    [Erster Jahrgang] => 34
+    [Erstes Heft] => 0
+    [Erstes Jahr] => 1997
+    [Letzter Jahrgang] => 36
+    [Letztes Heft] => 0
+    [Letztes Jahr] => 1999
+    [] => 
+)
+string(735) "{"Titel":"Analytical Communications (1997-1999)","Ampelfarbe":"1","Verlag":"Royal Society of Chemistry (RSC)","Fach":"Chemie und Pharmazie","E-ISSN":"1364-5536","P-ISSN":"0144-557X;1359-7337","ZDB-Nummer":"1495496-5","EZB-Id":"4","bibliographische URL(s)":"http:\/\/xlink.rsc.org\/?genre=journal&issn=1364-5536","VolltextURL":"","FrontdoorURL":"http:\/\/www.bibliothek.uni-regensburg.de\/ezeit\/?1495496&bibid=FHNW","Link zur Zeitschrift":"http:\/\/xlink.rsc.org\/?genre=journal&issn=1364-5536","Typ":"Volltext, Online und Druckausgabe","Preistyp":"kostenlos","Zugangsbedingung":"frei zug&auml;nglich","Erster Jahrgang":"34","Erstes Heft":"0","Erstes Jahr":"1997","Letzter Jahrgang":"36","Letztes Heft":"0","Letztes Jahr":"1999","":""}"
+{"Titel":"Analytical Communications (1997-1999)","Ampelfarbe":"1","Verlag":"Royal Society of Chemistry (RSC)","Fach":"Chemie und Pharmazie","E-ISSN":"1364-5536","P-ISSN":"0144-557X;1359-7337","ZDB-Nummer":"1495496-5","EZB-Id":"4","bibliographische URL(s)":"http:\/\/xlink.rsc.org\/?genre=journal&issn=1364-5536","VolltextURL":"","FrontdoorURL":"http:\/\/www.bibliothek.uni-regensburg.de\/ezeit\/?1495496&bibid=FHNW","Link zur Zeitschrift":"http:\/\/xlink.rsc.org\/?genre=journal&issn=1364-5536","Typ":"Volltext, Online und Druckausgabe","Preistyp":"kostenlos","Zugangsbedingung":"frei zug&auml;nglich","Erster Jahrgang":"34","Erstes Heft":"0","Erstes Jahr":"1997","Letzter Jahrgang":"36","Letztes Heft":"0","Letztes Jahr":"1999","":""}Insert query for ezb000000004 executed
+Query status: 0
+Query time: 1
+Title: Journal of Analytical Atomic Spectrometry (JAAS)
+Tags: Array
+(
+    [0] => index:medium:ezb/b7c516e4ecc24f06ca73cecf54e7644c/Chemie und Pharmazie
+)
+Cluster: Array
+(
+    [0] => Chemie und Pharmazie
+)
+Authors: Array
+(
+)
+Loans: Array
+(
+)
+Licenses: Array
+(
+    [0] => restricted
+)
+Signatures: Array
+(
+)
+URLs: Array
+(
+    [0] => bibl:http://xlink.rsc.org/jumptojournal.cfm?journal_code=JA
+    [1] => bibl:http://pubs.rsc.org/en/journals/journalissues/ja#!recentarticles&all
+    [2] => frontdoor:http://www.bibliothek.uni-regensburg.de/ezeit/?1484654&bibid=FHNW
+    [3] => journal:http://xlink.rsc.org/jumptojournal.cfm?journal_code=JA
+)
+Delete query for ezb000000005 executed
+Query status: 0
+Query time: 22
+Array
+(
+    [Titel] => Journal of Analytical Atomic Spectrometry (JAAS)
+    [Ampelfarbe] => 2
+    [Verlag] => Royal Society of Chemistry (RSC)
+    [Fach] => Chemie und Pharmazie
+    [E-ISSN] => 1364-5544
+    [P-ISSN] => 0267-9477
+    [ZDB-Nummer] => 1484654-8
+    [EZB-Id] => 5
+    [bibliographische URL(s)] => http://xlink.rsc.org/jumptojournal.cfm?journal_code=JA***http://pubs.rsc.org/en/journals/journalissues/ja#!recentarticles&all
+    [VolltextURL] => 
+    [FrontdoorURL] => http://www.bibliothek.uni-regensburg.de/ezeit/?1484654&bibid=FHNW
+    [Link zur Zeitschrift] => http://xlink.rsc.org/jumptojournal.cfm?journal_code=JA
+    [Typ] => Volltext, Online und Druckausgabe
+    [Preistyp] => kostenlos mit Druckausgabe
+    [Zugangsbedingung] => Subscription
+    [Erster Jahrgang] => 1
+    [Erstes Heft] => 1
+    [Erstes Jahr] => 1986
+    [Letzter Jahrgang] => 0
+    [Letztes Heft] => 0
+    [Letztes Jahr] => 
+    [] => 
+)
+string(824) "{"Titel":"Journal of Analytical Atomic Spectrometry (JAAS)","Ampelfarbe":"2","Verlag":"Royal Society of Chemistry (RSC)","Fach":"Chemie und Pharmazie","E-ISSN":"1364-5544","P-ISSN":"0267-9477","ZDB-Nummer":"1484654-8","EZB-Id":"5","bibliographische URL(s)":"http:\/\/xlink.rsc.org\/jumptojournal.cfm?journal_code=JA***http:\/\/pubs.rsc.org\/en\/journals\/journalissues\/ja#!recentarticles&all","VolltextURL":"","FrontdoorURL":"http:\/\/www.bibliothek.uni-regensburg.de\/ezeit\/?1484654&bibid=FHNW","Link zur Zeitschrift":"http:\/\/xlink.rsc.org\/jumptojournal.cfm?journal_code=JA","Typ":"Volltext, Online und Druckausgabe","Preistyp":"kostenlos mit Druckausgabe","Zugangsbedingung":"Subscription","Erster Jahrgang":"1","Erstes Heft":"1","Erstes Jahr":"1986","Letzter Jahrgang":"0","Letztes Heft":"0","Letztes Jahr":"","":""}"
+{"Titel":"Journal of Analytical Atomic Spectrometry (JAAS)","Ampelfarbe":"2","Verlag":"Royal Society of Chemistry (RSC)","Fach":"Chemie und Pharmazie","E-ISSN":"1364-5544","P-ISSN":"0267-9477","ZDB-Nummer":"1484654-8","EZB-Id":"5","bibliographische URL(s)":"http:\/\/xlink.rsc.org\/jumptojournal.cfm?journal_code=JA***http:\/\/pubs.rsc.org\/en\/journals\/journalissues\/ja#!recentarticles&all","VolltextURL":"","FrontdoorURL":"http:\/\/www.bibliothek.uni-regensburg.de\/ezeit\/?1484654&bibid=FHNW","Link zur Zeitschrift":"http:\/\/xlink.rsc.org\/jumptojournal.cfm?journal_code=JA","Typ":"Volltext, Online und Druckausgabe","Preistyp":"kostenlos mit Druckausgabe","Zugangsbedingung":"Subscription","Erster Jahrgang":"1","Erstes Heft":"1","Erstes Jahr":"1986","Letzter Jahrgang":"0","Letztes Heft":"0","Letztes Jahr":"","":""}Insert query for ezb000000005 executed
+Query status: 0
+Query time: 1
+Title: Chemical Communications : ChemComm
+Tags: Array
+(
+    [0] => index:medium:ezb/b7c516e4ecc24f06ca73cecf54e7644c/Chemie und Pharmazie
+)
+Cluster: Array
+(
+    [0] => Chemie und Pharmazie
+)
+Authors: Array
+(
+)
+Loans: Array
+(
+)
+Licenses: Array
+(
+    [0] => restricted
+)
+Signatures: Array
+(
+)
+URLs: Array
+(
+    [0] => bibl:http://pubs.rsc.org/en/journals/journalissues/cc#!recentarticles&all
+    [1] => bibl:http://www.rsc.org/Publishing/Journals/cc/
+    [2] => bibl:http://www.rsc.org/chemcomm
+    [3] => frontdoor:http://www.bibliothek.uni-regensburg.de/ezeit/?1472881&bibid=FHNW
+    [4] => journal:http://pubs.rsc.org/en/journals/journalissues/cc#!recentarticles&all
+)
+Delete query for ezb000000006 executed
+Query status: 0
+Query time: 25
+Array
+(
+    [Titel] => Chemical Communications : ChemComm
+    [Ampelfarbe] => 2
+    [Verlag] => Royal Society of Chemistry (RSC)
+    [Fach] => Chemie und Pharmazie
+    [E-ISSN] => 1364-548X
+    [P-ISSN] => 0009-241X;0022-4936;1359-7345
+    [ZDB-Nummer] => 1472881-3
+    [EZB-Id] => 6
+    [bibliographische URL(s)] => http://pubs.rsc.org/en/journals/journalissues/cc#!recentarticles&all***http://www.rsc.org/Publishing/Journals/cc/***http://www.rsc.org/chemcomm
+    [VolltextURL] => 
+    [FrontdoorURL] => http://www.bibliothek.uni-regensburg.de/ezeit/?1472881&bibid=FHNW
+    [Link zur Zeitschrift] => http://pubs.rsc.org/en/journals/journalissues/cc#!recentarticles&all
+    [Typ] => Volltext, Online und Druckausgabe
+    [Preistyp] => kostenlos mit Druckausgabe
+    [Zugangsbedingung] => Subscription
+    [Erster Jahrgang] => 0
+    [Erstes Heft] => 0
+    [Erstes Jahr] => 1996
+    [Letzter Jahrgang] => 0
+    [Letztes Heft] => 0
+    [Letztes Jahr] => 
+    [] => 
+)
+string(871) "{"Titel":"Chemical Communications : ChemComm","Ampelfarbe":"2","Verlag":"Royal Society of Chemistry (RSC)","Fach":"Chemie und Pharmazie","E-ISSN":"1364-548X","P-ISSN":"0009-241X;0022-4936;1359-7345","ZDB-Nummer":"1472881-3","EZB-Id":"6","bibliographische URL(s)":"http:\/\/pubs.rsc.org\/en\/journals\/journalissues\/cc#!recentarticles&all***http:\/\/www.rsc.org\/Publishing\/Journals\/cc\/***http:\/\/www.rsc.org\/chemcomm","VolltextURL":"","FrontdoorURL":"http:\/\/www.bibliothek.uni-regensburg.de\/ezeit\/?1472881&bibid=FHNW","Link zur Zeitschrift":"http:\/\/pubs.rsc.org\/en\/journals\/journalissues\/cc#!recentarticles&all","Typ":"Volltext, Online und Druckausgabe","Preistyp":"kostenlos mit Druckausgabe","Zugangsbedingung":"Subscription","Erster Jahrgang":"0","Erstes Heft":"0","Erstes Jahr":"1996","Letzter Jahrgang":"0","Letztes Heft":"0","Letztes Jahr":"","":""}"
+{"Titel":"Chemical Communications : ChemComm","Ampelfarbe":"2","Verlag":"Royal Society of Chemistry (RSC)","Fach":"Chemie und Pharmazie","E-ISSN":"1364-548X","P-ISSN":"0009-241X;0022-4936;1359-7345","ZDB-Nummer":"1472881-3","EZB-Id":"6","bibliographische URL(s)":"http:\/\/pubs.rsc.org\/en\/journals\/journalissues\/cc#!recentarticles&all***http:\/\/www.rsc.org\/Publishing\/Journals\/cc\/***http:\/\/www.rsc.org\/chemcomm","VolltextURL":"","FrontdoorURL":"http:\/\/www.bibliothek.uni-regensburg.de\/ezeit\/?1472881&bibid=FHNW","Link zur Zeitschrift":"http:\/\/pubs.rsc.org\/en\/journals\/journalissues\/cc#!recentarticles&all","Typ":"Volltext, Online und Druckausgabe","Preistyp":"kostenlos mit Druckausgabe","Zugangsbedingung":"Subscription","Erster Jahrgang":"0","Erstes Heft":"0","Erstes Jahr":"1996","Letzter Jahrgang":"0","Letztes Heft":"0","Letztes Jahr":"","":""}Insert query for ezb000000006 executed
+Query status: 0
+Query time: 1
+Title: Journal of Chemical Research (Synopses) (-1999)
+Tags: Array
+(
+    [0] => index:medium:ezb/b7c516e4ecc24f06ca73cecf54e7644c/Chemie und Pharmazie
+)
+Cluster: Array
+(
+    [0] => Chemie und Pharmazie
+)
+Authors: Array
+(
+)
+Loans: Array
+(
+)
+Licenses: Array
+(
+    [0] => restricted
+)
+Signatures: Array
+(
+)
+URLs: Array
+(
+    [0] => bibl:http://pubs.rsc.org/en/journals/journalissues/jc#!issueid=jc999012&type=archive&issnprint=0308-2342
+    [1] => frontdoor:http://www.bibliothek.uni-regensburg.de/ezeit/?1472927&bibid=FHNW
+    [2] => journal:http://pubs.rsc.org/en/journals/journalissues/jc#!issueid=jc999012&type=archive&issnprint=0308-2342
+)
+Delete query for ezb000000007 executed
+Query status: 0
+Query time: 24
+Array
+(
+    [Titel] => Journal of Chemical Research (Synopses) (-1999)
+    [Ampelfarbe] => 2
+    [Verlag] => Royal Society of Chemistry (RSC)
+    [Fach] => Chemie und Pharmazie
+    [E-ISSN] => 1364-5560
+    [P-ISSN] => 0308-2342
+    [ZDB-Nummer] => 1472927-1
+    [EZB-Id] => 7
+    [bibliographische URL(s)] => http://pubs.rsc.org/en/journals/journalissues/jc#!issueid=jc999012&type=archive&issnprint=0308-2342
+    [VolltextURL] => 
+    [FrontdoorURL] => http://www.bibliothek.uni-regensburg.de/ezeit/?1472927&bibid=FHNW
+    [Link zur Zeitschrift] => http://pubs.rsc.org/en/journals/journalissues/jc#!issueid=jc999012&type=archive&issnprint=0308-2342
+    [Typ] => Volltext, Online und Druckausgabe
+    [Preistyp] => kostenlos
+    [Zugangsbedingung] => frei zug&auml;nglich
+    [Erster Jahrgang] => 0
+    [Erstes Heft] => 1
+    [Erstes Jahr] => 1997
+    [Letzter Jahrgang] => 0
+    [Letztes Heft] => 12
+    [Letztes Jahr] => 1999
+    [] => 
+)
+string(838) "{"Titel":"Journal of Chemical Research (Synopses) (-1999)","Ampelfarbe":"2","Verlag":"Royal Society of Chemistry (RSC)","Fach":"Chemie und Pharmazie","E-ISSN":"1364-5560","P-ISSN":"0308-2342","ZDB-Nummer":"1472927-1","EZB-Id":"7","bibliographische URL(s)":"http:\/\/pubs.rsc.org\/en\/journals\/journalissues\/jc#!issueid=jc999012&type=archive&issnprint=0308-2342","VolltextURL":"","FrontdoorURL":"http:\/\/www.bibliothek.uni-regensburg.de\/ezeit\/?1472927&bibid=FHNW","Link zur Zeitschrift":"http:\/\/pubs.rsc.org\/en\/journals\/journalissues\/jc#!issueid=jc999012&type=archive&issnprint=0308-2342","Typ":"Volltext, Online und Druckausgabe","Preistyp":"kostenlos","Zugangsbedingung":"frei zug&auml;nglich","Erster Jahrgang":"0","Erstes Heft":"1","Erstes Jahr":"1997","Letzter Jahrgang":"0","Letztes Heft":"12","Letztes Jahr":"1999","":""}"
+{"Titel":"Journal of Chemical Research (Synopses) (-1999)","Ampelfarbe":"2","Verlag":"Royal Society of Chemistry (RSC)","Fach":"Chemie und Pharmazie","E-ISSN":"1364-5560","P-ISSN":"0308-2342","ZDB-Nummer":"1472927-1","EZB-Id":"7","bibliographische URL(s)":"http:\/\/pubs.rsc.org\/en\/journals\/journalissues\/jc#!issueid=jc999012&type=archive&issnprint=0308-2342","VolltextURL":"","FrontdoorURL":"http:\/\/www.bibliothek.uni-regensburg.de\/ezeit\/?1472927&bibid=FHNW","Link zur Zeitschrift":"http:\/\/pubs.rsc.org\/en\/journals\/journalissues\/jc#!issueid=jc999012&type=archive&issnprint=0308-2342","Typ":"Volltext, Online und Druckausgabe","Preistyp":"kostenlos","Zugangsbedingung":"frei zug&auml;nglich","Erster Jahrgang":"0","Erstes Heft":"1","Erstes Jahr":"1997","Letzter Jahrgang":"0","Letztes Heft":"12","Letztes Jahr":"1999","":""}Insert query for ezb000000007 executed
+Query status: 0
+Query time: 1
+Title: Dalton Transactions (2003 -)
+Tags: Array
+(
+    [0] => index:medium:ezb/b7c516e4ecc24f06ca73cecf54e7644c/Chemie und Pharmazie
+)
+Cluster: Array
+(
+    [0] => Chemie und Pharmazie
+)
+Authors: Array
+(
+)
+Loans: Array
+(
+)
+Licenses: Array
+(
+    [0] => restricted
+)
+Signatures: Array
+(
+)
+URLs: Array
+(
+    [0] => bibl:http://pubs.rsc.org/en/journals/journalissues/dt
+    [1] => frontdoor:http://www.bibliothek.uni-regensburg.de/ezeit/?1472887&bibid=FHNW
+    [2] => journal:http://pubs.rsc.org/en/journals/journalissues/dt
+)
+Delete query for ezb000000008 executed
+Query status: 0
+Query time: 23
+Array
+(
+    [Titel] => Dalton Transactions (2003 -)
+    [Ampelfarbe] => 2
+    [Verlag] => Royal Society of Chemistry (RSC)
+    [Fach] => Chemie und Pharmazie
+    [E-ISSN] => 1477-9234
+    [P-ISSN] => 1477-9226
+    [ZDB-Nummer] => 1472887-4
+    [EZB-Id] => 8
+    [bibliographische URL(s)] => http://pubs.rsc.org/en/journals/journalissues/dt
+    [VolltextURL] => 
+    [FrontdoorURL] => http://www.bibliothek.uni-regensburg.de/ezeit/?1472887&bibid=FHNW
+    [Link zur Zeitschrift] => http://pubs.rsc.org/en/journals/journalissues/dt
+    [Typ] => Volltext, Online und Druckausgabe
+    [Preistyp] => kostenlos mit Druckausgabe
+    [Zugangsbedingung] => Subscription
+    [Erster Jahrgang] => 0
+    [Erstes Heft] => 1
+    [Erstes Jahr] => 2003
+    [Letzter Jahrgang] => 0
+    [Letztes Heft] => 0
+    [Letztes Jahr] => 
+    [] => 
+)
+string(721) "{"Titel":"Dalton Transactions (2003 -)","Ampelfarbe":"2","Verlag":"Royal Society of Chemistry (RSC)","Fach":"Chemie und Pharmazie","E-ISSN":"1477-9234","P-ISSN":"1477-9226","ZDB-Nummer":"1472887-4","EZB-Id":"8","bibliographische URL(s)":"http:\/\/pubs.rsc.org\/en\/journals\/journalissues\/dt","VolltextURL":"","FrontdoorURL":"http:\/\/www.bibliothek.uni-regensburg.de\/ezeit\/?1472887&bibid=FHNW","Link zur Zeitschrift":"http:\/\/pubs.rsc.org\/en\/journals\/journalissues\/dt","Typ":"Volltext, Online und Druckausgabe","Preistyp":"kostenlos mit Druckausgabe","Zugangsbedingung":"Subscription","Erster Jahrgang":"0","Erstes Heft":"1","Erstes Jahr":"2003","Letzter Jahrgang":"0","Letztes Heft":"0","Letztes Jahr":"","":""}"
+{"Titel":"Dalton Transactions (2003 -)","Ampelfarbe":"2","Verlag":"Royal Society of Chemistry (RSC)","Fach":"Chemie und Pharmazie","E-ISSN":"1477-9234","P-ISSN":"1477-9226","ZDB-Nummer":"1472887-4","EZB-Id":"8","bibliographische URL(s)":"http:\/\/pubs.rsc.org\/en\/journals\/journalissues\/dt","VolltextURL":"","FrontdoorURL":"http:\/\/www.bibliothek.uni-regensburg.de\/ezeit\/?1472887&bibid=FHNW","Link zur Zeitschrift":"http:\/\/pubs.rsc.org\/en\/journals\/journalissues\/dt","Typ":"Volltext, Online und Druckausgabe","Preistyp":"kostenlos mit Druckausgabe","Zugangsbedingung":"Subscription","Erster Jahrgang":"0","Erstes Heft":"1","Erstes Jahr":"2003","Letzter Jahrgang":"0","Letztes Heft":"0","Letztes Jahr":"","":""}Insert query for ezb000000008 executed
+Query status: 0
+Query time: 1
+Title: Journal of the Chemical Society, Faraday Transactions
+Tags: Array
+(
+    [0] => index:medium:ezb/b7c516e4ecc24f06ca73cecf54e7644c/Chemie und Pharmazie
+    [1] => index:medium:ezb/0586f758b9db2b6e37c91b2994a9ac65/Physik
+)
+Cluster: Array
+(
+    [0] => Chemie und Pharmazie
+    [1] => Physik
+)
+Authors: Array
+(
+)
+Loans: Array
+(
+)
+Licenses: Array
+(
+    [0] => restricted
+)
+Signatures: Array
+(
+)
+URLs: Array
+(
+    [0] => bibl:http://xlink.rsc.org/jumptojournal.cfm?journal_code=FT
+    [1] => bibl:http://www.rsc.org/Publishing/Journals/CP/article.asp?Journal=FT10
+    [2] => frontdoor:http://www.bibliothek.uni-regensburg.de/ezeit/?1476283&bibid=FHNW
+    [3] => journal:http://xlink.rsc.org/jumptojournal.cfm?journal_code=FT
+)
+Delete query for ezb000000009 executed
+Query status: 0
+Query time: 28
+Array
+(
+    [Titel] => Journal of the Chemical Society, Faraday Transactions
+    [Ampelfarbe] => 2
+    [Verlag] => Royal Society of Chemistry (RSC)
+    [Fach] => Chemie und Pharmazie;Physik
+    [E-ISSN] => 1364-5455
+    [P-ISSN] => 0956-5000
+    [ZDB-Nummer] => 1476283-3
+    [EZB-Id] => 9
+    [bibliographische URL(s)] => http://xlink.rsc.org/jumptojournal.cfm?journal_code=FT***http://www.rsc.org/Publishing/Journals/CP/article.asp?Journal=FT10
+    [VolltextURL] => 
+    [FrontdoorURL] => http://www.bibliothek.uni-regensburg.de/ezeit/?1476283&bibid=FHNW
+    [Link zur Zeitschrift] => http://xlink.rsc.org/jumptojournal.cfm?journal_code=FT
+    [Typ] => Volltext, Online und Druckausgabe
+    [Preistyp] => kostenpflichtig
+    [Zugangsbedingung] => Subscription
+    [Erster Jahrgang] => 86
+    [Erstes Heft] => 1
+    [Erstes Jahr] => 1990
+    [Letzter Jahrgang] => 94
+    [Letztes Heft] => 24
+    [Letztes Jahr] => 1998
+    [] => 
+)
+string(830) "{"Titel":"Journal of the Chemical Society, Faraday Transactions","Ampelfarbe":"2","Verlag":"Royal Society of Chemistry (RSC)","Fach":"Chemie und Pharmazie;Physik","E-ISSN":"1364-5455","P-ISSN":"0956-5000","ZDB-Nummer":"1476283-3","EZB-Id":"9","bibliographische URL(s)":"http:\/\/xlink.rsc.org\/jumptojournal.cfm?journal_code=FT***http:\/\/www.rsc.org\/Publishing\/Journals\/CP\/article.asp?Journal=FT10","VolltextURL":"","FrontdoorURL":"http:\/\/www.bibliothek.uni-regensburg.de\/ezeit\/?1476283&bibid=FHNW","Link zur Zeitschrift":"http:\/\/xlink.rsc.org\/jumptojournal.cfm?journal_code=FT","Typ":"Volltext, Online und Druckausgabe","Preistyp":"kostenpflichtig","Zugangsbedingung":"Subscription","Erster Jahrgang":"86","Erstes Heft":"1","Erstes Jahr":"1990","Letzter Jahrgang":"94","Letztes Heft":"24","Letztes Jahr":"1998","":""}"
+{"Titel":"Journal of the Chemical Society, Faraday Transactions","Ampelfarbe":"2","Verlag":"Royal Society of Chemistry (RSC)","Fach":"Chemie und Pharmazie;Physik","E-ISSN":"1364-5455","P-ISSN":"0956-5000","ZDB-Nummer":"1476283-3","EZB-Id":"9","bibliographische URL(s)":"http:\/\/xlink.rsc.org\/jumptojournal.cfm?journal_code=FT***http:\/\/www.rsc.org\/Publishing\/Journals\/CP\/article.asp?Journal=FT10","VolltextURL":"","FrontdoorURL":"http:\/\/www.bibliothek.uni-regensburg.de\/ezeit\/?1476283&bibid=FHNW","Link zur Zeitschrift":"http:\/\/xlink.rsc.org\/jumptojournal.cfm?journal_code=FT","Typ":"Volltext, Online und Druckausgabe","Preistyp":"kostenpflichtig","Zugangsbedingung":"Subscription","Erster Jahrgang":"86","Erstes Heft":"1","Erstes Jahr":"1990","Letzter Jahrgang":"94","Letztes Heft":"24","Letztes Jahr":"1998","":""}Insert query for ezb000000009 executed
+Query status: 0
+Query time: 1
+Title: Faraday Discussions
+Tags: Array
+(
+    [0] => index:medium:ezb/b7c516e4ecc24f06ca73cecf54e7644c/Chemie und Pharmazie
+    [1] => index:medium:ezb/0586f758b9db2b6e37c91b2994a9ac65/Physik
+)
+Cluster: Array
+(
+    [0] => Chemie und Pharmazie
+    [1] => Physik
+)
+Authors: Array
+(
+)
+Loans: Array
+(
+)
+Licenses: Array
+(
+    [0] => restricted
+)
+Signatures: Array
+(
+)
+URLs: Array
+(
+    [0] => bibl:http://xlink.rsc.org/jumptojournal.cfm?journal_code=FD
+    [1] => bibl:http://www.rsc.org/faraday_d
+    [2] => bibl:http://www.rsc.org/Publishing/Journals/fd/
+    [3] => frontdoor:http://www.bibliothek.uni-regensburg.de/ezeit/?1472891&bibid=FHNW
+    [4] => journal:http://xlink.rsc.org/jumptojournal.cfm?journal_code=FD
+)
+Delete query for ezb000000010 executed
+Query status: 0
+Query time: 22
+Array
+(
+    [Titel] => Faraday Discussions
+    [Ampelfarbe] => 2
+    [Verlag] => Royal Society of Chemistry (RSC)
+    [Fach] => Chemie und Pharmazie;Physik
+    [E-ISSN] => 0301-7249;1364-5498
+    [P-ISSN] => 1359-6640
+    [ZDB-Nummer] => 1472891-6
+    [EZB-Id] => 10
+    [bibliographische URL(s)] => http://xlink.rsc.org/jumptojournal.cfm?journal_code=FD***http://www.rsc.org/faraday_d***http://www.rsc.org/Publishing/Journals/fd/
+    [VolltextURL] => 
+    [FrontdoorURL] => http://www.bibliothek.uni-regensburg.de/ezeit/?1472891&bibid=FHNW
+    [Link zur Zeitschrift] => http://xlink.rsc.org/jumptojournal.cfm?journal_code=FD
+    [Typ] => Volltext, Online und Druckausgabe
+    [Preistyp] => kostenlos mit Druckausgabe
+    [Zugangsbedingung] => Subscription
+    [Erster Jahrgang] => 92
+    [Erstes Heft] => 0
+    [Erstes Jahr] => 1991
+    [Letzter Jahrgang] => 0
+    [Letztes Heft] => 0
+    [Letztes Jahr] => 
+    [] => 
+)
+string(822) "{"Titel":"Faraday Discussions","Ampelfarbe":"2","Verlag":"Royal Society of Chemistry (RSC)","Fach":"Chemie und Pharmazie;Physik","E-ISSN":"0301-7249;1364-5498","P-ISSN":"1359-6640","ZDB-Nummer":"1472891-6","EZB-Id":"10","bibliographische URL(s)":"http:\/\/xlink.rsc.org\/jumptojournal.cfm?journal_code=FD***http:\/\/www.rsc.org\/faraday_d***http:\/\/www.rsc.org\/Publishing\/Journals\/fd\/","VolltextURL":"","FrontdoorURL":"http:\/\/www.bibliothek.uni-regensburg.de\/ezeit\/?1472891&bibid=FHNW","Link zur Zeitschrift":"http:\/\/xlink.rsc.org\/jumptojournal.cfm?journal_code=FD","Typ":"Volltext, Online und Druckausgabe","Preistyp":"kostenlos mit Druckausgabe","Zugangsbedingung":"Subscription","Erster Jahrgang":"92","Erstes Heft":"0","Erstes Jahr":"1991","Letzter Jahrgang":"0","Letztes Heft":"0","Letztes Jahr":"","":""}"
+{"Titel":"Faraday Discussions","Ampelfarbe":"2","Verlag":"Royal Society of Chemistry (RSC)","Fach":"Chemie und Pharmazie;Physik","E-ISSN":"0301-7249;1364-5498","P-ISSN":"1359-6640","ZDB-Nummer":"1472891-6","EZB-Id":"10","bibliographische URL(s)":"http:\/\/xlink.rsc.org\/jumptojournal.cfm?journal_code=FD***http:\/\/www.rsc.org\/faraday_d***http:\/\/www.rsc.org\/Publishing\/Journals\/fd\/","VolltextURL":"","FrontdoorURL":"http:\/\/www.bibliothek.uni-regensburg.de\/ezeit\/?1472891&bibid=FHNW","Link zur Zeitschrift":"http:\/\/xlink.rsc.org\/jumptojournal.cfm?journal_code=FD","Typ":"Volltext, Online und Druckausgabe","Preistyp":"kostenlos mit Druckausgabe","Zugangsbedingung":"Subscription","Erster Jahrgang":"92","Erstes Heft":"0","Erstes Jahr":"1991","Letzter Jahrgang":"0","Letztes Heft":"0","Letztes Jahr":"","":""}Insert query for ezb000000010 executed
+Query status: 0
+Query time: 1
+Title: Journal of Materials Chemistry
+Tags: Array
+(
+    [0] => index:medium:ezb/b7c516e4ecc24f06ca73cecf54e7644c/Chemie und Pharmazie
+    [1] => index:medium:ezb/f5383bb8b702c2e5d9b4cd470ca7c5bc/Maschinenwesen, Werkstoffwissenschaften, Fertigungstechnik, Bergbau u. Hüttenwesen, Verkehrstechnik, Feinwerktechnik
+)
+Cluster: Array
+(
+    [0] => Chemie und Pharmazie
+    [1] => Maschinenwesen, Werkstoffwissenschaften, Fertigungstechnik, Bergbau u. Hüttenwesen, Verkehrstechnik, Feinwerktechnik
+)
+Authors: Array
+(
+)
+Loans: Array
+(
+)
+Licenses: Array
+(
+    [0] => restricted
+)
+Signatures: Array
+(
+)
+URLs: Array
+(
+    [0] => bibl:http://pubs.rsc.org/en/journals/journalissues/jm#!issueid=jm022048&type=archive&issnprint=0959-9428
+    [1] => bibl:http://www.rsc.org/materials
+    [2] => bibl:http://www.rsc.org/Publishing/Journals/jm/Article.asp?Type=CurrentIssue
+    [3] => frontdoor:http://www.bibliothek.uni-regensburg.de/ezeit/?1491403&bibid=FHNW
+    [4] => journal:http://pubs.rsc.org/en/journals/journalissues/jm#!issueid=jm022048&type=archive&issnprint=0959-9428
+)
+Delete query for ezb000000011 executed
+Query status: 0
+Query time: 48
+Array
+(
+    [Titel] => Journal of Materials Chemistry 
+    [Ampelfarbe] => 2
+    [Verlag] => Royal Society of Chemistry (RSC)
+    [Fach] => Chemie und Pharmazie;Maschinenwesen, Werkstoffwissenschaften, Fertigungstechnik, Bergbau u. Hüttenwesen, Verkehrstechnik, Feinwerktechnik
+    [E-ISSN] => 1364-5501
+    [P-ISSN] => 0959-9428
+    [ZDB-Nummer] => 1491403-7
+    [EZB-Id] => 11
+    [bibliographische URL(s)] => http://pubs.rsc.org/en/journals/journalissues/jm#!issueid=jm022048&type=archive&issnprint=0959-9428***http://www.rsc.org/materials***http://www.rsc.org/Publishing/Journals/jm/Article.asp?Type=CurrentIssue
+    [VolltextURL] => 
+    [FrontdoorURL] => http://www.bibliothek.uni-regensburg.de/ezeit/?1491403&bibid=FHNW
+    [Link zur Zeitschrift] => http://pubs.rsc.org/en/journals/journalissues/jm#!issueid=jm022048&type=archive&issnprint=0959-9428
+    [Typ] => Volltext, Online und Druckausgabe
+    [Preistyp] => kostenlos mit Druckausgabe
+    [Zugangsbedingung] => Subscription
+    [Erster Jahrgang] => 1
+    [Erstes Heft] => 1
+    [Erstes Jahr] => 1991
+    [Letzter Jahrgang] => 22
+    [Letztes Heft] => 48
+    [Letztes Jahr] => 2012
+    [] => 
+)
+bool(false)
+no meta error

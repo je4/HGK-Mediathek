@@ -33,7 +33,7 @@ $pages = new Resource($client, $uriTemplateProcessor, $uriJoiner, $apiRootUrl);
 
                 <!--( B ) What Can I Do -->
 
-                <div class="clearfix">
+                <div class="clearfix full-height">
                     <h2 class="small-heading"> <?php echo $pages->{'title'}->{'rendered'}; ?></h2>
                     <div class="row">
                         <div class="col-md-10 col-md-offset-1 col-xs-12">

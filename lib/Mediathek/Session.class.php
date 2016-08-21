@@ -77,7 +77,7 @@ class Session implements \SessionHandlerInterface
                 , '.$this->db->qstr($this->shibGetSessionID()).'
                 , '.$this->db->qstr($this->certEmail).'
                 , '.$this->db->qstr($this->id).'
-                , '.$this->db->qstr($_SERVER['REMOTE_ADDR']).'
+                , '.$this->db->qstr(isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : null).'
                 )';
 //		echo $sql;
         $this->db->Execute( $sql );
@@ -168,6 +168,14 @@ class Session implements \SessionHandlerInterface
  
   public function shibGetUsername() {
     return "{$this->server['givenName']} {$this->server['surname']}";
+  }
+  
+  public function shibGetGivenName() {
+    return "{$this->server['givenName']}";
+  }
+
+  public function shibGetSurname() {
+    return "{$this->server['surname']}";
   }
   
   public function shibHomeOrganization() {

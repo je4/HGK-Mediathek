@@ -10,7 +10,7 @@ if( isset( $_REQUEST['signatur'] )) $signatur = trim( ($_REQUEST['signatur']));
 
 if( !strlen( $signatur ) ) return;
 
-$sql = "SELECT a.`Signatur` AS signatur, i.itemid, i.marker 
+$sql = "SELECT DISTINCT a.`Signatur` AS signatur, i.itemid, i.marker 
 			FROM inventory2 i LEFT JOIN ARC a ON a.`Strichcode`=i.itemid
 			WHERE (a.`Signatur` LIKE ".$db->qstr("%{$signatur}%")."
 			OR i.itemid LIKE ".$db->qstr("{$signatur}%")."

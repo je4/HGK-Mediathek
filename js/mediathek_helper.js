@@ -27,18 +27,29 @@ function initSearch( area ) {
 	   });
 	
 	$('#searchbutton').click( function(e) {
-	   doSearch( 0, 12 );
+	   doSearch( $('#searchtext').val(), 0, 12 );
 	});
 	
 	 $('#searchtext').keypress(function (e) {
 		if (e.which == 13) {
-		  doSearch( 0, 12 );
+		  doSearch( $('#searchtext').val(), 0, 12 );
+		  return false;    //<---- Add this line
+		}
+	 });
+
+	$('#searchbutton0').click( function(e) {
+	   doSearch( $('#searchtext0').val(), 0, 12 );
+	});
+	
+	 $('#searchtext0').keypress(function (e) {
+		if (e.which == 13) {
+		  doSearch( $('#searchtext0').val(), 0, 12 );
 		  return false;    //<---- Add this line
 		}
 	 });
      
 	 $('input.facet').change(function() {
-		doSearch( 0, 12 ); 
+		doSearch( $('#searchtext').val(), 0, 12 ); 
 	 });
 	 
 	var param = window.location.hash.replace("#","");
@@ -126,8 +137,8 @@ function doSearchFull(query, area, filter, facets, page, pagesize ) {
 	$('#searchform').attr('action', url).submit();
 }
 
-function doSearch(page, pagesize) {
-	searchtext = $('#searchtext').val();
+function doSearch( searchtext, page, pagesize) {
+//	searchtext = $('#searchtext').val();
 	//searcharea = window.location.hash.replace("#","");
 
 	var facets = {};

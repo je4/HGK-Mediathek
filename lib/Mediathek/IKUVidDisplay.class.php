@@ -34,7 +34,7 @@ class IKUVidDisplay extends DisplayEntity {
     }
 
 	public function detailView() {
-        global $config, $googleservice, $googleclient, $session;
+        global $config, $googleservice, $googleclient, $session, $page, $pagesize;
 		
 		$cert = $session->inGroup( 'certificate/mediathek');
 		$intern = $session->inGroup( 'location/fhnw');
@@ -49,20 +49,21 @@ class IKUVidDisplay extends DisplayEntity {
 		<span style="; font-weight: bold;">Aktueller Film</span><br>
 		<div class="facet" style="">
 			<div class="marker" style=""></div>
-			<h3><?php if( isset( $this->metadata['Autor Regie'] )) echo htmlspecialchars( $this->metadata['Autor Regie'].': ' ); echo htmlentities( $this->metadata['Titel1'] );?> <span style="font-size: 80%;"><?php echo htmlspecialchars( $this->metadata['Produktionsjahr'] );?></span></h3>
-			<h4><?php if( isset( $this->metadata['Titel2'] )) echo htmlspecialchars( $this->metadata['Titel2'].'.' );?>
+			<h5><?php if( isset( $this->metadata['Autor Regie'] )) echo htmlspecialchars( $this->metadata['Autor Regie'].': ' ); echo htmlentities( $this->metadata['Titel1'] );?> <span style="font-size: 80%;"><?php echo htmlspecialchars( $this->metadata['Produktionsjahr'] );?></span></h5>
+			<b><?php if( isset( $this->metadata['Titel2'] )) echo htmlspecialchars( $this->metadata['Titel2'].'.' );?>
 			<span style="font-size: 80%;"><?php if( isset( $this->metadata['Dauer'] )) echo htmlspecialchars( $this->metadata['Dauer'] );?>
 			<?php if( isset( $this->metadata['Land'] )) echo htmlspecialchars( $this->metadata['Land'] );?>
-			</span></h4>
+			</span></b>
 		</div>
 	</div>
-	<div class="col-md-9">
+	<div class="col-md-6">
 <?php
 		
 		//print_r( $session->getGroups());
 		// Fall 1
-		if( !$loggedin /* && !$cert */ ) {
+		if( !$loggedin || !$this->doc->embedded/* && !$cert */ ) {
 ?>
+<!--
 	<span style="; font-weight: bold;"></span><br>
 	<div class="facet" style="">
 		<div class="marker" style=""></div>
@@ -75,23 +76,35 @@ class IKUVidDisplay extends DisplayEntity {
 			</div>
 		</div>
 	</div>
-
+-->
 <?php
 		}
-		elseif( $session->inGroup( 'certificate/mediathek') && $this->doc->embedded ) {
+		elseif( $session->inGroup( 'global/admin' /* 'location/fhnw' */ /* 'certificate/mediathek' */) && $this->doc->embedded ) {
 ?>
 	<span style="; font-weight: bold;">Film abspielen</span><br>
 	<div class="facet" style="min-width: 740px; text-align: center;">
 		<div class="marker" style=""></div>
 		<video id="my-video" class="video-js" controls preload="auto" width="720" height="576"
 		poster="<?php echo $config['media']['picintern'].'/'.intval($this->doc->originalid).'.00001.big.png'; ?>" data-setup="{}">
-		  <source src="<?php echo $config['media']['videocert'].'/'.intval($this->doc->originalid).'.mp4'; ?>" type='video/mp4'>
+		  <source src="<?php echo $config['media']['videointern'].'/'.intval($this->doc->originalid).'.h264-1100k.mp4'; ?>" type='video/mp4'>
 		  <p class="vjs-no-js">
 			To view this video please enable JavaScript, and consider upgrading to a web browser that
 			<a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
 		  </p>
 		</video>
+
 	</div>  
+<?php
+		}
+		else
+		{
+?>
+	<span style="font-weight: bold;">Hinweis</span><br>
+	<div class="facet" style="min-width: 740px; text-align: center;">
+		<div class="marker" style=""></div>
+		
+		Abspielen von Videos ist nicht für alle Nutzer freigeschaltet. Bei Fragen wenden Sie sich bitte an die Mediathek.
+	</div>
 <?php
 		}
 
@@ -99,13 +112,60 @@ class IKUVidDisplay extends DisplayEntity {
 <br />
 <div class="facet" style="padding-bottom: 5px;">
 	<div class="marker" style=""></div>
+		<div class="media-body">
+			<p><?php echo htmlspecialchars( $this->metadata['Bemerkungen'] ); ?></p>
+		</div>
+	<?php if( $this->doc->embedded ) {	?>
 <img src="<?php echo $config['media']['picopen'].'/'.intval($this->doc->originalid).'.00005.thumb.png'; ?>" />
-<img src="<?php echo $config['media']['picopen'].'/'.intval($this->doc->originalid).'.00010.thumb.png'; ?>" />
-<img src="<?php echo $config['media']['picopen'].'/'.intval($this->doc->originalid).'.00015.thumb.png'; ?>" />
-<img src="<?php echo $config['media']['picopen'].'/'.intval($this->doc->originalid).'.00020.thumb.png'; ?>" />
-<img src="<?php echo $config['media']['picopen'].'/'.intval($this->doc->originalid).'.00025.thumb.png'; ?>" />
+<img src="<?php echo $config['media']['picopen'].'/'.intval($this->doc->originalid).'.00009.thumb.png'; ?>" />
+<img src="<?php echo $config['media']['picopen'].'/'.intval($this->doc->originalid).'.00013.thumb.png'; ?>" />
+<img src="<?php echo $config['media']['picopen'].'/'.intval($this->doc->originalid).'.00017.thumb.png'; ?>" />
+<img src="<?php echo $config['media']['picopen'].'/'.intval($this->doc->originalid).'.00021.thumb.png'; ?>" />
+<?php } ?>
 </div>
 	</div>
+			<div class="col-md-3">
+<?php 	if( is_array( $this->doc->cluster_ss ))  { ?>		
+				<div style="">
+				<span style="; font-weight: bold;">Themen</span><br />
+					<div class="facet" style="">
+						<div class="marker" style=""></div>
+<?php
+						foreach( $this->doc->cluster_ss as $cl ) {
+//						foreach( $entity->getCluster() as $cl ) {
+//							echo htmlspecialchars( $cl ).'<br />';
+?>
+								<label>
+									<a href="javascript:doSearchFull('', '', [], {cluster: ['<?php echo htmlspecialchars( $cl ); ?>']}, 0, <?php echo $pagesize; ?> );"><?php echo htmlspecialchars( $cl ); ?></a>
+								</label><br />
+								
+							<!-- <div class="checkbox checkbox-green">
+								<input class="facet" type="checkbox" id="cluster" value="<?php echo htmlentities($cl); ?>">
+								<label for="cluster<?php echo $i; ?>">
+									<?php echo htmlspecialchars( $cl ); ?>
+								</label>
+							</div> -->
+<?php							
+						}
+?>							
+					</div>
+				</div>
+						<?php  } ?>
+<!--						
+				<div style="">
+				<span style="; font-weight: bold;">Kontext</span><br />
+					<div class="facet" style="">
+						<div class="marker" style=""></div>
+					</div>
+				</div>
+				<div style="">
+				<span style="; font-weight: bold;">Systematik</span><br />
+					<div class="facet" style="">
+						<div class="marker" style=""></div>
+					</div>
+				</div>
+-->				
+			</div>	
 </div>
 		<script>
 			function initIKUVid() {
