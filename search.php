@@ -115,7 +115,19 @@ if( $query ) {
 }
 
 if( !$qobj ) {
-	$qobj = readQuery( $q );
+	if( !$q ) {
+		$qobj = new \stdClass();
+		$qobj->facets = new \stdClass();
+		$qobj->filter = new \stdClass();
+		$qobj->area = '';
+		$qobj->facets->source = array( 'NEBIS' );
+		$qobj->query = '*';
+		$query = json_encode( $qobj );
+		$q = md5($query);
+		writeQuery( $q, $qobj, $query );
+	}
+	else 
+		$qobj = readQuery( $q );
 }
 
 if( $qobj->query == '' ) $qobj->query = '*';
@@ -179,13 +191,13 @@ switch( $qobj->area ) {
 }
 
 if( @is_array( $qobj->facets->source )) {
-	$q = "";
+	$_q = "";
 	foreach( $qobj->facets->source as $src ) {
-		if( $q != '' ) $q .= ' OR ';
-		if( $src == 'NEBIS' ) $q .= ' (source:'.$helper->escapePhrase( $src ).' AND signature:'.$helper->escapePhrase('nebis:E75:*' ).')';
-		else $q .= ' (source:'.$helper->escapePhrase( $src ).')';
+		if( $_q != '' ) $_q .= ' OR ';
+		if( $src == 'NEBIS' ) $_q .= ' (source:'.$helper->escapePhrase( $src ).' AND signature:'.$helper->escapePhrase('nebis:E75:*' ).')';
+		else $_q .= ' (source:'.$helper->escapePhrase( $src ).')';
 	}
-    $squery->createFilterQuery('source')->addTag('source')->setQuery( $q	);	
+    $squery->createFilterQuery('source')->addTag('source')->setQuery( $_q );	
 }
 if( @is_array( $qobj->facets->embedded )) {
     $squery->createFilterQuery('embedded')->addTag('embedded')->setQuery('embedded:('.implode(' ', $qobj->facets->embedded).')'	);	
@@ -392,7 +404,7 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 
 function init() {
 
-	 initSearch("<?php echo $qobj->area; ?>");
+	 initSearch("<?php echo $qobj->area; ?>", <?php echo $session->getPageSize(); ?>);
 
 	 $('.setpage').keypress(function (e) {
 		if (e.which == 13) {

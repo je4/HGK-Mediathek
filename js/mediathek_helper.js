@@ -14,7 +14,7 @@ function facetSearch( q, facet, value, add ) {
 	}
 }
 
-function initSearch( area ) {
+function initSearch( area, pagesize = 12 ) {
     searcharea = area;
 	$('.search-panel .dropdown-menu').find('a').click(function(e) {
 		   e.preventDefault();
@@ -27,29 +27,29 @@ function initSearch( area ) {
 	   });
 	
 	$('#searchbutton').click( function(e) {
-	   doSearch( $('#searchtext').val(), 0, 12 );
+	   doSearch( $('#searchtext').val(), 0, pagesize );
 	});
 	
 	 $('#searchtext').keypress(function (e) {
 		if (e.which == 13) {
-		  doSearch( $('#searchtext').val(), 0, 12 );
+		  doSearch( $('#searchtext').val(), 0, pagesize );
 		  return false;    //<---- Add this line
 		}
 	 });
 
 	$('#searchbutton0').click( function(e) {
-	   doSearch( $('#searchtext0').val(), 0, 12 );
+	   doSearch( $('#searchtext0').val(), 0, pagesize );
 	});
 	
 	 $('#searchtext0').keypress(function (e) {
 		if (e.which == 13) {
-		  doSearch( $('#searchtext0').val(), 0, 12 );
+		  doSearch( $('#searchtext0').val(), 0, pagesize );
 		  return false;    //<---- Add this line
 		}
 	 });
      
 	 $('input.facet').change(function() {
-		doSearch( $('#searchtext').val(), 0, 12 ); 
+		doSearch( $('#searchtext').val(), 0, pagesize ); 
 	 });
 	 
 	var param = window.location.hash.replace("#","");
