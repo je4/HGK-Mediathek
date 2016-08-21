@@ -170,7 +170,11 @@ function init() {
 }
 </script>   
 	
-    
+<?php
+echo mediathekfooter();
+
+?>	
+<!--    
     <script type="text/javascript" src="assets/js/jquery-2.1.3.min.js"></script>
     <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="assets/js/modernizr.js"></script>
@@ -178,7 +182,6 @@ function init() {
     <script type="text/javascript" src="assets/js/jquery.mixitup.min.js"></script>
     <script type="text/javascript" src="assets/js/jquery.popup.min.js"></script>
     <script type="text/javascript" src="assets/js/owl.carousel.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js"></script>
     <script type="text/javascript" src="assets/js/contact.js"></script>
     <script type="text/javascript" src="assets/js/script.js"></script>
     <script type="text/javascript" src="js/md5.js"></script>
@@ -189,10 +192,11 @@ function init() {
 	<script src="js/threejs/build/TrackballControls.js"></script>
 	<script src="js/threejs/build/OrbitControls.js"></script>
 	<script src="js/threejs/build/CombinedCamera.js"></script>   
-	<!-- script src="mediathek2.js"></script -->   
 	<script src="js/mediathek.js"></script>   
 	<script src="js/mediathek3d.js"></script>	
 
 
 </body>
 </html>
+
+-->

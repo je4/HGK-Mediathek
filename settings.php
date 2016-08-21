@@ -20,7 +20,6 @@ include( 'init.inc.php' );
 echo mediathekheader('search', 'Mediathek - Settings', '');
 ?>
 <div class="back-btn"><i class="ion-ios-search"></i></div>
-<div class="setting-btn"><i class="<?php echo $session->isLoggedIn() ? 'ion-ios-settings-strong': 'ion-log-in'; ?>"></i></div>
 
 <div id="fullsearch" class="fullsearch-page container-fluid page">
     <div class="row">
@@ -49,18 +48,7 @@ echo mediathekheader('search', 'Mediathek - Settings', '');
 <h3><?php echo htmlspecialchars( $session->shibGetUsername()); ?></h3>
 <h4><a href="mailto:<?php echo $session->shibGetMail(); ?>"><?php echo $session->shibGetMail(); ?></a></h4>
 <div class="row">
-	<div class="col-md-6 col-sm-6 col-xs-12 price-catagory">
-		<div class="price-box">
-			<p class="pricing-catagory-name">Sicherheitsgruppen</p>
-			<ul>
-<?php			
-	foreach( $session->getGroups() as $grp )
-		echo "			<li>".htmlspecialchars( $grp )."</li>\n";
-?>				
-			</ul>
-		</div>
-	</div>
-	<div class="col-md-6 col-sm-6 col-xs-12 price-catagory">
+	<div class="col-md-6 col-sm-6 col-xs-12 price-catagory full-height">
 		<div class="price-box">
 			<p class="pricing-catagory-name">Elektronischer Bibliotheksausweis</p>
 <?php
@@ -178,6 +166,17 @@ echo mediathekheader('search', 'Mediathek - Settings', '');
 ?>			
 		</div>
 	</div>
+	<div class="col-md-6 col-sm-6 col-xs-12 price-catagory">
+		<div class="price-box">
+			<p class="pricing-catagory-name">Sicherheitsgruppen</p>
+			<ul>
+<?php			
+	foreach( $session->getGroups() as $grp )
+		echo "			<li>".htmlspecialchars( $grp )."</li>\n";
+?>				
+			</ul>
+		</div>
+	</div>
 <!--	
 	<div class="col-md-6 col-sm-6 col-xs-12 price-catagory">
 		<div class="price-box">
@@ -197,7 +196,7 @@ echo mediathekheader('search', 'Mediathek - Settings', '');
 -->	
 </div>
 <pre>
-<?php nl2br (htmlspecialchars( print_r( $_SERVER ))); ?>
+<!-- <?php nl2br (htmlspecialchars( print_r( $_SERVER ))); ?> -->
 </pre>
 
 <?php  } else { ?>
@@ -237,27 +236,6 @@ Bitte <a href="auth/?target=<?php echo urlencode( $_SERVER['REQUEST_SCHEME'].':/
 function init() {
 	$('.carousel-shot').carousel({
 	  interval: 2000
-	});
-
-	$('body').on('click', '.setting-btn', function () {
-		<?php if( $session->isLoggedIn()) { ?>
-		var modal = $('#MTModal');
-		modal.find('.modal-title').text( '<?php echo htmlspecialchars( $session->shibGetUsername()); ?>' );
-		var content = <?php 
-		echo "'<p>".htmlspecialchars( $session->shibHomeOrganization())."<br />'
-			 +'".htmlspecialchars( $session->shibGetMail()) ."<br />'
-			 +'<ul>'";
-		foreach( $session->getGroups() as $grp ) {
-			echo "+'<li>".htmlspecialchars( $grp )."</li>'";
-		}
-		echo "+'</ul>'";
-?>;		
-		modal.find( '.modal-body' ).html( content );
-		modal.modal('show');
-		<?php } else { ?>
-		window.location="auth/?target=<?php echo urlencode( $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']); ?>";
-		<?php } ?>
-		
 	});
 
 	$('body').on('click', '.back-btn', function () {

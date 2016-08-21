@@ -44,6 +44,7 @@ function mediathekheader( $current, $title, $area ) {
 
     <link type="text/css" rel="stylesheet" href="css/mediathek.css">    
     <link type="text/css" rel="stylesheet" href="css/checkbox.css">    
+    <link type="text/css" rel="stylesheet" href="css/bootstrap-editable.css">    
     
     <!--[if IE]>
 		<style>

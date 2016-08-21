@@ -21,12 +21,12 @@ function mediathekfooter() {
     <script type="text/javascript" src="js/mediathek_helper.js"></script>
     <script type="text/javascript" src="js/mediathek_gui.js"></script>
 	<script type="text/javascript" src="js/md5.min.js"></script>  
+	<script type="text/javascript" src="js/tether.min.js"></script>  
+	<script type="text/javascript" src="js/bootstrap-editable.js"></script>  
 	
 	<script language="javascript">
 	   $( document ).ready(function() {
 		   return;
-		
-		
 		
 		   init();
 		   	$('#MTModal').on('shown.bs.modal', function (event) {

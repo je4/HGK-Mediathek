@@ -405,9 +405,6 @@ function init() {
 	$('body').on('click', '.setting-btn', function () {
 		<?php if( $session->isLoggedIn()) { ?>
 		window.location="settings.php";
-?>;		
-		modal.find( '.modal-body' ).html( content );
-		modal.modal('show');
 		<?php } else { ?>
 		window.location="auth/?target=<?php echo urlencode( $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']); ?>";
 		<?php } ?>
