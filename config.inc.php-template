@@ -1,36 +1,53 @@
 <?php
+define("DEBUG", true);
 
 $config = array();
+$config['baseurl'] = 'https://mediathek.hgk.fhnw.ch/dev/';
 $config['db'] = array(
-  'host'=>'HOST',
+  'host'=>'ba14ns21402.adm.ds.fhnw.ch',
   'user'=>'rfid',
-  'password'=>'PASSWORD',
-  'database'=>'DATABASE'
+  'password'=>'SECRET',
+  'database'=>'rfid_dev'
 );
 
 $config['solarium']  = array(
     'endpoint' => array(
         'localhost' => array(
-            'host' => 'HOST',
+            'host' => 'ba14ns21401.adm.ds.fhnw.ch',
             'port' => 8983,
-            'path' => '/solr/',
+            'path' => '/solr/base_dev/',
         )
     )
 );
 
 $config['google'] = array(
-    'app' => 'APPNAME',
-    'key' => 'KEY',
-    'book' => array(  'restget' => 'https://www.googleapis.com/books/v1/volumes?key=AIzaSyDsNXE5m9mv9juuFQswIZfS_dTt-_TIH3k',
+    'app' => 'mediathek-hgk',
+    'key' => 'SECRET',
+    'book' => array(  'restget' => 'https://www.googleapis.com/books/v1/volumes?key=SECRET',
                    ),
-)
+);
 
 $config['media'] = array(
     'picintern' => 'https://ba14ns21403.fhnw.ch/pics/intern',
     'picopen' => 'https://ba14ns21403.fhnw.ch/pics/open',
     'videocert' => 'https://ba14ns21403.fhnw.ch/video/cert',
     'videoopen' => 'https://ba14ns21403.fhnw.ch/video/open',
+    'videointern' => 'https://ba14ns21403.fhnw.ch/video/intern',
     
+);
+
+$config['3dthumb'] = 'https://mediathek.hgk.fhnw.ch/img/dev/3dbox/thumb';
+$config['3dthumbdir'] = '/var/www/vhosts/mediathek.fhnw.ch/html/dev/img/3dbox/thumb';
+$config['3djsondir'] = '/var/www/vhosts/mediathek.fhnw.ch/html/dev/3djson';
+
+$config['wallet'] = array( 
+	'dir' => '/var/www/vhosts/mediathek.fhnw.ch/nwallet',
+	'applecert' => '',
+	'passcert' => '',
+	'passpwd' => '',
+	'passid' => '',
+	'passteamid' => '',
+	'passteamname' => 'FHNW Fachhochschule Nordwestschweiz Hochschule fuer Gestaltung und Kunst',
 );
 
 ?>
