@@ -73,7 +73,7 @@ echo mediathekheader('search', 'Mediathek - Settings', '');
 			$location->setAltitude( 46 );
 			$pass->addLocation( $location );
 
-			$expirationDate = (new \DateTime())->add( new \DateInterval('P6M') );
+			$expirationDate = (new \DateTime())->add( new \DateInterval($config['wallet']['expiry']) );
 			$pass->setExpirationDate( $expirationDate );
 
 			// Create pass structure
