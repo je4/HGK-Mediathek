@@ -160,7 +160,12 @@ echo mediathekheader('search', 'Mediathek - Settings', '');
 	} 
 	else {
 ?>
-			<p>Zur Aktivierung des digitalen Bibliotheksausweises wenden Sie sich bitte an das Mediatheksteam.</p>
+			<p>Sie möchten einen digitalen NEBIS-Verbundsausweis? 
+			Dann schreiben Sie eine eMail an tabea.lurk@fhnw.ch mit Ihrem Namen und Ihrer eMailadresses. 
+			Angehörige der FHNW erhalten als Benutzernummer die ID des Studierenden- bzw. Mitarbeitenden-Ausweises. 
+			Externe Nutzerinnen und Nutzer geben bitte ihre NEBIS-ID an. 
+			Sobald der Ausweis ausgestellt ist, erhalten Sie diesen per eMail, welche die Aktivierung des Zugang erläutert. 
+Der digitale NEBIS-Ausweis kann anschliessend mit dem Mobiltelefon oder dem Tablet verwendet werden.</p>
 <?php		
 	}
 ?>			
