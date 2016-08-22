@@ -61,6 +61,8 @@ echo mediathekheader('search', 'Mediathek - Settings', '');
 						, surname=".$db->qstr( $session->shibGetSurname())." 
 					WHERE email LIKE ".$db->qstr( $session->shibGetMail());
 			$db->Execute( $sql );
+			$sql = "SELECT *, (expiryDate > DATE_ADD( NOW(), INTERVAL 3 MONTH )) AS ok FROM card WHERE email LIKE ".$db->qstr( $session->shibGetMail());
+			$row = $db->getRow( $sql );			
 		}
 		$walletfile = $config['wallet']['dir'].'/'.$row['cardid'].'.pkpass';
 		if( !file_exists( $walletfile ) || $row['ok'] != 1 ) {
@@ -161,11 +163,11 @@ echo mediathekheader('search', 'Mediathek - Settings', '');
 	else {
 ?>
 			<p>Sie möchten einen digitalen NEBIS-Verbundsausweis? 
-			Dann schreiben Sie eine eMail an tabea.lurk@fhnw.ch mit Ihrem Namen und Ihrer eMailadresses. 
+			Dann schreiben Sie eine eMail an tabea.lurk@fhnw.ch mit Ihrem Namen und Ihrer eMailadresse. 
 			Angehörige der FHNW erhalten als Benutzernummer die ID des Studierenden- bzw. Mitarbeitenden-Ausweises. 
-			Externe Nutzerinnen und Nutzer geben bitte ihre NEBIS-ID an. 
-			Sobald der Ausweis ausgestellt ist, erhalten Sie diesen per eMail, welche die Aktivierung des Zugang erläutert. 
-Der digitale NEBIS-Ausweis kann anschliessend mit dem Mobiltelefon oder dem Tablet verwendet werden.</p>
+			Externe Nutzerinnen und Nutzer geben bitte ihre NEBIS-ID an.
+			Sobald der Ausweis ausgestellt ist, erhalten Sie eine eMail, welche die Aktivierung des Zugang erläutert. 
+			Der digitale NEBIS-Ausweis kann anschliessend mit dem Mobiltelefon oder dem Tablet verwendet werden.</p>
 <?php		
 	}
 ?>			
