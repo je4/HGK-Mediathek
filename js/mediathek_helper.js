@@ -14,7 +14,10 @@ function facetSearch( q, facet, value, add ) {
 	}
 }
 
-function initSearch( area, pagesize = 12 ) {
+function initSearch( area, pagesize ) {
+	if ( !pagesize ) {
+        pagesize = 12;
+    }
     searcharea = area;
 	$('.search-panel .dropdown-menu').find('a').click(function(e) {
 		   e.preventDefault();

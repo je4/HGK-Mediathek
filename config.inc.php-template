@@ -48,6 +48,13 @@ $config['wallet'] = array(
 	'passid' => '',
 	'passteamid' => '',
 	'passteamname' => 'FHNW Fachhochschule Nordwestschweiz Hochschule fuer Gestaltung und Kunst',
+	'db' => array(
+        'host'=>'ba14ns21402.adm.ds.fhnw.ch',
+        'user'=>'rfid',
+        'password'=>'SECRET',
+        'database'=>'wallet'
+      ),
+
 );
 
 ?>

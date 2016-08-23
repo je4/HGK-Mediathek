@@ -160,7 +160,7 @@ class MarcEntity implements SOLRSource {
 	
 	public function getLocations() {
 		$locations = array();
-		$sql = "SELECT DISTINCT marker FROM inventory2 i, ARC a WHERE i.itemid=a.Strichcode AND a.`Systemnummer`=".intval($this->id );
+		$sql = "SELECT DISTINCT marker FROM inventory_cache i, ARC a WHERE i.itemid=a.Strichcode AND a.`Systemnummer`=".intval($this->id );
 		$rs = $this->db->Execute( $sql );
 		foreach( $rs as $row ) {
 			$locations[] = 'E75:Kiste:'.trim( $row['marker'] );

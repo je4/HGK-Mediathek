@@ -110,8 +110,15 @@ echo mediathekheader('search', 'Mediathek - Settings', '');
 			$back4 = new Field( 'Valid', $expirationDate->format( 'd.m.Y H:i:s' ) );
 			$back4->setLabel( 'Gültig bis' );
 			$structure->addBackField( $back4 );
-			$back2 = new Field( 'Serial', $row['cardid'] );
-			$back2->setLabel( 'Seriennummer' );
+			$back2 = new Field( 'Data', "Seriennummer: ".$row['cardid']
+			."\nAAI UniqueID: ".$row['uniqueID']
+			."\nAAI Organisation: ".$session->shibHomeOrganization()
+			."\n\nhttps://mediathek.hgk.fhnw.ch/settings.php" 
+			);
+			$back2->setLabel( 'Informationen' );
+			$structure->addBackField( $back2 );
+			$back2 = new Field( 'Programming', 'info-age GmbH, Basel' );
+			$back2->setLabel( 'Programmierung' );
 			$structure->addBackField( $back2 );
 
 			// Set pass structure
@@ -144,6 +151,13 @@ echo mediathekheader('search', 'Mediathek - Settings', '');
 			$factory->package($pass);
 			
 			$sql = "UPDATE card SET issuedate=NOW(), expirydate=".$db->qstr( $expirationDate->format( 'Y-m-d H:i:s' ) )." WHERE cardid=".$db->qstr( $row['cardid'] );
+			$db->Execute( $sql );
+			
+			$sql = "REPLACE INTO wallet.wallet (`passid`, `serial`, `auth`, `expires`)
+				VALUES (".$db->qstr( $config['wallet']['passid'] ).",
+						".$row['cardid'].",
+						".$db->qstr( sha1(time() . $row['uniqueID'] . rand() )).",
+						".$db->qstr( $expirationDate->format( 'Y-m-d H:i:s' ) )." )";
 			$db->Execute( $sql );
 		}
 		$sql = "SELECT * FROM card WHERE email LIKE ".$db->qstr( $session->shibGetMail());
@@ -207,7 +221,7 @@ echo mediathekheader('search', 'Mediathek - Settings', '');
 </pre>
 
 <?php  } else { ?>
-Bitte <a href="auth/?target=<?php echo urlencode( $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']); ?>">anmelden</a>, um die persönlichen Einstellungen anzupassen.
+Bitte <a href="auth/?target=<?php echo urlencode( $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']); ?>">anmelden</a>, um einen digitalen NEBIS-Ausweis zu erstellen oder die persönlichen Einstellungen anzupassen.
 <?php } ?>
 					
 					</div>
