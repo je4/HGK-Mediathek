@@ -6,23 +6,23 @@ include '../init.inc.php';
 
 
 
-$doajClient = new \Phpoaipmh\Client('http://www.doaj.org/oai.article');
-$doajEndpoint = new \Phpoaipmh\Endpoint($doajClient, \Phpoaipmh\Granularity::DATE_AND_TIME);
+$doabClient = new \Phpoaipmh\Client('http://www.doabooks.org/oai');
+$doabEndpoint = new \Phpoaipmh\Endpoint($doabClient, \Phpoaipmh\Granularity::DATE_AND_TIME);
 
-$result = $doajEndpoint->identify();
+$result = $doabEndpoint->identify();
 //var_dump($result);
 
-$sql = "SELECT DATE_FORMAT(datestamp, '%Y-%m-%dT%H:%i:%sZ') FROM source_doajoai WHERE identifier LIKE \"oai:doaj.org/article:%\" ORDER BY datestamp DESC";
+$sql = "SELECT DATE_FORMAT(datestamp, '%Y-%m-%dT%H:%i:%sZ') FROM source_doajoai WHERE identifier LIKE \"oai:doab-books:%\" ORDER BY datestamp DESC";
 $datestamp = $db->GetOne( $sql );
 if( $datestamp == null ) $datestamp = (string) $result->Identify->earliestDatestamp;
 // var_dump( $datestamp );
 echo "Starting with: ".$datestamp."\n";
 
-$recs = $doajEndpoint->listRecords( 'oai_dc');
+$recs = $doabEndpoint->listRecords( 'oai_dc', new \DateTime( $datestamp ));
 $counter = 0;
 foreach( $recs as $xmlrec ) {
 //    var_dump( $rec );
-    $xml = str_replace( '<record', '<record xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"', $xmlrec );
+    $xml = $xmlrec; // str_replace( '<record', '<record xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"', $xmlrec );
 //    echo "\n".$xml."\n";
     $p = xml_parser_create();
     xml_parse_into_struct( $p, $xml, $vals, $index /*, LIBXML_NOWARNING */);
@@ -38,10 +38,9 @@ foreach( $recs as $xmlrec ) {
     }
     $identifier = $dc['IDENTIFIER'][0];
     $datestamp = $dc['DATESTAMP'][0];
-    $type = $dc['DC:TYPE'][0];
     echo $identifier."\n";
     $sql = "REPLACE INTO source_doajoai( identifier, datestamp, type, data )
-        VALUES (".$db->qstr( $identifier ).", ".$db->qstr( $datestamp ).", ".$db->qstr( $type ).", ".$db->qstr( json_encode( $dc )).")";
+        VALUES (".$db->qstr( $identifier ).", ".$db->qstr( $datestamp ).", ".$db->qstr( "book" ).", ".$db->qstr( json_encode( $dc )).")";
     $db->Execute( $sql );                                                                                                           
 //    if( $counter++ > 10 ) exit;
 }
@@ -55,38 +54,18 @@ foreach($results as $item) {
 */
 
 
-exit;
+//exit;
 
-$entity = new DOAJArticleEntity( $db );
+$entity = new DOABEntity( $db );
 $solr = new SOLR( $solrclient );
 
-//$sys = '006931662';
-//$sys = '5141218';
-//$sys = '001874213';
-$sys = '009526976';
-
-/*
-$sql = "SELECT * FROM nebis_grab2";
-$rs = $db->Execute( $sql );
-$x = 0;
-foreach( $rs as $row ) {
-    $sql = "INSERT INTO nebis_grab VALUES( ".$db->qstr( $row['sys']).",".$db->qstr( utf8_encode( $row['tag'])).",".$db->qstr( utf8_encode( $row['value']))." );";
-    $db->Execute( $sql );
-    $x = ($x+1)%100;
-    if( $x == 0 ) echo '.';
-}
-$rs->Close();
-exit;
-*/
-
-
-$sql = "SELECT DISTINCT `Journal EISSN (online version)` as id FROM source_doaj";
+$sql = "SELECT DISTINCT `identifier` as id FROM source_doajoai WHERE identifier LIKE ".$db->qstr( 'oai:doab-books:%' );
 $rs = $db->Execute( $sql );
 foreach( $rs as $row ) {
     $sys = $row['id'];
     if( !strlen( $sys )) continue;
     
-    $entity->loadFromDatabase( $sys, 'doaj' );
+    $entity->loadFromDatabase( $sys, 'doab' );
     
     //$xml = $entity->getXML();
     //echo $xml->saveXML();
@@ -105,11 +84,7 @@ foreach( $rs as $row ) {
     $authors = $entity->getAuthors();
     echo "Authors: ";
     print_r( $authors );
-    
-    $loans = $entity->getLoans();
-    echo "Loans: ";
-    print_r( $loans );
-    
+
     $licenses = $entity->getLicenses();
     echo "Licenses: ";
     print_r( $licenses );
@@ -121,8 +96,8 @@ foreach( $rs as $row ) {
     $urls = $entity->getURLs();
     echo "URLs: ";
     print_r( $urls );
-    
-    $solr->import( $entity );
+    if( strlen( trim( $entity->getTitle())))
+       $solr->import( $entity );
 
 }
 $rs->Close();

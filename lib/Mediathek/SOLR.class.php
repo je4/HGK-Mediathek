@@ -74,8 +74,13 @@ class SOLR {
 		foreach( $src->getLocations() as $loc )
 			$doc->addField( 'location', $loc );
         $doc->setField( 'title', /* utf8_encode */( $src->getTitle()));
-        $doc->setField( 'publisher', /* utf8_encode */( $src->getPublisher()));
-        $doc->setField( 'city', /* utf8_encode */( $src->getCity()));
+		
+		$publisher = $src->getPublisher();
+		if( !is_array( $publisher )) $publisher = array( $publisher );
+		foreach( $publisher as $pub )
+			$doc->addField( 'publisher', $pub );
+
+		$doc->setField( 'city', /* utf8_encode */( $src->getCity()));
         $doc->setField( 'year', $src->getYear());
         $doc->setField( 'abstract', $src->getAbstract());
         $meta = $src->getMeta();

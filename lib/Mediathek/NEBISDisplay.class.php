@@ -138,7 +138,7 @@ $cfg = array(
 //							echo htmlspecialchars( $cl ).'<br />';
 ?>
 								<label>
-									<a href="javascript:doSearchFull('', '', [], {cluster: ['<?php echo htmlspecialchars( $cl ); ?>']}, 0, <?php echo $pagesize; ?> );"><?php echo htmlspecialchars( $cl ); ?></a>
+									<a href="javascript:doSearchFull('', '', [], {source: ['NEBIS'], cluster: ['<?php echo htmlspecialchars( $cl ); ?>']}, 0, <?php echo $pagesize; ?> );"><?php echo htmlspecialchars( $cl ); ?></a>
 								</label><br />
 								
 							<!-- <div class="checkbox checkbox-green">

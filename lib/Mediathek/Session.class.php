@@ -14,13 +14,14 @@ class Session implements \SessionHandlerInterface
   private $groups = null;
   private $certEmail = null;
   
-  private $subnets = array();
+  private $subnetsFHNW = array();
+  private $localFHNW = false;
  
   function __construct( $db, $server )
   {
-	$this->subnets[] = new IPv6Net( "10.0.0.0/8" );
-	$this->subnets[] = new IPv6Net( "192.168.0.0/16" );
-	$this->subnets[] = new IPv6Net( "147.86.0.0/19" );
+	$this->subnetsFHNW[] = new IPv6Net( "10.0.0.0/8" );
+	$this->subnetsFHNW[] = new IPv6Net( "192.168.0.0/16" );
+	$this->subnetsFHNW[] = new IPv6Net( "147.86.0.0/19" );
 
     $this->db = $db;
     $this->server = $server;
@@ -211,6 +212,15 @@ class Session implements \SessionHandlerInterface
     if( $this->groups != null ) return $this->groups;
     
     $this->groups = array( 'global/guest', 'global/user' );
+
+	foreach( $this->subnetsFHNW as $sub ) {
+	  if( $sub->contains( $_SERVER['REMOTE_ADDR'])) {
+		$this->groups[] = "location/fhnw";
+		$this->localFHNW = true;
+		break;
+	  }
+	}
+
 	if( $this->isLoggedIn()) {
 	  $this->groups[] = $this->shibHomeOrganization().'/user';
 	  $dept = $this->shibDepartement();
@@ -219,15 +229,16 @@ class Session implements \SessionHandlerInterface
 	  foreach( explode( ';', $this->shibAffiliation()) as $grp )
 		  $this->groups[] = $this->shibHomeOrganization().'/'.strtolower( trim( $grp ));
 		  
-	  if( preg_match( '/OU=([A-Z]+),OU=([A-Z]+),OU=([0-9]+),OU=.+,OU=.+,DC=.+,DC=ds,DC=fhnw,DC=ch/', $_SERVER['orgunit-dn'], $matches )) {
-		  $this->groups[] = "fhnw.ch:{$matches[3]}/user";
-		  $this->groups[] = strtolower( "fhnw.ch:{$matches[3]}:{$matches[1]}/user" );
+	  if( preg_match( '/^.*,OU=([0-9]+),OU=.+,OU=.+,DC=.+,DC=ds,DC=fhnw,DC=ch/', $_SERVER['orgunit-dn'], $matches )) {
+		  $this->groups[] = "fhnw.ch:{$matches[1]}/user";
+//		  $this->groups[] = strtolower( "fhnw.ch:{$matches[3]}:{$matches[1]}/user" );
 	  }
 		  
 	}
     $sql = "SELECT grp FROM groups WHERE uniqueID=".$this->db->qstr( $this->shibGetUniqueID())." OR uniqueID=".$this->db->qstr( strtolower( $this->shibGetMail()));
     $rs = $this->db->Execute( $sql );
     foreach( $rs as $row ) {
+		if( preg_match( '/^fhnw\/.*$/', $row['grp'] ) && !$this->localFHNW ) continue; 
         $this->groups[] = strtolower( trim( $row['grp'] ));
     }
     $rs->Close();
@@ -235,12 +246,6 @@ class Session implements \SessionHandlerInterface
 	if( $this->certEmail ) 
 		$this->groups[] = "certificate/mediathek";
 	
-	foreach( $this->subnets as $sub ) {
-	  if( $sub->contains( $_SERVER['REMOTE_ADDR'])) {
-		$this->groups[] = "location/fhnw";
-		break;
-	  }
-	}
 	
     return $this->groups;
   }
@@ -250,6 +255,14 @@ class Session implements \SessionHandlerInterface
 	foreach( $this->getGroups() as $g ) {
 	  if( $g == $grp ) return true;
 	}
+	return false;
+  }
+
+  public function inAnyGroup( $grps ) {
+	foreach( $grps as $grp )
+	  if( $this->inGroup( $grp ))
+		return true;
+
 	return false;
   }
   

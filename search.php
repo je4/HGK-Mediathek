@@ -32,6 +32,8 @@ $sourcemap = array( 'NEBIS' => 'NEBIS-Bestand HGK',
 				    'DOAJ' => 'Directory of Open Access Journals',
 					'IKUVid' => 'Videosammlung Institut Kunst',
 					'EZB' => 'Elektronische Zeitschriften Datenbank',
+					'Wenkenpark' => 'Videowochen Wenkenpark',
+					'DOAB' => 'directory of open access books',
 				  );
 
 // get request values

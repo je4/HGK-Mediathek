@@ -140,6 +140,11 @@ echo mediathekheader('search', 'Mediathek - Settings', '');
 			$barcode = new Barcode(Barcode::TYPE_CODE_128, $row['libraryid'] );
 			$pass->setBarcode($barcode);
 
+			$auth = sha1(time() . $row['uniqueID'] . rand() );
+			$pass->setAuthenticationToken( $auth );
+			
+			$pass->setWebServiceURL( $config['wallet']['webservice'] );
+			
 			// Create pass factory instance
 			$factory = new PassFactory($config['wallet']['passid']
 									, $config['wallet']['passteamid']
@@ -156,7 +161,7 @@ echo mediathekheader('search', 'Mediathek - Settings', '');
 			$sql = "REPLACE INTO wallet.wallet (`passid`, `serial`, `auth`, `expires`)
 				VALUES (".$db->qstr( $config['wallet']['passid'] ).",
 						".$row['cardid'].",
-						".$db->qstr( sha1(time() . $row['uniqueID'] . rand() )).",
+						".$db->qstr( $auth ).",
 						".$db->qstr( $expirationDate->format( 'Y-m-d H:i:s' ) )." )";
 			$db->Execute( $sql );
 		}

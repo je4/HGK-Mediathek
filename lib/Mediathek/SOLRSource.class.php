@@ -40,7 +40,6 @@ interface SOLRSource {
     public function getAuthors();    
     public function getLoans();    
     public function getBarcode();    
-    public function getSignature();    
     public function getLicenses();    
     public function getURLs();    
     public function getSys();

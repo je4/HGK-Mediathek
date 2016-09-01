@@ -29,9 +29,8 @@ namespace Mediathek;
  *
  */
 
-class IKUVidEntity implements SOLRSource {
-    private static $videotable = 'source_ikuvid';
-    private $json = null;
+class DOABEntity implements SOLRSource {
+    private static $table = 'source_doajoai';
     private $data = null;
     private $id = null;
     private $idprefix = null;
@@ -47,191 +46,7 @@ class IKUVidEntity implements SOLRSource {
     private $signatures = null;
     private $online = false;
     
-    static $done = array(
-3010,
-3014,
-3015,
-3017,
-3020,
-3021,
-3057,
-3058,
-3063,
-3065,
-3067,
-3070,
-3072,
-3073,
-3075,
-3079,
-3081,
-3088,
-3089,
-3090,
-3092,
-3098,
-3100,
-3101,
-3103,
-3104,
-3106,
-3112,
-3114,
-3127,
-3128,
-3131,
-3132,
-3133,
-3134,
-3135,
-3137,
-3141,
-3145,
-3151,
-3153,
-3154,
-3160,
-3161,
-3164,
-3171,
-3175,
-3178,
-3184,
-3185,
-3186,
-3187,
-3189,
-3201,
-3205,
-3217,
-3222,
-3223,
-3225,
-3228,
-3237,
-3243,
-3246,
-6002,
-6003,
-6008,
-6009,
-6010,
-6014,
-6018,
-6024,
-6025,
-6026,
-6027,
-6028,
-6029,
-6038,
-6039,
-6042,
-6047,
-6050,
-6054,
-6057,
-6058,
-6072,
-6076,
-6083,
-6088,
-6089,
-6090,
-6091,
-6094,
-6097,
-6098,
-6102,
-6106,
-6107,
-6110,
-6113,
-6114,
-6116,
-6119,
-6120,
-6122,
-6127,
-6128,
-6132,
-6138,
-6142,
-6150,
-6152,
-6153,
-6158,
-6159,
-6165,
-6170,
-6172,
-6174,
-6175,
-6179,
-6182,
-6185,
-6193,
-6197,
-6200,
-6202,
-6203,
-6205,
-6208,
-6211,
-6212,
-6216,
-6218,
-6219,
-6223,
-6229,
-6235,
-6244,
-6247,
-6248,
-6251,
-6253,
-6259,
-6261,
-6263,
-6266,
-6267,
-6268,
-6270,
-6271,
-6273,
-6274,
-6275,
-6280,
-6282,
-6286,
-6287,
-6289,
-6294,
-6296,
-6299,
-6300,
-6307,
-6310,
-6316,
-6323,
-6326,
-6330,
-6333,
-6335,
-6337,
-6341,
-6343,
-6346,
-6348,
-6351,
-6360,
-6364,
-6368,
-6370,
-6407,
-);
-
-
+    
     function __construct( \ADOConnection $db ) {
         $this->db = $db;
     }
@@ -258,82 +73,99 @@ class IKUVidEntity implements SOLRSource {
         $this->id = $id;
         $this->idprefix = $idprefix;
         
-        $sql = "SELECT * FROM `".self::$videotable."` WHERE `Archiv-Nr` = ".$this->db->qstr( $id );
-        $this->data = $this->db->GetRow( $sql );
-        
+        $sql = "SELECT * FROM `".self::$table."` WHERE `identifier` = ".$this->db->qstr( $id );
+        $row = $this->db->GetRow( $sql );
+        $this->data = (array)json_decode( $row['data'] );
     }
     
+	private function getFirstField( $name ) {
+		if( !array_key_exists( $name, $this->data )) return null;
+		if( !is_array( $this->data[$name] )) return null;
+		if( !count( $this->data[$name] )) return null;
+		return $this->data[$name][0];
+	}
+	
+	private function getFields( $name ) {
+		if( !array_key_exists( $name, $this->data )) return array();
+		if( !is_array( $this->data[$name] )) return array();
+		return $this->data[$name];
+	}
+
     public function getID() {
-        return $this->idprefix.str_pad($this->id, 9, '0', STR_PAD_LEFT ); 
+        return $this->idprefix.'-'.$this->id; 
     }
 	
 	public function getOriginalID() {
 		return $this->id;
 	}
-    
-    public function getSource() {
-        return 'IKUVid';
-    }
-	
+    	
     public function getType() {
-		return "MovingImage";
+		return "Book";
 	}
 
-	
-	public function getEmbedded() {
-		return array_search($this->id, IKUVidEntity::$done ) !== false;
-	}
-
-	public function getOpenAccess() {
+    public function getEmbedded() {
 		return false;
 	}
 
-	public function getLocations() {
-		return array( 'E75:Mediathek' );
-	}
+    public function getSource() {
+        return 'DOAB';
+    }
     
+	public function getLocations() {
+		return array( 'DOAB:online' );
+	}
+	
+	public function getOpenAccess() {
+		return true;
+	}
+	
     public function getTitle() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
-        $title = trim( $this->data['Titel1'] );
-        if( strlen( trim( $this->data['Titel2'] )))
-            $title .= '. '.trim( $this->data['Titel2'] );
+        $title = trim( $this->getFirstField('DC:TITLE') );
 
         return $title;
     }
     
     public function getPublisher() {
-        return null;
+        if( $this->data == null ) throw new \Exception( "no entity loaded" );
+        return $this->getFields('DC:PUBLISHER');
+    }
+
+    public function getCodes() {
+        if( $this->data == null ) throw new \Exception( "no entity loaded" );
+        $identifiers = $this->getFields( 'DC:IDENTIFIER');
+		$codes = array();
+		foreach( $identifiers as $ident )
+			if( !preg_match( "/:\/\//", $ident ))
+				$codes[] = $ident;
+		return $codes;
     }
     
     public function getYear() {
-        if( $this->data == null ) throw new \Exception( "no entity loaded" );
-        $year = intval( substr( $this->data['Produktionsjahr'], 0, 4 ));
-        return $year ? $year : null;
+        return $this->getFirstField('DC:DATE') ;
     }
     
     public function getCity() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
-        return null;
+        return null; // $this->data['Country of publisher'];
     }
     
 	public function getTags() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
+    
         
         $this->tags = array();
-        if( strlen(trim( $this->data['Medium'])))
-            $this->tags[] = 'index:medium:ikuvid/'.md5( trim( $this->data['Medium']) ).'/'.trim( $this->data['Medium']);
-        if( strlen(trim( $this->data['Techn Daten'])))
-            $this->tags[] = 'index:tech:ikuvid/'.md5( trim( $this->data['Techn Daten']) ).'/'.trim( $this->data['Techn Daten']);
-        if( strlen(trim( $this->data['Kategorie'])))
-            $this->tags[] = 'index:category:ikuvid/'.md5( trim( $this->data['Kategorie']) ).'/'.trim( $this->data['Kategorie']);
-        if( strlen(trim( $this->data['Stichwort'])))
-            $this->tags[] = 'index:keyword:ikuvid/'.md5( trim( $this->data['Stichwort']) ).'/'.trim( $this->data['Stichwort']);
-        
+        $specs = $this->getFields( 'SETSPEC' );
+		foreach( $specs as $spec ) {
+			if( substr( $spec, 0, 10 ) == 'publisher_' ) continue;
+			$spec = str_replace( '_', ' ', $spec );
+			$this->tags[] = 'subject:doab/'.md5( trim( $spec) ).'/'.trim( $spec );
+		}
         $this->tags = array_unique( $this->tags );
         $this->cluster = array();
         foreach( $this->tags as $tag ) {
-            if( substr( $tag, 0, strlen( 'index:category' )) == 'index:category'
-               || substr( $tag, 0, strlen( 'index:keyword' )) == 'index:keyword' ) {
+            if( substr( $tag, 0, strlen( 'index:keyword' )) == 'index:keyword'
+                  || substr( $tag, 0, strlen( 'subject:doab' )) == 'subject:doab') {
                 $ts = explode( '/', $tag );
                 $this->cluster[] = $ts[count( $ts )-1];
             }
@@ -357,12 +189,13 @@ class IKUVidEntity implements SOLRSource {
     
     public function getAuthors() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
-        if( $this->authors == null ) {
-            $this->authors = array();
-            if( strlen(trim( $this->data['Autor Regie'])))
-                 $this->authors[] = trim( $this->data['Autor Regie']);
-        }
-        return $this->authors;        
+        $authors = array();
+		foreach( $this->getFields( 'DC:CREATOR') as $author ) {
+			$as = explode( ',', $author );
+			if( count( $as ) != 2 ) $authors[] = $author;
+			else $authors[] = trim( $as[1] ).' '.trim( $as[0] );
+		}
+		return $authors;
     }
     
     public function getLoans() {
@@ -378,14 +211,18 @@ class IKUVidEntity implements SOLRSource {
     }
     
     public function getLicenses() {
-        if( $this->licenses == null ) {
-            $this->licenses = array( 'restricted' );
-        }
-        return $this->licenses;
+        $licenses = $this->getFields( 'DC:RIGHT');
+		if( !count( $licenses )) $licenses = array( 'unknown' );
+		return $licenses;
     }
     
     public function getURLs() {
-        return array();
+        $identifiers = $this->getFields( 'DC:IDENTIFIER');
+		$urls = array();
+		foreach( $identifiers as $ident )
+			if( preg_match( "/:\/\//", $ident ))
+				$urls[] = $ident;
+		return $urls;
     }
     
     public function getSys() {
@@ -397,21 +234,19 @@ class IKUVidEntity implements SOLRSource {
     }
     
     public function getOnline() {
-		return array_search($this->id, IKUVidEntity::$done ) !== false;
+        return true;
     }
 
    public function getAbstract() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
-        $bem = trim( $this->data['Bemerkungen']);
-        return strlen( $bem ) ? $bem : null;    
+
+        return $this->getFirstField( 'DC:DESCRIPTION' );    
     }
-   public function getContent() { return null; }    
-   public function getCodes() { return array(); }
+   public function getContent() { return null; }
    
     public function getMetaACL() { return array( 'global/guest' ); }
-    public function getContentACL() { return array( 'certificate/mediathek', 'fhnw/video' ); }
-    public function getPreviewACL() { return array( 'location/fhnw' ); }
-
+    public function getContentACL() { return array(); }
+    public function getPreviewACL() { return array(); }
 }
 
 ?>

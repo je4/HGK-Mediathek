@@ -29,8 +29,8 @@ namespace Mediathek;
  *
  */
 
-class IKUVidEntity implements SOLRSource {
-    private static $videotable = 'source_ikuvid';
+class WenkenparkEntity implements SOLRSource {
+    private static $videotable = 'source_wenkenpark';
     private $json = null;
     private $data = null;
     private $id = null;
@@ -48,187 +48,12 @@ class IKUVidEntity implements SOLRSource {
     private $online = false;
     
     static $done = array(
-3010,
-3014,
-3015,
-3017,
-3020,
-3021,
-3057,
-3058,
-3063,
-3065,
-3067,
-3070,
-3072,
-3073,
-3075,
-3079,
-3081,
-3088,
-3089,
-3090,
-3092,
-3098,
-3100,
-3101,
-3103,
-3104,
-3106,
-3112,
-3114,
-3127,
-3128,
-3131,
-3132,
-3133,
-3134,
-3135,
-3137,
-3141,
-3145,
-3151,
-3153,
-3154,
-3160,
-3161,
-3164,
-3171,
-3175,
-3178,
-3184,
-3185,
-3186,
-3187,
-3189,
-3201,
-3205,
-3217,
-3222,
-3223,
-3225,
-3228,
-3237,
-3243,
-3246,
-6002,
-6003,
-6008,
-6009,
-6010,
-6014,
-6018,
-6024,
-6025,
-6026,
-6027,
-6028,
-6029,
-6038,
-6039,
-6042,
-6047,
-6050,
-6054,
-6057,
-6058,
-6072,
-6076,
-6083,
-6088,
-6089,
-6090,
-6091,
-6094,
-6097,
-6098,
-6102,
-6106,
-6107,
-6110,
-6113,
-6114,
-6116,
-6119,
-6120,
-6122,
-6127,
-6128,
-6132,
-6138,
-6142,
-6150,
-6152,
-6153,
-6158,
-6159,
-6165,
-6170,
-6172,
-6174,
-6175,
-6179,
-6182,
-6185,
-6193,
-6197,
-6200,
-6202,
-6203,
-6205,
-6208,
-6211,
-6212,
-6216,
-6218,
-6219,
-6223,
-6229,
-6235,
-6244,
-6247,
-6248,
-6251,
-6253,
-6259,
-6261,
-6263,
-6266,
-6267,
-6268,
-6270,
-6271,
-6273,
-6274,
-6275,
-6280,
-6282,
-6286,
-6287,
-6289,
-6294,
-6296,
-6299,
-6300,
-6307,
-6310,
-6316,
-6323,
-6326,
-6330,
-6333,
-6335,
-6337,
-6341,
-6343,
-6346,
-6348,
-6351,
-6360,
-6364,
-6368,
-6370,
-6407,
+8402,
+8404,
+8601,
+8633,
+8801,
+8811,
 );
 
 
@@ -258,7 +83,7 @@ class IKUVidEntity implements SOLRSource {
         $this->id = $id;
         $this->idprefix = $idprefix;
         
-        $sql = "SELECT * FROM `".self::$videotable."` WHERE `Archiv-Nr` = ".$this->db->qstr( $id );
+        $sql = "SELECT * FROM `".self::$videotable."` WHERE `KATALOGNUMMER` = ".$this->db->qstr( $id );
         $this->data = $this->db->GetRow( $sql );
         
     }
@@ -272,7 +97,7 @@ class IKUVidEntity implements SOLRSource {
 	}
     
     public function getSource() {
-        return 'IKUVid';
+        return 'Wenkenpark';
     }
 	
     public function getType() {
@@ -281,7 +106,7 @@ class IKUVidEntity implements SOLRSource {
 
 	
 	public function getEmbedded() {
-		return array_search($this->id, IKUVidEntity::$done ) !== false;
+		return array_search(intval( $this->data['Publikationsnummer'] ), WenkenparkEntity::$done ) !== false;
 	}
 
 	public function getOpenAccess() {
@@ -294,15 +119,16 @@ class IKUVidEntity implements SOLRSource {
     
     public function getTitle() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
-        $title = trim( $this->data['Titel1'] );
-        if( strlen( trim( $this->data['Titel2'] )))
-            $title .= '. '.trim( $this->data['Titel2'] );
+        $title = trim( $this->data['TITEL'] );
 
         return $title;
     }
     
     public function getPublisher() {
-        return null;
+        $publisher = array();
+		if( @strlen( $this->data['Produktion'] )) $publisher[] = $this->data['Produktion'];
+		if( @strlen( $this->data['Koproduktion'] )) $publisher[] = $this->data['Koproduktion'];
+		return $publisher;
     }
     
     public function getYear() {
@@ -313,21 +139,26 @@ class IKUVidEntity implements SOLRSource {
     
     public function getCity() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
-        return null;
+        return 'Basel';
     }
     
 	public function getTags() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
         
         $this->tags = array();
-        if( strlen(trim( $this->data['Medium'])))
-            $this->tags[] = 'index:medium:ikuvid/'.md5( trim( $this->data['Medium']) ).'/'.trim( $this->data['Medium']);
-        if( strlen(trim( $this->data['Techn Daten'])))
-            $this->tags[] = 'index:tech:ikuvid/'.md5( trim( $this->data['Techn Daten']) ).'/'.trim( $this->data['Techn Daten']);
-        if( strlen(trim( $this->data['Kategorie'])))
-            $this->tags[] = 'index:category:ikuvid/'.md5( trim( $this->data['Kategorie']) ).'/'.trim( $this->data['Kategorie']);
-        if( strlen(trim( $this->data['Stichwort'])))
-            $this->tags[] = 'index:keyword:ikuvid/'.md5( trim( $this->data['Stichwort']) ).'/'.trim( $this->data['Stichwort']);
+        $this->tags[] = 'index:keyword:wenkenpark/'.md5( trim( 'Wenkenpark' )).'/Wenkenpark';
+        if( strlen(trim( $this->data['Videowoche Jahr'])))
+            $this->tags[] = 'index:keyword:wenkenpark/'.md5( trim( $this->data['Videowoche Jahr']) ).'/'.trim( $this->data['Videowoche Jahr']);
+        if( strlen(trim( $this->data['Ursprungsformat'])))
+            $this->tags[] = 'index:medium:wenkenpark/'.md5( trim( $this->data['Ursprungsformat']) ).'/'.trim( $this->data['Ursprungsformat']);
+        if( strlen(trim( $this->data['Sprache'])))
+            $this->tags[] = 'index:language:wenkenpark/'.md5( trim( $this->data['Sprache']) ).'/'.trim( $this->data['Sprache']);
+        
+		$tech = array();
+		if( strlen(trim( $this->data['TV System']))) $tech[] = trim( $this->data['TV System']);
+		if( strlen(trim( $this->data['Farbe sw']))) $tech[] = trim( $this->data['Farbe sw']);
+		if( strlen(trim( $this->data['Tonart']))) $tech[] = trim( $this->data['Tonart']);
+		if( count( $tech )) $this->tags[] = 'index:tech:wenkenpark/'.md5( trim( implode( "\n", $tech ))).'/'.trim( implode( "\n", $tech ));
         
         $this->tags = array_unique( $this->tags );
         $this->cluster = array();
@@ -352,15 +183,32 @@ class IKUVidEntity implements SOLRSource {
     public function getSignatures() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
         
-        return array();
+        return array( $this->data['Publikationsnummer'] );
     }
     
     public function getAuthors() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
         if( $this->authors == null ) {
             $this->authors = array();
-            if( strlen(trim( $this->data['Autor Regie'])))
-                 $this->authors[] = trim( $this->data['Autor Regie']);
+            if( strlen(trim( $this->data['AutorinVN1'])))
+                 $this->authors[] = trim( $this->data['AutorinVN1']).' '.trim( $this->data['AutorInN1']);
+            if( strlen(trim( $this->data['AutorinVN2'])))
+                 $this->authors[] = trim( $this->data['AutorinVN2']).' '.trim( $this->data['AutorInN2']);
+            if( strlen(trim( $this->data['AutorinVN3'])))
+                 $this->authors[] = trim( $this->data['AutorinVN3']).' '.trim( $this->data['AutorInN3']);
+            if( strlen(trim( $this->data['KonzeptDrehbuchVor1'])))
+                 $this->authors[] = trim( $this->data['KonzeptDrehbuchVor1']).' '.trim( $this->data['KonzeptDrehbuchNach1']);
+            if( strlen(trim( $this->data['KonzeptDrehbuchVor2'])))
+                 $this->authors[] = trim( $this->data['KonzeptDrehbuchVor2']).' '.trim( $this->data['KonzeptDrehbuchNach2']);
+            if( strlen(trim( $this->data['KAMERA'])))
+                 $this->authors[] = trim( $this->data['KAMERA']);
+            if( strlen(trim( $this->data['Schnitt'])))
+                 $this->authors[] = trim( $this->data['Schnitt']);
+            if( strlen(trim( $this->data['MUSIK'])))
+                 $this->authors[] = trim( $this->data['MUSIK']);
+            if( strlen(trim( $this->data['Ton'])))
+                 $this->authors[] = trim( $this->data['Ton']);
+			$this->authors = array_unique( $this->authors );
         }
         return $this->authors;        
     }
@@ -370,10 +218,6 @@ class IKUVidEntity implements SOLRSource {
     }
     
     public function getBarcode() {
-        return null;
-    }
-    
-    public function getSignature() {
         return null;
     }
     
@@ -397,12 +241,16 @@ class IKUVidEntity implements SOLRSource {
     }
     
     public function getOnline() {
-		return array_search($this->id, IKUVidEntity::$done ) !== false;
+//		echo "Online: ".$this->data['Publikationsnummer']."\n";
+//		print_r( WenkenparkEntity::$done );
+		$online = array_search(intval( $this->data['Publikationsnummer'] ), WenkenparkEntity::$done ) !== false;
+		echo $online."\n";
+		return $online;
     }
 
    public function getAbstract() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
-        $bem = trim( $this->data['Bemerkungen']);
+        $bem = trim( $this->data['KURZBESCHRIEB']);
         return strlen( $bem ) ? $bem : null;    
     }
    public function getContent() { return null; }    

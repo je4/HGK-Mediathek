@@ -12,10 +12,29 @@ require_once 'lib/Passbook/Autoloader.php';
 \Mediathek\Autoloader::register();
 \Passbook\Autoloader::register();
 
-include 'init.db.php';
-include 'init.session.php';
-include 'init.solr.php';
-include 'init.oaipmh.php';
+require_once 'lib/adodb5/adodb-exceptions.inc.php';
+require_once 'lib/adodb5/adodb.inc.php';
+
+$db = NewAdoConnection( 'mysqli' );
+$db->PConnect( $config['db']['host'], $config['db']['user'], $config['db']['password'], $config['db']['database'] );
+$db->SetCharSet('utf8');
+
+
+$session = new Mediathek\Session( $db, $_SERVER );
+$solrclient = new Solarium\Client($config['solarium']);
+
+
+require 'lib/Phpoaipmh/Autoloader.php';
+require 'lib/Psr/Autoloader.php';
+require 'lib/GuzzleHttp/Autoloader.php';
+//require 'lib/HalExplorer/Autoloader.php';
+require 'lib/SimpleHal/Autoloader.php';
+
+\Phpoaipmh\Autoloader::register();
+\Psr\Autoloader::register();
+\GuzzleHttp\Autoloader::register();
+//\HalExplorer\Autoloader::register();
+\Stormsys\SimpleHal\Autoloader::register();
 
 /*
 $googleclient = new Google_Client();

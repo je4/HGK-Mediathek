@@ -24,8 +24,138 @@
 
 namespace Mediathek;
 
+use \Passbook\Pass\Field;
+use \Passbook\Pass\Location;
+use \Passbook\Pass\Image;
+use \Passbook\PassFactory;
+use \Passbook\Pass\Barcode;
+use \Passbook\Pass\Structure;
+use \Passbook\Type\StoreCard;
+
 class Helper {
   
+	static function createPass($id, $serial ) {
+			global $db, $session, $config;
+			$sql = "SELECT * FROM wallet.card WHERE pass=".$id." AND serial=".$db->qstr( $serial );
+			$card = $db->GetRow( $sql );
+			$sql = "SELECT * FROM wallet.pass WHERE id=".$id;
+			$pass = $db->GetRow( $sql );
+			
+			
+			if( !$card || !$pass ) return false;
+			if( $pass['check'] && !$card['valid'] ) return false;
+			
+			if( $pass['type'] == 'storeCard' ) {
+				$p = new StoreCard($serial, $pass['description'] );
+				$p->setBackgroundColor('rgb(255, 255, 255)');
+				$p->setLogoText($pass['logotext']);
+	
+				if( $pass['latitude'] && $pass['longitude'] ) {
+					$location = new Location( $pass['latitude'] , $pass['longitude'] );
+					if( $pass['altitude'] ) $location->setAltitude( $pass['altitude'] );
+					$p->addLocation( $location );
+				}
+	
+				$expirationDate = (new \DateTime())->add( new \DateInterval($pass['expiry']) );
+				$p->setExpirationDate( $expirationDate );
+	
+				// Create pass structure
+				$structure = new Structure();
+	
+				// Add primary field
+				$primary = new Field('Title', $pass['title']);
+				$structure->addPrimaryField($primary);
+	
+				// Add secondary field
+				$secondary = new Field('Name', "{$card['name']}");
+				$secondary->setLabel( 'Name' );
+				$structure->addSecondaryField($secondary);
+	
+				$secondary2 = new Field('Cardnumber', $card['barcode']);
+				$secondary2->setLabel( 'Kartennummer' );
+				$structure->addSecondaryField($secondary2);
+	
+				// Add back field
+				$back = new Field( 'Library', $pass['library'] );
+				$back->setLabel( 'Bibliothek' );
+				$structure->addBackField( $back );
+				$back1 = new Field( 'Name', $card['name'] );
+				$back1->setLabel( 'Name' );
+				$structure->addBackField( $back1 );
+				$back2 = new Field( 'Cardnumber', $card['barcode'] );
+				$back2->setLabel( 'Kartennummer' );
+				$structure->addBackField( $back2 );
+				$back3 = new Field( 'Email', $card['email'] );
+				$back3->setLabel( 'Emailadresse' );
+				if( strlen( $card['email2'])) {
+					$back3 = new Field( 'Email2', $card['email2'] );
+					$back3->setLabel( 'Emailadresse 2' );
+				}
+				$structure->addBackField( $back3 );
+				$back4 = new Field( 'Valid', $expirationDate->format( 'd.m.Y H:i:s' ) );
+				$back4->setLabel( 'Gültig bis' );
+				$structure->addBackField( $back4 );
+				$back2 = new Field( 'Data', "Seriennummer: ".$serial
+				."\nAAI UniqueID: ".$card['uniqueID']
+				."\nAAI Organisation: ".$session->shibHomeOrganization()
+				."\n\nhttps://mediathek.hgk.fhnw.ch/ausweis.php" 
+				);
+				$back2->setLabel( 'Informationen' );
+				$structure->addBackField( $back2 );
+				$back2 = new Field( 'presented', 'Proudly presented by Mediathek HGK' );
+				$structure->addBackField( $back2 );
+				$back2 = new Field( 'Programming', 'info-age GmbH, Basel' );
+				$back2->setLabel( 'Programmierung' );
+				$structure->addBackField( $back2 );
+	
+				// Set pass structure
+				$p->setStructure($structure);
+	
+				// Add icon image
+				$icon = new Image($pass['icon'], 'icon');
+				$p->addImage($icon);
+	
+				// Add logo image
+				$logo = new Image($pass['logo'], 'logo');
+				$p->addImage($logo);
+	
+				// Add strip image
+				$strip = new Image($pass['strip'], 'strip');
+				$p->addImage($strip);
+	
+				// Add barcode
+				$barcode = new Barcode( $pass['code'], $card['barcode'] );
+				$p->setBarcode($barcode);
+			}
+
+			if( $p != null ) {
+				$auth = sha1(time() . $card['uniqueID'] . rand() );
+				$p->setAuthenticationToken( $auth );
+				
+				$p->setWebServiceURL( $pass['webservice'] );
+				
+				// Create pass factory instance
+				$factory = new PassFactory($pass['passid']
+										, $pass['teamid']
+										, $pass['teamname']
+										, $pass['certfile']
+										, $pass['certpwd']
+										, $config['wallet']['applecert']);
+				$factory->setOutputPath( $pass['folder'] );
+				$factory->package($p);
+				
+				$sql = "UPDATE wallet.card SET issuedate=NOW(), expirydate=".$db->qstr( $expirationDate->format( 'Y-m-d H:i:s' ) )." WHERE pass=".$id." AND serial=".$serial;
+				$db->Execute( $sql );
+				
+				$sql = "REPLACE INTO wallet.wallet (`passid`, `serial`, `auth`, `expires`)
+					VALUES (".$db->qstr( $pass['passid'] ).",
+							".$serial.",
+							".$db->qstr( $auth ).",
+							".$db->qstr( $expirationDate->format( 'Y-m-d H:i:s' ) )." )";
+				$db->Execute( $sql );
+			}
+	}
+	
     static function buildSOLRQuery( $qstr ) {
         global $helper;
 
@@ -107,6 +237,16 @@ class Helper {
                     $qstr .= ' AND ';
                 }
                 $qstr .= 'content:'.$helper->escapePhrase( $word ).'^10';
+                $first = false;
+            }
+            $qstr .= ' )';
+            $qstr .= ' OR (';
+            $first = true;
+            foreach( $global as $word ) {
+                if( !$first ) {
+                    $qstr .= ' AND ';
+                }
+                $qstr .= 'abstract:'.$helper->escapePhrase( $word ).'^10';
                 $first = false;
             }
             $qstr .= ' )';

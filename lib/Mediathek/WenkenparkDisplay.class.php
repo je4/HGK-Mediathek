@@ -24,7 +24,7 @@
 
 namespace Mediathek;
 
-class IKUVidDisplay extends DisplayEntity {
+class WenkenparkDisplay extends DisplayEntity {
 	private $metadata;
 	
     public function __construct( $doc, $urlparams, $db ) {
@@ -44,16 +44,38 @@ class IKUVidDisplay extends DisplayEntity {
 		
         ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
 ?>
-<div class="row">
+<div class="row full-height">
 	<div class="col-md-3">
 		<span style="; font-weight: bold;">Aktueller Film</span><br>
 		<div class="facet" style="">
 			<div class="marker" style=""></div>
-			<h5><?php if( isset( $this->metadata['Autor Regie'] )) echo htmlspecialchars( $this->metadata['Autor Regie'].': ' ); echo htmlentities( $this->metadata['Titel1'] );?> <span style="font-size: 80%;"><?php echo htmlspecialchars( $this->metadata['Produktionsjahr'] );?></span></h5>
-			<b><?php if( isset( $this->metadata['Titel2'] )) echo htmlspecialchars( $this->metadata['Titel2'].'.' );?>
-			<span style="font-size: 80%;"><?php if( isset( $this->metadata['Dauer'] )) echo htmlspecialchars( $this->metadata['Dauer'] );?>
-			<?php if( isset( $this->metadata['Land'] )) echo htmlspecialchars( $this->metadata['Land'] );?>
-			</span></b>
+			<h5><?php 
+			$authors = array();
+            if( strlen(trim( $this->metadata['AutorinVN1'])))
+                 $authors[] = trim( $this->metadata['AutorinVN1']).' '.trim( $this->metadata['AutorInN1']);
+            if( strlen(trim( $this->metadata['AutorinVN2'])))
+                 $authors[] = trim( $this->metadata['AutorinVN2']).' '.trim( $this->metadata['AutorInN2']);
+            if( strlen(trim( $this->metadata['AutorinVN3'])))
+                 $authors[] = trim( $this->metadata['AutorinVN3']).' '.trim( $this->metadata['AutorInN3']);
+			echo htmlentities( implode( "; ", $authors )).": ";
+			echo htmlentities( $this->metadata['TITEL'] );
+			?> <span style="font-size: 80%;"><?php echo htmlspecialchars( $this->metadata['Produktionsjahr'] );?></span></h5>
+			<span style="font-size: 80%; line-height: 1em;">
+<?php 
+					if( @strlen(trim( $this->metadata['KonzeptDrehbuchVor1'])))
+						echo "Konzept/Drehbuch: ".htmlentities( trim( $this->metadata['KonzeptDrehbuchVor1']).' '.trim( $this->metadata['KonzeptDrehbuchNach1']))."<br />\n";
+					if( @strlen(trim( $this->metadata['KonzeptDrehbuchVor2'])))
+						echo "Konzept/Drehbuch: ".htmlentities( trim( $this->metadata['KonzeptDrehbuchVor2']).' '.trim( $this->metadata['KonzeptDrehbuchNach2']))."<br />\n";
+					if( @strlen(trim( $this->metadata['KAMERA'])))
+						echo "Kamera: ".htmlentities( trim( $this->metadata['KAMERA']))."<br />\n";
+					if( @strlen(trim( $this->metadata['Schnitt'])))
+						echo "Schnitt: ".htmlentities( trim( $this->metadata['Schnitt']))."<br />\n"; 
+					if( @strlen(trim( $this->metadata['MUSIK'])))
+						echo "Musik: ".htmlentities( trim( $this->metadata['MUSIK']))."<br />\n"; 
+					if( @strlen(trim( $this->metadata['Ton'])))
+						echo "Ton: ".htmlentities( trim( $this->metadata['Ton']))."<br />\n"; 
+					if( isset( $this->metadata['LAENGE'] )) echo "Dauer: ".htmlspecialchars( $this->metadata['LAENGE'] );?>
+			</span>
 		</div>
 	</div>
 	<div class="col-md-6">
@@ -69,10 +91,10 @@ class IKUVidDisplay extends DisplayEntity {
 		<div class="marker" style=""></div>
 			<div class="media">
 			<a class="media-left" href="#">
-				<img class="media-left" src="<?php echo $config['media']['picopen'].'/'.intval($this->doc->originalid).'.00001.thumb.png'; ?>" />
+				<img class="media-left" src="<?php echo $config['media']['picopen'].'/VWW'.intval($this->metadata['Publikationsnummer']).'.00001.thumb.png'; ?>" />
 			</a>
 			<div class="media-body">
-				<p><?php echo htmlspecialchars( $this->metadata['Bemerkungen'] ); ?></p>
+				<p><?php echo htmlspecialchars( $this->metadata['KURZBESCHRIEB'] ); ?></p>
 			</div>
 		</div>
 	</div>
@@ -85,8 +107,8 @@ class IKUVidDisplay extends DisplayEntity {
 	<div class="facet" style="min-width: 550px; text-align: center;">
 		<div class="marker" style=""></div>
 		<video id="my-video" class="video-js" controls preload="auto" width="550"
-		poster="<?php echo $config['media']['picintern'].'/'.intval($this->doc->originalid).'.00001.big.png'; ?>" data-setup="{}">
-		  <source src="<?php echo $config['media']['videointern'].'/'.intval($this->doc->originalid).'.h264-1100k.mp4'; ?>" type='video/mp4'>
+		poster="<?php echo $config['media']['picintern'].'/VWW'.intval($this->metadata['Publikationsnummer']).'.00001.big.png'; ?>" data-setup="{}">
+		  <source src="<?php echo $config['media']['videointern'].'/VWW'.intval($this->metadata['Publikationsnummer']).'.h264.mp4'; ?>" type='video/mp4'>
 		  <p class="vjs-no-js">
 			To view this video please enable JavaScript, and consider upgrading to a web browser that
 			<a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
@@ -113,14 +135,14 @@ class IKUVidDisplay extends DisplayEntity {
 <div class="facet" style="padding-bottom: 5px;">
 	<div class="marker" style=""></div>
 		<div class="media-body">
-			<p><?php echo htmlspecialchars( $this->metadata['Bemerkungen'] ); ?></p>
+			<p><?php echo htmlspecialchars( $this->metadata['KURZBESCHRIEB'] ); ?></p>
 		</div>
 	<?php if( $this->doc->embedded ) {	?>
-<img src="<?php echo $config['media']['picopen'].'/'.intval($this->doc->originalid).'.00005.thumb.png'; ?>" />
-<img src="<?php echo $config['media']['picopen'].'/'.intval($this->doc->originalid).'.00009.thumb.png'; ?>" />
-<img src="<?php echo $config['media']['picopen'].'/'.intval($this->doc->originalid).'.00013.thumb.png'; ?>" />
-<img src="<?php echo $config['media']['picopen'].'/'.intval($this->doc->originalid).'.00017.thumb.png'; ?>" />
-<img src="<?php echo $config['media']['picopen'].'/'.intval($this->doc->originalid).'.00021.thumb.png'; ?>" />
+<img src="<?php echo $config['media']['picopen'].'/VWW'.intval($this->metadata['Publikationsnummer']).'.00005.thumb.png'; ?>" />
+<img src="<?php echo $config['media']['picopen'].'/VWW'.intval($this->metadata['Publikationsnummer']).'.00009.thumb.png'; ?>" />
+<img src="<?php echo $config['media']['picopen'].'/VWW'.intval($this->metadata['Publikationsnummer']).'.00013.thumb.png'; ?>" />
+<img src="<?php echo $config['media']['picopen'].'/VWW'.intval($this->metadata['Publikationsnummer']).'.00017.thumb.png'; ?>" />
+<img src="<?php echo $config['media']['picopen'].'/VWW'.intval($this->metadata['Publikationsnummer']).'.00021.thumb.png'; ?>" />
 <?php } ?>
 </div>
 	</div>
@@ -136,7 +158,7 @@ class IKUVidDisplay extends DisplayEntity {
 //							echo htmlspecialchars( $cl ).'<br />';
 ?>
 								<label>
-									<a href="javascript:doSearchFull('', '', [], {source: ['IKUVid'], cluster: ['<?php echo htmlspecialchars( $cl ); ?>']}, 0, <?php echo $pagesize; ?> );"><?php echo htmlspecialchars( $cl ); ?></a>
+									<a href="javascript:doSearchFull('', '', [], {source: ['Wenkenpark'], cluster: ['<?php echo htmlspecialchars( $cl ); ?>']}, 0, <?php echo $pagesize; ?> );"><?php echo htmlspecialchars( $cl ); ?></a>
 								</label><br />
 								
 							<!-- <div class="checkbox checkbox-green">
@@ -168,7 +190,7 @@ class IKUVidDisplay extends DisplayEntity {
 			</div>	
 </div>
 		<script>
-			function initIKUVid() {
+			function initWenkenpark() {
 				
 			}
 		</script>
@@ -202,11 +224,27 @@ class IKUVidDisplay extends DisplayEntity {
             </td>
             <td class="detail">
                 <div class="collapse" id="coll_<?php echo $this->doc->id; ?>">
-                    <?php if( strlen( $this->metadata['Autor Regie'] )) echo 'Autor/Regie: '.htmlspecialchars( $this->metadata['Autor Regie'] )."<br />\n"; ?>
-                    <?php if( strlen( $this->metadata['Land'] )) echo 'Land: '.htmlspecialchars( $this->metadata['Land'] )."<br />\n"; ?>
+					<?php if( @strlen(trim( $this->metadata['AutorinVN2'])))
+						echo trim( $this->metadata['AutorinVN2']).' '.trim( $this->metadata['AutorInN2'])."<br />\n"; ?>
+					<?php if( @strlen(trim( $this->metadata['AutorinVN3'])))
+						echo trim( $this->metadata['AutorinVN3']).' '.trim( $this->metadata['AutorInN3'])."<br />\n"; ?>
+<!--
+					<?php if( @strlen(trim( $this->metadata['KonzeptDrehbuchVor1'])))
+						echo "Konzept/Drehbuch: ".trim( $this->metadata['KonzeptDrehbuchVor1']).' '.trim( $this->metadata['KonzeptDrehbuchNach1'])."<br />\n"; ?>
+					<?php if( @strlen(trim( $this->metadata['KonzeptDrehbuchVor2'])))
+						echo "Konzept/Drehbuch: ".trim( $this->metadata['KonzeptDrehbuchVor2']).' '.trim( $this->metadata['KonzeptDrehbuchNach2'])."<br />\n"; ?>
+					<?php if( @strlen(trim( $this->metadata['KAMERA'])))
+						echo "Kamera: ".trim( $this->metadata['KAMERA'])."<br />\n"; ?>
+					<?php if( @strlen(trim( $this->metadata['Schnitt'])))
+						echo "Schnitt: ".trim( $this->metadata['Schnitt'])."<br />\n"; ?>
+					<?php if( @strlen(trim( $this->metadata['MUSIK'])))
+						echo "Musik: ".trim( $this->metadata['MUSIK'])."<br />\n"; ?>
+					<?php if( @strlen(trim( $this->metadata['Ton'])))
+						echo "Ton: ".trim( $this->metadata['Ton'])."<br />\n"; ?>
+-->
                     <?php if( strlen( $this->metadata['Produktionsjahr'] )) echo 'Jahr: '.htmlspecialchars( $this->metadata['Produktionsjahr'] )."<br />\n"; ?>
-                    <?php if( strlen( $this->metadata['Dauer'] )) echo 'Dauer: '.htmlspecialchars( $this->metadata['Dauer'] )."<br />\n"; ?>
-					<!--<i class="fa fa-external-link" aria-hidden="true"></i> <a href="http://www.imdb.com/find?ref_=nv_sr_fn&q=<?php echo urlencode(trim($this->metadata['Titel1'] )); ?>&s=all" target="_blank"><img src="img/imdb.png"></a><br /> -->
+                    <?php if( strlen( $this->metadata['LAENGE'] )) echo 'Dauer: '.htmlspecialchars( $this->metadata['LAENGE'] )."<br />\n"; ?>
+                    <?php if( strlen( $this->metadata['Publikationsnummer'] )) echo 'Publikationsnummer: '.htmlspecialchars( $this->metadata['Publikationsnummer'] )."<br />\n"; ?>
 					ID: <?php echo $this->doc->id; ?><br />
 					<a href="detail.php?<?php echo "id=".urlencode( $this->doc->id ); foreach( $this->urlparams as $key=>$val ) echo '&'.$key.'='.urlencode($val); ?>"><i class="fa fa-folder-open" aria-hidden="true"></i> Details</a><br />
 
