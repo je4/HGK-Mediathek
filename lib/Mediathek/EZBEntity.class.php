@@ -116,7 +116,7 @@ class EZBEntity implements SOLRSource {
     }
     
     public function getPublisher() {
-        return $this->data['Verlag'];
+        return array( $this->data['Verlag'] );
     }
     
     public function getYear() {

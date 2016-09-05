@@ -89,15 +89,19 @@ $cfg = array(
 							
 							<br />
 <?php
-							$publisher = $entity->getPublisher();
+							$publishers = $entity->getPublisher();
 							$city = $entity->getCity();
 							$year = $entity->getYear();
 							if( $city ) echo htmlspecialchars( $city ).': '; 
-							if( $publisher ) { ?>
+							if( $publishers ) { 
+								foreach( $publishers as $publisher ) { ?>
 									<a href="javascript:doSearchFull('publisher:&quot;<?php echo trim( $publisher ); ?>&quot;', '', [], [], 0, <?php echo $pagesize; ?> );">
 										<?php echo htmlspecialchars( $publisher ); ?>
 									</a>
-							<?php }
+							<?php 
+								}
+							}
+								
 							if( $year ) echo htmlspecialchars( $year ).'.';
 							if( $city || $year || $publisher ) echo "<br />\n";
 
@@ -309,13 +313,13 @@ if( $kiste ) {
 				
 <?php			
 				if( count( $authors ) > 1 ) echo "<br />\n";
-				$publisher = $entity->getPublisher();
+				$publishers = $entity->getPublisher();
 				$city = $entity->getCity();
 				$year = $entity->getYear();
 				if( $city ) echo htmlspecialchars( $city ).': '; 
-				if( $publisher ) echo htmlspecialchars( $publisher ).', ';
+				if( $publishers ) echo htmlspecialchars( implode( '/', $publishers )).', ';
 				if( $year ) echo htmlspecialchars( $year ).'.';
-				if( $city || $year || $publisher ) echo "<br />\n";
+				if( $city || $year || $publishers ) echo "<br />\n";
 
 				$codes = $entity->getCodes();
 				foreach( $codes as $code ) 

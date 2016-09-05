@@ -153,8 +153,8 @@ class WenkenparkDisplay extends DisplayEntity {
 					<div class="facet" style="">
 						<div class="marker" style=""></div>
 <?php
-						foreach( $this->doc->cluster_ss as $cl ) {
-//						foreach( $entity->getCluster() as $cl ) {
+						foreach( $this->doc->cluster_ss as $i=>$cl ) {
+//						foreach( $entity->getCluster() as $i=>$cl ) {
 //							echo htmlspecialchars( $cl ).'<br />';
 ?>
 								<label>
@@ -204,6 +204,7 @@ class WenkenparkDisplay extends DisplayEntity {
 	}
 	    
     public function desktopList() {
+		$html = '';
         ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
 ?>
         <tr>

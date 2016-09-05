@@ -224,10 +224,16 @@ class MarcEntity implements SOLRSource {
         $xpath = new \DOMXPath($this->xml);
         $query = '/record/datafield[@tag="260" and @ind1=" "]/subfield[@code="b"]';
         $entries = $xpath->query( $query );
+		$publishers = array();
+		foreach( $entries as $item ) 
+			$publishers[] = $item->nodeValue;
+		return count( $publishers ) ? $publishers : null;
+/*		
         if( $entries->length > 0 ) {
             return $entries->item(0)->nodeValue;
         }
         return null;
+*/		
     }
     
     public function getYear() {
