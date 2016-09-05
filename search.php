@@ -437,6 +437,7 @@ function init() {
 <!-- script src="mediathek2.js"></script -->   
 <script src="js/mediathek.js"></script>   
 <script src="js/mediathek3d.js"></script>
+<script src="js/threex.windowresize.js"></script>
 
 <?php
 echo mediathekfooter();
