@@ -44,6 +44,7 @@ var Mediathek = function( config, done ) {
 	if( this.camJSON != null )
 		this.setCamJSON( this.camJSON );
 	
+	this.windowResize = THREEx.WindowResize( this.renderer, this.camera );
 }
 
 Mediathek.prototype.getCamJSON = function() {
@@ -110,11 +111,12 @@ Mediathek.prototype.createOrthoCamera = function() {
 Mediathek.prototype.windowResize = function() {
 	if( this.camera == null ) return;
 
-    //camera.aspect = this.renderDom.innerWidth() / this.renderDom.innerHeight();
-    this.camera.setSize(this.renderDom.innerWidth(), this.renderDom.innerHeight());
+	
+    this.camera.aspect = this.renderDOM.innerWidth() / this.renderDOM.innerHeight();
+//    this.camera.setSize(this.renderDOM.innerWidth(), this.renderDOM.innerHeight());
 	this.camera.updateProjectionMatrix();
 
-    this.renderer.setSize( this.renderDom.innerWidth()-2, this.renderDom.innerHeight()-2 );
+    this.renderer.setSize( this.renderDOM.innerWidth()-2, this.renderDOM.innerHeight()-2 );
 //	console.log( "resize" );
 	
 }

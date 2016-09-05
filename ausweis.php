@@ -104,28 +104,31 @@ if( $session->isLoggedIn()) {
 		}
 		
 		if( !$error ) {
-			$sql = "SELECT * FROM wallet.card WHERE uniqueID=".$db->qstr( $session->shibGetUniqueID())." AND pass=".$id." AND serial=".$serial;
-			$card = $db->getRow( $sql );
 			$sql = "SELECT * FROM wallet.pass WHERE id=".$id;
 			$pass = $db->getRow( $sql );
-			$passFile = "{$pass['folder']}/{$serial}.pkpass";
-			if( !file_exists( $passFile )) {
-				Helper::createPass( $id, $serial );
+			$passFile = Helper::createPass( $id, $serial );
+			if( $passFile !== false ) {
 				$sql = "SELECT * FROM wallet.card WHERE pass=".$id." AND serial=".$serial;
 				$card = $db->getRow( $sql );
-			}
 			
-			$text = "Ihr neuer Digitaler Ausweis: {$pass['logotext']}
+				$text = "Ihr digitaler Bibliotheksausweis ist fertig!
+Your electronic library card is ready!
+Stammbibliothek/Home Library: {$pass['logotext']}
 
-Antragsteller: {$card['name']}
-Seriennummer: {$card['serial']}
+Antragsteller/User: {$card['name']}
+Seriennummer/Serial Number: {$card['serial']}
 Barcode: {$card['barcode']}
-Ablaufdatum: {$card['expirydate']}
+Ablaufdatum/Expires: {$card['expirydate']}
 
-IOS User: Anhang speichern und ins Apple-Wallet aufnehmen
 
-Android User: Es wird eine App benötigt, welche in der Lage ist Apple-Wallets anzuzeigen.
+Android User: Es wird eine App benötigt, welche in der Lage ist Apple-Wallets anzuzeigen:
 https://play.google.com/store/search?q=apple%20wallet&c=apps&hl=de
+
+Android User: You need an app to display Apple Wallets:
+https://play.google.com/store/search?q=apple%20wallet&c=apps&hl=de
+
+Mit freundlichen Grüssen / kind regards,
+{$pass['logotext']}
 
 ";
 
@@ -141,7 +144,7 @@ https://play.google.com/store/search?q=apple%20wallet&c=apps&hl=de
 				$mail->SMTPSecure = ''; // 'tls';                            // Enable TLS encryption, `ssl` also accepted
 				$mail->Port = 25; // 587;                                    // TCP port to connect to
 				//$mail -> charSet = "UTF-8"; 
-				$mail->setFrom('noreply@fhnw.ch', "=?UTF-8?B?".base64_encode("Mediathek der Künste (no reply)")."?=");
+				$mail->setFrom('noreply@fhnw.ch', "=?UTF-8?B?".base64_encode("{$pass['logotext']} (no reply)")."?=");
 				$mail->addAddress($card['email'], $card['name']);
 				if( strlen( $card['email2'])) $mail->addAddress($card['email2'], utf8_decode( $card['name']));
 				$mail->isHTML(false);
@@ -162,7 +165,7 @@ https://play.google.com/store/search?q=apple%20wallet&c=apps&hl=de
 	<h4>Der Ausweis "<?php echo htmlspecialchars($pass['logotext']); ?>" wurde an ihre Emailadresse(n) gesendet.</h4>
 </div><?php					
 				}
-    
+			}
 		}
 		
 	}
@@ -220,10 +223,10 @@ https://play.google.com/store/search?q=apple%20wallet&c=apps&hl=de
 		<label for="library" style="text-align: left;">Stammbibliothek</label>
 		<select class="form-control" id="library" name="library">
 <?php
-	$sql = "SELECT id,displayname FROM wallet.pass ORDER BY sort, displayname ASC";
+	$sql = "SELECT id,displayname FROM wallet.pass WHERE active=1 ORDER BY sort, displayname ASC";
 	$rs = $db->Execute( $sql );
 	foreach( $rs as $row ) {
-		echo '    <option value="'.$row['id'].'"'.($row['id'] == $pass ? ' selected':'').'>'.htmlspecialchars( $row['displayname'] ).'</option>'."\n";
+		echo '    <option value="'.$row['id'].'"'.($row['id'] == $id ? ' selected':'').'>'.htmlspecialchars( $row['displayname'] ).'</option>'."\n";
 	}
 	$rs->Close();	
 ?>
@@ -247,16 +250,19 @@ https://play.google.com/store/search?q=apple%20wallet&c=apps&hl=de
 
 <p>&nbsp;</p>
 <div style="background-color: white; padding: 25px; margin: 15px 0px;">
-	<h3>Alle Ausweise</h3>
+	<h3>Ausweise</h3>
 
 <div class="row">
 <?php
 $sql = "SELECT p.id as library, c.serial, p.description, c.barcode, c.email, c.email2, DATE(c.expirydate) as expirydate, c.valid FROM wallet.card c, wallet.pass p
 			WHERE deleted=0 AND c.pass=p.id AND c.uniqueID=".$db->qstr( $session->shibGetUniqueID());
 $rs = $db->Execute( $sql );
+$num = $rs->RecordCount();
+$w = 3;
+if( $num <= 4 ) $w = 12/$num;
 foreach( $rs as $row ) {
 ?>
-	<div class="col-lg-3">
+	<div class="col-lg-<?php echo $w; ?>">
 		<div class="card card-block">
 			<div class="card-header">
 			<?php echo htmlspecialchars( $row['serial'] ); ?>
@@ -271,8 +277,8 @@ foreach( $rs as $row ) {
 				</p>
 			</div>
 			<div class="card-footer">
-			<button onclick="cardsend(<?php echo $row['library']; ?>, '<?php echo trim( $row['serial']); ?>');" class="btn btn-primary" style="padding: 7px 14px;">Zusenden</button>
-			<button onclick="carddelete(<?php echo $row['library']; ?>, '<?php echo trim( $row['serial']); ?>');" class="btn btn-primary" style="padding: 7px 14px;">Löschen</button>
+			<button onclick="cardsend(<?php echo $row['library']; ?>, '<?php echo trim( $row['serial']); ?>');" class="btn btn-primary" style="padding: 7px 14px; margin: 3px;">Zusenden</button>
+			<button onclick="carddelete(<?php echo $row['library']; ?>, '<?php echo trim( $row['serial']); ?>');" class="btn btn-primary" style="padding: 7px 14px; margin: 3px;">Löschen</button>
 			</div>
 		</div>
 	</div>
@@ -281,7 +287,6 @@ foreach( $rs as $row ) {
 $rs->Close();
 ?>
 </div>
-
 </div>
 <pre>
 <!-- <?php nl2br (htmlspecialchars( print_r( $_SERVER ))); ?> -->
@@ -292,6 +297,74 @@ Bitte <a href="auth/?target=<?php echo urlencode( $_SERVER['REQUEST_SCHEME'].':/
 <?php } ?>
 					
 					</div>
+<?php
+	$grps = array();
+	foreach( $session->getGroups() as $grp ) $grps[] = $db->qstr( $grp );
+	$sql = 'SELECT * FROM wallet.pass WHERE `group` IN ('.implode( ', ', $grps ).")";
+	echo "<!-- {$sql} -->\n";
+	$passes = $db->GetAll( $sql );
+	$num = count( $passes );
+	if( $num ) {
+		$passids = array();
+		foreach( $passes as $pass ) $passids[] = $pass['id'];
+		
+?>
+<div style="background-color: white; padding: 25px; margin: 15px 0px;">
+	<h3>Ausweise bearbeiten</h3>
+<form id="idedit">
+	<table class="table table-bordered" id="idtable">
+		<thead>
+			<tr>
+				<th>Seriennummer</th>
+				<th>Ausweis</th>
+				<th>Name</th>
+				<th>Email</th>
+				<th>Email 2</th>
+				<th>Barcode</th>
+				<th>Geprüft</th>
+				<th>&nbsp;</th>
+			</tr>
+		</thead>
+		<tfoot>
+			<tr>
+				<th>Seriennummer</th>
+				<th>Ausweis</th>
+				<th>Name</th>
+				<th>Email</th>
+				<th>Email 2</th>
+				<th>Barcode</th>
+				<th>Geprüft</th>
+				<th>&nbsp;</th>
+			</tr>
+		</tfoot>
+		<tbody>
+			<tr class="idsearch">
+				<td><input type="text" id="serial" name="serial" value="" onkeyup="searchid();"></td>
+				<td><select class="form-control" id="library" name="library" onchange="searchid();">
+					<option value="0">Alle</option>
+<?php
+foreach( $passes as $pass )
+	echo "				<option value=\"{$pass['id']}\">".htmlentities( $pass['displayname'])."</option>\n";
+?>
+				</select></td>
+				<td><input type="text" id="name" name="name" value="" onkeyup="searchid();"></td>
+				<td colspan=2><input type="text" id="email" name="email" value="" onkeyup="searchid();"></td>
+				<td><input type="text" id="barcode" name="barcode" value="" onkeyup="searchid();"></td>
+				<td><select class="form-control" id="valid" name="valid" onchange="searchid();">
+					<option value="-1">egal</option>
+					<option value="1">ja</option>
+					<option value="0" selected>nein</option>
+				</select></td>
+				<td><!-- <button onclick="searchid();" class="btn btn-primary" style="padding: 7px 14px;">Suchen</button> --></td>
+			</tr>
+		</tbody>
+	</table>
+</form>	
+</div>
+<?php
+	}
+?>
+					
 				</div>
 			</div>
 	<div class="footer clearfix">
@@ -321,12 +394,54 @@ Bitte <a href="auth/?target=<?php echo urlencode( $_SERVER['REQUEST_SCHEME'].':/
 ?>
 <script>
 
+
+function reloadAusweis( action, _library, _serial ) {
+	form = $("#idedit");
+	serial = form.find("#serial").val();
+	passid = form.find("#library option:selected").val();
+	name = form.find("#name").val();
+	email = form.find("#email").val();
+	barcode = form.find("#barcode").val();
+	valid = form.find("#valid option:selected").val();
+	
+	console.log( serial+"/"+passid+"/"+name+"/"+email+"/"+barcode+"/"+valid );
+	
+	
+	$.get( 'ausweis.load.php?serial='+encodeURIComponent(serial)
+		  +'&serial='+encodeURIComponent(serial)
+		  +'&passid='+encodeURIComponent(passid)
+		  +'&name='+encodeURIComponent(name)
+		  +'&email='+encodeURIComponent(email)
+		  +'&barcode='+encodeURIComponent(barcode)
+		  +'&valid='+encodeURIComponent(valid)
+		  +'&action='+encodeURIComponent(action)
+		  +'&_library='+encodeURIComponent(_library)
+		  +'&_serial='+encodeURIComponent(_serial)
+		  , function( data ) {
+				$("#idtable").find( "tr.iddata" ).replaceWith( '' );
+				$("#idtable").find( "tr.idsearch" ).after( data );
+				$.fn.editable.defaults.mode = 'inline';
+				$('.x-editable').editable( { showbuttons: false });
+	});
+}
+
+function searchid() {
+	reloadAusweis( 'search', null, null );
+}	
+
+function validateSendAusweis( library, serial ) {
+	reloadAusweis( 'validate_send', library, serial );
+}
+
+function sendAusweis( library, serial ) {
+	reloadAusweis( 'send', library, serial );
+}
+
 function cardsend(library, serial ) {
     $('#generic').children( '#action' ).val( 'send' );
     $('#generic').children( '#library' ).val( library );
     $('#generic').children( '#serial' ).val( serial );
     $('#generic').submit();
-
 }
 
 function carddelete(library, serial ) {
@@ -336,7 +451,6 @@ function carddelete(library, serial ) {
 		$('#generic').children( '#serial' ).val( serial );
 		$('#generic').submit();
     }
-
 }
 
 function init() {
@@ -354,6 +468,7 @@ function init() {
 		window.location="search.php";
 	});
 	
+	searchid();
 }
 </script>   
 

@@ -279,11 +279,12 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 				$facetSource = $rs->getFacetSet()->getFacet('source');
 				$i = 0;
 				foreach ($facetSource as $value => $count) {
+					if( !isset( $config['sourcemap'][$value] )) continue;
 ?>	
 						<div class="checkbox checkbox-green">
 							<input class="facet" type="checkbox" id="source" value="<?php echo htmlentities($value); ?>" <?php if( @is_array( $qobj->facets->source ) && array_search($value, $qobj->facets->source) !== false ) echo " checked"; ?>>
 							<label for="source<?php echo $i; ?>">
-								<?php echo htmlspecialchars( $sourcemap[$value] ).' ('.$count.')'; ?>
+								<?php echo htmlspecialchars( $config['sourcemap'][$value] ).' ('.$count.')'; ?>
 							</label>
 						</div>
 <!--						

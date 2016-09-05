@@ -36,6 +36,14 @@ $config['media'] = array(
     
 );
 
+$config['sourcemap'] = array( 'NEBIS' => 'NEBIS-Bestand HGK',
+				    'DOAJ' => 'Directory of Open Access Journals',
+					'IKUVid' => 'Videosammlung Institut Kunst',
+					'EZB' => 'Elektronische Zeitschriften Datenbank',
+					'Wenkenpark' => 'Videowochen Wenkenpark',
+					'DOAB' => 'directory of open access books',
+				  );
+
 $config['3dthumb'] = 'https://mediathek.hgk.fhnw.ch/img/dev/3dbox/thumb';
 $config['3dthumbdir'] = '/var/www/vhosts/mediathek.fhnw.ch/html/dev/img/3dbox/thumb';
 $config['3djsondir'] = '/var/www/vhosts/mediathek.fhnw.ch/html/dev/3djson';

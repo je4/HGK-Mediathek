@@ -220,7 +220,7 @@ function init3D( box, camJSON ) {
 				mediathek.camera.position.set( px*gridWidth, py*gridWidth, pz*gridWidth );
 				mediathek.camera.up = new THREE.Vector3(0,0,1);
 				box = mediathek3D.boxes[hash.substring( 0, 4)];
-				mediathek.controls.target.copy( box.position );
+				if( box ) mediathek.controls.target.copy( box.position );
 			}
 			else {
 				mediathek.setCamJSON( camJSON );
