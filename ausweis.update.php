@@ -28,6 +28,18 @@ try {
 			break;
 	}
 	
+	$sql = "SELECT * FROM wallet.pass WHERE id=".$passid;
+	$pass = $db->GetRow( $sql );
+	
+	if( !$pass ) {
+		http_response_code( 500 );
+		echo "{status: 'error', msg: 'pass {$passid} not found'}";
+		exit;
+	}
+	
+	$passFile = "{$pass['folder']}/{$serial}.pkpass";
+	if( file_exists( $passFile )) unlink( $passFile );
+
 	$sql = "UPDATE wallet.card SET `{$name}`=".$db->qstr( $value )." WHERE pass=".intval( $passid )." AND serial=".intval( $serial );
 	$db->Execute( $sql );
 	print_r( $_REQUEST );
