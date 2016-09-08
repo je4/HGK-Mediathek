@@ -108,7 +108,7 @@ if( strlen( $name )) $sql .= " AND c.name LIKE ".$db->qstr( $name.'%' );
 if( strlen( $email )) $sql .= " AND (c.email LIKE ".$db->qstr( $email.'%' )." OR c.email2 LIKE ".$db->qstr( $email.'%' ).")";
 if( strlen( $barcode )) $sql .= " AND c.barcode LIKE ".$db->qstr( $barcode.'%' );
 if( $valid != -1 ) $sql .= " AND c.valid=".$valid;
-$sql .= " ORDER BY serial";
+$sql .= " ORDER BY serial DESC";
 echo "<!-- {$sql} -->\n";
 $rs = $db->Execute( $sql );
 foreach( $rs as $row ) {
@@ -117,8 +117,8 @@ foreach( $rs as $row ) {
 				<td><?php echo htmlentities( $row['serial'] ); ?></td>
 				<td><?php echo htmlentities( $row['displayname'] ); ?></td>
 				<td><?php echo '<a href="#" data-pk="'.$row['serial'].'-'.$row['pass'].'" data-type="text" data-url="ausweis.update.php" data-name="name" id="name_'.$row['serial'].'" class="x-editable" )">'.htmlentities( $row['name'] ).'</a>'; ?></td>
-				<td><?php echo htmlentities( $row['email'] ); ?></td>
-				<td><?php echo '<a href="#" data-pk="'.$row['serial'].'-'.$row['pass'].'" data-type="text" data-url="ausweis.update.php" data-name="email2" id="email2_'.$row['serial'].'" class="x-editable" )">'.htmlentities( $row['email2'] ).'</a>'; ?></td>
+				<td><?php echo htmlentities( $row['email'] ); ?><br />
+					<?php echo '<a href="#" data-pk="'.$row['serial'].'-'.$row['pass'].'" data-type="text" data-url="ausweis.update.php" data-name="email2" id="email2_'.$row['serial'].'" class="x-editable" )">'.htmlentities( $row['email2'] ).'</a>'; ?></td>
 				<td><?php echo '<a href="#" data-pk="'.$row['serial'].'-'.$row['pass'].'" data-type="text" data-url="ausweis.update.php" data-name="barcode" id="barcode_'.$row['serial'].'" class="x-editable" )">'.htmlentities( $row['barcode'] ).'</a>'; ?></td>
 				<td><?php echo htmlentities( $row['valid'] ? 'ja':'nein' ); ?></td>
 				<?php if( $row['valid'] ) { ?>

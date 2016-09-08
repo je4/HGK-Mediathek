@@ -319,7 +319,6 @@ Bitte <a href="auth/?target=<?php echo urlencode( $_SERVER['REQUEST_SCHEME'].':/
 				<th>Ausweis</th>
 				<th>Name</th>
 				<th>Email</th>
-				<th>Email 2</th>
 				<th>Barcode</th>
 				<th>Geprüft</th>
 				<th>&nbsp;</th>
@@ -331,7 +330,6 @@ Bitte <a href="auth/?target=<?php echo urlencode( $_SERVER['REQUEST_SCHEME'].':/
 				<th>Ausweis</th>
 				<th>Name</th>
 				<th>Email</th>
-				<th>Email 2</th>
 				<th>Barcode</th>
 				<th>Geprüft</th>
 				<th>&nbsp;</th>
@@ -348,7 +346,7 @@ foreach( $passes as $pass )
 ?>
 				</select></td>
 				<td><input type="text" id="name" name="name" value="" onkeyup="searchid();"></td>
-				<td colspan=2><input type="text" id="email" name="email" value="" onkeyup="searchid();"></td>
+				<td><input type="text" id="email" name="email" value="" onkeyup="searchid();"></td>
 				<td><input type="text" id="barcode" name="barcode" value="" onkeyup="searchid();"></td>
 				<td><select class="form-control" id="valid" name="valid" onchange="searchid();">
 					<option value="-1">egal</option>
