@@ -12,7 +12,7 @@ global $db;
 
 header( 'Location: '.$_REQUEST['target'] );
 
-echo mediathekheader('login', null);
+echo mediathekheader('login', null, '' );
 ?>
 	<div class="container-fluid" style="margin-top: 0px; background-color: rgba(255, 255, 255, 0.5); padding: 20px;">
 		<pre>

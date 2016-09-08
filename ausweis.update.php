@@ -28,8 +28,9 @@ try {
 			break;
 	}
 	
-	$sql = "UPDATE wallet.card SET `{$name}`=".$db->qstr( $value )." WHERE uniqueID=".$db->qstr( $session->shibGetUniqueID() )." AND pass=".intval( $passid )." AND serial=".intval( $serial );
+	$sql = "UPDATE wallet.card SET `{$name}`=".$db->qstr( $value )." WHERE pass=".intval( $passid )." AND serial=".intval( $serial );
 	$db->Execute( $sql );
+	print_r( $_REQUEST );
 }
 catch( Exception $ex ) {
 	header( "HTTP/1.1 500 Internal Server Error" );

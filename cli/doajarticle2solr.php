@@ -12,7 +12,8 @@ $doajEndpoint = new \Phpoaipmh\Endpoint($doajClient, \Phpoaipmh\Granularity::DAT
 $result = $doajEndpoint->identify();
 //var_dump($result);
 
-$sql = "SELECT DATE_FORMAT(datestamp, '%Y-%m-%dT%H:%i:%sZ') FROM source_doajoai WHERE identifier LIKE \"oai:doaj.org/article:%\" ORDER BY datestamp DESC";
+$sql = "SELECT DATE_FORMAT(datestamp, '%Y-%m-%dT%H:%i:%sZ') FROM source_doajoai WHERE type=\"article\" ORDER BY datestamp DESC";
+echo $sql."\n";
 $datestamp = $db->GetOne( $sql );
 if( $datestamp == null ) $datestamp = (string) $result->Identify->earliestDatestamp;
 // var_dump( $datestamp );
