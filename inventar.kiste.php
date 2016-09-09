@@ -28,7 +28,7 @@ function rawToDisplay( $str ) {
 <h4 class="small-heading">Kiste <?php echo htmlspecialchars( $kiste ); ?></h3>
 	
  <?php
-$sql = "SELECT MIN(DATE(inventorytime)) AS start, MAX(DATE(inventorytime)) AS end, COUNT(*) AS num FROM inventory2 WHERE marker=".$db->qstr($kiste);
+$sql = "SELECT MIN(DATE(inventorytime)) AS start, MAX(DATE(inventorytime)) AS end, COUNT(*) AS num FROM inventory_cache WHERE marker=".$db->qstr($kiste);
 echo "<!-- {$sql} -->\n";
 $row = $db->GetRow($sql);
 echo "<p>Anzahl Medien: {$row['num']}<br />\n";
@@ -36,12 +36,12 @@ echo "letzter Inventarisierungszeitraum: {$row['start']}";
 if( $row['start'] != $row['end'] ) echo " - {$row['end']}";
 echo "</p>\n";
 
-$sql = "SELECT DISTINCT ag.signaturgroup, sg.name FROM inventory2, ARC_group ag, signaturgroup sg WHERE id=signaturgroup AND itemid=Strichcode AND marker=".$db->qstr($kiste)." ORDER BY sg.name ASC";
+$sql = "SELECT DISTINCT ag.signaturgroup, sg.name FROM inventory_cache, ARC_group ag, signaturgroup sg WHERE id=signaturgroup AND itemid=Strichcode AND marker=".$db->qstr($kiste)." ORDER BY sg.name ASC";
 echo "<!-- {$sql} -->\n";
 $rs = $db->Execute( $sql );
 foreach( $rs as $row ) {
 	$sql = "SELECT MIN(Signatur) AS start, MAX(Signatur) AS end , COUNT(*) AS num
-        FROM inventory2 i, ARC_group ag, signaturgroup sg
+        FROM inventory_cache i, ARC_group ag, signaturgroup sg
             WHERE ag.signaturgroup={$row['signaturgroup']} AND sg.id=ag.signaturgroup AND itemid=Strichcode AND marker=".$db->qstr($kiste)." GROUP BY ag.signaturgroup";
 	echo "<!-- {$sql} -->\n";
 	$row2 = $db->GetRow( $sql );
@@ -62,7 +62,8 @@ $rs->Close();
             </thead>
             <tbody>
 <?php
-$sql = "SELECT itemid, signatur, uid, raw FROM inventory2 LEFT JOIN ARC ON itemid=Strichcode WHERE marker=".$db->qstr($kiste)." ORDER BY itemid ASC, signatur ASC";
+$sql = "SELECT i.itemid, signatur, uid, raw FROM inventory i, inventory_cache ic LEFT JOIN ARC ON ic.itemid=Strichcode WHERE i.itemid=ic.itemid AND i.inventorytime=ic.inventorytime AND ic.marker=".$db->qstr($kiste)." ORDER BY itemid ASC, signatur ASC";
+echo "<!-- {$sql} -->\n";
 
 $rs = $db->Execute( $sql );
 foreach( $rs as $row ) {

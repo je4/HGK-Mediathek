@@ -20,12 +20,18 @@ try {
 
 	$sql = "INSERT INTO inventory_m (`itemid`, `inventorytime`, `marker`, `userid`) VALUES(".$db->qstr( $itemid ).", NOW(), ".$db->qstr( $value ).", ".$db->qstr( $user ).")";
 	$db->Execute( $sql );
+	if( !$db->Affected_Rows() ) {
+		header( "HTTP/1.1 500 Internal Server Error" );
+		echo "{status: 'error', msg: 'affected rows == 0'}";
+		return;
+	}
 
 	$sql = "REPLACE INTO inventory_cache (`itemid`, `inventorytime`, `marker`)  VALUES(".$db->qstr( $itemid ).", NOW(), ".$db->qstr( $value ).")";
 	$db->Execute( $sql );
 
 }
 catch( Exception $ex ) {
+	header( "HTTP/1.1 500 Internal Server Error" );
 	echo "{status: 'error', msg: 'database error!'}";
 }
 ?>

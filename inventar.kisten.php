@@ -1,7 +1,7 @@
 <?php
 
 $sql = 'SELECT COUNT(*) AS num, MIN(DATE(inventorytime)) AS start, MAX(DATE(inventorytime)) AS end, CONCAT( SUBSTRING(marker, 1, 3), "00_", SUBSTRING(marker, 7, 1)) AS reihe
-    FROM inventory2
+    FROM inventory_cache
     WHERE marker REGEXP "^[A-Z]_\\\\d{3}_[ab]"
     GROUP BY reihe ORDER BY reihe ASC';
     
