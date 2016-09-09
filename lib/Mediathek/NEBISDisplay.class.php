@@ -111,7 +111,8 @@ $cfg = array(
 							
 							$signatures = $this->doc->signature;
 							if( is_array( $signatures )) foreach( $signatures as $sig ) 
-								if( substr( $sig, 0, 10 ) == 'nebis:E75:' ) echo 'Signatur: <a href="redir.php?id='.urlencode( $this->doc->id ).'&url='.urlencode( 'http://opac.nebis.ch/F?func=find-c&ccl_term=SYS%3D'.urlencode($this->doc->originalid)).'" target="_blank">'.htmlspecialchars( substr( $sig, 10 ))."</a><br />\n";
+								if( substr( $sig, 0, 10 ) == 'nebis:E75:' ) echo 'Signatur: <a href="redir.php?id='.urlencode( $this->doc->id ).'&url='.urlencode( 'http://recherche.nebis.ch/primo_library/libweb/action/search.do?fn=search&ct=search&vl(freeText0)='.urlencode( $this->doc->originalid ).'&vid=NEBIS&fn=change_lang&prefLang=de_DE&prefBackUrl=http://recherche.nebis.ch/nebis/action/search.do?fn=search&ct=search&vl(freeText0)='.urlencode( $this->doc->originalid ).'&search=&backFromPreferences=true.' ).'"
+										target="_blank">'.htmlspecialchars( substr( $sig, 10 ))."</a><br />\n";
 
 ?>							
 					</div>

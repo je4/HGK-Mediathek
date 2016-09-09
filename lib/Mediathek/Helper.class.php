@@ -82,7 +82,7 @@ class Helper {
 			$back = new Field( 'Library', $pass['library'] );
 			$back->setLabel( 'Bibliothek' );
 			$structure->addBackField( $back );
-			$back1 = new Field( 'Name', $card['name'] );
+			$back1 = new Field( 'Ownername', $card['name'] );
 			$back1->setLabel( 'Name' );
 			$structure->addBackField( $back1 );
 			$back2 = new Field( 'Cardnumber', $card['barcode'] );
@@ -132,7 +132,18 @@ class Helper {
 		}
 
 		if( $p != null ) {
-			$auth = sha1(time() . $card['uniqueID'] . rand() );
+			$sql = "SELECT auth FROM wallet.wallet WHERE passid=".$db->qstr( $pass['passid'] )." AND serial=".$serial;
+			$auth = $db->GetOne( $sql );
+			if( !$auth ) {
+				$auth = sha1(time() . $card['uniqueID'] . rand() );
+				
+				$sql = "INSERT INTO wallet.wallet (`passid`, `serial`, `auth`, `expires`)
+					VALUES (".$db->qstr( $pass['passid'] ).",
+							".$serial.",
+							".$db->qstr( $auth ).",
+							".$db->qstr( $expirationDate->format( 'Y-m-d H:i:s' ) )." )";
+				$db->Execute( $sql );
+			}
 			$p->setAuthenticationToken( $auth );
 			
 			$p->setWebServiceURL( $pass['webservice'] );
@@ -150,12 +161,6 @@ class Helper {
 			$sql = "UPDATE wallet.card SET issuedate=NOW(), expirydate=".$db->qstr( $expirationDate->format( 'Y-m-d H:i:s' ) )." WHERE pass=".$id." AND serial=".$serial;
 			$db->Execute( $sql );
 			
-			$sql = "REPLACE INTO wallet.wallet (`passid`, `serial`, `auth`, `expires`)
-				VALUES (".$db->qstr( $pass['passid'] ).",
-						".$serial.",
-						".$db->qstr( $auth ).",
-						".$db->qstr( $expirationDate->format( 'Y-m-d H:i:s' ) )." )";
-			$db->Execute( $sql );
 
 			if( file_exists( $passFile ))
 				return $passFile;
