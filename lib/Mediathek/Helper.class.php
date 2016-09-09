@@ -85,7 +85,7 @@ class Helper {
 			$back1 = new Field( 'Ownername', $card['name'] );
 			$back1->setLabel( 'Name' );
 			$structure->addBackField( $back1 );
-			$back2 = new Field( 'Cardnumber', $card['barcode'] );
+			$back2 = new Field( 'CardnumberBack', $card['barcode'] );
 			$back2->setLabel( 'Kartennummer' );
 			$structure->addBackField( $back2 );
 			$back3 = new Field( 'Email', $card['email'] );
