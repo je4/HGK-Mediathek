@@ -62,7 +62,7 @@ $rs->Close();
             </thead>
             <tbody>
 <?php
-$sql = "SELECT i.itemid, signatur, uid, raw FROM inventory i, inventory_cache ic LEFT JOIN ARC ON ic.itemid=Strichcode WHERE i.itemid=ic.itemid AND i.inventorytime=ic.inventorytime AND ic.marker=".$db->qstr($kiste)." ORDER BY itemid ASC, signatur ASC";
+$sql = "SELECT i.itemid, signatur, uid, raw FROM inventory i, inventory_cache ic LEFT JOIN ARC ON ic.itemid=Strichcode WHERE i.itemid=ic.itemid AND ic.marker=".$db->qstr($kiste)." ORDER BY itemid ASC, signatur ASC";
 echo "<!-- {$sql} -->\n";
 
 $rs = $db->Execute( $sql );
