@@ -258,9 +258,10 @@ $sql = "SELECT p.id as library, c.serial, p.description, c.barcode, c.email, c.e
 			WHERE deleted=0 AND c.pass=p.id AND c.uniqueID=".$db->qstr( $session->shibGetUniqueID());
 $rs = $db->Execute( $sql );
 $num = $rs->RecordCount();
-$w = 3;
-if( $num <= 4 ) $w = 12/$num;
-foreach( $rs as $row ) {
+if( $num ) {
+	$w = 3;
+	if( $num <= 4 ) $w = 12/$num;
+	foreach( $rs as $row ) {
 ?>
 	<div class="col-lg-<?php echo $w; ?>">
 		<div class="card card-block">
@@ -283,8 +284,9 @@ foreach( $rs as $row ) {
 		</div>
 	</div>
 <?php
+	}
+	$rs->Close();
 }
-$rs->Close();
 ?>
 </div>
 </div>

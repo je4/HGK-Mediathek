@@ -134,7 +134,7 @@ class Helper {
 		if( $p != null ) {
 			$sql = "SELECT auth FROM wallet.wallet WHERE passid=".$db->qstr( $pass['passid'] )." AND serial=".$serial;
 			$auth = $db->GetOne( $sql );
-			if( $auth === false ) {
+			if( $auth === null ) {
 				$auth = sha1(time() . $card['uniqueID'] . rand() );
 				
 				$sql = "INSERT INTO wallet.wallet (`passid`, `serial`, `auth`, `expires`)
