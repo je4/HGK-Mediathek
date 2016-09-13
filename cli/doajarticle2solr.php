@@ -17,9 +17,9 @@ echo $sql."\n";
 $datestamp = $db->GetOne( $sql );
 if( $datestamp == null ) $datestamp = (string) $result->Identify->earliestDatestamp;
 // var_dump( $datestamp );
+//$datestamp = "2016-08-08T15:46:18Z";
 echo "Starting with: ".$datestamp."\n";
-
-$recs = $doajEndpoint->listRecords( 'oai_dc');
+$recs = $doajEndpoint->listRecords( 'oai_dc', new \DateTime( $datestamp ) /*, new \DateTime( '2016-09-08T01:30:57Z' ) */);
 $counter = 0;
 foreach( $recs as $xmlrec ) {
 //    var_dump( $rec );
@@ -40,7 +40,7 @@ foreach( $recs as $xmlrec ) {
     $identifier = $dc['IDENTIFIER'][0];
     $datestamp = $dc['DATESTAMP'][0];
     $type = $dc['DC:TYPE'][0];
-    echo $identifier."\n";
+    echo $identifier.": ".$datestamp."\n";
     $sql = "REPLACE INTO source_doajoai( identifier, datestamp, type, data )
         VALUES (".$db->qstr( $identifier ).", ".$db->qstr( $datestamp ).", ".$db->qstr( $type ).", ".$db->qstr( json_encode( $dc )).")";
     $db->Execute( $sql );                                                                                                           

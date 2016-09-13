@@ -30,7 +30,7 @@ namespace Mediathek;
  */
 
 class DOAJArticleEntity implements SOLRSource {
-    private static $table = 'source_doajarticle';
+    private static $table = 'source_doajoai';
     private $data = null;
     private $id = null;
     private $idprefix = null;
@@ -73,9 +73,8 @@ class DOAJArticleEntity implements SOLRSource {
         $this->id = $id;
         $this->idprefix = $idprefix;
         
-        $sql = "SELECT * FROM `".self::$table."` WHERE `Journal EISSN (online version)` = ".$this->db->qstr( $id );
-        $this->data = $this->db->GetRow( $sql );
-        
+        $sql = "SELECT data FROM `".self::$table."` WHERE `identifier` = ".$this->db->qstr( $id );
+        $this->data = ( array )json_decode( $this->db->GetOne( $sql ));
     }
     
     public function getID() {
@@ -88,14 +87,14 @@ class DOAJArticleEntity implements SOLRSource {
     
     public function getTitle() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
-        $title = trim( $this->data['Journal title'] );
+        $title = trim( $this->data['DC:TITLE'] );
 
         return $title;
     }
     
     public function getPublisher() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
-        $pub = trim( $this->data['Publisher'] );
+        $pub = $this->data['DC:PUBLISHER'];
 
         return $pub;
     }
@@ -103,20 +102,23 @@ class DOAJArticleEntity implements SOLRSource {
     public function getCodes() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
         $codes = array();
-        if( strlen( trim( $this->data['Journal ISSN (print version)'])))
-            $codes[] = 'ISSN:'.trim( $this->data['Journal ISSN (print version)']);
-        if( strlen( trim( $this->data['Journal EISSN (online version)'])))
-            $codes[] = 'EISSN:'.trim( $this->data['Journal EISSN (online version)']);
+		foreach( $this->data['DC:IDENTIFIER'] as $ident ) {
+			if( preg_match( "/[0-9]+-[0-9]+/", $ident ))
+				$codes[] = 'ISSN:'.trim( $ident );
+		}
         return $codes;
     }
     
     public function getYear() {
-        return null;
+		$ds = $this->data['DC:DATE'];
+		if( !count($ds )) return null;
+		$d = new \DateTime( $ds[0] );
+		return intval( $d->format( 'Y' ));
     }
     
     public function getCity() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
-        return $this->data['Country of publisher'];
+        return null;
     }
     
 	public function getTags() {
@@ -198,14 +200,10 @@ class DOAJArticleEntity implements SOLRSource {
     public function getURLs() {
         if( $this->urls == null ) {
             $this->urls = array();
-            if( strlen( trim( $this->data['Journal URL'])))
-                $this->urls[] = 'journal:' . trim( $this->data['Journal URL']);
-            if( strlen( trim( $this->data['APC information URL'])))
-                $this->urls[] = 'apcinfo:' . trim( $this->data['APC information URL']);
-            if( strlen( trim( $this->data['Archiving infomation URL'])))
-                $this->urls[] = 'archinfo:' . trim( $this->data['Archiving infomation URL']);
-            if( strlen( trim( $this->data['URL for license terms'])))
-                $this->urls[] = 'license:' . trim( $this->data['URL for license terms']);
+			foreach( $this->data['DC:IDENTIFIER'] as $ident ) {
+				if( preg_match( '/https?:\/\//', $ident ))
+					$this->urls[] = 'unknown:'.trim( $ident );
+			}
         }
         return $this->urls;
     }

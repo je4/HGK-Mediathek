@@ -140,7 +140,7 @@ class Session implements \SessionHandlerInterface
         foreach( $fields as $fld ) {
             if( $first ) $first = false;
             else $sql .= ", ";
-            $sql .= $this->db->qstr( $this->server[$fld] );
+            $sql .= $this->db->qstr( isset( $this->server[$fld] ) ? $this->server[$fld] : null );
         }
         $sql .= ");";
         $this->db->Execute( $sql );
@@ -168,15 +168,15 @@ class Session implements \SessionHandlerInterface
   }
  
   public function shibGetUsername() {
-    return "{$this->server['givenName']} {$this->server['surname']}";
+    return (isset( $this->server['givenName'] ) ? "{$this->server['givenName']} " : "" ).(isset( $this->server['surname'] ) ? $this->server['surname'] : "");
   }
   
   public function shibGetGivenName() {
-    return "{$this->server['givenName']}";
+    return (isset( $this->server['givenName'] ) ? "{$this->server['givenName']}" : "" );
   }
 
   public function shibGetSurname() {
-    return "{$this->server['surname']}";
+    return (isset( $this->server['surname'] ) ? $this->server['surname'] : "");
   }
   
   public function shibHomeOrganization() {
@@ -188,9 +188,10 @@ class Session implements \SessionHandlerInterface
   }
  
   public function shibDepartement() {
-	  if( preg_match( "/OU=([A-Za-z0-9]+)(,OU=([A-Z]+))?,OU=([0-9]+),[a-zA-Z,=],DC=fhnw,DC=ch/", $this->server['orgunit-dn'], $matches )) {
-		  return $matches[1].$matches[2].$matches[4];
-	  }
+	  if( isset( $this->server['orgunit-dn'] ))
+		if( preg_match( "/OU=([A-Za-z0-9]+)(,OU=([A-Z]+))?,OU=([0-9]+),[a-zA-Z,=],DC=fhnw,DC=ch/", $this->server['orgunit-dn'], $matches )) {
+			return $matches[1].$matches[2].$matches[4];
+		}
 	  return null;
   }
   
@@ -229,10 +230,11 @@ class Session implements \SessionHandlerInterface
 	  foreach( explode( ';', $this->shibAffiliation()) as $grp )
 		  $this->groups[] = $this->shibHomeOrganization().'/'.strtolower( trim( $grp ));
 		  
-	  if( preg_match( '/^.*,OU=([0-9]+),OU=.+,OU=.+,DC=.+,DC=ds,DC=fhnw,DC=ch/', $_SERVER['orgunit-dn'], $matches )) {
-		  $this->groups[] = "fhnw.ch:{$matches[1]}/user";
-//		  $this->groups[] = strtolower( "fhnw.ch:{$matches[3]}:{$matches[1]}/user" );
-	  }
+	  if( isset( $this->server['orgunit-dn'] ))
+		if( preg_match( '/^.*,OU=([0-9]+),OU=.+,OU=.+,DC=.+,DC=ds,DC=fhnw,DC=ch/', $_SERVER['orgunit-dn'], $matches )) {
+			$this->groups[] = "fhnw.ch:{$matches[1]}/user";
+  //		  $this->groups[] = strtolower( "fhnw.ch:{$matches[3]}:{$matches[1]}/user" );
+		}
 		  
 	}
     $sql = "SELECT grp FROM groups WHERE uniqueID=".$this->db->qstr( $this->shibGetUniqueID())." OR uniqueID=".$this->db->qstr( strtolower( $this->shibGetMail()));
