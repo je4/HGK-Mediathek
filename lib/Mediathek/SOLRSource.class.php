@@ -53,6 +53,8 @@ interface SOLRSource {
     public function getMetaACL();
     public function getContentACL();
     public function getPreviewACL();
+	public function getLanguages();
+	public function getIssues();
 
 }
 

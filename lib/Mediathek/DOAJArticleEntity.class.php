@@ -78,16 +78,30 @@ class DOAJArticleEntity implements SOLRSource {
     }
     
     public function getID() {
+        if( substr( $this->id, 0, strlen( 'oai:doaj.org/article:')) == 'oai:doaj.org/article:' )
+            return $this->idprefix.substr( $this->id, strlen( 'oai:doaj.org/article:'));
         return $this->idprefix.'-'.$this->id; 
     }
     
     public function getSource() {
-        return 'DOAJ';
+        return 'DOAJArticle';
     }
     
+    public function getOpenAccess() {
+        return true;
+    }
+    
+    public function getType() {
+		return "Article";
+	}
+
+	public function getEmbedded() {
+		return false;
+	}
+
     public function getTitle() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
-        $title = trim( $this->data['DC:TITLE'] );
+        $title = @trim( $this->data['DC:TITLE'][0] );
 
         return $title;
     }
@@ -127,13 +141,8 @@ class DOAJArticleEntity implements SOLRSource {
         
         $this->tags = array();
     
-        $kws = explode( ',', $this->data['Keywords']);
-   
-        foreach( $kws as $kw ) {
-            $this->tags[] = 'index:keyword:doaj/'.md5( trim( $kw) ).'/'.trim( $kw );
-        }
-        $kws = explode( '|', $this->data['Subjects']);
-   
+        $kws = $this->data['DC:SUBJECT'];
+
         foreach( $kws as $kw ) {
             $this->tags[] = 'subject:hierarchical:doaj/'.md5( trim( $kw) ).'/'.trim( $kw );
         }
@@ -161,18 +170,28 @@ class DOAJArticleEntity implements SOLRSource {
     public function getSignatures() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
         
+        
         return array();
     }
     
     public function getAuthors() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
-        return array();
+        return $this->data['DC:CREATOR'];
     }
     
     public function getLoans() {
         return array();
     }
     
+	public function getLocations() {
+		return array( 'online' );
+	}
+   
+	
+	public function getOriginalID() {
+		return $this->id;
+	}
+         
     public function getBarcode() {
         return null;
     }
@@ -182,19 +201,8 @@ class DOAJArticleEntity implements SOLRSource {
     }
     
     public function getLicenses() {
-        if( $this->licenses == null ) {
-            $this->licenses = array( );
-            $l = "";
-            if( strlen( trim( $this->data['Journal license'])))
-                $l .= trim( $this->data['Journal license']);
-            if( strlen( trim( $this->data['License attributes'])))
-                $l .= ' ('.trim( $this->data['License attributes']).')';
-            if( strlen( trim( $l )))
-                $this->licenses[] = trim( $l );
-            if( count( $this->licenses ) == 0)
-                $this->licenses[] = 'restricted';
-        }
-        return $this->licenses;
+            if( !isset( $this->data['DC:RIGHTS'] )) return array( 'restricted' );
+            return $this->data['DC:RIGHTS'];
     }
     
     public function getURLs() {
@@ -202,8 +210,12 @@ class DOAJArticleEntity implements SOLRSource {
             $this->urls = array();
 			foreach( $this->data['DC:IDENTIFIER'] as $ident ) {
 				if( preg_match( '/https?:\/\//', $ident ))
-					$this->urls[] = 'unknown:'.trim( $ident );
+					$this->urls[] = 'identifier:'.trim( $ident );
 			}
+			foreach( $this->data['DC:RELATION'] as $ident ) {
+				$this->urls[] = 'relation:'.trim( $ident );
+			}
+            
         }
         return $this->urls;
     }
@@ -223,9 +235,29 @@ class DOAJArticleEntity implements SOLRSource {
    public function getAbstract() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
 
-        return null;    
+        return @trim( $this->data['DC:DESCRIPTION'][0] );    
     }
-   public function getContent() { return null; }    
+   public function getContent() { return null; }
+   
+    public function getMetaACL() { return array( 'global/guest' ); }
+    public function getContentACL() {
+        // todo: check, whether ppl are in fhnw network???
+        return array(  );
+    }
+    public function getPreviewACL() { return array( 'location/fhnw' ); }
+   
+   	public function getLanguages() {
+        if( isset( $this->data['DC:LANGUAGE']))
+            return $this->data['DC:LANGUAGE'];
+        return array();
+    }
+    
+	public function getIssues() {
+        if( isset( $this->data['DC:SOURCE']))
+            return $this->data['DC:SOURCE'];
+        return array();
+    }
+
 }
 
 ?>

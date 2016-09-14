@@ -55,9 +55,6 @@ foreach($results as $item) {
 }
 */
 
-
-exit;
-
 $entity = new DOAJArticleEntity( $db );
 $solr = new SOLR( $solrclient );
 
@@ -81,50 +78,58 @@ exit;
 */
 
 
-$sql = "SELECT DISTINCT `Journal EISSN (online version)` as id FROM source_doaj";
+$counter = 0;
+$sql = "SELECT `identifier` as id FROM source_doajoai WHERE type=".$db->qstr( 'article' );
+echo $sql."\n";
 $rs = $db->Execute( $sql );
 foreach( $rs as $row ) {
     $sys = $row['id'];
     if( !strlen( $sys )) continue;
     
-    $entity->loadFromDatabase( $sys, 'doaj' );
-    
-    //$xml = $entity->getXML();
-    //echo $xml->saveXML();
-    
-    $title = $entity->getTitle();
-    echo "Title: ".$title."\n";
-    
-    $tags = $entity->getTags();
-    echo "Tags: ";
-    print_r( $tags );
-    
-    $cluster = $entity->getCluster();
-    echo "Cluster: ";
-    print_r( $cluster );
-    
-    $authors = $entity->getAuthors();
-    echo "Authors: ";
-    print_r( $authors );
-    
-    $loans = $entity->getLoans();
-    echo "Loans: ";
-    print_r( $loans );
-    
-    $licenses = $entity->getLicenses();
-    echo "Licenses: ";
-    print_r( $licenses );
-    
-    $signatures = $entity->getSignatures();
-    echo "Signatures: ";
-    print_r( $signatures );
-    
-    $urls = $entity->getURLs();
-    echo "URLs: ";
-    print_r( $urls );
-    
-    $solr->import( $entity );
+    try {
+      $entity->loadFromDatabase( $sys, 'doajarticle' );
+      
+      //$xml = $entity->getXML();
+      //echo $xml->saveXML();
+      
+      $title = $entity->getTitle();
+      echo "Title: ".$title."\n";
+      
+      $tags = $entity->getTags();
+      echo "Tags: ";
+      print_r( $tags );
+      
+      $cluster = $entity->getCluster();
+      echo "Cluster: ";
+      print_r( $cluster );
+      
+      $authors = $entity->getAuthors();
+      echo "Authors: ";
+      print_r( $authors );
+      
+      $loans = $entity->getLoans();
+      echo "Loans: ";
+      print_r( $loans );
+      
+      $licenses = $entity->getLicenses();
+      echo "Licenses: ";
+      print_r( $licenses );
+      
+      $signatures = $entity->getSignatures();
+      echo "Signatures: ";
+      print_r( $signatures );
+      
+      $urls = $entity->getURLs();
+      echo "URLs: ";
+      print_r( $urls );
+      
+      $solr->import( $entity );
+    }
+    catch( Exception $ex ) {
+      echo $ex;
+    }
 
+    //if( $count++ > 10 ) break;
 }
 $rs->Close();
 ?>

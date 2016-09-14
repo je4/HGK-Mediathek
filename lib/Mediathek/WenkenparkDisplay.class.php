@@ -57,9 +57,14 @@ class WenkenparkDisplay extends DisplayEntity {
                  $authors[] = trim( $this->metadata['AutorinVN2']).' '.trim( $this->metadata['AutorInN2']);
             if( strlen(trim( $this->metadata['AutorinVN3'])))
                  $authors[] = trim( $this->metadata['AutorinVN3']).' '.trim( $this->metadata['AutorInN3']);
-			echo htmlentities( implode( "; ", $authors )).": ";
+			echo '<span style="font-weight: normal; font-size: 1.1rem;">';
+			
+			
+			echo htmlentities( implode( ", ", $authors ));
+			
+			echo "</span>: ";
 			echo htmlentities( $this->metadata['TITEL'] );
-			?> <span style="font-size: 80%;"><?php echo htmlspecialchars( $this->metadata['Produktionsjahr'] );?></span></h5>
+			?> <span style="font-size: 80%;">(<?php echo htmlspecialchars( $this->metadata['Produktionsjahr'] );?>)</span></h5>
 			<span style="font-size: 80%; line-height: 1em;">
 <?php 
 					if( @strlen(trim( $this->metadata['KonzeptDrehbuchVor1'])))
@@ -74,7 +79,20 @@ class WenkenparkDisplay extends DisplayEntity {
 						echo "Musik: ".htmlentities( trim( $this->metadata['MUSIK']))."<br />\n"; 
 					if( @strlen(trim( $this->metadata['Ton'])))
 						echo "Ton: ".htmlentities( trim( $this->metadata['Ton']))."<br />\n"; 
-					if( isset( $this->metadata['LAENGE'] )) echo "Dauer: ".htmlspecialchars( $this->metadata['LAENGE'] );?>
+					if( isset( $this->metadata['LAENGE'] ))
+						echo "Dauer: ".htmlspecialchars( substr( $this->metadata['LAENGE'], 0, -2 ).':'.substr( $this->metadata['LAENGE'], -2 ) )."<br />\n";;
+					if( isset( $this->metadata['Ursprungsformat'] ))
+						echo "Ursprungsformat: ".htmlspecialchars($this->metadata['Ursprungsformat'])."<br />\n";;
+					$sys = array();
+					if( isset( $this->metadata['TV System'] ))
+						$sys[] = $this->metadata['TV System'];
+					if( isset( $this->metadata['Farbe sw'] ))
+						$sys[] = $this->metadata['Farbe sw'];
+					if( isset( $this->metadata['Tonart'] ))
+						$sys[] = $this->metadata['Tonart'];
+					if( count( $sys )) echo htmlspecialchars( implode( ' / ', $sys ))."<br />\n";
+					
+?>
 			</span>
 		</div>
 	</div>
@@ -138,11 +156,11 @@ class WenkenparkDisplay extends DisplayEntity {
 			<p><?php echo htmlspecialchars( $this->metadata['KURZBESCHRIEB'] ); ?></p>
 		</div>
 	<?php if( $this->doc->embedded ) {	?>
-<img src="<?php echo $config['media']['picopen'].'/VWW'.intval($this->metadata['Publikationsnummer']).'.00005.thumb.png'; ?>" />
-<img src="<?php echo $config['media']['picopen'].'/VWW'.intval($this->metadata['Publikationsnummer']).'.00009.thumb.png'; ?>" />
-<img src="<?php echo $config['media']['picopen'].'/VWW'.intval($this->metadata['Publikationsnummer']).'.00013.thumb.png'; ?>" />
-<img src="<?php echo $config['media']['picopen'].'/VWW'.intval($this->metadata['Publikationsnummer']).'.00017.thumb.png'; ?>" />
-<img src="<?php echo $config['media']['picopen'].'/VWW'.intval($this->metadata['Publikationsnummer']).'.00021.thumb.png'; ?>" />
+<img style="margin: 5px;" src="<?php echo $config['media']['picopen'].'/VWW'.intval($this->metadata['Publikationsnummer']).'.00005.thumb.png'; ?>" />
+<img style="margin: 5px;" src="<?php echo $config['media']['picopen'].'/VWW'.intval($this->metadata['Publikationsnummer']).'.00009.thumb.png'; ?>" />
+<img style="margin: 5px;" src="<?php echo $config['media']['picopen'].'/VWW'.intval($this->metadata['Publikationsnummer']).'.00013.thumb.png'; ?>" />
+<img style="margin: 5px;" src="<?php echo $config['media']['picopen'].'/VWW'.intval($this->metadata['Publikationsnummer']).'.00017.thumb.png'; ?>" />
+<img style="margin: 5px;" src="<?php echo $config['media']['picopen'].'/VWW'.intval($this->metadata['Publikationsnummer']).'.00021.thumb.png'; ?>" />
 <?php } ?>
 </div>
 	</div>

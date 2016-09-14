@@ -225,6 +225,8 @@ class EZBEntity implements SOLRSource {
     }
     public function getPreviewACL() { return array( 'location/fhnw' ); }
 
+	public function getLanguages() { return array(); }
+	public function getIssues()  { return array(); }
 }
 
 ?>

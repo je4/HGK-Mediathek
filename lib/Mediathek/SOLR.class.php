@@ -119,6 +119,10 @@ class SOLR {
             $doc->addField( 'url', $url);
         foreach( $src->getCodes() as $code )
             $doc->addField( 'code', $code);
+        foreach( $src->getIssues() as $issue )
+            $doc->addField( 'issue', $issue);
+        foreach( $src->getLanguages() as $lang )
+            $doc->addField( 'lang', $lang);
         
         $doc->setField( 'online', $src->getOnline());
         $doc->setField( 'embedded', $src->getEmbedded());
