@@ -125,7 +125,7 @@ Android User: Es wird eine App benötigt, welche in der Lage ist Apple-Wallets a
 https://play.google.com/store/search?q=apple%20wallet&c=apps&hl=de
 
 Android User: You need an app to display Apple Wallets:
-https://play.google.com/store/search?q=apple%20wallet&c=apps&hl=de
+https://play.google.com/store/search?q=apple%20wallet&c=apps&hl=en
 
 Mit freundlichen Grüssen / kind regards,
 {$pass['logotext']}

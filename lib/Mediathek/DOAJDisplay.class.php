@@ -27,8 +27,8 @@ namespace Mediathek;
 class DOAJDisplay extends DisplayEntity {
     private $metadata;
     
-    public function __construct( $doc, $urlparams, $db ) {
-        parent::__construct( $doc, $urlparams, $db );
+    public function __construct( $doc, $urlparams, $db, $highlightedDoc ) {
+        parent::__construct( $doc, $urlparams, $db, $highlightedDoc );
         
         $this->metadata = (array) json_decode( $this->data );
     }

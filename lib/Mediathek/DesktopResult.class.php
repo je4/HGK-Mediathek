@@ -33,10 +33,10 @@ class DesktopResult extends SOLRResult {
             parent::__construct($resultSet, $startDoc, $pageSize, $db);
     }
  
-    public function addDocument( $doc ){
+    public function addDocument( $doc, $highlightedDoc ){
         $class = '\\Mediathek\\'.$doc->source.'Display';
 
-        $output = new $class($doc, $this->urlparams, $this->db);
+        $output = new $class($doc, $this->urlparams, $this->db, $highlightedDoc );
         $this->html .= $output->desktopList();
         
         return;

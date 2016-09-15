@@ -24,39 +24,39 @@
 
 namespace Mediathek;
 
-class EZBDisplay extends DisplayEntity {
-    
+class DOAJArticleDisplay extends DisplayEntity {
+    private $metadata;
+	private $entity;
+	
     public function __construct( $doc, $urlparams, $db, $highlightedDoc ) {
         parent::__construct( $doc, $urlparams, $db, $highlightedDoc );
-
-        $this->db = $db;
+        
+        $this->metadata = (array) json_decode( $this->data );
+		$this->entity = new DOAJArticleEntity( $db );
+		$this->entity->loadFromArray( $this->doc->originalid, $this->metadata, 'doajarticle');
     }
     
 	public function detailView() {
-		
-        global $config, $solrclient, $db, $urlparams, $pagesize;
-		return '';
+        global $config, $googleservice, $googleclient;
+        $html = '';
+
+		return $html;
 	}
 	
     public function desktopList() {
-        global $config, $googleservice, $googleclient;
-        $html = '';
-		
-		$entity = new EZBEntity($this->db);
-		$entity->loadFromArray( (array)json_decode( $this->data ), $this->doc->source );
-
+		$html = '';
         ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
 ?>
         <tr>
             <td rowspan="2" class="list" style="text-align: right; width: 25%;">
                 <a class="entity" href="#coll_<?php echo $this->doc->id; ?>" data-toggle="collapse" aria-expanded="false" aria-controls="coll_<?php echo $this->doc->id; ?>">
-					<?php echo htmlspecialchars( implode( '; ', $entity->getPublisher())  ); ?>
+                    <?php echo htmlspecialchars( count( $this->entity->getAuthors() ) ? $this->entity->getAuthors()[0] : "" ); ?>
                 </a>
             </td>
-            <td class="list" style="width: 5%;"><i class="fa fa-newspaper-o"></i></td>
+            <td class="list" style="width: 5%;"><i class="fa fa-newspaper-o" aria-hidden="true"></i></td>
             <td class="list" style="width: 70%;">
                 <a class="entity" href="#coll_<?php echo $this->doc->id; ?>" data-toggle="collapse" aria-expanded="false" aria-controls="coll_<?php echo $this->doc->id; ?>">
-                    <?php echo htmlspecialchars( $entity->getTitle() ); ?>
+                    <?php echo htmlspecialchars( $this->doc->title ); ?>
                 </a>        
             </td>
         </tr>
@@ -65,22 +65,28 @@ class EZBDisplay extends DisplayEntity {
             </td>
             <td class="detail">
                 <div class="collapse" id="coll_<?php echo $this->doc->id; ?>">
-				
-<?php			
-				$codes = $entity->getCodes();
-				foreach( $codes as $code ) 
-					echo htmlspecialchars( $code )."<br />\n";
-				
-				if( is_array( $this->doc->url )) foreach( $this->doc->url as $u ) {
-					$us = explode( ':', $u );
-					if( substr( $us[1], 0, 4 ) == 'http' ) {
-						$url = substr( $u, strlen( $us[0])+1 );
-						echo "{$us[0]}: <i class=\"fa fa-external-link\" aria-hidden=\"true\"></i><a href=\"redir.php?id=".urlencode( $this->doc->id ).'&url='.urlencode( $url )."\" target=\"blank\">{$url}</a><br />\n";
-					}
-				}
-				
-				echo "ID: ".$this->doc->id."<br />\n";
+					<?php if( count( $this->entity->getAuthors()) > 1 ) for( $i = 1; $i < count( $this->entity->getAuthors()); $i++ ) echo htmlspecialchars( $this->entity->getAuthors()[$i] )." / "; ?><br />
+					<?php if ($this->highlight) { ?>
+					<p style="background-color: #f0f0f0; margin-left: +20px; border-top: 1px solid black; border-bottom: 1px solid black;"><i>
+					
+<?php
+						foreach ($this->highlight as $field => $highlight) {
+							echo '(...) '.strip_tags( implode(' (...) ', $highlight), '<b></b>') . ' (...)' . '<br/>';
+						}
 ?>
+					</i></p>					
+<?php
+					}
+?>
+					<?php if( count( $this->entity->getIssues() )) echo "Issue: ".htmlentities( implode( '; ', $this->entity->getIssues()))."<br />\n"; ?>
+					<?php if( count( $this->entity->getLanguages() )) echo "Language(s): ".htmlentities( implode( '; ', $this->entity->getLanguages()))."<br />\n"; ?>
+					<?php if( count( $this->entity->getLanguages() )) echo "Publisher: ".htmlentities( implode( '; ', $this->entity->getPublisher()))."<br />\n"; ?>
+					
+					ID: <?php echo $this->doc->id; ?>
+					<p>
+					<!-- <a href="detail.php?<?php echo "id=".urlencode( $this->doc->id ); foreach( $this->urlparams as $key=>$val ) echo '&'.$key.'='.urlencode($val); ?>">Detail</a><br />
+					-->
+                    
                 </div>
             </td>
         </tr>

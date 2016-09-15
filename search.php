@@ -237,7 +237,10 @@ $facetSetCluster->createFacetField('cluster')->setField('cluster_ss'); //->addEx
 //$facetSetAcl = $squery->getFacetSet();
 //$facetSetAcl->createFacetField('acl')->setField('acl')->addExclude('acl');
 
-
+$hl = $squery->getHighlighting();
+$hl->setFields('abstract, content');
+$hl->setSimplePrefix('<b class="highlight">');
+$hl->setSimplePostfix('</b>');
 
 $rs = $solrclient->select( $squery );
 $numResults = $rs->getNumFound();

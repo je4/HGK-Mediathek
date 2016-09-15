@@ -26,8 +26,8 @@ namespace Mediathek;
 
 class NEBISDisplay extends DisplayEntity {
     
-    public function __construct( $doc, $urlparams, $db ) {
-        parent::__construct( $doc, $urlparams, $db );
+    public function __construct( $doc, $urlparams, $db, $highlightedDoc ) {
+        parent::__construct( $doc, $urlparams, $db, $highlightedDoc );
 
         $this->db = $db;
     }

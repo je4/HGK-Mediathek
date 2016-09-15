@@ -77,6 +77,13 @@ class DOAJArticleEntity implements SOLRSource {
         $this->data = ( array )json_decode( $this->db->GetOne( $sql ));
     }
     
+    function loadFromArray( string $id, array $data, string $idprefix ) {
+        $this->id = $id;
+        $this->idprefix = $idprefix;
+		$this->data = $data;
+	}
+	
+	
     public function getID() {
         if( substr( $this->id, 0, strlen( 'oai:doaj.org/article:')) == 'oai:doaj.org/article:' )
             return $this->idprefix.substr( $this->id, strlen( 'oai:doaj.org/article:'));
@@ -176,6 +183,7 @@ class DOAJArticleEntity implements SOLRSource {
     
     public function getAuthors() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
+		if( !@is_array( $this->data['DC:CREATOR'] )) return array();
         return $this->data['DC:CREATOR'];
     }
     

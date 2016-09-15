@@ -29,6 +29,7 @@ abstract class SOLRResult {
     protected $totalDoc, $startDoc, $pageSize, $numDoc;
     protected $resultSet;
     protected $db;
+    protected $highlighting;
 
     public function __construct( $resultSet, int $startDoc, int $pageSize, $db ) {
         $this->resultSet = $resultSet;
@@ -36,13 +37,14 @@ abstract class SOLRResult {
         $this->startDoc = $startDoc;
         $this->numDoc = $resultSet->count();
         $this->db = $db;
-        
+        $this->highlighting = $resultSet->getHighlighting();
         foreach( $resultSet as $doc ) {
-            $this->addDocument( $doc );
+            $highlightedDoc = $this->highlighting->getResult($doc->id);
+            $this->addDocument( $doc, $highlightedDoc );
         }
     }
         
-    abstract public function addDocument( $doc );
+    abstract public function addDocument( $doc, $highlightedDoc );
     abstract public function getResult();
     
     

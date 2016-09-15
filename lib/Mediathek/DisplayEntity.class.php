@@ -29,12 +29,14 @@ abstract class DisplayEntity {
     protected $doc = null;
 	protected $urlparams = null;
 	protected $db = null;
-    public function __construct( $doc, $urlparams, $db  ) {
+	protected $highlight = null;
+    public function __construct( $doc, $urlparams, $db, $highlightedDoc  ) {
         $this->doc = $doc;
 		$this->urlparams = $urlparams;
 		$this->db = null;
         $this->data = gzdecode( base64_decode( $doc->metagz ));
  //       echo "<!--\n".$this->data."\n-->\n";
+		$this->highlight = $highlightedDoc;
     }
     public abstract function detailView();
     public abstract function desktopList();
