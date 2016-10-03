@@ -44,7 +44,7 @@ SELECT sys, substring(value, 4, 14 ) FROM `mediathekmarc` WHERE `tag` LIKE '949'
 <script src="js/mediathek.js"></script>   
 <script src="js/mediathek_helper.js"></script>   
 <script src="js/mediathek3d.js"></script>     
-<script src="js/threex.windowresize.js"></script>     
+<script src="js/threex.domresize.js"></script>     
 
 <script>
 var mediathek = null;

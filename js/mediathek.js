@@ -7,6 +7,7 @@ var Mediathek = function( config, done ) {
 	this.floorWidth = 2048;
     this.floorHeight = 2048;
     this.ambientLightColor = 0x404040;
+	this.doWindowResize = false;
 //	this.showSatellite = true;
     this.camJSON = null; //'[0.9993451833724976,0.015195777639746666,-0.03283816948533058,0,0.01806975156068802,0.5766857266426086,0.8167662024497986,0,0.03134870156645775,-0.816824734210968,0.5760335326194763,0,286.9632568359375,-7477.142578125,5272.96044921875,1]';
 	this.animationID = null;
@@ -44,7 +45,8 @@ var Mediathek = function( config, done ) {
 	if( this.camJSON != null )
 		this.setCamJSON( this.camJSON );
 	
-	this.windowResize = THREEx.WindowResize( this.renderer, this.camera );
+	if( this.doWindowResize )
+		this.windowResize = THREEx.DOMResize( this.renderer, this.camera, this.renderDOM );
 }
 
 Mediathek.prototype.getCamJSON = function() {
