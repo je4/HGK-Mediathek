@@ -25,9 +25,8 @@ function homepageResponsive() {
 
 	var introWidth = $('.introduction').width(),
 		introHeight = $('.introduction').height(),
-		bgImage = $('.introduction').find('img .bgimage'),
+		bgImage = $('.introduction').find('img.iimg .bgimage'),
 		menuBgImages = $('.menu > div img');
-
 	if (introWidth > introHeight) {
 
 		bgImage.css({
@@ -40,7 +39,6 @@ function homepageResponsive() {
 		});
 
 	} else {
-
 		bgImage.css({
 			width: 'auto',
 			height: '100%'
@@ -49,9 +47,7 @@ function homepageResponsive() {
 			width: 'auto',
 			height: '100%'
 		});
-
 	}
-
 }
 
 function hideBoots4Menu()
@@ -153,7 +149,7 @@ $(document).ready(function () {
 
         var introWidth = $('.introduction').width(),
             introHeight = $('.introduction').height(),
-            bgImage = $('.introduction').find('img'),
+            bgImage = $('.introduction').find('img.iimg'),
             menuBgImages = $('.menu > div img');
 
         if (introWidth > introHeight) {
@@ -162,6 +158,7 @@ $(document).ready(function () {
                 width: '100%',
                 height: 'auto'
             });
+
             menuBgImages.css({
                 width: '100%',
                 height: 'auto'
@@ -173,6 +170,7 @@ $(document).ready(function () {
                 width: 'auto',
                 height: '100%'
             });
+
             menuBgImages.css({
                 width: 'auto',
                 height: '100%'

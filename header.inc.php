@@ -94,7 +94,6 @@ function mediathekheader( $current, $title, $area ) {
 		</div>
 	  </div>
 	</div>
-
 <?php
 //	echo "<!-- \n".print_r( $_SERVER, true )."\n-->\n";
 

@@ -8,35 +8,23 @@ require 'footer.inc.php';
 
 include( 'init.inc.php' );
 
+use GuzzleHttp\Client;
+use Stormsys\SimpleHal\Clients\GuzzleHalClient;
+use Stormsys\SimpleHal\Resource;
+use Stormsys\SimpleHal\Uri\GuzzleUriTemplateProcessor;
+use Stormsys\SimpleHal\Uri\LeagueUriJoiner;
+
+$client = new GuzzleHalClient(new Client());
+$uriTemplateProcessor = new GuzzleUriTemplateProcessor();
+$uriJoiner = new LeagueUriJoiner();
+$apiRootUrl = 'https://restclient:pmmefrnH4EynPhbvoNEYoeV2@mediathek.hgk.fhnw.ch/wordpress/wp-json/wp/v2/pages?parent=200';
+
+$pages = new Resource($client, $uriTemplateProcessor, $uriJoiner, $apiRootUrl);
+
+
 global $db;
-
-// get request values
-$query = isset( $_REQUEST['query'] ) ? $_REQUEST['query'] : null;
-$q = isset( $_REQUEST['q'] ) ? strtolower( trim( $_REQUEST['q'] )): null;
-$page = isset( $_REQUEST['page'] ) ? intval( $_REQUEST['page'] ) : 0;
-$pagesize = isset( $_REQUEST['pagesize'] ) ? intval( $_REQUEST['pagesize'] ) : 25;
-$id = isset( $_REQUEST['id'] ) ? strtolower( trim( $_REQUEST['id'] )) : null;
-$barcode = isset( $_REQUEST['barcode'] ) ? strtolower( trim( $_REQUEST['barcode'] )) : null;
-
-
-$urlparams = array( 'q'=>$q,
-	'page'=>$page,
-	'pagesize'=>$pagesize,
-	);
-
-$squery = $solrclient->createSelect();
-$helper = $squery->getHelper();
-if( $id ) $qstr = 'id:'.$id;
-else if( $barcode ) $qstr = 'signature:'.$helper->escapePhrase( 'barcode:E75:'.$barcode);
-else $qstr = "id:none";
-$squery->setQuery( $qstr );
-
-$rs = $solrclient->select( $squery );
-$numResults = $rs->getNumFound();
-echo "<!-- ".$qstr." (Documents: {$numResults}) -->\n";
-$doc = ( $numResults > 0 ) ? $rs->getDocuments()[0] : null;
 	
-echo mediathekheader('search', 'Mediathek - Detail - '.($doc ? $doc->title : '').' ['.$id.']', '');
+echo mediathekheader('static', 'Mediathek - Handapparate', '');
 ?>
 <div class="back-btn"><i class="ion-ios-search"></i></div>
 <div class="setting-btn"><i class="<?php echo $session->isLoggedIn() ? 'ion-ios-settings-strong': 'ion-log-in'; ?>"></i></div>
@@ -49,7 +37,7 @@ echo mediathekheader('search', 'Mediathek - Detail - '.($doc ? $doc->title : '')
                 <div class="mask">
                 </div>
                 <div style="left: 20%;" class="main-heading">
-                    <h1>Detail</h1>
+                    <h1>Handapparat</h1>
                 </div>
             </div>
 
@@ -61,16 +49,12 @@ echo mediathekheader('search', 'Mediathek - Detail - '.($doc ? $doc->title : '')
 
 					<div class="container-fluid" style="margin-top: 0px; padding: 0px 20px 20px 20px;">
 <?php
-if( $numResults > 0 ) foreach( $rs as $doc ) {
+foreach( $pages as $page ) {
 ?>
-		  <!-- <a href="search.php?q=<?php echo urlencode( $q ); ?>&page=<?php echo $page; ?>&pagesize=<?php echo $pagesize; ?>">back to search</a><br /> -->
-<?php
-	$class = '\\Mediathek\\'.$doc->source.'Display';
-
-	$output = new $class($doc, null, $db, null);
-	$html = $output->detailView();
-	echo $html;
-?>
+			<div class="clearfix">
+                    <h3 class="small-heading"> <?php echo $page->{'title'}->{'rendered'}; ?></h3>
+                    <?php echo $page->{'content'}->{'rendered'}; ?>                           
+                </div>
 <?php
 }
 ?>
@@ -105,25 +89,7 @@ if( $numResults > 0 ) foreach( $rs as $doc ) {
 <script>
 
 function init() {
-	$('.carousel-shot').carousel({
-	  interval: 2000
-	});
-
-	$('body').on('click', '.setting-btn', function () {
-		<?php if( $session->isLoggedIn()) { ?>
-		window.location="settings.php";
-		<?php } else { ?>
-		window.location="auth/?target=<?php echo urlencode( $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']); ?>";
-		<?php } ?>
-		
-	});
-
-	$('body').on('click', '.back-btn', function () {
-		window.location="search.php?q=<?php echo urlencode( $q ); ?>&page=<?php echo urlencode( $page ); ?>&pagesize=<?php echo urlencode( $pagesize ); ?>";
-	});
-	
-	init<?php echo $doc->source; ?>();
-	
+	initZotpress();
 }
 </script>   
 
@@ -135,6 +101,7 @@ function init() {
 <script src="js/mediathek.js"></script>   
 <script src="js/mediathek3d.js"></script>
 <script src="js/threex.windowresize.js"></script>
+<script src="js/zotpress.mediathek.js"></script>
 
 <?php
 echo mediathekfooter();

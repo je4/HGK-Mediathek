@@ -27,11 +27,15 @@ echo mediathekheader('home', 'Willkommen in der Mediathek der Künste', null);
         <!-- Introduction -->
         
         <div class="introduction">
+
+			<div id="fhnwtop" style="background-color: black; height: 40px; vertical-align: middle;">
+				<img src="img/fhnwhgk_white_x35.png" style="left: 30px;">
+			</div>
+
             <!-- <div class="mask">
             </div> -->
             <div class="intro-content">
-                <!-- <h1>HELLO<br>
-                I'M <span>JOHN</span> DOE</h1> -->
+              
                 <h1 style="text-shadow: 2px 2px 3px rgba(255,255,255,0.8);">
                     Mediathek der
                 </h1> 
@@ -48,27 +52,15 @@ echo mediathekheader('home', 'Willkommen in der Mediathek der Künste', null);
 					  </span>
 				</div>
 				</p>
-<!--
-                <div class="social-media hidden-xs">
-                    <a href="#" class="fa fa-facebook" data-toggle="tooltip" title="Facebook"></a>
-                    <a href="#" class="fa fa-twitter" data-toggle="tooltip" title="Twitter"></a>
-                    <a href="#" class="fa fa-plus" data-toggle="tooltip" title="Google+"></a>
-                    <a href="#" class="fa fa-linkedin" data-toggle="tooltip" title="Linkedin"></a>
-                    <a href="#" class="fa fa-behance" data-toggle="tooltip" title="Behance"></a>
-                    <a href="#" class="fa fa-flickr" data-toggle="tooltip" title="Flicker"></a>
-                    <a href="#" class="fa fa-instagram" data-toggle="tooltip" title="Instagram"></a>
-                </div>
--->
             </div>
-            
-            <!-- Social Media Icons [ END ] -->
+           
         </div>
         
         <!-- Navigation Menu -->
         
         <div class="menu">
             <div data-url_target="about" class="profile-btn menu_button">
-                <img alt="" src="img/about400x400.png" style="width:100%; height:100%;">
+                <img class="iimg" alt="" src="img/about400x400.png" style="width:100%; height:100%;">
                 <div class="mask" style="background: none;">
                 </div>
                 <div class="heading">
@@ -80,7 +72,7 @@ echo mediathekheader('home', 'Willkommen in der Mediathek der Künste', null);
             <!-- Single Navigation Menu Button -->
             
             <div data-url_target="search" class="portfolio-btn menu_button">
-                <img alt="" src="img/search400x400.png">
+                <img class="iimg" alt="" src="img/search400x400.png">
                 <div class="mask" style="background: none;">
                 </div>
                 <div class="heading">
@@ -92,7 +84,7 @@ echo mediathekheader('home', 'Willkommen in der Mediathek der Künste', null);
             <!-- Single Navigation Menu Button [ END ]  -->
             
             <div data-url_target="news" class="news-btn menu_button">
-                <img alt="" src="img/news400x400.png">
+                <img class="iimg" alt="" src="img/news400x400.png">
                 <div class="mask" style="background: none;">
                 </div>
                 <div class="heading">
@@ -104,7 +96,7 @@ echo mediathekheader('home', 'Willkommen in der Mediathek der Künste', null);
             <!-- Single Navigation Menu Button [ END ]  -->
             
             <div data-url_target="info" class="service-btn menu_button">
-                <img alt="" src="img/info400x400.png">
+                <img class="iimg" alt="" src="img/info400x400.png">
                 <div class="mask" style="background: none;">
                 </div>
                 <div class="heading">

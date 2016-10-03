@@ -133,7 +133,9 @@ class EZBEntity implements SOLRSource {
         
         $this->tags = array();
         $this->cluster = array();
-        foreach( explode( ';', $this->data['Fach']) as $fach ) {
+		
+		
+        foreach( explode( ';', preg_replace( '/(?<! u|-)[\.,]/', ';',$this->data['Fach'])) as $fach ) {
             $this->tags[] = 'index:medium:ezb/'.md5( trim( $fach ) ).'/'.trim( $fach );
             $this->cluster[] = trim( $fach );
         }

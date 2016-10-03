@@ -184,7 +184,19 @@ class DOAJArticleEntity implements SOLRSource {
     public function getAuthors() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
 		if( !@is_array( $this->data['DC:CREATOR'] )) return array();
-        return $this->data['DC:CREATOR'];
+		$authors = array();
+		foreach( $this->data['DC:CREATOR'] as $a ) {
+			if( strpos( $a, ',' ) === false ) {
+				$as = explode( ' ', $a );
+				if( count( $as ) > 1 ) {
+					$a = array_pop( $as );
+					$a .= ', '.implode( ' ', $as );
+				}
+			}
+			$authors[] = $a;
+		}
+		//print_r( $authors );
+        return $authors;
     }
     
     public function getLoans() {

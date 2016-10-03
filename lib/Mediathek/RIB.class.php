@@ -10,7 +10,7 @@
  *
  *
  * @package     Mediathek
- * @subpackage  SOLRResult
+ * @subpackage  NEBISDisplay
  * @author      Juergen Enge (juergen@info-age.net)
  * @copyright   (C) 2016 Academy of Art and Design FHNW
  * @license     http://www.gnu.org/licenses/gpl-3.0
@@ -24,29 +24,33 @@
 
 namespace Mediathek;
 
-abstract class SOLRResult {
-    protected $query;
-    protected $totalDoc, $startDoc, $pageSize, $numDoc;
-    protected $resultSet;
-    protected $db;
-    protected $highlighting;
-
-    public function __construct( $resultSet, int $startDoc, int $pageSize, $db ) {
-        $this->resultSet = $resultSet;
-        $this->totalDoc = $resultSet->getNumFound();
-        $this->startDoc = $startDoc;
-        $this->numDoc = $resultSet->count();
-        $this->db = $db;
-        $this->highlighting = $resultSet->getHighlighting();
-        foreach( $resultSet as $doc ) {
-            if( $this->highlighting ) $highlightedDoc = $this->highlighting->getResult($doc->id);
-            else $highlightedDoc = null;
-            $this->addDocument( $doc, $highlightedDoc );
-        }
+class RIB {
+    private $baseurl;
+    private $data;
+    
+    public function __construct( $baseurl ) {
+        $this->baseurl = $baseurl;
+        $this->data = null;
     }
-        
-    abstract public function addDocument( $doc, $highlightedDoc );
-    abstract public function getResult();
     
+    public function load( $sys ) {
+        $url = $this->baseurl.'/documents?q=ebi01_prod'.$sys.'&aleph_items=true&searchfield=rid';
+        $rd = file_get_contents( $url );
+        $this->data = (array)json_decode( $rd );
+    }
     
+    public function getAvailability( $signature ) {
+        if( !isset( $this->data['result'])) return null;
+        foreach( $this->data['result']->document as $doc ) {
+            if( isset( $doc->availability->itemList ) && is_array( $doc->availability->itemList )) {
+                foreach( $doc->availability->itemList as $item ) {
+                    $item = (array)$item;
+                    if( $item['z30-call-no'] == $signature ) return $item;
+                }
+            }
+        }
+        return null;
+    }
 }
+
+?>

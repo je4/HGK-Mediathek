@@ -9,6 +9,10 @@ include '../init.inc.php';
 $doajClient = new \Phpoaipmh\Client('http://www.doaj.org/oai.article');
 $doajEndpoint = new \Phpoaipmh\Endpoint($doajClient, \Phpoaipmh\Granularity::DATE_AND_TIME);
 
+$entity = new DOAJArticleEntity( $db );
+$solr = new SOLR( $solrclient );
+
+
 $result = $doajEndpoint->identify();
 //var_dump($result);
 
@@ -43,10 +47,14 @@ foreach( $recs as $xmlrec ) {
     echo $identifier.": ".$datestamp."\n";
     $sql = "REPLACE INTO source_doajoai( identifier, datestamp, type, data )
         VALUES (".$db->qstr( $identifier ).", ".$db->qstr( $datestamp ).", ".$db->qstr( $type ).", ".$db->qstr( json_encode( $dc )).")";
-    $db->Execute( $sql );                                                                                                           
+    $db->Execute( $sql );
+    
+    $entity->loadFromDatabase( $identifier, 'doajarticle' );
+    $solr->import( $entity );
 //    if( $counter++ > 10 ) exit;
 }
 
+exit;
 /*
 // Results will be iterator of SimpleXMLElement objects
 $results = $doajEndpoint->listMetadataFormats();
@@ -54,14 +62,6 @@ foreach($results as $item) {
     var_dump($item);
 }
 */
-
-$entity = new DOAJArticleEntity( $db );
-$solr = new SOLR( $solrclient );
-
-//$sys = '006931662';
-//$sys = '5141218';
-//$sys = '001874213';
-$sys = '009526976';
 
 /*
 $sql = "SELECT * FROM nebis_grab2";
@@ -76,7 +76,6 @@ foreach( $rs as $row ) {
 $rs->Close();
 exit;
 */
-
 
 $counter = 0;
 $sql = "SELECT `identifier` as id FROM source_doajoai WHERE type=".$db->qstr( 'article' );

@@ -248,7 +248,7 @@ class Helper {
                 if( !$first ) {
                     $qstr .= ' AND ';
                 }
-                $qstr .= 'content:'.$helper->escapePhrase( $word ).'^10';
+                $qstr .= 'content:'.$helper->escapePhrase( $word ).'^6';
                 $first = false;
             }
             $qstr .= ' )';
@@ -258,7 +258,7 @@ class Helper {
                 if( !$first ) {
                     $qstr .= ' AND ';
                 }
-                $qstr .= 'abstract:'.$helper->escapePhrase( $word ).'^10';
+                $qstr .= 'abstract:'.$helper->escapePhrase( $word ).'^8';
                 $first = false;
             }
             $qstr .= ' )';
@@ -268,7 +268,7 @@ class Helper {
                 if( !$first ) {
                     $qstr .= ' OR ';
                 }
-                $qstr .= 'signature:'.$helper->escapePhrase( $word ).'^10';
+                $qstr .= 'signature:'.$helper->escapePhrase( $word ).'^5';
                 $first = false;
             }
             $qstr .= ' )';
