@@ -102,7 +102,7 @@ class DOAJArticleDisplay extends DisplayEntity {
 							$doajident = null;
 							foreach( $this->doc->url as $url ) if( substr( $url, 0, 11 ) == 'identifier:' ) $doajident = substr( $url, 11 );
 							if( $doajident ) {
-								echo "<a href=\"redir.php?id=".urlencode( $this->doc->id ).'&url='.urlencode( substr( $doajident, 9 ))."\" target=\"_blank\">DOAJ Link</a><br />\n";
+								echo "<a href=\"redir.php?id=".urlencode( $this->doc->id ).'&url='.urlencode( $doajident )."\" target=\"_blank\">DOAJ Link</a><br />\n";
 							}
 
 ?>							
