@@ -62,6 +62,8 @@ echo mediathekheader('kiste', null, '');
 <!-- script src="mediathek2.js"></script -->   
 <script src="js/mediathek.js"></script>   
 <script src="js/mediathek3d.js"></script>
+<script src="js/threex.domresize.js"></script>
+
 
 <?php
 include( 'bgimage.inc.php' );
