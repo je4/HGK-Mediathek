@@ -42,6 +42,10 @@ foreach( $recs as $xmlrec ) {
       }
     }
     $identifier = $dc['IDENTIFIER'][0];
+	if( !$identifier ) { 
+		echo "empty identifier\n";
+		continue;
+	}
     $datestamp = $dc['DATESTAMP'][0];
     $type = $dc['DC:TYPE'][0];
     echo $identifier.": ".$datestamp."\n";
