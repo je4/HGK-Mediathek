@@ -859,6 +859,13 @@ class IKUVidEntity implements SOLRSource {
     }
    public function getContent() { return null; }    
    public function getCodes() { return array(); }
+   public function getIssues() { return array(); }
+   public function getLanguages() {
+       $l = array();
+       if( $this->data['Originalsprache']) $l[] = $this->data['Originalsprache'];
+       if( $this->data['Sprachen 2-Kanal']) $l[] = $this->data['Sprachen 2-Kanal'];
+       return $l;
+   }
    
     public function getMetaACL() { return array( 'global/guest' ); }
     public function getContentACL() { return array( 'certificate/mediathek', 'fhnw/video' ); }
