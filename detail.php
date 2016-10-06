@@ -69,6 +69,8 @@ if( $numResults > 0 ) foreach( $rs as $doc ) {
 
 	$output = new $class($doc, null, $db, null);
 	$html = $output->detailView();
+	$html .= '<script type="application/ld+json">'."\n".json_encode( $output->getSchema() )."\n</script>\n";
+	
 	echo $html;
 ?>
 <?php

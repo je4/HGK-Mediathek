@@ -136,6 +136,10 @@ body, button, input, select, textarea, p {
 }
 
 
+.mask {
+    top: 40px;    
+    
+}
 
 .back-btn,
 .close-btn,
@@ -146,7 +150,7 @@ body, button, input, select, textarea, p {
     height: 40px;
     position: fixed;
     right: 3%;
-    top: 10px;
+    top: 50px;
 	font-size: 40px;
 	text-align: center;
 	vertical-align: middle;
@@ -161,7 +165,7 @@ body, button, input, select, textarea, p {
     height: 40px;
     position: fixed;
     right: 3%;
-    top: 50px;
+    top: 90px;
 	font-size: 40px;
 	text-align: center;
 	vertical-align: middle;

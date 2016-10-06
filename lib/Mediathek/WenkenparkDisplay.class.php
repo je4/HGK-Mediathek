@@ -27,12 +27,37 @@ namespace Mediathek;
 class WenkenparkDisplay extends DisplayEntity {
 	private $metadata;
 	
-    public function __construct( $doc, $urlparams, $db ) {
-        parent::__construct( $doc, $urlparams, $db );
+    public function __construct( $doc, $urlparams, $db, $highlightedDoc ) {
+        parent::__construct( $doc, $urlparams, $db, $highlightedDoc );
 		
 		$this->metadata = (array) json_decode( $this->data );
     }
 
+     public function getSchema() {
+		$schema = array();
+		$schema['@context'] = 'http://schema.org';
+		$schema['@type'] = 'Movie';
+		$schema['name'] = $this->doc->title;
+		if( isset( $this->doc->author_ss ) && count( $this->doc->author_ss )) {
+			$schema['author'] = array();
+			foreach( $this->doc->author_ss as $author ) {
+				$schema['author'][] = array( '@type' => 'Person', 'name' => $author );
+			}
+		}
+		
+		if( $this->doc->publisher && count( $this->doc->publisher ))
+			foreach( $this->doc->publisher as $publisher ) {
+				$schema['publisher'][] = array( '@type' => 'Organization', 'legalName' => $publisher );
+			}
+		$schema['url'] = 'https://mediathek.hgk.fhnw.ch/detail.php?id='.urlencode( $this->doc->id );		
+		if( $this->doc->cluster_ss )
+			$schema['keywords'] = implode( '; ', $this->doc->cluster_ss );
+		
+		$schema['license'] = implode( '; ', $this->doc->license );
+		
+		return $schema;
+	}
+    
 	public function detailView() {
         global $config, $googleservice, $googleclient, $session, $page, $pagesize;
 		

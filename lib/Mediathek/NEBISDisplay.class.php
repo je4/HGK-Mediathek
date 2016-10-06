@@ -26,12 +26,57 @@ namespace Mediathek;
 
 class NEBISDisplay extends DisplayEntity {
     
+	var $entity;
+	
     public function __construct( $doc, $urlparams, $db, $highlightedDoc ) {
         parent::__construct( $doc, $urlparams, $db, $highlightedDoc );
 
         $this->db = $db;
+		$this->entity = new MarcEntity($this->db);
+		$this->entity->loadFromXML( $this->data, substr( $this->doc->id, strlen( $this->doc->source)), $this->doc->source );
     }
-    
+
+    public function getSchema() {
+		$entity = $this->entity;
+		$schema = array();
+		$schema['@context'] = 'http://schema.org';
+//		$schema['@id'] =  '#record';
+		if( $this->isJournal( $entity )) {
+			$schema['@type'] = 'Periodical';
+				if( preg_match( '/^ISSN:/', $c ))
+					$schema['issn'] = substr( $c, 5 );
+		}
+		else {
+			$schema['@type'] = 'Book';
+			foreach( $entity->getCodes() as $c )
+				if( preg_match( '/^ISBN:/', $c ))
+					$schema['isbn'] = substr( $c, 5 );
+		}
+		$schema['name'] = $this->doc->title;
+		$schema['author'] = array();
+		foreach( $entity->getAuthors() as $author ) {
+			$schema['author'][] = array( '@type' => 'Person', 'name' => $author );
+		}
+		$publishers = $entity->getPublisher();
+		if( $publishers && count( $publishers ))
+			foreach( $publishers as $publisher ) {
+				$schema['publisher'][] = array( '@type' => 'Organization', 'legalName' => $publisher );
+			}
+		$schema['url'] = 'https://mediathek.hgk.fhnw.ch/detail.php?id='.urlencode( $this->doc->id );		
+		if( $this->doc->cluster_ss )
+			$schema['keywords'] = implode( '; ', $this->doc->cluster_ss );
+		$schema['license'] = implode( '; ', $this->doc->license );
+		return $schema;
+	}
+	
+	public function isJournal() {
+		foreach( $this->entity->getCodes() as $c ) {
+			if( preg_match( '/^ISSN:/', $c ))
+				return true;
+		}
+		return false;
+	}
+	
 	public function detailView() {
         global $config, $googleservice, $googleclient, $solrclient, $db, $urlparams, $pagesize;
         $html = '';
@@ -41,8 +86,7 @@ $cfg = array(
                    'input-xml' => true,
                    'wrap'           => 150);
         
-		$entity = new MarcEntity($this->db);
-		$entity->loadFromXML( $this->data, substr( $this->doc->id, strlen( $this->doc->source)), $this->doc->source );
+		$entity = $this->entity;
 		$authors = array_unique( $entity->getAuthors());
 		$js_sourcelist = '';
 		$ds = $config['defaultsource'];
@@ -73,7 +117,7 @@ $cfg = array(
 		} 
 
         ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
-?>		
+?>
 		<div class="row">
 			<div class="col-md-3">
 				<div style="">
@@ -287,10 +331,9 @@ if( $kiste ) {
                    'output-xml'   => true,
                    'input-xml' => true,
                    'wrap'           => 150);
-        
-		$entity = new MarcEntity($this->db);
-		$entity->loadFromXML( $this->data, substr( $this->doc->id, strlen( $this->doc->source)), $this->doc->source );
-		
+        		
+		$entity = $this->entity;
+
         // Tidy
         $tidy = new \Tidy;
         $tidy->parseString($this->data, $cfg, 'utf8');
@@ -374,25 +417,6 @@ if( $kiste ) {
 					<a href="detail.php?<?php echo "id=".urlencode( $this->doc->id ); foreach( $this->urlparams as $key=>$val ) echo '&'.$key.'='.urlencode($val); ?>"><i class="fa fa-folder-open" aria-hidden="true"></i> Details</a><br />
 <?php			} ?>				
 				<p>
-<script type="application/ld+json">
-<?php
-
-	$jmeta = array( "@context"=> "http://schema.org/",
-					"@id"=>"#record",
-					"@type"=>"Book" );
-	$jmeta['name'] = $entity->getTitle();
-	$jmeta['author'] = $authors;
-	foreach( $entity->getCodes() as $c )
-		if( preg_match( '/^ISBN:/', $c ))
-			$jmeta['isbn'] = substr( $c, 5 );
-	if( $publishers )
-		$jmeta['publisher'] = $publishers;
-	$jmeta['url'] = 'https://mediathek.hgk.fhnw.ch/detail.php?id='.urlencode( $this->doc->id );
-	
-	echo json_encode( $jmeta );
-	
-?>
-</script>
 				</p>
 					<!-- <a href="detail.php?<?php echo "id=".urlencode( $this->doc->id ); foreach( $this->urlparams as $key=>$val ) echo '&'.$key.'='.urlencode($val); ?>">Detail</a><br /> -->
                     <!-- <pre><?php /* echo ( htmlspecialchars( $tidy ));  */ ?></pre> -->

@@ -28,14 +28,6 @@ $topicmap = array(
 	'index:curriculumobjective'=>'Lehrplanziel',	
 );
 
-$sourcemap = array( 'NEBIS' => 'NEBIS-Bestand HGK',
-				    'DOAJ' => 'Directory of Open Access Journals',
-					'IKUVid' => 'Videosammlung Institut Kunst',
-					'EZB' => 'Elektronische Zeitschriften Datenbank',
-					'Wenkenpark' => 'Videowochen Wenkenpark',
-					'DOAB' => 'directory of open access books',
-				  );
-
 // get request values
 $query = isset( $_REQUEST['query'] ) ? $_REQUEST['query'] : null;
 $q = isset( $_REQUEST['q'] ) ? strtolower( trim( $_REQUEST['q'] )): null;
@@ -122,7 +114,7 @@ if( !$qobj ) {
 		$qobj->facets = new \stdClass();
 		$qobj->filter = new \stdClass();
 		$qobj->area = '';
-		$qobj->facets->source = array( 'NEBIS' );
+		$qobj->facets->source = $config['defaultsource'];
 		$qobj->query = '*';
 		$query = json_encode( $qobj );
 		$q = md5($query);

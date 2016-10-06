@@ -35,7 +35,53 @@ class DOAJArticleDisplay extends DisplayEntity {
 		$this->entity = new DOAJArticleEntity( $db );
 		$this->entity->loadFromArray( $this->doc->originalid, $this->metadata, 'doajarticle');
     }
+
+    public function getSchema() {
+		$entity = $this->entity;
+		$schema = array();
+		$schema['@context'] = 'http://schema.org';
+		$schema['@type'] = 'TechArticle';
+		$schema['name'] = $this->doc->title;
+		$schema['author'] = array();
+		foreach( $entity->getAuthors() as $author ) {
+			$schema['author'][] = array( '@type' => 'Person', 'name' => $author );
+		}
+		$schema['url'] = 'https://mediathek.hgk.fhnw.ch/detail.php?id='.urlencode( $this->doc->id );		
+		if( $this->doc->cluster_ss )
+			$schema['keywords'] = implode( '; ', $this->doc->cluster_ss );
+		$schema['license'] = implode( '; ', $this->doc->license );
+
+//		$schema['isPartOf'] = array();		
+		$issn = array();
+		foreach( $entity->getCodes() as $c )
+			if( preg_match( '/^ISSN:/', $c ))
+				$issn[] = substr( $c, 5 );
+		$publishers = array();
+		$ps = $entity->getPublisher();
+		if( $ps && count( $ps ))
+			foreach( $ps as $publisher ) {
+				$publishers[] = array( '@type' => 'Organization', 'legalName' => $publisher );
+			}
+		foreach( $this->entity->getIssues() as $issue ) {
+			if( preg_match( '/^(.*), ([^,]+), ([^,]+), ([^,]+)$/', $issue, $matches ))
+			{
+				$schema['isPartOf'] = array( "@type"=>"PublicationIssue",
+					'issueNumber'=>$matches[3],
+					'isPartOf'=>array( "@type"=>"PublicationVolume",
+						'volumeNumber'=>$matches[2],
+						'isPartOf'=>array( '@type'=>'Periodical',
+							"name"=>$matches[1],
+							"issn"=>$issn,
+							'publisher'=>$publishers,
+						)
+					)
+				);		
+			}
+		}		
+		return $schema;
+	}
     
+	
 	public function detailView() {
         global $config, $pagesize, $solrclient, $db, $urlparams;
 		$html = '';

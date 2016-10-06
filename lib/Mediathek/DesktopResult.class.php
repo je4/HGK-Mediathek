@@ -27,9 +27,16 @@ namespace Mediathek;
 class DesktopResult extends SOLRResult {
     private $html = "";
 	private $urlparams = null;
+	private $schema;
     
     public function __construct( $resultSet, int $startDoc, int $pageSize, $db, $urlparams ) {
             $this->urlparams = $urlparams;
+			$this->schema = array("@context"=>"http://schema.org",
+				"@type"=>array( "ItemList", "SearchResultsPage"),
+				"publisher"=> array( '@type'=>'Organization', 'name'=>'Mediathek der Künste Basel' ),
+				"numberOfItems"=>count( $resultSet ),
+				"itemListElement"=> array(),
+			);
             parent::__construct($resultSet, $startDoc, $pageSize, $db);
     }
  
@@ -38,12 +45,15 @@ class DesktopResult extends SOLRResult {
 
         $output = new $class($doc, $this->urlparams, $this->db, $highlightedDoc );
         $this->html .= $output->desktopList();
-        
+        $this->schema['itemListElement'][] = array( "@type"=>"ListItem",
+						"item"=>$output->getSchema(),
+				);
         return;
     }
     
     public function getResult() {
        $this->html  = '<table class="table" style="table-layout: fixed;">'."\n".$this->html."</table>\n";
+	   $this->html .= '<script type="application/ld+json">'."\n".json_encode( $this->schema )."\n</script>\n";
        return $this->html;
     }
 }

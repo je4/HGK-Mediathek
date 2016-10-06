@@ -38,6 +38,8 @@ abstract class DisplayEntity {
  //       echo "<!--\n".$this->data."\n-->\n";
 		$this->highlight = $highlightedDoc;
     }
+	
+	public abstract function getSchema( );
     public abstract function detailView();
     public abstract function desktopList();
 }
