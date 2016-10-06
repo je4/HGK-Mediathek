@@ -60,6 +60,8 @@ function mediathekheader( $current, $title, $area ) {
 
 
 <body>
+<?php include_once("analyticstracking.php") ?>
+
 <div id="fhnwtop" style="background-color: black; height: 40px; vertical-align: middle; position: fixed; width: 100%;">
 	<div style="float: left;">&nbsp;<img src="img/fhnwhgk_white_x35.png" style="left: 30px;"></div>
 	<div style="color: white; vertical-align: middle; top: 0px; float: right;"><a style="color: white;" href=".">Mediathek der Künste</a>&nbsp;&nbsp;&nbsp;</div>
