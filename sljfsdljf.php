@@ -56,7 +56,7 @@ else{
 			echo 'https://mediathek.hgk.fhnw.ch/detail.php?id='.urlencode($doc->id)."\n";
 		}
 		$page++;
-	} while( $last < min( $numResults, $map*$mapsize ));
+	} while( $last < min( $numResults, ($map+1)*$mapsize-1 ));
 }
 
 
