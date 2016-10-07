@@ -11,12 +11,24 @@ include( 'init.inc.php' );
 global $db;
 
 function getDescription( $reihe ) {
-	global $db;
+	global $db, $config;
+	
+	$js_sourcelist = '';
+	$ds = $config['defaultsource'];
+	$ds[] = 'NEBIS';
+	$ds = array_unique( $ds );
+	foreach( $ds as $src )
+		$js_sourcelist .= ",'".trim( $src )."'";
+	$js_sourcelist = trim( $js_sourcelist, ',');
 	
 	ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
 	
 ?>
-<h4 class="small-heading">Reihe <?php echo htmlspecialchars( $reihe ); ?></h3>
+<h4 class="small-heading">
+<a href="javascript:doSearchFull('location:&quot;<?php echo 'E75:Kiste:'.substr_replace( trim( $reihe ), '?', 4, 1 ); ?>&quot;', '', [], {'source':[<?php echo $js_sourcelist; ?>]}, 0, 25 );">
+<?php echo htmlspecialchars( $reihe ); ?>
+</a>
+</h4>
 <?php
 	
 	$sql = "SELECT MIN(DATE(inventorytime)) AS start, MAX(DATE(inventorytime)) AS end, COUNT(*) AS num FROM inventory_cache WHERE marker LIKE ".$db->qstr(str_replace("00", "__", $reihe));
