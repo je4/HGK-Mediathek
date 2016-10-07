@@ -37,7 +37,7 @@ class RIB {
         $url = $this->baseurl.'/documents?q=ebi01_prod'.$sys.'&aleph_items=true&searchfield=rid';
         $rd = file_get_contents( $url );
         $this->data = (array)json_decode( $rd );
-        echo "\n<!--\n".print_r( $this->data, true )."\n-->\n";
+//        echo "\n<!--\n".print_r( $this->data, true )."\n-->\n";
     }
     
     public function getAvailability( $signature ) {

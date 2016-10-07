@@ -165,6 +165,10 @@ $cfg = array(
 								$rib = new RIB( $config['RIB'] );
 								$rib->load( $this->doc->originalid );
 							}
+							else
+							{
+								echo "<!-- error: no rib -->";
+							}
 							$signatures = $this->doc->signature;
 							if( is_array( $signatures )) foreach( $signatures as $sig ) { 
 								if( substr( $sig, 0, 10 ) == 'nebis:E75:' ) {
