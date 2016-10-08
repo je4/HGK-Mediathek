@@ -127,6 +127,8 @@ class SOLR {
         $doc->setField( 'online', $src->getOnline());
         $doc->setField( 'embedded', $src->getEmbedded());
         
+		$doc->setField( 'creation_date', gmdate('Y-m-d\TH:i:s\Z', time()));
+		
         $update->addDocuments( array( $doc ));
         if( $commit )
             $update->addCommit();

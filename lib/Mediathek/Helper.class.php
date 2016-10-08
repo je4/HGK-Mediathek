@@ -212,7 +212,7 @@ class Helper {
             foreach( $fields as $field ) {
                 if( !$first )
                     $qstr .= ' OR ';
-                $qstr .= $field.':'.str_replace( '\?', '?', $helper->escapeTerm( $word ));
+                $qstr .= $field.':'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapeTerm( $word )));
             }
             $qstr .= ')';
         }
@@ -228,7 +228,7 @@ class Helper {
                 if( $first == false ) {
                     $qstr .= ' OR ';
                 }
-                $qstr .= 'title:'.$helper->escapePhrase( $word ).'^10';
+                $qstr .= 'title:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapeTerm( $word ))).'^10';
                 $first = false;
             }
             $qstr .= ' )';
@@ -238,7 +238,7 @@ class Helper {
                 if( !$first ) {
                     $qstr .= ' OR ';
                 }
-                $qstr .= 'author:'.$helper->escapePhrase( $word ).'^10';
+                $qstr .= 'author:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapeTerm( $word ))).'^10';
                 $first = false;
             }
             $qstr .= ' )';
@@ -248,7 +248,7 @@ class Helper {
                 if( !$first ) {
                     $qstr .= ' AND ';
                 }
-                $qstr .= 'content:'.$helper->escapePhrase( $word ).'^6';
+                $qstr .= 'content:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapeTerm( $word ))).'^6';
                 $first = false;
             }
             $qstr .= ' )';
@@ -258,7 +258,7 @@ class Helper {
                 if( !$first ) {
                     $qstr .= ' AND ';
                 }
-                $qstr .= 'abstract:'.$helper->escapePhrase( $word ).'^8';
+                $qstr .= 'abstract:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapeTerm( $word ))).'^8';
                 $first = false;
             }
             $qstr .= ' )';
@@ -268,7 +268,7 @@ class Helper {
                 if( !$first ) {
                     $qstr .= ' OR ';
                 }
-                $qstr .= 'signature:'.$helper->escapePhrase( $word ).'^5';
+                $qstr .= 'signature:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapeTerm( $word ))).'^5';
                 $first = false;
             }
             $qstr .= ' )';

@@ -58,7 +58,9 @@ foreach( $recs as $xmlrec ) {
 //    if( $counter++ > 10 ) exit;
 }
 
-exit;
+//exit;
+
+
 /*
 // Results will be iterator of SimpleXMLElement objects
 $results = $doajEndpoint->listMetadataFormats();
