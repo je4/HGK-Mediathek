@@ -4,6 +4,8 @@ namespace Mediathek;
 
 include '../init.inc.php';
 
+$hdlprefix = '20.500.11806/mediathek/';
+$urlbase = 'https://mediathek.hgk.fhnw.ch/detail.php?id=';
 
 $entity = new IKUVidEntity( $db );
 $solr = new SOLR( $solrclient );
@@ -15,7 +17,9 @@ foreach( $rs as $row ) {
     $sys = $row['id'];
 
     $entity->loadFromDatabase( $sys, 'ikuvid' );
-    
+    $sql = "REPLACE INTO mediathek_handle.handles_handle (`handle`, `idx`, `type`, `data`, `ttl_type`, `ttl`, `timestamp`, `refs`, `admin_read`, `admin_write`, `pub_read`, `pub_write`)
+        VALUES (".$db->qstr( $hdlprefix.$entity->getID()).", '1', 'URL', ".$db->qstr( $urlbase.$entity->getID()).", 0, 86400, NULL, NULL, 1, 0, 1, 0)"; 
+    $db->execute( $sql );
     //$xml = $entity->getXML();
     //echo $xml->saveXML();
     

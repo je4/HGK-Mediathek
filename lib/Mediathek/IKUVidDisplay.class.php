@@ -69,6 +69,7 @@ class IKUVidDisplay extends DisplayEntity {
 		$html = '';
 		
         ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
+		$handle = 'https://hdl.handle.net/20.500.11806/mediathek/'.$this->doc->id;
 ?>
 <div class="row">
 	<div class="col-md-3">
@@ -79,7 +80,8 @@ class IKUVidDisplay extends DisplayEntity {
 			<b><?php if( isset( $this->metadata['Titel2'] )) echo htmlspecialchars( $this->metadata['Titel2'].'.' );?>
 			<span style="font-size: 80%;"><?php if( isset( $this->metadata['Dauer'] )) echo htmlspecialchars( $this->metadata['Dauer'] );?>
 			<?php if( isset( $this->metadata['Land'] )) echo htmlspecialchars( $this->metadata['Land'] );?>
-			</span></b>
+			</span></b><br />
+			<a href="<?php echo $handle; ?>">Persistent Identifier: https://hdl.handle...</a>
 		</div>
 	</div>
 	<div class="col-md-6">
@@ -89,20 +91,7 @@ class IKUVidDisplay extends DisplayEntity {
 		// Fall 1
 		if( !$loggedin || !$this->doc->embedded/* && !$cert */ ) {
 ?>
-<!--
-	<span style="; font-weight: bold;"></span><br>
-	<div class="facet" style="">
-		<div class="marker" style=""></div>
-			<div class="media">
-			<a class="media-left" href="#">
-				<img class="media-left" src="<?php echo $config['media']['picopen'].'/'.intval($this->doc->originalid).'.00001.thumb.png'; ?>" />
-			</a>
-			<div class="media-body">
-				<p><?php echo htmlspecialchars( $this->metadata['Bemerkungen'] ); ?></p>
-			</div>
-		</div>
-	</div>
--->
+
 <?php
 		}
 		elseif( $session->inAnyGroup( $this->doc->acl_content ) && $this->doc->embedded ) {
