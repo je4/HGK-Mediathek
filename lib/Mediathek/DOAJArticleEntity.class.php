@@ -131,6 +131,7 @@ class DOAJArticleEntity implements SOLRSource {
     }
     
     public function getYear() {
+		if( !isset( $this->data['DC:DATE'] )) return null;
 		$ds = $this->data['DC:DATE'];
 		if( !count($ds )) return null;
 		$d = new \DateTime( $ds[0] );

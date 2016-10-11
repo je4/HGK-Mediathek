@@ -162,6 +162,7 @@ $cfg = array(
 								echo htmlspecialchars( str_replace( ':', ': ', $code ))."<br />\n";
 
 							$rib = null;
+							/*
 							if( isset( $config['RIB'] )) {
 								$rib = new RIB( $config['RIB'] );
 								$rib->load( $this->doc->originalid );
@@ -170,6 +171,7 @@ $cfg = array(
 							{
 								echo "<!-- error: no rib -->";
 							}
+							*/
 							$signatures = $this->doc->signature;
 							if( is_array( $signatures )) foreach( $signatures as $sig ) { 
 								if( substr( $sig, 0, 10 ) == 'nebis:E75:' ) {
@@ -182,7 +184,7 @@ $cfg = array(
 									}
 								}
 							}
-?>							
+?>							<div id='RIB'></div>
 					</div>
 				</div>
 			</div>
@@ -316,6 +318,10 @@ if( $kiste ) {
 			  renderer.height( '400px');
 			  //var width = body.width();
 			  ///renderer.width( width );
+			  signatures = [<?php foreach( $this->doc->signature as $sig ) if( substr( $sig, 0, 10 ) == 'nebis:E75:' ) 	echo '"'.substr( $sig, 10 ).'", '; ?>];
+			  $.post( 'RIB.php', { sys: <?php echo '"'.$this->doc->originalid.'"'; ?>, sig: signatures }).done( function( data ) {
+				$('#RIB' ).html( data );
+			  });
 			  init3D( '<?php echo $box; ?>', '<?php echo $boxjson; ?>'  );
 
 			}

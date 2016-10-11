@@ -32,6 +32,10 @@ class RIB {
         $this->data = null;
     }
     
+    public function hasData() {
+        return isset( $this->data['result']);
+    }
+    
     public function load( $sys ) {
         $url = $this->baseurl.'/documents?q=ebi01_prod'.$sys.'&aleph_items=true&searchfield=rid';
         $rd = file_get_contents( $url );
