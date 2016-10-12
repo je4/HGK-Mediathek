@@ -26,7 +26,7 @@ $urlparams = array( 'q'=>$q,
 
 $squery = $solrclient->createSelect();
 $helper = $squery->getHelper();
-if( $id ) $qstr = 'id:'.$id;
+if( $id ) $qstr = 'id:'.$helper->escapePhrase($id);
 else if( $barcode ) $qstr = 'signature:'.$helper->escapePhrase( 'barcode:E75:'.$barcode);
 else $qstr = "id:none";
 $squery->setQuery( $qstr );
