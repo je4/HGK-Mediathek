@@ -50,11 +50,16 @@ function getDescription( $reihe ) {
 		WHERE signaturgroup={$row['signaturgroup']} AND id=signaturgroup AND itemid=Strichcode AND marker  LIKE ".$db->qstr(str_replace("00", "__", $reihe))." GROUP BY signaturgroup";
 		echo "<!-- {$sql} -->\n";
 		$row2 = $db->GetRow( $sql );
-		if( strlen( $row['descr']))
-			echo htmlspecialchars( $row['name'] )." - ".htmlspecialchars( $row['descr'] )."";
-		if( $row2['end'] != $row2['start'] ) 
-			echo (strlen( $row['descr']) ? ' // ' : '' ).htmlspecialchars( utf8_encode( "{$row2['end']}"))." ({$row2['num']})";
-		echo "<br />\n";
+		$txt = '';
+		if( strlen( $row['descr'])) {
+			$txt .= htmlspecialchars( $row['name'] )." - ".htmlspecialchars( $row['descr'] )."";
+			
+		}
+		if( $row2['end'] != $row2['start'] ) {
+			$txt .= (strlen( $row['descr']) ? ' // ' : '' ).htmlspecialchars( utf8_encode( "{$row2['end']}"))." ({$row2['num']})";
+		}
+		if( strlen( trim( $txt )))
+			echo $txt."<br />\n";
 	}
 	$rs->Close();
 	

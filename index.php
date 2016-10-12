@@ -162,6 +162,15 @@ function init() {
 }
 </script>   
 	
+<script src="js/threejs/build/three.js"></script>
+<script src="js/threejs/build/TrackballControls.js"></script>
+<script src="js/threejs/build/OrbitControls.js"></script>
+<script src="js/threejs/build/CombinedCamera.js"></script>   
+<!-- script src="mediathek2.js"></script -->   
+<script src="js/mediathek.js"></script>   
+<script src="js/mediathek3d.js"></script>
+<script src="js/threex.domresize.js"></script>
+
 <?php
 echo mediathekfooter();
 

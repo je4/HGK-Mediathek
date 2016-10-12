@@ -318,7 +318,7 @@ if( $kiste ) {
 			  renderer.height( '400px');
 			  //var width = body.width();
 			  ///renderer.width( width );
-			  signatures = [<?php foreach( $this->doc->signature as $sig ) if( substr( $sig, 0, 10 ) == 'nebis:E75:' ) 	echo '"'.substr( $sig, 10 ).'", '; ?>];
+			  signatures = [<?php if( isset( $this->doc->signature )) foreach( $this->doc->signature as $sig ) if( substr( $sig, 0, 10 ) == 'nebis:E75:' ) 	echo '"'.substr( $sig, 10 ).'", '; ?>];
 			  $.post( 'RIB.php', { sys: <?php echo '"'.$this->doc->originalid.'"'; ?>, sig: signatures }).done( function( data ) {
 				$('#RIB' ).html( data );
 			  });
