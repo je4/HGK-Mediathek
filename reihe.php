@@ -25,7 +25,7 @@ function getDescription( $reihe, $debug ) {
 	
 ?>
 <h4 class="small-heading">
-<a href="javascript:doSearchFull('location:&quot;<?php echo 'E75:Kiste:'.substr_replace( trim( $reihe ), '?', 4, 1 ); ?>&quot;', '', [], {'source':[<?php echo $js_sourcelist; ?>]}, 0, 25 );">
+<a href="javascript:doSearchFull('location:&quot;<?php echo 'E75:Kiste:'.substr_replace( trim( $reihe ), '??', 3, 2 ); ?>&quot;', '', [], {'source':[<?php echo $js_sourcelist; ?>]}, 0, 25 );">
 <?php echo htmlspecialchars( $reihe ); ?>
 </a>
 </h4>
