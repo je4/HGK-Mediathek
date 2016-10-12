@@ -10,7 +10,7 @@ include( 'init.inc.php' );
 
 global $db;
 
-function getDescription( $reihe ) {
+function getDescription( $reihe, $debug ) {
 	global $db, $config;
 	
 	$js_sourcelist = '';
@@ -34,10 +34,12 @@ function getDescription( $reihe ) {
 	$sql = "SELECT MIN(DATE(inventorytime)) AS start, MAX(DATE(inventorytime)) AS end, COUNT(*) AS num FROM inventory_cache WHERE marker LIKE ".$db->qstr(str_replace("00", "__", $reihe));
 	echo "<!-- {$sql} -->\n";
 	$row = $db->GetRow($sql);
-	echo "<p>Anzahl Medien: {$row['num']}<br />\n";
-	echo "letzter Inventarisierungszeitraum: {$row['start']}";
-	if( $row['start'] != $row['end'] ) echo " - {$row['end']}";
-	echo "</p>\n";
+	if( $debug ) {
+		echo "<p>Anzahl Medien: {$row['num']}<br />\n";
+		echo "letzter Inventarisierungszeitraum: {$row['start']}";
+		if( $row['start'] != $row['end'] ) echo " - {$row['end']}";
+		echo "</p>\n";
+	}
 	$sql = "SELECT DISTINCT signaturgroup, signaturgroup.name, signaturgroup.descr, signaturgroup.signatursys
 			FROM inventory_cache, ARC_group, signaturgroup
 			WHERE id=signaturgroup AND itemid=Strichcode AND marker LIKE ".$db->qstr(str_replace("00", "__", $reihe))."
@@ -53,10 +55,9 @@ function getDescription( $reihe ) {
 		$txt = '';
 		if( strlen( $row['descr'])) {
 			$txt .= htmlspecialchars( $row['name'] )." - ".htmlspecialchars( $row['descr'] )."";
-			
 		}
 		if( $row2['end'] != $row2['start'] ) {
-			$txt .= (strlen( $row['descr']) ? ' // ' : '' ).htmlspecialchars( utf8_encode( "{$row2['end']}"))." ({$row2['num']})";
+			if( $debug || !strlen( $txt )) $txt .= (strlen( $row['descr']) ? ' // ' : '' ).htmlspecialchars( utf8_encode( "{$row2['end']}")).($debug ? " ({$row2['num']})" : "");
 		}
 		if( strlen( trim( $txt )))
 			echo $txt."<br />\n";
@@ -71,7 +72,7 @@ function getDescription( $reihe ) {
 // get request values
 $func = 'reihe';
 $qr = isset( $_REQUEST['reihe'] ) ? $_REQUEST['reihe'] : null;
-
+$debug = isset( $_REQUEST['x'] );
 
 echo mediathekheader('reihe', 'Mediathek - Reihe '.$qr, '');
 ?>
@@ -100,11 +101,11 @@ if( preg_match( '/([A-Za-z])_([0-9]{3})_([a-z])/', $qr, $matches )) {
 			<div class="clearfix">
 				<h2 class="small-heading">Reihe</h2>
 				<?php if( $side == 'a' ) { ?>
-				<div><?php echo getDescription( $ra ); ?></div>
-				<div style="width:100%; text-align: right;"><?php echo getDescription( $rb ); ?></div>
+				<div><?php echo getDescription( $ra, $debug ); ?></div>
+				<div style="width:100%; text-align: right;"><?php echo getDescription( $rb, $debug ); ?></div>
 				<?php } else { ?>
-				<div style="width:100%; text-align: right;"><?php echo getDescription( $ra ); ?></div>
-				<div><?php echo getDescription( $rb ); ?></div>
+				<div style="width:100%; text-align: right;"><?php echo getDescription( $ra, $debug ); ?></div>
+				<div><?php echo getDescription( $rb, $debug ); ?></div>
 				<?php } ?>
 			</div>
 		</div>
