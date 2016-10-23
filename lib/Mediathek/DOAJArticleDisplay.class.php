@@ -85,6 +85,20 @@ class DOAJArticleDisplay extends DisplayEntity {
 					)
 				);		
 			}
+			elseif( preg_match( '/^(.*), ([^,]+), ([^,]+)$/', $issue, $matches ))
+			{
+				$schema['isPartOf'] = array( "@type"=>"PublicationIssue",
+					'issueNumber'=>0,
+					'isPartOf'=>array( "@type"=>"PublicationVolume",
+						'volumeNumber'=>$matches[2],
+						'isPartOf'=>array( '@type'=>'Periodical',
+							"name"=>$matches[1],
+							"issn"=>$issn,
+							'publisher'=>$publishers,
+						)
+					)
+				);		
+			}
 		}		
 		return $schema;
 	}
