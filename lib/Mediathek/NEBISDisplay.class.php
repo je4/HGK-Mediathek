@@ -64,7 +64,15 @@ class NEBISDisplay extends DisplayEntity {
 			foreach( $publishers as $publisher ) {
 				$schema['publisher'][] = array( '@type' => 'Organization', 'legalName' => $publisher );
 			}
-		$schema['url'] = 'https://mediathek.hgk.fhnw.ch/detail.php?id='.urlencode( $this->doc->id );		
+		$schema['url'] = array( 'https://mediathek.hgk.fhnw.ch/detail.php?id='.urlencode( $this->doc->id ));	
+		if( is_array( $this->doc->url )) foreach( $this->doc->url as $u ) {
+			$us = explode( ':', $u );
+			if( substr( $us[1], 0, 4 ) == 'http' ) {
+				$url = substr( $u, strlen( $us[0])+1 );
+				$schema['url'][] = $url;
+			}
+		}
+		
 		if( $this->doc->cluster_ss )
 			$schema['keywords'] = implode( '; ', $this->doc->cluster_ss );
 		$schema['license'] = implode( '; ', $this->doc->license );

@@ -54,7 +54,10 @@ class DOAJDisplay extends DisplayEntity {
 			foreach( $this->doc->publisher as $publisher ) {
 				$schema['publisher'][] = array( '@type' => 'Organization', 'legalName' => $publisher );
 			}
-		$schema['url'] = 'https://mediathek.hgk.fhnw.ch/detail.php?id='.urlencode( $this->doc->id );		
+		$schema['url'] = array( 'https://mediathek.hgk.fhnw.ch/detail.php?id='.urlencode( $this->doc->id ));	
+		if( strlen( $this->metadata['Journal URL'] )) {
+			$schema['url'][] = $this->metadata['Journal URL'];
+		}
 		if( $this->doc->cluster_ss )
 			$schema['keywords'] = implode( '; ', $this->doc->cluster_ss );
 		

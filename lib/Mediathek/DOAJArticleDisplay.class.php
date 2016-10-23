@@ -47,7 +47,14 @@ class DOAJArticleDisplay extends DisplayEntity {
 		foreach( $entity->getAuthors() as $author ) {
 			$schema['author'][] = array( '@type' => 'Person', 'name' => $author );
 		}
-		$schema['url'] = 'https://mediathek.hgk.fhnw.ch/detail.php?id='.urlencode( $this->doc->id );		
+		$schema['url'] = array( 'https://mediathek.hgk.fhnw.ch/detail.php?id='.urlencode( $this->doc->id ));		
+		foreach( $this->doc->url as $url ) 
+			if( substr( $url, 0, 11 ) == 'identifier:' ) { 
+				$doajident = substr( $url, 11 );
+				if( $doajident ) {
+					$schema['url'][] = $doajident;
+				}
+			}
 		if( $this->doc->cluster_ss )
 			$schema['keywords'] = implode( '; ', $this->doc->cluster_ss );
 		$schema['license'] = implode( '; ', $this->doc->license );
