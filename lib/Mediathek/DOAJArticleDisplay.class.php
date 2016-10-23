@@ -227,7 +227,7 @@ class DOAJArticleDisplay extends DisplayEntity {
 	}
 
 // Issue: 452º F : Revista de Teoría de la Literatura y Literatura Comparada, Iss 2, Pp 127-136 (2010)
-	$qstr = $phrase;
+		$qstr = $phrase . ' AND -id:'.$helper->escapeTerm( $this->doc->id );
 		$squery->setQuery( $qstr );
 		$rs = $solrclient->select( $squery );
 		$numResults = $rs->getNumFound();
