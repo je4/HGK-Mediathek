@@ -40,7 +40,7 @@ class DOAJArticleDisplay extends DisplayEntity {
 		$entity = $this->entity;
 		$schema = array();
 		$schema['@context'] = 'http://schema.org';
-		$schema['@type'] = 'TechArticle';
+		$schema['@type'] = array('TechArticle');
 		$schema['@id'] = $this->doc->id;
 		$schema['name'] = $this->doc->title;
 		$schema['author'] = array();

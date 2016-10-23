@@ -43,13 +43,13 @@ class NEBISDisplay extends DisplayEntity {
 //		$schema['@id'] =  '#record';
 		$schema['@id'] = $this->doc->id;
 		if( $this->isJournal( $entity )) {
-			$schema['@type'] = 'Periodical';
+			$schema['@type'] = array( 'Periodical' );
 		foreach( $this->doc->code as $c )
 				if( preg_match( '/^ISSN:/', $c ))
 					$schema['issn'] = substr( $c, 5 );
 		}
 		else {
-			$schema['@type'] = 'Book';
+			$schema['@type'] = array( 'Book' );
 			foreach( $entity->getCodes() as $c )
 				if( preg_match( '/^ISBN:/', $c ))
 					$schema['isbn'] = substr( $c, 5 );

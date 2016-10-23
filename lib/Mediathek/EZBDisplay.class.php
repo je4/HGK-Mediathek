@@ -35,7 +35,7 @@ class EZBDisplay extends DisplayEntity {
     public function getSchema() {
 		$schema = array();
 		$schema['@context'] = 'http://schema.org';
-		$schema['@type'] = 'Periodical';
+		$schema['@type'] = array('Periodical');
 		$schema['@id'] = $this->doc->id;
 		$schema['name'] = $this->doc->title;
 		if( isset( $this->doc->author_ss ) && count( $this->doc->author_ss )) {

@@ -38,7 +38,7 @@ class IKUVidDisplay extends DisplayEntity {
 		
 		$schema = array();
 		$schema['@context'] = 'http://schema.org';
-		$schema['@type'] = 'Movie';
+		$schema['@type'] = array('Movie');
 		$schema['@id'] = $this->doc->id;
 		$schema['name'] = $this->doc->title;
 		if( $this->doc->embedded ) {	
