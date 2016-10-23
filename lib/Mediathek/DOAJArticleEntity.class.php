@@ -126,6 +126,8 @@ class DOAJArticleEntity implements SOLRSource {
 		foreach( $this->data['DC:IDENTIFIER'] as $ident ) {
 			if( preg_match( "/[0-9]+-[0-9]+/", $ident ))
 				$codes[] = 'ISSN:'.trim( $ident );
+			elseif( preg_match( "/[0-9]{2}.[0-9]{4}\//", $ident ))
+				$codes[] = 'DOI:'.trim( $ident );
 		}
         return $codes;
     }

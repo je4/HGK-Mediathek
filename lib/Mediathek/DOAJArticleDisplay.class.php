@@ -61,9 +61,13 @@ class DOAJArticleDisplay extends DisplayEntity {
 
 //		$schema['isPartOf'] = array();		
 		$issn = array();
+		$doi = array();
 		foreach( $entity->getCodes() as $c )
 			if( preg_match( '/^ISSN:/', $c ))
 				$issn[] = substr( $c, 5 );
+			elseif( preg_match( '/^DOI:/', $c ))
+				$doi[] = substr( $c, 4 );
+		$schema['doi'] = $doi;
 		$publishers = array();
 		$ps = $entity->getPublisher();
 		if( $ps && count( $ps ))
@@ -117,6 +121,7 @@ class DOAJArticleDisplay extends DisplayEntity {
 			$js_sourcelist .= ",'".trim( $src )."'";
 		$js_sourcelist = trim( $js_sourcelist, ',');
         ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
+		echo "<!-- ".print_r( $this->metadata, true)." -->";
 ?>
 		<div class="row">
 			<div class="col-md-3">
