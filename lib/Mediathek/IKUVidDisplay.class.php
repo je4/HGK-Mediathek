@@ -34,10 +34,16 @@ class IKUVidDisplay extends DisplayEntity {
     }
 
 	public function getSchema() {
+		global $config;
+		
 		$schema = array();
 		$schema['@context'] = 'http://schema.org';
 		$schema['@type'] = 'Movie';
+		$schema['@id'] = $this->doc->id;
 		$schema['name'] = $this->doc->title;
+		if( $this->doc->embedded ) {	
+			$schema['image'] = $config['media']['picopen'].'/'.intval($this->doc->originalid).'.00005.thumb.png';
+		}		
 		$schema['author'] = array();
 		if( isset( $this->doc->author_ss ) && count( $this->doc->author_ss )) {
 			$schema['author'] = array();
@@ -81,7 +87,7 @@ class IKUVidDisplay extends DisplayEntity {
 			<span style="font-size: 80%;"><?php if( isset( $this->metadata['Dauer'] )) echo htmlspecialchars( $this->metadata['Dauer'] );?>
 			<?php if( isset( $this->metadata['Land'] )) echo htmlspecialchars( $this->metadata['Land'] );?>
 			</span></b><br />
-			<a href="<?php echo $handle; ?>">Persistent Identifier: https://hdl.handle...</a>
+			Persistent Identifier: <a href="<?php echo $handle; ?>">https://hdl.handle...</a>
 		</div>
 	</div>
 	<div class="col-md-6">

@@ -41,6 +41,7 @@ class DOAJArticleDisplay extends DisplayEntity {
 		$schema = array();
 		$schema['@context'] = 'http://schema.org';
 		$schema['@type'] = 'TechArticle';
+		$schema['@id'] = $this->doc->id;
 		$schema['name'] = $this->doc->title;
 		$schema['author'] = array();
 		foreach( $entity->getAuthors() as $author ) {

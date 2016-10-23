@@ -37,6 +37,7 @@ class WenkenparkDisplay extends DisplayEntity {
 		$schema = array();
 		$schema['@context'] = 'http://schema.org';
 		$schema['@type'] = 'Movie';
+		$schema['@id'] = $this->doc->id;
 		$schema['name'] = $this->doc->title;
 		if( isset( $this->doc->author_ss ) && count( $this->doc->author_ss )) {
 			$schema['author'] = array();

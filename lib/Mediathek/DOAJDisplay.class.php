@@ -37,6 +37,7 @@ class DOAJDisplay extends DisplayEntity {
 		$schema = array();
 		$schema['@context'] = 'http://schema.org';
 		$schema['@type'] = 'Periodical';
+		$schema['@id'] = $this->doc->id;
 		$schema['name'] = $this->doc->title;
 		foreach( $this->doc->code as $c )
 			if( preg_match( '/ISSN:(.*)$/', $c, $matches ))

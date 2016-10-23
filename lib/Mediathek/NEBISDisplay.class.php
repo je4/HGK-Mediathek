@@ -41,6 +41,7 @@ class NEBISDisplay extends DisplayEntity {
 		$schema = array();
 		$schema['@context'] = 'http://schema.org';
 //		$schema['@id'] =  '#record';
+		$schema['@id'] = $this->doc->id;
 		if( $this->isJournal( $entity )) {
 			$schema['@type'] = 'Periodical';
 		foreach( $this->doc->code as $c )
@@ -109,11 +110,10 @@ $cfg = array(
         
         // Output
 //        echo $tidy;
-		$kiste = null;
+		$kiste = array();
 		if( is_array( $this->doc->location )) foreach( $this->doc->location as $loc ) {
 		  if( substr( $loc, 0, 10 ) == 'E75:Kiste:' ) {
-			  $kiste = substr( $loc, 10 );
-			  break;
+			  $kiste[] = substr( $loc, 10 );
 		  }
 		} 
 
@@ -244,18 +244,24 @@ $cfg = array(
 -->
 		</div>
 <?php
-if( $kiste ) {
+if( count( $kiste )) {
 ?>
 		<div class="row">
 			<div class="col-md-9">
 				<div style="">
-				<span style="; font-weight: bold;">Weitere Bücher in Kiste <?php echo $kiste; ?></span><br />
+				<span style="; font-weight: bold;">Weitere Bücher in Kiste <?php echo implode( ' / ',$kiste ); ?></span><br />
 					<div class="facet" style="">
 						<div class="marker" style=""></div>
 <?php						
 	$squery->setRows( 500 );
 	$squery->setStart( 0 );
-	$qstr = 'location:'.$helper->escapePhrase( 'E75:Kiste:'.$kiste );
+	$qstr = '';
+	foreach( $kiste as $k ) {
+		if( strlen( $qstr )) $qstr .= ' OR ';
+		$qstr .= 'location:'.$helper->escapePhrase( 'E75:Kiste:'.$k );
+	}
+	$qstr = "({$qstr}) AND -id:".$helper->escapeTerm( $this->doc->id );
+	//echo "\n<!-- {$qstr} -->\n";
 	$squery->setQuery( $qstr );
 	$rs = $solrclient->select( $squery );
 	$numResults = $rs->getNumFound();
