@@ -188,7 +188,7 @@ if( @is_array( $qobj->facets->source )) {
 	$_q = "";
 	foreach( $qobj->facets->source as $src ) {
 		if( $_q != '' ) $_q .= ' OR ';
-		if( $src == 'NEBIS' ) $_q .= ' (source:'.$helper->escapePhrase( $src ).' AND signature:'.$helper->escapePhrase('nebis:E75:*' ).')';
+		if( $src == 'NEBIS' ) $_q .= ' (source:'.$helper->escapePhrase( $src ).' AND ( signature:'.$helper->escapePhrase('nebis:E75:*' ).' OR online:true ))';
 		else $_q .= ' (source:'.$helper->escapePhrase( $src ).')';
 	}
     $squery->createFilterQuery('source')->addTag('source')->setQuery( $_q );	
