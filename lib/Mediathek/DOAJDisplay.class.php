@@ -36,7 +36,7 @@ class DOAJDisplay extends DisplayEntity {
     public function getSchema() {
 		$schema = array();
 		$schema['@context'] = 'http://schema.org';
-		$schema['@type'] = 'Periodical';
+		$schema['@type'] = array( 'Periodical' );
 		$schema['@id'] = $this->doc->id;
 		$schema['name'] = $this->doc->title;
 		foreach( $this->doc->code as $c )
