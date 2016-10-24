@@ -58,7 +58,7 @@ foreach( $recs as $xmlrec ) {
 //    if( $counter++ > 10 ) exit;
 }
 
-//exit;
+exit;
 
 
 /*
