@@ -30,7 +30,7 @@ namespace Mediathek;
  */
 
 class DOAJEntity implements SOLRSource {
-    private static $table = 'source_doaj';
+    private static $table = 'oai_pmh';
     private $data = null;
     private $id = null;
     private $idprefix = null;
@@ -73,11 +73,15 @@ class DOAJEntity implements SOLRSource {
         $this->id = $id;
         $this->idprefix = $idprefix;
         
-        $sql = "SELECT * FROM `".self::$table."` WHERE `Journal EISSN (online version)` = ".$this->db->qstr( $id );
-        $this->data = $this->db->GetRow( $sql );
-        
+        $sql = "SELECT * FROM \"".self::$table."\" WHERE \"identifier\" = ".$this->db->qstr( $id );
+		$row = $this->db->GetRow( $sql );
+        $this->data = (array)json_decode( $row['data'] );
     }
     
+	function load( string $id, string $idprefix, $data ) {
+        $this->data = $data;
+	}
+	
     public function getID() {
         return $this->idprefix.'-'.$this->id; 
     }
@@ -108,14 +112,14 @@ class DOAJEntity implements SOLRSource {
 	
     public function getTitle() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
-        $title = trim( $this->data['Journal title'] );
+        $title = trim( implode( '; ', $this->data['DC:TITLE'] ));
 
         return $title;
     }
     
     public function getPublisher() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
-        $pub = trim( $this->data['Publisher'] );
+        $pub = $this->data['DC:PUBLISHER'];
 
         return $pub;
     }
@@ -123,20 +127,24 @@ class DOAJEntity implements SOLRSource {
     public function getCodes() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
         $codes = array();
-        if( strlen( trim( $this->data['Journal ISSN (print version)'])))
-            $codes[] = 'ISSN:'.trim( $this->data['Journal ISSN (print version)']);
-        if( strlen( trim( $this->data['Journal EISSN (online version)'])))
-            $codes[] = 'EISSN:'.trim( $this->data['Journal EISSN (online version)']);
+		foreach( $this->data['DC:IDENTIFIER'] as $ident ) {
+			if( preg_match( '/^[0-9-]+$/', $ident )) {
+				$codes[] = 'ISSN:'.$ident;
+			}
+		}
         return $codes;
     }
     
     public function getYear() {
+		foreach( $this->data['DC:DATE'] as $date ) {
+			$d = new \DateTime( $date );
+			return intval( $d->format( 'Y' ));
+		}
         return null;
     }
     
     public function getCity() {
-        if( $this->data == null ) throw new \Exception( "no entity loaded" );
-        return $this->data['Country of publisher'];
+        return null;
     }
     
 	public function getTags() {
@@ -145,12 +153,7 @@ class DOAJEntity implements SOLRSource {
         
         $this->tags = array();
     
-        $kws = explode( ',', $this->data['Keywords']);
-   
-        foreach( $kws as $kw ) {
-            $this->tags[] = 'index:keyword:doaj/'.md5( trim( $kw) ).'/'.trim( $kw );
-        }
-        $kws = explode( '|', $this->data['Subjects']);
+        $kws = $this->data['DC:SUBJECT'];
    
         foreach( $kws as $kw ) {
             $this->tags[] = 'subject:hierarchical:doaj/'.md5( trim( $kw) ).'/'.trim( $kw );
@@ -200,32 +203,22 @@ class DOAJEntity implements SOLRSource {
     }
     
     public function getLicenses() {
-        if( $this->licenses == null ) {
-            $this->licenses = array( );
-            $l = "";
-            if( strlen( trim( $this->data['Journal license'])))
-                $l .= trim( $this->data['Journal license']);
-            if( strlen( trim( $this->data['License attributes'])))
-                $l .= ' ('.trim( $this->data['License attributes']).')';
-            if( strlen( trim( $l )))
-                $this->licenses[] = trim( $l );
-            if( count( $this->licenses ) == 0)
-                $this->licenses[] = 'restricted';
-        }
-        return $this->licenses;
+        if( $this->data == null ) throw new \Exception( "no entity loaded" );
+        return isset( $this->data['DC:RIGHTS'] ) ? $this->data['DC:RIGHTS'] : array( 'unknown' );
     }
     
     public function getURLs() {
         if( $this->urls == null ) {
+	        if( $this->data == null ) throw new \Exception( "no entity loaded" );
             $this->urls = array();
-            if( strlen( trim( $this->data['Journal URL'])))
-                $this->urls[] = 'journal:' . trim( $this->data['Journal URL']);
-            if( strlen( trim( $this->data['APC information URL'])))
-                $this->urls[] = 'apcinfo:' . trim( $this->data['APC information URL']);
-            if( strlen( trim( $this->data['Archiving infomation URL'])))
-                $this->urls[] = 'archinfo:' . trim( $this->data['Archiving infomation URL']);
-            if( strlen( trim( $this->data['URL for license terms'])))
-                $this->urls[] = 'license:' . trim( $this->data['URL for license terms']);
+			foreach( $this->data['DC:IDENTIFIER'] as $ident ) {
+				if( preg_match( '/^http/', $ident )) {
+					$this->urls[] = 'identifier:'.$ident;
+				}
+			}
+			foreach( $this->data['DC:RELATION'] as $url ) {
+				$this->urls[] = 'relation:'.$url;
+			}
         }
         return $this->urls;
     }
@@ -252,6 +245,14 @@ class DOAJEntity implements SOLRSource {
     public function getMetaACL() { return array( 'global/guest' ); }
     public function getContentACL() { return array(); }
     public function getPreviewACL() { return array(); }
+
+	public function getLanguages() {
+        if( $this->data == null ) throw new \Exception( "no entity loaded" );
+					
+		return isset( $this->data['DC:LANGUAGE'] ) ? $this->data['DC:LANGUAGE'] : array();
+	}
+
+	public function getIssues() { return array(); }
 }
 
 ?>
