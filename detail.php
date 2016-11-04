@@ -124,7 +124,9 @@ function init() {
 		window.location="search.php?q=<?php echo urlencode( $q ); ?>&page=<?php echo urlencode( $page ); ?>&pagesize=<?php echo urlencode( $pagesize ); ?>";
 	});
 	
-	init<?php echo $doc->source; ?>();
+<?php
+	if( isset( $doc )) echo "init{$doc->source}();";
+?>
 	
 }
 </script>   
