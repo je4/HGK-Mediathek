@@ -163,7 +163,7 @@ $cfg = array(
 							}
 								
 							if( $year ) echo htmlspecialchars( $year ).'.';
-							if( $city || $year || $publisher ) echo "<br />\n";
+							if( $city || $year || $publishers ) echo "<br />\n";
 
 							$codes = $entity->getCodes();
 							if( is_array( $codes )) foreach( $codes as $code ) 
@@ -336,7 +336,7 @@ if( count( $kiste )) {
 			  $.post( 'RIB.php', { sys: <?php echo '"'.$this->doc->originalid.'"'; ?>, sig: signatures }).done( function( data ) {
 				$('#RIB' ).html( data );
 			  });
-			  init3D( '<?php echo $box; ?>', '<?php echo $boxjson; ?>'  );
+			  init3D( ['<?php echo $box; ?>'], '<?php echo $boxjson; ?>'  );
 
 			}
 		</script>

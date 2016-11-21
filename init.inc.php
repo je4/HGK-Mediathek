@@ -8,9 +8,11 @@ include 'config.inc.php';
 include 'vendor/autoload.php';
 require_once 'lib/Mediathek/Autoloader.php';
 require_once 'lib/Passbook/Autoloader.php';
+require_once 'lib/Zotero/Autoloader.php';
 
 \Mediathek\Autoloader::register();
 \Passbook\Autoloader::register();
+\Zotero\Autoloader::register();
 
 require_once 'lib/adodb5/adodb-exceptions.inc.php';
 require_once 'lib/adodb5/adodb.inc.php';

@@ -42,6 +42,14 @@ var Mediathek3D = function( config, done ) {
         this[prop]=config[prop];   
     }
 	
+    
+    // make sure that drawOnly is an array
+    if ( this.drawOnly != null ) {
+        if ( typeof this.drawOnly == 'string') {
+            this.drawOnly = [ this.drawOnly ];
+        }
+    }
+    console.log( this.drawOnly );
 	// apply the pixelFactor
 	this.floorWidth *= this.pixelFactor;
 	this.floorHeight *= this.pixelFactor;
@@ -444,14 +452,22 @@ Mediathek3D.prototype.addBoxLevel = function( name, level ) {
 		if( this.drawOnly == null ) 
 			box = this.createBox( boxname );
 		else {
-			if( this.drawOnly == name ) 
-				box = this.createBox( boxname );
-			else {
-				if( level == 1 )
-					box = this.createBottom( boxname );
-				else
-					return;
-			}
+            var found = false;
+            for( var i = 0; i < this.drawOnly.length; i++ ) {
+                  if( this.drawOnly[i].substring( 0,1 ) == name ) {
+                        found = true;
+                        break;
+                  }
+            }
+            if ( found ) {
+                  box = this.createBox( boxname );
+            }
+            else {
+                if( level == 1 )
+                    box = this.createBottom( boxname );
+                else
+                    return;
+            }
 		}
 			 
 		

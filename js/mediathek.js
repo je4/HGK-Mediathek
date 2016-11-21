@@ -1,5 +1,6 @@
 
 var Mediathek = function( config, done ) {
+	this.controltype = 'trackball';
 	this.camType = "perspective";
 	this.renderDOM = null;
 	this.backgroundColor = 0xFAFAFA;
@@ -27,14 +28,14 @@ var Mediathek = function( config, done ) {
 
 	this.camera = null;
 	switch( this.camType ) {
-	case "perspective":
-		this.createPerspectiveCamera();
-		break;
-	case "ortho":
-		this.createOrthoCamera();
-		break;
-	default:
-		console.log( "Error: no camera created" );
+		case "perspective":
+			this.createPerspectiveCamera();
+			break;
+		case "ortho":
+			this.createOrthoCamera();
+			break;
+		default:
+			console.log( "Error: no camera created" );
 		return;
 	}
 	this.controls = null;
@@ -181,25 +182,34 @@ Mediathek.prototype.addLight = function() {
 }
 
 Mediathek.prototype.createControls = function () {
-	this.controls = new THREE.TrackballControls(this.camera, this.renderer.domElement);
-//	this.controls = new THREE.OrbitControls( this.camera, this.renderer.domElement );
+	if ( this.controltype == 'fly') {
+        this.controls = new THREE.FlyControls( this.camera, this.renderer.domElement );
+		this.controls.movementSpeed = 0.05;
+		this.controls.rollSpeed = Math.PI / 400;
+		this.controls.autoForward = true;
+		this.controls.dragToLook = false;
 
-	this.controls.rotateSpeed = 2.0;
-	this.controls.zoomSpeed = 1.2;
-	this.controls.panSpeed = 0.8;
-
-	this.controls.noZoom = false;
-	this.controls.noPan = false;
-
-	this.controls.staticMoving = true;
-	this.controls.dynamicDampingFactor = 0.3;
-
-//	this.controls.keys = [ 65, 83, 68 ];	
+    }
+	else {
+		this.controls = new THREE.TrackballControls(this.camera, this.renderer.domElement);
+	//	this.controls = new THREE.OrbitControls( this.camera, this.renderer.domElement );
 	
+		this.controls.rotateSpeed = 2.0;
+		this.controls.zoomSpeed = 1.2;
+		this.controls.panSpeed = 0.8;
+	
+		this.controls.noZoom = false;
+		this.controls.noPan = false;
+	
+		this.controls.staticMoving = true;
+		this.controls.dynamicDampingFactor = 0.3;
+	
+	//	this.controls.keys = [ 65, 83, 68 ];	
+	}
 }
 
 Mediathek.prototype.render = function() {
-    this.controls.update();
+    this.controls.update(1);
 //	directionalLight.position.copy( camera.position );
     this.renderer.render(this.scene, this.camera);
 /*	

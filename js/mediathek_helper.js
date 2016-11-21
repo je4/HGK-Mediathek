@@ -181,8 +181,7 @@ var py = -5;
 var pz = 5;
 var gridWidth = 500;
 
-function init3D( box, camJSON ) {
-	hash = box.substring(0, 4);
+function init3D( boxes, camJSON ) {
 	
 	mediathek = new Mediathek( {
 		camType: "perspective",
@@ -190,14 +189,8 @@ function init3D( box, camJSON ) {
 		backgroundColor: 0x425164,
 		camJSON: null, //'[0.9993451833724976,0.015195777639746666,-0.03283816948533058,0,0.01806975156068802,0.5766857266426086,0.8167662024497986,0,0.03134870156645775,-0.816824734210968,0.5760335326194763,0,286.9632568359375,-7477.142578125,5272.96044921875,1]',
 		doWindowResize: true,
+		//controltype: 'fly',
 	})
-	
-	var row = hash.substring( 0, 1 );
-	
-
-	var drawOnly = null;
-	if( hash.length > 1)
-		drawOnly = hash.substring( 0, 1 );
 	
 	mediathek3D = new Mediathek3D( {
 			floorImage: 'img/mt_background.png',
@@ -207,7 +200,7 @@ function init3D( box, camJSON ) {
 			boxColor: 0xe0e0e0,
 			//boxColorHighlight: 0x283744,
 			boxDelay: 1,
-			drawOnly: drawOnly,
+			drawOnly: boxes,
 		}, 
 		function( object ) {
 			mediathek.scene.add(object);
@@ -216,17 +209,23 @@ function init3D( box, camJSON ) {
 			
 			object.renderBoxes(0);
 
+			for( var i = 0; i < boxes.length; i++ ) {
+				box = boxes[i];
+				if( box.length >= 4 ) {
+					mediathek3D.boxHighlight( box.substring( 0, 4), true );
+				}
+			}
 			if( camJSON == null ) {
-				mediathek3D.boxHighlight( hash.substring( 0, 4), true );
 				mediathek.camera.position.set( px*gridWidth, py*gridWidth, pz*gridWidth );
 				mediathek.camera.up = new THREE.Vector3(0,0,1);
-				box = mediathek3D.boxes[hash.substring( 0, 4)];
-				if( box ) mediathek.controls.target.copy( box.position );
+				b = mediathek3D.boxes[box.substring( 0, 4)];
+				if( b ) mediathek.controls.target.copy( b.position );
 			}
 			else {
 				mediathek.setCamJSON( camJSON );
 			}
 			$(document).keyup( function( event ) {
+				return;
 				console.log( event.which );
 				if ( mediathek == null ) {
                     return;

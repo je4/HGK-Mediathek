@@ -36,10 +36,12 @@ $kisten = array(
 			'boxes'=>3,
 			),
 		),
+/*
 		4=> array(
 			'indent'=>1.5,
 			'boxes'=>2,
 			),
+*/
 		),
 'B'=> array( 
 	'point'=> array( 
@@ -64,12 +66,12 @@ $kisten = array(
 			'indent'=>1,
 			'boxes'=>3,
 			),
-		),
 		4=> array(
 			'indent'=>1.5,
 			'boxes'=>2,
 			),
 		),
+    ),
 'C'=> array( 
 	'point'=> array( 
 		array( 'x'=>1913, 'y'=>1018),

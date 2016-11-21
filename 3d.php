@@ -7,6 +7,11 @@ error_reporting(E_ALL);
 $box = null;
 if( isset( $_REQUEST['box'] )) $box = trim( strtoupper($_REQUEST['box']));
 
+$shelf = null;
+if( isset( $_REQUEST['shelf']) ) $shelf = explode( ',', $_REQUEST['shelf'] );
+
+
+
 /**
  * (c) Copyright 2015/2016 info-age GmbH
  *
@@ -39,6 +44,7 @@ SELECT sys, substring(value, 4, 14 ) FROM `mediathekmarc` WHERE `tag` LIKE '949'
 <script src="js/threejs/build/three.js"></script>
 <script src="js/threejs/build/TrackballControls.js"></script>
 <script src="js/threejs/build/OrbitControls.js"></script>
+<script src="js/threejs/build/FlyControls.js"></script>
 <script src="js/threejs/build/CombinedCamera.js"></script>   
 <!-- script src="mediathek2.js"></script -->   
 <script src="js/mediathek.js"></script>   
@@ -56,10 +62,19 @@ var pz = 5;
 var gridWidth = 500;
 
 function init() {
-
 	hash = window.location.hash.substring( 1 );
-	init3D( hash );	
+	shelf = null;
+<?php
+	if( is_array( $shelf )) {
+		echo 'shelf = [';
+		foreach( $shelf as $s ) {
+			echo "'".trim(strtoupper($s))."',";
+		}
+		echo "];\n";
+	}
+?>
 
+	init3D( shelf );	
 	$("textarea").keyup(function(e) {
 		var code = e.keyCode ? e.keyCode : e.which;
 		if (code == 13) {  // Enter keycode
