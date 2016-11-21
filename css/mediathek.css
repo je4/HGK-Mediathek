@@ -221,7 +221,7 @@ a.entity {
 td.list {
     padding-top: 0.25rem;
     padding-bottom: 0.25rem;
-    border-top: 2px solid #004824;
+    border-top: 2px solid black;
 }
 
 tr:first-child > td {
