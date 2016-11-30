@@ -29,7 +29,7 @@ namespace Mediathek;
  *
  */
 
-class DOAJEntity implements SOLRSource {
+class DOAJEntity extends SOLRSource {
     private static $table = 'oai_pmh';
     private $data = null;
     private $id = null;

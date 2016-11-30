@@ -29,55 +29,32 @@ namespace Mediathek;
  *
  */
 
-class EZBEntity extends SOLRSource {
-    private $json = null;
+class to_performEntity extends SOLRSource {
     private $data = null;
     private $id = null;
     private $idprefix = null;
-    private $db = null;
-    private $barcode = null;
-    private $signature = null;
-    private $loans = null;
-    private $authors = null;
-    private $tags = null;
-    private $cluster = null;
-    private $licenses = null;
-    private $urls = null;
-    private $signatures = null;
-    private $online = false;
+
+	static $persons = array( 'Author', 'Creator', 'Artist', );
     
    
-    function __construct( \ADOConnection $db ) {
-        $this->db = $db;
+    function __construct( ) {
+        
     }
 
     private function reset() {
         $this->id = null;
         $this->idprefix = null;
-        $this->json = null;
-        $this->barcode = null;
-        $this->signature = null;
-        $this->authors = null;
-        $this->loans = null;
-        $this->tags = null;
-        $this->licenses = null;
-        $this->urls = null;
-        $this->signatures = null;
-        $this->online = false;
+		$this->data = null;
         
     }
     
-    function loadFromArray( array $row, string $idprefix ) {
+    function loadFromArray( string $id, array $row, string $idprefix ) {
         $this->reset();
         
         $this->data = $row;
         
-        $this->id = $this->data['EZB-Id'];
+        $this->id = $this->data['Id'];
         $this->idprefix = $idprefix;
-        
-        //echo $this->id."\n";
-        
-        //var_dump( $this->data );
     }
     
     public function getID() {
@@ -89,16 +66,18 @@ class EZBEntity extends SOLRSource {
 	}
     
     public function getSource() {
-        return 'EZB';
+        return 'to_perform';
     }
 	
     public function getType() {
-		return "EJournal";
+        if( $this->data == null ) throw new \Exception( "no entity loaded" );
+		if( @strlen( $this->data['Vermittlung'] )) return $this->data['Vermittlung'];
+		else return 'unknown';
 	}
 
 	
 	public function getEmbedded() {
-		return false;
+		return true;
 	}
 
 	public function getOpenAccess() {
@@ -111,21 +90,29 @@ class EZBEntity extends SOLRSource {
     
     public function getTitle() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
-        $title = trim( $this->data['Titel'] );
-        return $title;
+		if( array_key_exists( 'Title', $this->data )) return $this->data['Title'];
+		if( array_key_exists( 'Document Name', $this->data )) return $this->data['Document Name'];
+		
+		else return 'unknown';
     }
     
     public function getPublisher() {
-        return array( $this->data['Verlag'] );
+        if( $this->data == null ) throw new \Exception( "no entity loaded" );
+		if( @strlen( $this->data['Verleger'] )) return array( $this->data['Verleger'] );
+		else return array( 'Hochschule für Musik Basel' );
     }
     
     public function getYear() {
+        if( $this->data == null ) throw new \Exception( "no entity loaded" );
+		if( @preg_match( '/^({0-9]{2})\.({0-9]{2})\.({0-9]{4})$/', $this->data['Description'], $matches )) {
+			return intval( $matches[3] );
+		}
         return null;
     }
     
     public function getCity() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
-        return null;
+        return 'Basel';
     }
     
 	public function getTags() {
@@ -134,12 +121,12 @@ class EZBEntity extends SOLRSource {
         $this->tags = array();
         $this->cluster = array();
 		
-		
-        foreach( explode( ';', preg_replace( '/(?<! u|-)[\.,]/', ';',$this->data['Fach'])) as $fach ) {
-            $this->tags[] = 'index:medium:ezb/'.md5( trim( $fach ) ).'/'.trim( $fach );
-            $this->cluster[] = trim( $fach );
+		if( false ) {
+			foreach( explode( ';', preg_replace( '/(?<! u|-)[\.,]/', ';',$this->data['Fach'])) as $fach ) {
+				$this->tags[] = 'index:medium:ezb/'.md5( trim( $fach ) ).'/'.trim( $fach );
+				$this->cluster[] = trim( $fach );
+			}
         }
-        
         return $this->tags;        
 	}
 	
@@ -156,8 +143,13 @@ class EZBEntity extends SOLRSource {
     }
     
     public function getAuthors() {
-
-        return array();        
+		$persons = array();
+		foreach( to_performEntity::$persons as $p ) {
+			if( array_key_exists( $p, $this->data )) {
+				$persons[] = $this->data[$p];
+			}
+		}
+        return $persons;        
     }
     
     public function getLoans() {
@@ -181,16 +173,6 @@ class EZBEntity extends SOLRSource {
     
     public function getURLs() {
         $urls = array();
-        if( strlen( $this->data['bibliographische URL(s)']))
-            foreach( explode( '***', $this->data['bibliographische URL(s)']) as $url )
-                $urls[] = 'bibl:'.$url;
-        if( strlen( $this->data['FrontdoorURL']))
-            foreach( explode( '***', $this->data['FrontdoorURL']) as $url )
-                $urls[] = 'frontdoor:'.$url;
-        if( strlen( $this->data['Link zur Zeitschrift']))
-            foreach( explode( '***', $this->data['Link zur Zeitschrift']) as $url )
-                $urls[] = 'journal:'.$url;
-        
         return $urls;
     }
     
@@ -208,24 +190,32 @@ class EZBEntity extends SOLRSource {
     }
 
    public function getAbstract() {
-        return null;
-    }
+        if( $this->data == null ) throw new \Exception( "no entity loaded" );
+		if( array_key_exists( 'Description', $this->data )) 
+			return $this->data['Description'];
+        return null;    
+	}
     
-   public function getContent() { return null; }    
+   public function getContent() {
+        if( $this->data == null ) throw new \Exception( "no entity loaded" );
+		if( array_key_exists( 'Full Text', $this->data )) 
+			return $this->data['Full Text'];
+        return null;    
+   }    
+
    public function getCodes() {
         $codes = array();
-        if( strlen( $this->data['E-ISSN'])) $codes[] = 'EISSN:'.$this->data['E-ISSN'];
-        if( strlen( $this->data['P-ISSN'])) $codes[] = 'ISSN:'.$this->data['P-ISSN'];
         
         return $codes;
     }
    
-    public function getMetaACL() { return array( 'global/guest' ); }
+    public function getMetaACL() { return array( 'musik/to_perform', 'global/admin' ); }
     public function getContentACL() {
-        // todo: check, whether ppl are in fhnw network???
-        return array(  );
+        return array( 'location/fhnw' );
     }
-    public function getPreviewACL() { return array( 'location/fhnw' ); }
+    public function getPreviewACL() { 
+		return array( 'location/fhnw' ); 
+	}
 
 	public function getLanguages() { return array(); }
 	public function getIssues()  { return array(); }

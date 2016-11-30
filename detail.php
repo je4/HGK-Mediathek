@@ -29,6 +29,14 @@ $helper = $squery->getHelper();
 if( $id ) $qstr = 'id:'.$helper->escapePhrase($id);
 else if( $barcode ) $qstr = 'signature:'.$helper->escapePhrase( 'barcode:E75:'.$barcode);
 else $qstr = "id:none";
+
+$acl_query = '';
+foreach( $session->getGroups() as $grp ) {
+	if( strlen( $acl_query ) > 0 ) $acl_query .= ' OR';
+	$acl_query .= ' acl_meta:'.$helper->escapePhrase($grp);
+}
+$squery->createFilterQuery('acl_meta')->setQuery($acl_query);
+
 $squery->setQuery( $qstr );
 
 $rs = $solrclient->select( $squery );

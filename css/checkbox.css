@@ -77,8 +77,8 @@
 	
 .checkbox-green input[type="checkbox"]:checked + label::before,
 .checkbox-green input[type="radio"]:checked + label::before {
-  background-color: #004824;
-  border-color: #004824; }
+  background-color: #425164;
+  border-color: #425164; }
 .checkbox-green input[type="checkbox"]:checked + label::after,
 .checkbox-green input[type="radio"]:checked + label::after {
   color: #fff; }

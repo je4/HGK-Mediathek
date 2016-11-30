@@ -29,7 +29,7 @@ namespace Mediathek;
  *
  */
 
-class WenkenparkEntity implements SOLRSource {
+class WenkenparkEntity extends SOLRSource {
     private static $videotable = 'source_wenkenpark';
     private $json = null;
     private $data = null;

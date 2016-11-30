@@ -24,37 +24,41 @@
 
 namespace Mediathek;
 
-interface SOLRSource {
-    public function getID();
-	public function getOriginalID();
-    public function getSource();
-    public function getType();
-	public function getOpenAccess();
-	public function getLocations();
-    public function getTitle();    
-    public function getCodes();
-    public function getAbstract();
-    public function getContent();
-    public function getTags();    
-    public function getSignatures();    
-    public function getAuthors();    
-    public function getLoans();    
-    public function getBarcode();    
-    public function getLicenses();    
-    public function getURLs();    
-    public function getSys();
-    public function getPublisher();
-    public function getYear();
-    public function getCity();
-    public function getCluster();
-    public function getMeta();
-    public function getOnline();
-	public function getEmbedded();
-    public function getMetaACL();
-    public function getContentACL();
-    public function getPreviewACL();
-	public function getLanguages();
-	public function getIssues();
+abstract class SOLRSource {
+    abstract public function getID();
+	abstract public function getOriginalID();
+    abstract public function getSource();
+    abstract public function getType();
+	abstract public function getOpenAccess();
+	abstract public function getLocations();
+    abstract public function getTitle();    
+    abstract public function getCodes();
+    abstract public function getAbstract();
+    abstract public function getContent();
+    abstract public function getTags();    
+    abstract public function getSignatures();    
+    abstract public function getAuthors();    
+    abstract public function getLoans();    
+    abstract public function getBarcode();    
+    abstract public function getLicenses();    
+    abstract public function getURLs();    
+    abstract public function getSys();
+    abstract public function getPublisher();
+    abstract public function getYear();
+    abstract public function getCity();
+    abstract public function getCluster();
+    abstract public function getMeta();
+    abstract public function getOnline();
+	abstract public function getEmbedded();
+    abstract public function getMetaACL();
+    abstract public function getContentACL();
+    abstract public function getPreviewACL();
+	abstract public function getLanguages();
+	abstract public function getIssues();
+	public function getCategories() {
+		$r = new \ReflectionMethod(get_called_class(), 'getSource');
+		return array( 'source::'.$r->invoke($this) );
+	}
 
 }
 

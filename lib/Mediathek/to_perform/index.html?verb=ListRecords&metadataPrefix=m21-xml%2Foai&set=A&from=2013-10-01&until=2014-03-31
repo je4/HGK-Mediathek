@@ -1,0 +1,708 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+<responseDate>2016-11-29T13:51:29Z</responseDate>
+<request verb="ListRecords" from="2013-10-01" until="2014-03-31" set="A" metadataPrefix="m21-xml/oai">http://oai.swissbib.ch:20103/oai/DB=2.1/</request>
+<ListRecords>
+<record>
+<header status="deleted">
+<identifier>258469293</identifier>
+<datestamp>2013-10-18T18:28:01.400Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258469412</identifier>
+<datestamp>2013-10-18T18:28:01.464Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258469722</identifier>
+<datestamp>2013-10-18T18:28:01.584Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258469943</identifier>
+<datestamp>2013-10-18T18:28:01.687Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258470119</identifier>
+<datestamp>2013-10-18T18:28:01.827Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258470194</identifier>
+<datestamp>2013-10-18T18:28:01.988Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>25847047X</identifier>
+<datestamp>2013-10-18T18:28:02.225Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258470526</identifier>
+<datestamp>2013-10-18T18:28:02.397Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258471123</identifier>
+<datestamp>2013-10-18T18:28:02.530Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258471182</identifier>
+<datestamp>2013-10-18T18:28:02.601Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258471212</identifier>
+<datestamp>2013-10-18T18:28:02.698Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258471247</identifier>
+<datestamp>2013-10-18T18:28:02.784Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258471298</identifier>
+<datestamp>2013-10-18T18:28:02.874Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258471328</identifier>
+<datestamp>2013-10-18T18:28:02.943Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258472367</identifier>
+<datestamp>2013-10-18T18:28:03.005Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258472855</identifier>
+<datestamp>2013-10-18T18:28:03.083Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258473347</identifier>
+<datestamp>2013-10-18T18:28:03.188Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258473797</identifier>
+<datestamp>2013-10-18T18:28:03.273Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258473819</identifier>
+<datestamp>2013-10-18T18:28:03.326Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258473851</identifier>
+<datestamp>2013-10-18T18:28:03.391Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258473932</identifier>
+<datestamp>2013-10-18T18:28:03.463Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258474254</identifier>
+<datestamp>2013-10-18T18:28:03.532Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258474491</identifier>
+<datestamp>2013-10-18T18:28:03.598Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258474734</identifier>
+<datestamp>2013-10-18T18:28:03.649Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258475048</identifier>
+<datestamp>2013-10-18T18:28:03.713Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258475277</identifier>
+<datestamp>2013-10-18T18:28:03.770Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258475501</identifier>
+<datestamp>2013-10-18T18:28:03.848Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258475846</identifier>
+<datestamp>2013-10-18T18:28:03.896Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258475897</identifier>
+<datestamp>2013-10-18T18:28:03.970Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258475900</identifier>
+<datestamp>2013-10-18T18:28:04.051Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258476427</identifier>
+<datestamp>2013-10-18T18:28:04.137Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258476990</identifier>
+<datestamp>2013-10-18T18:28:04.205Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>25847811X</identifier>
+<datestamp>2013-10-18T18:28:04.268Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258478411</identifier>
+<datestamp>2013-10-18T18:28:04.314Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258479604</identifier>
+<datestamp>2013-10-18T18:28:04.403Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>25847968X</identifier>
+<datestamp>2013-10-18T18:28:04.471Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258479701</identifier>
+<datestamp>2013-10-18T18:28:04.580Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258479795</identifier>
+<datestamp>2013-10-18T18:28:04.622Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258479817</identifier>
+<datestamp>2013-10-18T18:28:04.713Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258479833</identifier>
+<datestamp>2013-10-18T18:28:04.769Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258480084</identifier>
+<datestamp>2013-10-18T18:28:04.844Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258480319</identifier>
+<datestamp>2013-10-18T18:28:04.912Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258480823</identifier>
+<datestamp>2013-10-18T18:28:04.979Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258480866</identifier>
+<datestamp>2013-10-18T18:28:05.052Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258481080</identifier>
+<datestamp>2013-10-18T18:28:05.129Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258481102</identifier>
+<datestamp>2013-10-18T18:28:05.205Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258481161</identifier>
+<datestamp>2013-10-18T18:28:05.273Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258481412</identifier>
+<datestamp>2013-10-18T18:28:05.329Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258481498</identifier>
+<datestamp>2013-10-18T18:28:05.390Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258482257</identifier>
+<datestamp>2013-10-18T18:28:05.441Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258482834</identifier>
+<datestamp>2013-10-18T18:28:05.509Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258483016</identifier>
+<datestamp>2013-10-18T18:28:05.564Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258483148</identifier>
+<datestamp>2013-10-18T18:28:05.624Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258483407</identifier>
+<datestamp>2013-10-18T18:28:05.726Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258483709</identifier>
+<datestamp>2013-10-18T18:28:05.851Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258484063</identifier>
+<datestamp>2013-10-18T18:28:05.913Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258484748</identifier>
+<datestamp>2013-10-18T18:28:06.034Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258484993</identifier>
+<datestamp>2013-10-18T18:28:06.084Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258485043</identifier>
+<datestamp>2013-10-18T18:28:06.167Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258485418</identifier>
+<datestamp>2013-10-18T18:28:06.359Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258485523</identifier>
+<datestamp>2013-10-18T18:28:06.408Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258485620</identifier>
+<datestamp>2013-10-18T18:28:06.469Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>25848568X</identifier>
+<datestamp>2013-10-18T18:28:06.550Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258485698</identifier>
+<datestamp>2013-10-18T18:28:06.607Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258486031</identifier>
+<datestamp>2013-10-18T18:28:06.663Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258486058</identifier>
+<datestamp>2013-10-18T18:28:06.697Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258486201</identifier>
+<datestamp>2013-10-18T18:28:06.771Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258486481</identifier>
+<datestamp>2013-10-18T18:28:06.840Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258486740</identifier>
+<datestamp>2013-10-18T18:28:06.912Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>25848683X</identifier>
+<datestamp>2013-10-18T18:28:06.975Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258486945</identifier>
+<datestamp>2013-10-18T18:28:07.095Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258487070</identifier>
+<datestamp>2013-10-18T18:28:07.184Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258487267</identifier>
+<datestamp>2013-10-18T18:28:07.257Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258487283</identifier>
+<datestamp>2013-10-18T18:28:07.326Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>25848733X</identifier>
+<datestamp>2013-10-18T18:28:07.365Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258487402</identifier>
+<datestamp>2013-10-18T18:28:07.482Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258487690</identifier>
+<datestamp>2013-10-18T18:28:07.562Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258487704</identifier>
+<datestamp>2013-10-18T18:28:07.629Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258487747</identifier>
+<datestamp>2013-10-18T18:28:07.707Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258488085</identifier>
+<datestamp>2013-10-18T18:28:07.774Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258488158</identifier>
+<datestamp>2013-10-18T18:28:07.841Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258488212</identifier>
+<datestamp>2013-10-18T18:28:07.923Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>25848845X</identifier>
+<datestamp>2013-10-18T18:28:08.013Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258488530</identifier>
+<datestamp>2013-10-18T18:28:08.062Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258488557</identifier>
+<datestamp>2013-10-18T18:28:08.115Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258488891</identifier>
+<datestamp>2013-10-18T18:28:08.167Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258489146</identifier>
+<datestamp>2013-10-18T18:28:08.220Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258489448</identifier>
+<datestamp>2013-10-18T18:28:08.295Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258489502</identifier>
+<datestamp>2013-10-18T18:28:08.359Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258489774</identifier>
+<datestamp>2013-10-18T18:28:08.457Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258489782</identifier>
+<datestamp>2013-10-18T18:28:08.506Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258489995</identifier>
+<datestamp>2013-10-18T18:28:08.568Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258490233</identifier>
+<datestamp>2013-10-18T18:28:08.631Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258490624</identifier>
+<datestamp>2013-10-18T18:28:08.744Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258490802</identifier>
+<datestamp>2013-10-18T18:28:08.780Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258490918</identifier>
+<datestamp>2013-10-18T18:28:08.859Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258491116</identifier>
+<datestamp>2013-10-18T18:28:08.956Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258491183</identifier>
+<datestamp>2013-10-18T18:28:08.996Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258491248</identifier>
+<datestamp>2013-10-18T18:28:09.049Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<record>
+<header status="deleted">
+<identifier>258491256</identifier>
+<datestamp>2013-10-18T18:28:09.104Z</datestamp>
+<setSpec>A</setSpec>
+</header>
+</record>
+<resumptionToken>2013-10-18T18%3A28%3A09.142Z/25849170/2014-03-31T00%3A00%3A00.000Z/A/m21-xml%2Foai</resumptionToken>
+</ListRecords>
+</OAI-PMH>

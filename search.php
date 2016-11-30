@@ -185,13 +185,13 @@ switch( $qobj->area ) {
 }
 
 if( @is_array( $qobj->facets->source )) {
-	$_q = "";
+	$sourcefilterquery = "";
 	foreach( $qobj->facets->source as $src ) {
-		if( $_q != '' ) $_q .= ' OR ';
-		if( $src == 'NEBIS' ) $_q .= ' (source:'.$helper->escapePhrase( $src ).' AND ( signature:'.$helper->escapePhrase('nebis:E75:*' ).' OR online:true ))';
-		else $_q .= ' (source:'.$helper->escapePhrase( $src ).')';
+		if( $sourcefilterquery != '' ) $sourcefilterquery .= ' OR ';
+		if( $src == 'NEBIS' ) $sourcefilterquery .= ' (source:'.$helper->escapePhrase( $src ).' AND ( signature:'.$helper->escapePhrase('nebis:E75:*' ).' OR online:true ))';
+		else $sourcefilterquery .= ' (source:'.$helper->escapePhrase( $src ).')';
 	}
-    $squery->createFilterQuery('source')->addTag('source')->setQuery( $_q );	
+    $squery->createFilterQuery('source')->addTag('source')->setQuery( $sourcefilterquery );	
 }
 if( @is_array( $qobj->facets->embedded )) {
     $squery->createFilterQuery('embedded')->addTag('embedded')->setQuery('embedded:('.implode(' ', $qobj->facets->embedded).')'	);	
@@ -239,7 +239,10 @@ $numResults = $rs->getNumFound();
 $numPages = floor( $numResults / $pagesize );
 if( $numResults % $pagesize > 0 ) $numPages++;
 
-echo "<!-- ".$qstr." (Documents: {$numResults} // Page ".($page+1)." of {$numPages}) -->\n";
+echo "<!-- ".$qstr." (Documents: {$numResults} // Page ".($page+1)." of {$numPages}) 
+		Metafilter: {$acl_query} 
+		Sourcefilter: {$sourcefilterquery}
+-->\n";
 
 $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 

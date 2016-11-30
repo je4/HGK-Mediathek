@@ -36,21 +36,21 @@ class SOLR {
         $this->solr = $solr;    
     }
     
-    static public function buildTag( $tags ) {
+    static public function buildTag( $tags, $divider = '/' ) {
         $result = array();
         foreach( $tags as $tag ) {
-            $tlist = explode('/', $tag );
+            $tlist = explode($divider, $tag );
             for( $i = 0; $i < count( $tlist ); $i++ ) {
                 $r = $i;
                 for( $j = 0; $j <= $i; $j++ )
-                    $r .= '/'.trim( $tlist[$j] );
+                    $r .= $divider.trim( $tlist[$j] );
                 if( array_search( $r, $result ) === false )
                     $result[] = $r;
             }
         }
         return $result;
     }
-    
+	
     public function import( SOLRSource $src, $commit = false ) {
         $id = $src->getID();
         $update = $this->solr->createUpdate();
@@ -107,6 +107,8 @@ class SOLR {
            $doc->addField( 'author', /* utf8_encode */($author ));
         foreach( /* SOLR::buildTag */($src->getTags()) as $tag )
                 $doc->addField( 'tag', /* utf8_encode */( $tag ));
+        foreach( SOLR::buildTag($src->getCategories(), '::' ) as $category )
+                $doc->addField( 'category', /* utf8_encode */( $category ));
         foreach( $src->getCluster() as $cluster )
             $doc->addField( 'cluster', $cluster );
         foreach( $src->getLoans() as $loan )

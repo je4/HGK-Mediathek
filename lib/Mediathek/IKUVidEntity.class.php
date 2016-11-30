@@ -29,7 +29,7 @@ namespace Mediathek;
  *
  */
 
-class IKUVidEntity implements SOLRSource {
+class IKUVidEntity extends SOLRSource {
     private static $videotable = 'source_ikuvid';
     private $json = null;
     private $data = null;
