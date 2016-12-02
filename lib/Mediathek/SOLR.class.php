@@ -51,9 +51,8 @@ class SOLR {
         return $result;
     }
 	
-    public function import( SOLRSource $src, $commit = false ) {
-        $id = $src->getID();
-        $update = $this->solr->createUpdate();
+	public function delete( $id ) {
+		$update = $this->solr->createUpdate();
         $update->addDeleteByID($id);
         $update->addCommit();
         $result = $this->solr->update( $update );
@@ -61,6 +60,11 @@ class SOLR {
         echo 'Delete query for '.$id.' executed'."\n";
         echo 'Query status: ' . $result->getStatus()."\n";
         echo 'Query time: ' . $result->getQueryTime()."\n";
+	}
+	
+    public function import( SOLRSource $src, $commit = false ) {
+        $id = $src->getID();
+		$this->delete( $id );
 
         $update = $this->solr->createUpdate();
         $helper = $update->getHelper();

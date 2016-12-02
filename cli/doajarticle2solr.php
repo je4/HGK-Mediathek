@@ -3,7 +3,7 @@
 namespace Mediathek;
 
 include '../init.inc.php';
-
+include '../init.pg.php';
 
 
 $doajClient = new \Phpoaipmh\Client('http://www.doaj.org/oai.article');
@@ -16,13 +16,12 @@ $solr = new SOLR( $solrclient );
 $result = $doajEndpoint->identify();
 //var_dump($result);
 
-$sql = "SELECT DATE_FORMAT(datestamp, '%Y-%m-%dT%H:%i:%sZ') FROM source_doajoai WHERE type=\"article\" ORDER BY datestamp DESC";
-echo $sql."\n";
+$sql = "SELECT DATE_FORMAT(datestamp, '%Y-%m-%dT%H:%i:%sZ') FROM source_doajoai WHERE identifier LIKE \"oai:doaj.org/article:%\" ORDER BY datestamp DESC";
 $datestamp = $db->GetOne( $sql );
 if( $datestamp == null ) $datestamp = (string) $result->Identify->earliestDatestamp;
 // var_dump( $datestamp );
-//$datestamp = "2016-08-08T15:46:18Z";
 echo "Starting with: ".$datestamp."\n";
+
 $recs = $doajEndpoint->listRecords( 'oai_dc', new \DateTime( $datestamp ) /*, new \DateTime( '2016-09-08T01:30:57Z' ) */);
 $counter = 0;
 foreach( $recs as $xmlrec ) {

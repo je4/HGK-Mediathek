@@ -253,6 +253,13 @@ class DOAJEntity extends SOLRSource {
 	}
 
 	public function getIssues() { return array(); }
+
+	public function getCategories() {
+		$categories = parent::getCategories();
+		$categories[] = 'openaccess!!DOAJ';
+		return $categories;
+	}	
+	
 }
 
 ?>

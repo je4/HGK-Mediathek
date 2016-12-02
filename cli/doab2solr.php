@@ -23,6 +23,7 @@ $counter = 0;
 foreach( $recs as $xmlrec ) {
 //    var_dump( $rec );
     $xml = $xmlrec; // str_replace( '<record', '<record xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"', $xmlrec );
+
 //    echo "\n".$xml."\n";
     $p = xml_parser_create();
     xml_parse_into_struct( $p, $xml, $vals, $index /*, LIBXML_NOWARNING */);

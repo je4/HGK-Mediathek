@@ -591,6 +591,17 @@ class MarcEntity extends SOLRSource {
          return $codes;
     }
 
+	public function getCategories() {
+		$categories = parent::getCategories();
+		foreach( $this->getSignatures() as $sig ) {
+			$s = explode( ':', $sig );
+			if( count( $s ) >= 3 ) {
+				$categories[] = $s[0].'!!'.$s[1];
+			}
+		}
+		return $categories;
+	}	
+	
     public function getAbstract() { return null; }
     public function getContent() { return null; }
     public function getMetaACL() { return array( 'global/guest' ); }
