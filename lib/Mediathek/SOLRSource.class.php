@@ -57,7 +57,7 @@ abstract class SOLRSource {
 	abstract public function getIssues();
 	public function getCategories() {
 		$r = new \ReflectionMethod(get_called_class(), 'getSource');
-		return array( 'source::'.$r->invoke($this) );
+		return array( 'source!!'.$r->invoke($this) );
 	}
 
 }

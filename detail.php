@@ -65,9 +65,7 @@ echo mediathekheader('search', 'Mediathek - Detail - '.($doc ? $doc->title : '')
 
             <div class="content-container col-md-11 col-sm-12">
                 <div class="clearfix full-height">
-                    <h2 class="small-heading">Mediathek der Künste</h2>
 
-					<div class="container-fluid" style="margin-top: 0px; padding: 0px 20px 20px 20px;">
 <?php
 if( $numResults > 0 ) foreach( $rs as $doc ) {
 ?>
@@ -76,7 +74,8 @@ if( $numResults > 0 ) foreach( $rs as $doc ) {
 	$class = '\\Mediathek\\'.$doc->source.'Display';
 
 	$output = new $class($doc, null, $db, null);
-	$html = $output->detailView();
+	$html = $output->getHeading();
+	$html .= $output->detailView();
 	$html .= '<script type="application/ld+json">'."\n".json_encode( $output->getSchema() )."\n</script>\n";
 	
 	echo $html;

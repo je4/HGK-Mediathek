@@ -20,8 +20,8 @@ $dbid = $data['Id'];
 						<i><?php echo htmlspecialchars( $data['Description'] 	); ?></i><br />
 						<?php } ?>
 						<?php if( array_key_exists( 'Categories', $data )) { ?>
-						<b>Kategorie: </b><span style="word-break: break-all;"><?php echo htmlspecialchars( str_replace( ':', '>', $data['Categories'] )); ?></span><br />
-						<?php } ?>
+						<b>Kategorie: </b><span style="word-break: break-all;"><?php echo htmlspecialchars( str_replace( ':', ' > ', $data['Categories'] )); ?></span><br />
+						<?php } ?> 
 						<?php if( array_key_exists( 'Author', $data )) { ?>
 						<b>Coverage: </b><?php echo htmlspecialchars( $data['Coverage'] 	); ?><br />
 						<?php } ?>

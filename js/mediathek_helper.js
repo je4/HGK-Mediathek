@@ -146,6 +146,12 @@ function doSearchFull(query, area, filter, facets, page, pagesize ) {
 }
 
 function doSearch( searchtext, page, pagesize) {
+	
+	if ( typeof doSearch.running == 'undefined' ) {
+        // It has not... perform the initialization
+        doSearch.running = true;
+    }
+	else return;
 //	searchtext = $('#searchtext').val();
 	//searcharea = window.location.hash.replace("#","");
 
@@ -161,6 +167,26 @@ function doSearch( searchtext, page, pagesize) {
 			facets[facet].push($(this).val())
 		}
 	});
+	
+	// categories
+	var selected = [];
+	var slist = $('#categorytree').jstree().get_selected(true);
+	// alle ausgewählten in liste
+	for (var obj in slist) {
+		selected.push( slist[obj].id );
+	}
+	// jetzt nur die ausgewählten in die liste, deren parent nicht schon in der liste ist
+	for (var obj in slist) {
+		var o = slist[obj];
+		if ( $.inArray( o.parent, selected ) != -1 ) {
+            continue;
+        }
+		if(!( 'category' in facets )) {
+			facets['category'] = [];
+		}
+		facets['category'].push(slist[obj].id)
+	}
+	
 
 	doSearchFull( searchtext, searcharea, [], facets, page, pagesize );
 }

@@ -29,7 +29,7 @@ namespace Mediathek;
  *
  */
 
-class MarcEntity implements SOLRSource {
+class MarcEntity extends SOLRSource {
     private static $marctable = 'nebis_grab';
     private $xml = null;
     private $id = null;

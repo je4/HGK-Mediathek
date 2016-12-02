@@ -107,7 +107,7 @@ class SOLR {
            $doc->addField( 'author', /* utf8_encode */($author ));
         foreach( /* SOLR::buildTag */($src->getTags()) as $tag )
                 $doc->addField( 'tag', /* utf8_encode */( $tag ));
-        foreach( SOLR::buildTag($src->getCategories(), '::' ) as $category )
+        foreach( SOLR::buildTag($src->getCategories(), '!!' ) as $category )
                 $doc->addField( 'category', /* utf8_encode */( $category ));
         foreach( $src->getCluster() as $cluster )
             $doc->addField( 'cluster', $cluster );

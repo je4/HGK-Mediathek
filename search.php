@@ -71,6 +71,7 @@ function readQuery( $md5 ) {
 	
 	$sql = "SELECT json FROM web_query WHERE queryid=".$db->qstr( $md5 );
 	$json = $db->GetOne( $sql );
+//	var_dump( json_decode( $json ));
 	if( $json ) return json_decode( $json );
 	
 	$qobj = new \stdClass();
@@ -193,6 +194,14 @@ if( @is_array( $qobj->facets->source )) {
 	}
     $squery->createFilterQuery('source')->addTag('source')->setQuery( $sourcefilterquery );	
 }
+if( @is_array( $qobj->facets->category )) {
+	$categoryfilterquery = "";
+	foreach( $qobj->facets->category as $cat ) {
+		if( $categoryfilterquery != '' ) $categoryfilterquery .= ' OR ';
+		$categoryfilterquery .= ' (category:'.$helper->escapePhrase( $cat ).')';
+	}
+    $squery->createFilterQuery('category')->addTag('category')->setQuery( $categoryfilterquery );	
+}
 if( @is_array( $qobj->facets->embedded )) {
     $squery->createFilterQuery('embedded')->addTag('embedded')->setQuery('embedded:('.implode(' ', $qobj->facets->embedded).')'	);	
 }
@@ -220,6 +229,8 @@ $squery->setQuery( $qstr );
 
 $facetSetSource = $squery->getFacetSet();
 $facetSetSource->createFacetField('source')->setField('source')->addExclude('source');
+$facetSetCategory = $squery->getFacetSet();
+$facetSetCategory->createFacetField('category')->setField('category')->addExclude('category');
 $facetSetEmbedded = $squery->getFacetSet();
 $facetSetEmbedded->createFacetField('embedded')->setField('embedded')->addExclude('embedded');
 //$facetSetLicense = $squery->getFacetSet();
@@ -252,7 +263,7 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 	   </div>
 		
 	   <div class="row">
-		  <div class="col-md-9">
+		  <div class="col-md-8">
 			<div class="clearfix full-height">
 			  
 
@@ -268,7 +279,7 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 			  </table>
 			</div>
 		  </div>
-   		  <div class="col-md-3" style="background-color: transparent;">
+   		  <div class="col-md-4" style="background-color: transparent;">
 			<div style="">
 			<span style="; font-weight: bold;">Kataloge</span><br />
 			<div class="facet" style="">
@@ -363,6 +374,87 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 ?>
 			</div>
 			</div>
+
+			<div style="overflow:hidden;">
+			<span style="; font-weight: bold;">Kategorien</span><br />
+			<div class="facet" style="">
+				<div class="marker" style=""></div>
+<!--
+<?php
+				$facetCategory = $rs->getFacetSet()->getFacet('category');
+				$i = 0;
+				$categories = array();
+				foreach ($facetCategory as $value => $count) {
+					if( preg_match( '/^[0-9]+(!!.*)$/', $value, $matches )) {
+						$categories[$matches[1]] = $count;
+					}
+					if( (@is_array( $qobj->facets->category )
+							&& array_search($value, $qobj->facets->category) !== false ) === false
+							&& $count == 0 )
+						continue;
+?>	
+					<div class="checkbox checkbox-green">
+						<input class="facet" type="checkbox" id="category" value="<?php echo htmlentities($value); ?>" <?php if( @is_array( $qobj->facets->category ) && array_search($value, $qobj->facets->category) !== false ) { echo " checked"; } ?>>
+						<label for="category<?php echo $i; ?>">
+							<?php echo htmlspecialchars( str_replace( '!!', ':', $value )).' ('.$count.')'; ?>
+						</label>
+					</div>
+<?php			
+					$i++;
+				}
+				if( isset( $qobj->facets->category ))
+					foreach( $qobj->facets->category as $value ) {
+//						echo "check: ".$value;
+						if( array_key_exists( $value, $facetCategory->getValues() )) {
+							continue;
+						}
+?>	
+					<div class="checkbox checkbox-green">
+						<input class="facet" type="checkbox" id="category" value="<?php echo htmlentities($value); ?>" checked >
+						<label for="category<?php echo $i; ?>">
+							<?php echo htmlspecialchars( $value ); ?>
+						</label>
+					</div>
+<?php								
+					}
+?>
+-->
+<?php								
+				$cats = array_keys( $categories );
+				sort( $cats );
+				//var_dump( $cats );
+				$len = 0;
+?>
+				<div id="categorytree">
+<?php
+	$tree = CategoryTree::buildTree( $facetCategory->getValues(), isset( $qobj->facets->category) ? $qobj->facets->category : array() );
+//	echo nl2br( str_replace( ' ', '+', htmlentities( $tree->__toString() )));
+	echo $tree->treeJS();
+?>
+<?php
+/*
+					foreach( $cats as $cat ) {
+						
+						if( strlen( $cat ) > $len ) {
+							echo "	<ul>\n";
+						}
+						elseif( strlen( $cat ) < $len ) {
+							echo "	</ul>\n";
+						}
+						else {
+							if( preg_match( '/!!([^!]+)$/', $cat, $matches )) {
+								echo "		<li>".htmlentities( $matches[1] )."</li>\n";								
+							}
+						}
+					}
+*/
+?>
+
+				</div>
+			</div>
+			</div>
+			
+			
 		  </div>
 
 	   </div>
@@ -401,9 +493,50 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 		facets: {},
 	}
 
-	
 
 function init() {
+	var inEvent = false;
+	$('#categorytree').on('select_node.jstree', function (e, data) {
+			if ( inEvent ) {
+                return;
+            }
+			inEvent = true;
+			console.log( "select node: %o", $('#categorytree').jstree().get_selected(true) );
+			doSearch( $('#searchtext').val(), 0, <?php echo $session->getPageSize(); ?> );
+			
+	
+		}).on('deselect_node.jstree', function (e, data) {
+			function uncheckChildren( node ) {
+				if( data.node.children.length > 0 ) {
+					for( var id in data.node.children ) {
+						data.instance.uncheck_node( data.node.children[id] );
+					}
+				}
+			}
+			function uncheckParents( node ) {
+				if( data.node.parents.length > 0 ) {
+					for( var id in data.node.parents ) {
+						data.instance.uncheck_node( data.node.parents[id] );
+					}
+				}
+			}
+
+			if ( inEvent ) {
+                return;
+            }
+			inEvent = true;
+    
+			console.log( "deselect node: %o", data );
+
+			//uncheckChildren( data.node );
+			//uncheckParents( data.node );
+			
+			setTimeout( function () { doSearch( $('#searchtext').val(), 0, <?php echo $session->getPageSize(); ?> ); }, 0 );
+	
+		}).jstree({ 
+			"plugins" : [ "checkbox" ], 
+			"core": { "themes":{ "icons":false  } }
+		});
 
 	 initSearch("<?php echo $qobj->area; ?>", <?php echo $session->getPageSize(); ?>);
 

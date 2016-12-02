@@ -44,7 +44,8 @@ function mediathekheader( $current, $title, $area ) {
 
     <link type="text/css" rel="stylesheet" href="css/mediathek.css">    
     <link type="text/css" rel="stylesheet" href="css/checkbox.css">    
-    <link type="text/css" rel="stylesheet" href="css/bootstrap-editable.css">    
+    <link type="text/css" rel="stylesheet" href="css/bootstrap-editable.css">
+	<link rel="stylesheet" href="css/jstree_default/style.css" />
     
     <!--[if IE]>
 		<style>
@@ -54,7 +55,7 @@ function mediathekheader( $current, $title, $area ) {
 			}
 		</style>
 	<![endif]-->
-
+	
 
 </head>
 

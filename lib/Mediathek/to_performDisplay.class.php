@@ -65,6 +65,21 @@ class to_performDisplay extends DisplayEntity {
 		return $schema;
 	}
   
+  
+  	public function getHeading() {
+		$html = '';
+		
+        ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
+?>
+		                    <h2 class="small-heading">to_perform</h2>
+
+					<div class="container-fluid" style="margin-top: 0px; padding: 0px 20px 20px 20px;">
+<?php
+        $html .= ob_get_contents();
+        ob_end_clean();
+		return $html;
+	}
+
 	public function detailView() {
 		
         global $config, $solrclient, $db, $urlparams, $pagesize;

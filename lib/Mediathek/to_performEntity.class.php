@@ -219,6 +219,15 @@ class to_performEntity extends SOLRSource {
 
 	public function getLanguages() { return array(); }
 	public function getIssues()  { return array(); }
+	
+	public function getCategories() {
+		$categories = parent::getCategories();
+		if( preg_match( '/Projekte:to_perform:(.*)$/', $this->data['Categories'], $matches )) {
+			$categories[] = 'fhnw!!hsm!!fue!!prj!!to_perform!!'.str_replace( ':', '!!', $matches[1] );
+		}
+		else $categories[] = 'fhnw!!hsm!!fue!!prj!!to_perform';
+		return $categories;
+	}
 }
 
 ?>

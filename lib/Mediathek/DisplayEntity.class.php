@@ -39,6 +39,20 @@ abstract class DisplayEntity {
 		$this->highlight = $highlightedDoc;
     }
 	
+	public function getHeading() {
+		$html = '';
+		
+        ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
+?>
+		                    <h2 class="small-heading">Mediathek der Künste</h2>
+
+					<div class="container-fluid" style="margin-top: 0px; padding: 0px 20px 20px 20px;">
+<?php
+        $html .= ob_get_contents();
+        ob_end_clean();
+		return $html;
+	}
+	
 	public abstract function getSchema( );
     public abstract function detailView();
     public abstract function desktopList();

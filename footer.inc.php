@@ -23,6 +23,7 @@ function mediathekfooter() {
 	<script type="text/javascript" src="js/md5.min.js"></script>  
 	<script type="text/javascript" src="js/tether.min.js"></script>  
 	<script type="text/javascript" src="js/bootstrap-editable.js"></script>  
+	<script type="text/javascript" src="js/jstree.min.js"></script>  
 	
 	<script language="javascript">
 	   $( document ).ready(function() {
