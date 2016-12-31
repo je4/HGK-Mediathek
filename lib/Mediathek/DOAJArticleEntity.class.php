@@ -86,7 +86,7 @@ class DOAJArticleEntity extends SOLRSource {
 	
     public function getID() {
         if( substr( $this->id, 0, strlen( 'oai:doaj.org/article:')) == 'oai:doaj.org/article:' )
-            return $this->idprefix.substr( $this->id, strlen( 'oai:doaj.org/article:'));
+            return $this->idprefix.'-'.substr( $this->id, strlen( 'oai:doaj.org/article:'));
         return $this->idprefix.'-'.$this->id; 
     }
     
@@ -281,6 +281,12 @@ class DOAJArticleEntity extends SOLRSource {
         return array();
     }
 
+	public function getCategories() {
+		$categories = parent::getCategories();
+		$categories[] = 'openaccess!!DOAJArticle';
+		return $categories;
+	}	
+	
 }
 
 ?>

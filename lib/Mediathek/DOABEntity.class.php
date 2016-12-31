@@ -78,6 +78,12 @@ class DOABEntity extends SOLRSource {
         $this->data = (array)json_decode( $row['data'] );
     }
     
+    function loadFromArray( string $id, array $data, string $idprefix ) {
+        $this->id = $id;
+        $this->idprefix = $idprefix;
+		$this->data = $data;
+	}
+	 
 	private function getFirstField( $name ) {
 		if( !array_key_exists( $name, $this->data )) return null;
 		if( !is_array( $this->data[$name] )) return null;
@@ -247,6 +253,15 @@ class DOABEntity extends SOLRSource {
     public function getMetaACL() { return array( 'global/guest' ); }
     public function getContentACL() { return array(); }
     public function getPreviewACL() { return array(); }
+    public function getLanguages() { return array(); }
+    public function getIssues() { return array(); }
+	
+	public function getCategories() {
+		$categories = parent::getCategories();
+		$categories[] = 'openaccess!!DOAB';
+		return $categories;
+	}	
+		
 }
 
 ?>

@@ -16,9 +16,9 @@ $solr = new SOLR( $solrclient );
 $result = $doajEndpoint->identify();
 
 //$sql = "SELECT DATE_FORMAT(datestamp, '%Y-%m-%dT%H:%i:%sZ') FROM source_doajoai WHERE identifier LIKE \"oai:doaj.org/journal:%\" ORDER BY datestamp DESC";
-$sql = "SELECT to_char( datestamp, 'YYYY-MM-DDXHH24:MI:SS') FROM oai_pmh WHERE oai_pmh_source_id=1 ORDER BY datestamp DESC";
+$sql = "SELECT to_char( datestamp, 'YYYY-MM-DDXHH24:MI:SS') FROM oai_pmh WHERE oai_pmh_source_id={$sourceid} ORDER BY datestamp DESC";
 $datestamp = $pg->GetOne( $sql );
-//if( $datestamp == null )
+if( $datestamp == null )
   $datestamp = (string) $result->Identify->earliestDatestamp;
 $datestamp = str_replace( 'X', 'T', $datestamp );
 // var_dump( $datestamp );

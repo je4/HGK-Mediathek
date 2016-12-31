@@ -59,7 +59,11 @@ abstract class SOLRSource {
 		$r = new \ReflectionMethod(get_called_class(), 'getSource');
 		return array( 'source!!'.$r->invoke($this) );
 	}
-
+	
+	public function getSourceIDs() {
+		return array();
+	} 
+	
 }
 
 ?>

@@ -6,134 +6,95 @@ include '../init.inc.php';
 include '../init.pg.php';
 
 
+$sourceid = 2;
+$interval = "P1W";
+
 $doajClient = new \Phpoaipmh\Client('http://www.doaj.org/oai.article');
 $doajEndpoint = new \Phpoaipmh\Endpoint($doajClient, \Phpoaipmh\Granularity::DATE_AND_TIME);
 
-$entity = new DOAJArticleEntity( $db );
+$entity = new DOAJArticleEntity( $pg );
 $solr = new SOLR( $solrclient );
 
-
 $result = $doajEndpoint->identify();
-//var_dump($result);
 
-$sql = "SELECT DATE_FORMAT(datestamp, '%Y-%m-%dT%H:%i:%sZ') FROM source_doajoai WHERE identifier LIKE \"oai:doaj.org/article:%\" ORDER BY datestamp DESC";
-$datestamp = $db->GetOne( $sql );
-if( $datestamp == null ) $datestamp = (string) $result->Identify->earliestDatestamp;
-// var_dump( $datestamp );
+$sql = "SELECT to_char( datestamp, 'YYYY-MM-DDXHH24:MI:SS') FROM oai_pmh WHERE oai_pmh_source_id={$sourceid} ORDER BY datestamp DESC";
+$datestamp = $pg->GetOne( $sql );
+
+if( $datestamp == null ) {
+	$datestamp = (string) $result->Identify->earliestDatestamp;
+	$date = new \DateTime( $datestamp );
+}
+else {
+	$datestamp = str_replace( 'X', 'T', $datestamp );
+	$date = new \DateTime( $datestamp );
+	$dint = new \DateInterval( $interval );
+	$dint->invert = 1;
+	$date->add( $dint );
+}
+
 echo "Starting with: ".$datestamp."\n";
 
-$recs = $doajEndpoint->listRecords( 'oai_dc', new \DateTime( $datestamp ) /*, new \DateTime( '2016-09-08T01:30:57Z' ) */);
+$now = new \DateTime();
+$now->add( new \DateInterval($interval) );
+
+
 $counter = 0;
-foreach( $recs as $xmlrec ) {
-//    var_dump( $rec );
-    $xml = str_replace( '<record', '<record xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"', $xmlrec );
-//    echo "\n".$xml."\n";
-    $p = xml_parser_create();
-    xml_parse_into_struct( $p, $xml, $vals, $index /*, LIBXML_NOWARNING */);
-    xml_parser_free($p);
-    $dc = array();
-//    print_r( $vals );
-    foreach( $vals as $val ) {
-      if( $val['type'] == 'complete' )
-      {
-          if( !@is_array( $dc[$val['tag']] )) $dc[$val['tag']] = array();
-            $dc[$val['tag']][] = $val['value'];
-      }
-    }
-    $identifier = $dc['IDENTIFIER'][0];
-	if( !$identifier ) { 
-		echo "empty identifier\n";
-		continue;
+$month = 1;
+
+do {
+	$date2 = clone $date;
+	$date2->add( new \DateInterval( $interval ));
+	echo "Current date: ".$date->format('Y-m-d H:i:s')." until ".$date2->format('Y-m-d H:i:s')."\n";
+	
+	$recs = $doajEndpoint->listRecords( 'oai_dc', $date, $date2 );
+	$counter = 0;
+	foreach( $recs as $xmlrec ) {
+		$xml = str_replace( '<record', '<record xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"', $xmlrec );
+
+		$record = new OAIPMHRecord( $xml );
+		
+		echo "{$month}:{$counter}:".$record->getIdentifier()."\n";
+	  
+		if( $record->isDeleted() ) {
+			echo "   deleting...\n";
+			$solr->delete( 'doajarticle'.$record->getIdentifier());
+			$sql = "DELETE FROM oai_pmh WHERE identifier=".$pg->qstr( $record->getIdentifier() );
+			$pg->Execute();
+			continue;
+		}
+
+		$metadata = $record->getMetadata();
+		
+		$data = array();
+		$data['IDENTIFIER'] = array( $record->getIdentifier() );
+		$data['DATESTAMP'] = array( $record->getDatestamp() );
+		
+	//	echo $metadata->ownerDocument->saveXML($metadata)."\n";
+		$dc = $metadata->firstChild;
+		foreach( $dc->childNodes as $dca ) {
+		  //echo $dca->tagName.': '.$dca->nodeValue."\n";
+		  $tag = strtoupper( $dca->tagName );
+		  if( !array_key_exists( $tag, $data )) $data[$tag] = array();
+		  $data[$tag][] = $dca->nodeValue;
+		}
+
+		$json = json_encode( $data );
+		$sql = "INSERT INTO oai_pmh
+				  VALUES( ".$pg->qstr( $record->getIdentifier() ).", ".$pg->qstr( $record->getDatestamp() ).", ".$pg->qstr( 'article' ).", ".$pg->qstr( $json ).", {$sourceid} )
+				ON CONFLICT (identifier) DO UPDATE
+					SET datestamp=".$pg->qstr( $datestamp ).", type=".$pg->qstr( 'article' ).", data=".$pg->qstr( $json ).", oai_pmh_source_id={$sourceid}";
+		//echo "\n------\n{$sql}\n--------\n";
+		$pg->Execute( $sql );
+		
+		$entity->loadFromArray( $record->getIdentifier(), $data, 'doajarticle' );
+		$solr->import( $entity );
+		$counter++;
 	}
-    $datestamp = $dc['DATESTAMP'][0];
-    $type = $dc['DC:TYPE'][0];
-    echo $identifier.": ".$datestamp."\n";
-    $sql = "REPLACE INTO source_doajoai( identifier, datestamp, type, data )
-        VALUES (".$db->qstr( $identifier ).", ".$db->qstr( $datestamp ).", ".$db->qstr( $type ).", ".$db->qstr( json_encode( $dc )).")";
-    $db->Execute( $sql );
-    
-    $entity->loadFromDatabase( $identifier, 'doajarticle' );
-    $solr->import( $entity );
-//    if( $counter++ > 10 ) exit;
-}
+	
+	$date->add( new \DateInterval($interval) );
+	$month++;
+} while( $date < $now );
+	
+echo "DONE -------------------------------------------\n";
 
-exit;
-
-
-/*
-// Results will be iterator of SimpleXMLElement objects
-$results = $doajEndpoint->listMetadataFormats();
-foreach($results as $item) {
-    var_dump($item);
-}
-*/
-
-/*
-$sql = "SELECT * FROM nebis_grab2";
-$rs = $db->Execute( $sql );
-$x = 0;
-foreach( $rs as $row ) {
-    $sql = "INSERT INTO nebis_grab VALUES( ".$db->qstr( $row['sys']).",".$db->qstr( utf8_encode( $row['tag'])).",".$db->qstr( utf8_encode( $row['value']))." );";
-    $db->Execute( $sql );
-    $x = ($x+1)%100;
-    if( $x == 0 ) echo '.';
-}
-$rs->Close();
-exit;
-*/
-
-$counter = 0;
-$sql = "SELECT `identifier` as id FROM source_doajoai WHERE type=".$db->qstr( 'article' );
-echo $sql."\n";
-$rs = $db->Execute( $sql );
-foreach( $rs as $row ) {
-    $sys = $row['id'];
-    if( !strlen( $sys )) continue;
-    
-    try {
-      $entity->loadFromDatabase( $sys, 'doajarticle' );
-      
-      //$xml = $entity->getXML();
-      //echo $xml->saveXML();
-      
-      $title = $entity->getTitle();
-      echo "Title: ".$title."\n";
-      
-      $tags = $entity->getTags();
-      echo "Tags: ";
-      print_r( $tags );
-      
-      $cluster = $entity->getCluster();
-      echo "Cluster: ";
-      print_r( $cluster );
-      
-      $authors = $entity->getAuthors();
-      echo "Authors: ";
-      print_r( $authors );
-      
-      $loans = $entity->getLoans();
-      echo "Loans: ";
-      print_r( $loans );
-      
-      $licenses = $entity->getLicenses();
-      echo "Licenses: ";
-      print_r( $licenses );
-      
-      $signatures = $entity->getSignatures();
-      echo "Signatures: ";
-      print_r( $signatures );
-      
-      $urls = $entity->getURLs();
-      echo "URLs: ";
-      print_r( $urls );
-      
-      $solr->import( $entity );
-    }
-    catch( Exception $ex ) {
-      echo $ex;
-    }
-
-    //if( $count++ > 10 ) break;
-}
-$rs->Close();
 ?>

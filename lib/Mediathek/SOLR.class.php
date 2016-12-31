@@ -51,20 +51,32 @@ class SOLR {
         return $result;
     }
 	
-	public function delete( $id ) {
-		$update = $this->solr->createUpdate();
-        $update->addDeleteByID($id);
-        $update->addCommit();
-        $result = $this->solr->update( $update );
-        
-        echo 'Delete query for '.$id.' executed'."\n";
-        echo 'Query status: ' . $result->getStatus()."\n";
-        echo 'Query time: ' . $result->getQueryTime()."\n";
+	public function delete( $id, $commit = false ) {
+		$query = $this->solr->createSelect();
+		$helper = $query->getHelper();
+		$query->setQuery( 'id:'.$helper->escapeTerm( $id ));
+		$resultset = $this->solr->select( $query );
+		if( $resultset->getNumFound() == 1 ) {
+			foreach( $resultset->getDocuments() as $doc ) {
+				$doc->setField( 'deleted', true );
+
+				$update = $this->solr->createUpdate();
+				$update->addDocuments( array( $doc ));
+				if( $commit ) $update->addCommit();
+				$result = $this->solr->update( $update );
+				echo 'Delete query for '.$id.' executed'."\n";
+				echo 'Query status: ' . $result->getStatus()."\n";
+				echo 'Query time: ' . $result->getQueryTime()."\n";
+				break;
+			}
+		}
 	}
+	
+	
 	
     public function import( SOLRSource $src, $commit = false ) {
         $id = $src->getID();
-		$this->delete( $id );
+		//$this->delete( $id );
 
         $update = $this->solr->createUpdate();
         $helper = $update->getHelper();
@@ -73,7 +85,7 @@ class SOLR {
         $doc->id = $src->getID();
         $doc->setField( 'originalid', $src->getOriginalID());
         $doc->setField( 'source', $src->getSource());
-        $doc->setField( 'type', $src->getType());
+		$doc->setField( 'type', $src->getType());
         $doc->setField( 'openaccess', $src->getOpenAccess());
 		foreach( $src->getLocations() as $loc )
 			$doc->addField( 'location', $loc );
@@ -99,7 +111,7 @@ class SOLR {
 				echo "gzencode error\n";
 			}
             $doc->setField( 'metagz', base64_encode( $metagz ));
-            $doc->setField( 'metatext', ( $meta ));
+            //$doc->setField( 'metatext', ( $meta ));
 		}
         foreach( $src->getMetaACL() as $acl )
            $doc->addField( 'acl_meta', $acl );
@@ -129,7 +141,9 @@ class SOLR {
             $doc->addField( 'issue', $issue);
         foreach( $src->getLanguages() as $lang )
             $doc->addField( 'lang', $lang);
-        
+        foreach( $src->getSourceIDs() as $sid)
+           	$doc->addField( 'sourceid', $sid);
+            
         $doc->setField( 'online', $src->getOnline());
         $doc->setField( 'embedded', $src->getEmbedded());
         
@@ -141,8 +155,8 @@ class SOLR {
         $result = $this->solr->update( $update );
 
         echo 'Insert query for '.$id.' executed'."\n";
-        echo 'Query status: ' . $result->getStatus()."\n";
-        echo 'Query time: ' . $result->getQueryTime()."\n";
+//        echo 'Query status: ' . $result->getStatus()."\n";
+//        echo 'Query time: ' . $result->getQueryTime()."\n";
         
     }
 }    

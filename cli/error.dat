@@ -1,0 +1,19 @@
+Solr HTTP error: HTTP request failed, Connection timed out after 5001 milliseconds
+#0 /var/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/library/Solarium/Core/Client/Adapter/Curl.php(92): Solarium\Core\Client\Adapter\Curl->check('', Array, Resource id #18928751)
+#1 /var/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/library/Solarium/Core/Client/Adapter/Curl.php(213): Solarium\Core\Client\Adapter\Curl->getResponse(Resource id #18928751, false)
+#2 /var/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/library/Solarium/Core/Client/Adapter/Curl.php(68): Solarium\Core\Client\Adapter\Curl->getData(Object(Solarium\Core\Client\Request), Object(Solarium\Core\Client\Endpoint))
+#3 /var/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/library/Solarium/Core/Client/Client.php(804): Solarium\Core\Client\Adapter\Curl->execute(Object(Solarium\Core\Client\Request), Object(Solarium\Core\Client\Endpoint))
+#4 /var/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/library/Solarium/Core/Client/Client.php(773): Solarium\Core\Client\Client->executeRequest(Object(Solarium\Core\Client\Request), Object(Solarium\Core\Client\Endpoint))
+#5 /var/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/library/Solarium/Core/Client/Client.php(864): Solarium\Core\Client\Client->execute(Object(Solarium\QueryType\Update\Query\Query), NULL)
+#6 /var/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/SOLR.class.php(155): Solarium\Core\Client\Client->update(Object(Solarium\QueryType\Update\Query\Query))
+#7 /var/www/vhosts/mediathek.fhnw.ch/html/dev/cli/swissbib2solr.php(101): Mediathek\SOLR->import(Object(Mediathek\swissbibEntity))
+#8 {main}Solr HTTP error: HTTP request failed, Connection timed out after 5001 milliseconds
+#0 /var/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/library/Solarium/Core/Client/Adapter/Curl.php(92): Solarium\Core\Client\Adapter\Curl->check('', Array, Resource id #7767494)
+#1 /var/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/library/Solarium/Core/Client/Adapter/Curl.php(213): Solarium\Core\Client\Adapter\Curl->getResponse(Resource id #7767494, false)
+#2 /var/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/library/Solarium/Core/Client/Adapter/Curl.php(68): Solarium\Core\Client\Adapter\Curl->getData(Object(Solarium\Core\Client\Request), Object(Solarium\Core\Client\Endpoint))
+#3 /var/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/library/Solarium/Core/Client/Client.php(804): Solarium\Core\Client\Adapter\Curl->execute(Object(Solarium\Core\Client\Request), Object(Solarium\Core\Client\Endpoint))
+#4 /var/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/library/Solarium/Core/Client/Client.php(773): Solarium\Core\Client\Client->executeRequest(Object(Solarium\Core\Client\Request), Object(Solarium\Core\Client\Endpoint))
+#5 /var/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/library/Solarium/Core/Client/Client.php(864): Solarium\Core\Client\Client->execute(Object(Solarium\QueryType\Update\Query\Query), NULL)
+#6 /var/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/SOLR.class.php(155): Solarium\Core\Client\Client->update(Object(Solarium\QueryType\Update\Query\Query))
+#7 /var/www/vhosts/mediathek.fhnw.ch/html/dev/cli/swissbib2solr.php(101): Mediathek\SOLR->import(Object(Mediathek\swissbibEntity))
+#8 {main}

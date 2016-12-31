@@ -42,7 +42,7 @@ class DOABDisplay extends DisplayEntity {
 				$schema['isbn'] = substr( $c, 5 );
 		$schema['name'] = $this->doc->title;
 		$schema['author'] = array();
-		foreach( $this->doc->author_ss as $author ) {
+		if( isset( $this->doc->author_ss )) foreach( $this->doc->author_ss as $author ) {
 			$schema['author'][] = array( '@type' => 'Person', 'name' => $author );
 		}
 		
