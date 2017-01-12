@@ -10,7 +10,7 @@ $sourceid=4;
 $doabClient = new \Phpoaipmh\Client('http://oai.swissbib.ch:20103/oai/DB=2.1/');
 $doabEndpoint = new \Phpoaipmh\Endpoint($doabClient, \Phpoaipmh\Granularity::DATE_AND_TIME);
 
-$entity = new swissbibEntity();
+$entity = new swissbibEntity( $db );
 $solr = new SOLR( $solrclient );
 
 $result = $doabEndpoint->identify();
@@ -27,9 +27,11 @@ $datestamp = str_replace( 'X', 'T', $datestamp );
 echo "Starting with: ".$datestamp."\n";
 try {
 	$recs = $doabEndpoint->listRecords( 'm21-xml/oaitp', new \DateTime( $datestamp ));
-	$counter = 0;
+	$counter = $interval = $interval2 =  0;
 	foreach( $recs as $xmlrec ) {
 		$counter++;
+		$interval++;
+		$interval2++;
 		
 		try {
 		
@@ -42,9 +44,9 @@ try {
 			echo "> {$id} {$datestamp}({$counter})\n";
 		  
 			if( $record->isDeleted() ) {
-				echo "   deleting...\n";
+				echo "   deleting swissbib-{$id}...\n";
 				$solr->delete( 'swissbib-'.$id);
-				$pg->Execute($sql);
+				//$pg->Execute($sql);
 				continue;
 			}
 		
@@ -64,46 +66,45 @@ try {
 			
 			if( $marc == null ) continue;
 			
-			$entity->loadNode( $id, $marc, 'swissbib' );
+			$entity->loadNode( $id, $record, 'swissbib' );
 			echo $entity->getTitle()."\n";
-			/*
-			if( count($entity->getSourceIDs())) {
-				foreach( $entity->getSourceIDs() as $tag) echo $tag."\n";
-				echo "\n{$xml}\n";
-				exit;
-			}
-			continue;
-			*/
-			
-			//echo implode( ';', $entity->getGeneralNote())."\n";
-		/*	
-			foreach( $entity->getTags() as $tag) echo $tag."\n";
-			foreach( $entity->getCluster() as $tag) echo $tag."\n";
-			foreach( $entity->getAuthors() as $tag) echo $tag."\n";
-			echo implode( '/', $entity->getPublisher()).', '
-				.$entity->getCity().', '
-				.$entity->getYear()."\n";
-			
-			foreach( $entity->getSignatures() as $tag) echo $tag."\n";
-			foreach( $entity->getSourceIDs() as $tag) echo $tag."\n";
-			foreach( $entity->getCodes() as $tag) echo $tag."\n";
-		*/	
-		
-		/*	
-			$json = json_encode( $data );
-			$sql = "INSERT INTO oai_pmh
-					  VALUES( ".$pg->qstr( $record->getIdentifier() ).", ".$pg->qstr( $record->getDatestamp() ).", ".$pg->qstr( 'article' ).", ".$pg->qstr( $json ).", {$sourceid} )
-					ON CONFLICT (identifier) DO UPDATE
-						SET datestamp=".$pg->qstr( $datestamp ).", type=".$pg->qstr( 'article' ).", data=".$pg->qstr( $json ).", oai_pmh_source_id={$sourceid}";
-			//echo "\n------\n{$sql}\n--------\n";
-			$pg->Execute( $sql );
-		*/	
+
 			$solr->import( $entity );
 			
-			if( $counter % 1000 == 0 ) {
+			if( $interval2 >= 5000 ) {
+				$interval2 = 0;
+				$update = $solrclient->createUpdate();
+				
+				// add commit command to the update query
+				$update->addCommit();
+				
+				// this executes the query and returns the result
+				$result = $solrclient->update($update);
+				
+				doConnectPostgres();
 				$sql = "UPDATE oai_pmh_source SET datestamp=".$pg->qstr( $record->getDatestamp() )." WHERE oai_pmh_source_id={$sourceid}";
 				echo "\n------\n{$sql}\n--------\n";
 				$pg->Execute( $sql );
+			}
+			if( $interval > 500000 ) {
+				$interval = 0;
+				
+				$update = $solrclient->createUpdate();
+				
+				// add commit command to the update query
+				$update->addCommit();
+				
+				// this executes the query and returns the result
+				$result = $solrclient->update($update);
+				
+				doConnectPostgres();
+				$sql = "UPDATE oai_pmh_source SET datestamp=".$pg->qstr( $record->getDatestamp() )." WHERE oai_pmh_source_id={$sourceid}";
+				echo "\n------\n{$sql}\n--------\n";
+				$pg->Execute( $sql );				
+				
+				echo "sleeping 5min\n";
+				sleep( 5*60 );				
+				
 			}
 			
 		//	if( $counter < 50010 ) continue;
@@ -111,9 +112,11 @@ try {
 			
 		//	$entity->loadFromArray( $record->getIdentifier(), $data, 'doab' );
 		}
+		
 		catch( \Exception $e ) {
 			var_dump($e->getMessage());
 			file_put_contents( "error.dat", print_r( $e->getMessage(), true )."\n".$e->getTraceAsString(), FILE_APPEND );
+			die();
 		}
 	} 
 }
@@ -123,4 +126,5 @@ catch( \Phpoaipmh\Exception\MalformedResponseException $e) {
 	
 }
 
+doConnectMySQL();
 ?>

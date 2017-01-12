@@ -110,7 +110,40 @@ if( preg_match( '/([A-Za-z])_([0-9]{3})_([a-z])/', $qr, $matches )) {
 			</div>
 		</div>
 
-<?php } ?>
+<?php
+}
+else {
+?>
+
+		<div class="content-container col-md-offset-1 col-md-9 col-sm-12">
+			<div class="clearfix">
+				<h2 class="small-heading">Reihe</h2>
+<?php
+	$sql = "SELECT DISTINCT SUBSTR(marker, 1, 5 ) AS marker FROM `inventory_cache` WHERE marker like '_\____%' order by marker asc";
+	$rs = $db->Execute( $sql );
+	foreach( $rs as $row ) {
+		if( preg_match( '/([A-Za-z])_([0-9]{3})/', $row['marker'], $matches )) {
+		$ra = $matches[1].'_'.$matches[2].'_a';
+		$rb = $matches[1].'_'.$matches[2].'_b';
+?>
+				
+				<div><?php echo getDescription( $ra, $debug ); ?></div>
+				<div style="width:100%; text-align: right;"><?php echo getDescription( $rb, $debug ); ?></div>
+	
+				
+				<br />
+				<hr />
+<?php
+		}
+	}
+
+?>
+			</div>
+		</div>
+
+<?php	
+}
+?>
 	</div>
 </div>
 <script>

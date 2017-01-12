@@ -58,10 +58,18 @@ class SOLR {
 		$resultset = $this->solr->select( $query );
 		if( $resultset->getNumFound() == 1 ) {
 			foreach( $resultset->getDocuments() as $doc ) {
-				$doc->setField( 'deleted', true );
-
 				$update = $this->solr->createUpdate();
-				$update->addDocuments( array( $doc ));
+				$fields = $doc->getFields();
+				if( array_key_exists( 'score', $fields )) {
+					unset( $fields['score']);
+				}
+				if( array_key_exists( '_version_', $fields )) {
+					unset( $fields['_version_']);
+				}
+				$udoc = $update->createDocument( $fields );
+				$udoc->setField( 'creation_date', gmdate('Y-m-d\TH:i:s\Z', time()));
+				$udoc->setField( 'deleted', true );
+				$update->addDocuments( array( $udoc ));
 				if( $commit ) $update->addCommit();
 				$result = $this->solr->update( $update );
 				echo 'Delete query for '.$id.' executed'."\n";
@@ -137,8 +145,12 @@ class SOLR {
             $doc->addField( 'url', $url);
         foreach( $src->getCodes() as $code )
             $doc->addField( 'code', $code);
-        foreach( $src->getIssues() as $issue )
-            $doc->addField( 'issue', $issue);
+        foreach( $src->getIssues() as $issue ) {
+        	if( strlen( trim( $issue ))) {
+        		//echo "issue: $issue <br />\n";
+        		$doc->addField( 'issue', trim( $issue ));
+        	}
+        }
         foreach( $src->getLanguages() as $lang )
             $doc->addField( 'lang', $lang);
         foreach( $src->getSourceIDs() as $sid)

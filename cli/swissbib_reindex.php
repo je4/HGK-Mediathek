@@ -1,0 +1,82 @@
+<?php
+
+namespace Mediathek;
+
+include '../init.inc.php';
+include '../init.pg.php';
+
+$tmpfile = "/data/tmp/ids.dat";
+$cntfile = "/data/tmp/counter.dat";
+
+$entity = new swissbibEntity( $db );
+$solr = new SOLR( $solrclient );
+
+if( false ) {
+	$tmp = fopen( $tmpfile, 'w' );
+	
+	$customizer = $solrclient->getPlugin('customizerequest');
+	
+	$pagesize = 10000;
+	$page = 0;
+	$numPages = 1;
+	
+	$counter = 1;
+	
+	$cursormark = '*';
+	
+	do {
+		$squery = $solrclient->createSelect();
+		$squery->setRows( $pagesize );
+		$squery->createFilterQuery('swissbib')->setQuery("source:swissbib");
+		$squery->createFilterQuery('nodelete')->setQuery("deleted:false");
+		$squery->setFields( array( 'id' ));
+		$squery->setQuery( "*:*" );
+		$squery->addSort('id', $squery::SORT_ASC);
+		$customizer->createCustomization( 'cursorMark' )
+			->setType( 'param' )
+			->setName( 'cursorMark' )
+			->setValue( $cursormark );
+		$rs = $solrclient->select( $squery );
+		$numResults = $rs->getNumFound();
+		$numPages = floor( $numResults / $pagesize );
+		foreach( $rs as $doc ) {
+			echo sprintf( "%0.2f - %08d ", $counter*100/$numResults, $counter ).$doc->id."\n";
+			fwrite( $tmp, $doc->id."\n" );
+			$counter++;
+		}
+		$data = $rs->getData();
+		if( $cursormark == $data["nextCursorMark"] )
+			break;
+		
+		$cursormark = $data["nextCursorMark"];
+		$page++;
+	} while( true );
+	
+	fclose( $tmp );
+}
+
+$counter = 0;
+$tmp = fopen( $tmpfile, 'r' );
+while( $id = fgets( $tmp ) ) {
+	$query = $solrclient->createSelect();
+	$helper = $query->getHelper();
+	$query->setQuery( 'id:'.$helper->escapeTerm( $id ));
+	$resultset = $solrclient->select( $query );
+	if( $resultset->getNumFound() == 1 ) {
+		foreach( $resultset->getDocuments() as $doc ) {
+			$data = gzdecode( base64_decode( $doc->metagz ));
+			$record = new OAIPMHRecord( $data );
+			$entity->loadNode( $doc->originalid, $record, 'swissbib' );
+			$solr->import( $entity, ($counter % 5000 == 0) );
+			echo sprintf( "%08u - ", $counter ).$id."\n";
+			if($counter % 1000 == 0) {
+				file_put_contents( $cntfile, $counter );
+			}
+		}
+	}
+	$counter++;
+}
+fclose( $tmp );
+
+doConnectMySQL();
+?>

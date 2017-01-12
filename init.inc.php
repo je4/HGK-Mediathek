@@ -17,19 +17,29 @@ require_once 'lib/Zotero/Autoloader.php';
 require_once 'lib/adodb5/adodb-exceptions.inc.php';
 require_once 'lib/adodb5/adodb.inc.php';
 
-$db = NewAdoConnection( 'mysqli' );
-try {
-    if( !$db->PConnect( $config['db']['host'], $config['db']['user'], $config['db']['password'], $config['db']['database'] )) {
-        sleep( 1 );
-        $db->PConnect( $config['db']['host'], $config['db']['user'], $config['db']['password'], $config['db']['database'] );
+$db = null;
+
+function doConnectMySQL() {
+    global $db, $config;
+    if( $db == null ) {
+        $db = NewAdoConnection( 'mysqli' );        
+    }
+    if( !$db->isConnected()) {
+        try {
+            if( !$db->PConnect( $config['db']['host'], $config['db']['user'], $config['db']['password'], $config['db']['database'] )) {
+                sleep( 1 );
+                $db->PConnect( $config['db']['host'], $config['db']['user'], $config['db']['password'], $config['db']['database'] );
+            }
+        }
+        catch( Exception $e ) {
+            sleep( 1 );
+            $db->PConnect( $config['db']['host'], $config['db']['user'], $config['db']['password'], $config['db']['database'] );
+        }
+        $db->SetCharSet('utf8');
     }
 }
-catch( Exception $e ) {
-    sleep( 1 );
-    $db->PConnect( $config['db']['host'], $config['db']['user'], $config['db']['password'], $config['db']['database'] );
-}
-$db->SetCharSet('utf8');
 
+doConnectMySQL();
 
 $session = new Mediathek\Session( $db, $_SERVER );
 $solrclient = new Solarium\Client($config['solarium']);

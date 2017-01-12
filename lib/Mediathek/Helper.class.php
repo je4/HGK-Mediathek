@@ -212,6 +212,7 @@ class Helper {
             foreach( $fields as $field ) {
                 if( !$first )
                     $qstr .= ' OR ';
+                $first = false;
                 $qstr .= $field.':'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapeTerm( $word )));
             }
             $qstr .= ')';

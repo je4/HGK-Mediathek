@@ -71,4 +71,8 @@ class OAIPMHRecord {
 	public function getMetadata() {
 		return $this->metadata;
 	}
+	
+	public function getXML() {
+		return $this->dom->saveXML();
+	}
 }

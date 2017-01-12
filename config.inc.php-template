@@ -1,13 +1,20 @@
 <?php
-define("DEBUG", true);
+define("DEBUG", false);
 
 $config = array();
-$config['baseurl'] = 'https://mediathek.hgk.fhnw.ch/dev/';
+$config['baseurl'] = 'https://mediathek.hgk.fhnw.ch/';
 $config['db'] = array(
   'host'=>'ba14ns21402.adm.ds.fhnw.ch',
   'user'=>'rfid',
   'password'=>'SECRET',
-  'database'=>'rfid_dev'
+  'database'=>'rfid'
+);
+
+$config['pg'] = array(
+  'host'=>'ba14ns21402.adm.ds.fhnw.ch',
+  'user'=>'mediathek',
+  'password'=>'SECRET',
+  'database'=>'mediathek'
 );
 
 $config['solarium']  = array(
@@ -15,15 +22,43 @@ $config['solarium']  = array(
         'localhost' => array(
             'host' => 'ba14ns21401.adm.ds.fhnw.ch',
             'port' => 8983,
-            'path' => '/solr/base_dev/',
+            'path' => '/solr/base/',
         )
     )
 );
 
+$config['sourcemap'] = array( 'NEBIS' => 'NEBIS-Bestand HGK',
+				    'DOAJ' => 'Directory of Open Access Journals (DOAJ)',
+					'IKUVid' => 'Videosammlung Institut Kunst',
+					'EZB' => 'Elektronische Zeitschriften Datenbank',
+					'Wenkenpark' => 'Videowochen Wenkenpark',
+					'DOAB' => 'Directory of Open Access Books',
+					'DOAJArticle' => 'DOAJ Articles',
+					'to_perform' => 'to_perform',
+					'swissbib' => 'swissbib',
+				  );
+$config['defaultsource'] = array( 'NEBIS', 'IKUVid', 'Wenkenpark' );    
+
+$config['basemap'] = array( 
+		'NEBIS' => array( 'title'=>'NEBIS-Bestand HGK', 'qstr'=>'(source:NEBIS)' ),
+		'DOAJ' => array( 'title'=>'Directory of Open Access Journals (DOAJ)', 'qstr'=>'(DOAJ)' ),
+		'IKUVid' => array( 'title'=>'Videosammlung Institut Kunst', 'qstr'=>'(source:IKUVid)' ),
+		'EZB' => array( 'title'=>'Elektronische Zeitschriften Datenbank', 'qstr'=>'(source:EZB)' ),
+		'Wenkenpark' => array( 'title'=>'Videowochen Wenkenpark', 'qstr'=>'(source:Wenkenpark)' ),
+		'DOAB' => array( 'title'=>'Directory of Open Access Books', 'qstr'=>'(source:DOAB)' ),
+		'DOAJArticle' => array( 'title'=>'DOAJ Articles', 'qstr'=>'(source:DOAJArticle)' ),
+		'to_perform' => array( 'title'=>'to_perform', 'qstr'=>'(source:to_perform)' ),
+		'swissbib' => array( 'title'=>'swissbib', 'qstr'=>'(source:swissbib)' ),
+);
+				  
+				  
+$config['defaultbase'] = array( 'NEBIS', 'IKUVid', 'Wenkenpark' );    
+
+
 $config['google'] = array(
     'app' => 'mediathek-hgk',
-    'key' => 'SECRET',
-    'book' => array(  'restget' => 'https://www.googleapis.com/books/v1/volumes?key=SECRET',
+    'key' => 'AIzaSyDsNXE5m9mv9juuFQswIZfS_dTt-_TIH3k',
+    'book' => array(  'restget' => 'https://www.googleapis.com/books/v1/volumes?key=AIzaSyDsNXE5m9mv9juuFQswIZfS_dTt-_TIH3k',
                    ),
 );
 
@@ -36,33 +71,30 @@ $config['media'] = array(
     
 );
 
-$config['sourcemap'] = array( 'NEBIS' => 'NEBIS-Bestand HGK',
-				    'DOAJ' => 'Directory of Open Access Journals',
-					'IKUVid' => 'Videosammlung Institut Kunst',
-					'EZB' => 'Elektronische Zeitschriften Datenbank',
-					'Wenkenpark' => 'Videowochen Wenkenpark',
-					'DOAB' => 'directory of open access books',
-				  );
-
 $config['3dthumb'] = 'https://mediathek.hgk.fhnw.ch/img/dev/3dbox/thumb';
 $config['3dthumbdir'] = '/var/www/vhosts/mediathek.fhnw.ch/html/dev/img/3dbox/thumb';
 $config['3djsondir'] = '/var/www/vhosts/mediathek.fhnw.ch/html/dev/3djson';
 
 $config['wallet'] = array( 
 	'dir' => '/var/www/vhosts/mediathek.fhnw.ch/nwallet',
-	'applecert' => '',
-	'passcert' => '',
+	'applecert' => '/var/www/vhosts/mediathek.fhnw.ch/AppleWWDRCA.pem',
+	'passcert' => '/var/www/vhosts/mediathek.fhnw.ch/pass.p12',
 	'passpwd' => '',
-	'passid' => '',
-	'passteamid' => '',
+	'passid' => 'pass.ch.fhnw.hgk.mediathek.nebis',
+	'passteamid' => 'TEQ2YTLNJM',
 	'passteamname' => 'FHNW Fachhochschule Nordwestschweiz Hochschule fuer Gestaltung und Kunst',
-	'db' => array(
+	'expiry' => 'P10Y',
+    'webservice' => 'https://mediathek.hgk.fhnw.ch/wallet/',
+    'db' => array(
         'host'=>'ba14ns21402.adm.ds.fhnw.ch',
         'user'=>'rfid',
-        'password'=>'SECRET',
+        'password'=>'NuKodYchx63eTxBNx34kQPF',
         'database'=>'wallet'
       ),
 
 );
+
+$config['RIB'] = 'http://www.library.ethz.ch/rib/v1/primo';
+
 
 ?>

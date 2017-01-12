@@ -15,7 +15,7 @@ $query = isset( $_REQUEST['query'] ) ? $_REQUEST['query'] : null;
 $q = isset( $_REQUEST['q'] ) ? strtolower( trim( $_REQUEST['q'] )): null;
 $page = isset( $_REQUEST['page'] ) ? intval( $_REQUEST['page'] ) : 0;
 $pagesize = isset( $_REQUEST['pagesize'] ) ? intval( $_REQUEST['pagesize'] ) : 25;
-$id = isset( $_REQUEST['id'] ) ? strtolower( trim( $_REQUEST['id'] )) : null;
+$id = isset( $_REQUEST['id'] ) ? trim( $_REQUEST['id'] ) : null;
 $barcode = isset( $_REQUEST['barcode'] ) ? strtolower( trim( $_REQUEST['barcode'] )) : null;
 
 
@@ -74,13 +74,21 @@ if( $numResults > 0 ) foreach( $rs as $doc ) {
 	$class = '\\Mediathek\\'.$doc->source.'Display';
 
 	$output = new $class($doc, null, $db, null);
-	$html = $output->getHeading();
-	$html .= $output->detailView();
-	$html .= '<script type="application/ld+json">'."\n".json_encode( $output->getSchema() )."\n</script>\n";
+	echo $output->getHeading();
+	echo $output->detailView();
+	echo '<script type="application/ld+json">'."\n".json_encode( $output->getSchema() )."\n</script>\n";
 	
-	echo $html;
 ?>
 <?php
+}
+else {
+?>	
+	<h2 class="small-heading">Mediathek der Künste</h2>
+	
+	<div class="container-fluid" style="margin-top: 0px; padding: 0px 20px 20px 20px;">
+	<h2>Error: not found</h2>	
+<?php 
+	echo $qstr." (Documents: {$numResults})\n";
 }
 ?>
 					</div>

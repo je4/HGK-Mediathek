@@ -192,7 +192,7 @@ if( @is_array( $qobj->facets->source )) {
 		if( $src == 'NEBIS' ) $sourcefilterquery .= ' (source:'.$helper->escapePhrase( $src ).' AND ( signature:'.$helper->escapePhrase('nebis:E75:*' ).' OR online:true ))';
 		else $sourcefilterquery .= ' (source:'.$helper->escapePhrase( $src ).')';
 	}
-    $squery->createFilterQuery('source')->addTag('source')->setQuery( $sourcefilterquery );	
+	$squery->createFilterQuery('source')->addTag('source')->setQuery( $sourcefilterquery );
 }
 if( @is_array( $qobj->facets->category )) {
 	$categoryfilterquery = "";
@@ -229,14 +229,19 @@ $squery->setQuery( $qstr );
 
 $facetSetSource = $squery->getFacetSet();
 $facetSetSource->createFacetField('source')->setField('source')->addExclude('source');
+
 $facetSetCategory = $squery->getFacetSet();
 $facetSetCategory->createFacetField('category')->setField('category')->addExclude('category');
+
 $facetSetEmbedded = $squery->getFacetSet();
 $facetSetEmbedded->createFacetField('embedded')->setField('embedded')->addExclude('embedded');
+
 //$facetSetLicense = $squery->getFacetSet();
 //$facetSetLicense->createFacetField('license')->setField('license')->addExclude('license');
+
 $facetSetCluster = $squery->getFacetSet();
 $facetSetCluster->createFacetField('cluster')->setField('cluster_ss'); //->addExclude('cluster');
+
 //$facetSetAcl = $squery->getFacetSet();
 //$facetSetAcl->createFacetField('acl')->setField('acl')->addExclude('acl');
 
@@ -253,7 +258,7 @@ if( $numResults % $pagesize > 0 ) $numPages++;
 echo "<!-- ".$qstr." (Documents: {$numResults} // Page ".($page+1)." of {$numPages}) 
 		Metafilter: {$acl_query} 
 		Sourcefilter: {$sourcefilterquery}
--->\n";
+		-->\n";
 
 $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 
@@ -487,7 +492,7 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 <script>
 
 	var q = {
-		query: '<?php echo $qobj->query; ?>',
+		query: '<?php echo str_replace('\'', '\\\'', $qobj->query ); ?>',
 		area: '<?php echo $qobj->area; ?>',
 		filter: [],
 		facets: {},
