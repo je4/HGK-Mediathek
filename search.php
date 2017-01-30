@@ -172,6 +172,8 @@ if( $qobj->query != '*' ) {
 }
 else
     $qstr = '*:*';
+
+echo "<!-- qstr: {$qstr} -->\n";
     
 $acl_query = '';
 foreach( $session->getGroups() as $grp ) {
