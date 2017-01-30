@@ -213,16 +213,18 @@ if( @is_array( $qobj->facets->source )) {
 	}
 	$squery->createFilterQuery('source')->addTag('source')->setQuery( $sourcefilterquery );
 	echo "<!-- filter source: {$sourcefilterquery} -->\n";
+}
+if( DEBUG ) {	
+	if( @is_array( $qobj->facets->category )) {
+		$categoryfilterquery = "";
+		foreach( $qobj->facets->category as $cat ) {
+			if( $categoryfilterquery != '' ) $categoryfilterquery .= ' OR ';
+			$categoryfilterquery .= ' (category:'.$helper->escapePhrase( $cat ).')';
+		}
+	    $squery->createFilterQuery('category')->addTag('category')->setQuery( $categoryfilterquery );	
+	    echo "<!-- filter category: {$categoryfilterquery} -->\n";
+	    
 	}
-if( @is_array( $qobj->facets->category )) {
-	$categoryfilterquery = "";
-	foreach( $qobj->facets->category as $cat ) {
-		if( $categoryfilterquery != '' ) $categoryfilterquery .= ' OR ';
-		$categoryfilterquery .= ' (category:'.$helper->escapePhrase( $cat ).')';
-	}
-    $squery->createFilterQuery('category')->addTag('category')->setQuery( $categoryfilterquery );	
-    echo "<!-- filter category: {$categoryfilterquery} -->\n";
-    
 }
 if( @is_array( $qobj->facets->embedded )) {
 	$embeddedfilterquery = 'embedded:('.implode(' ', $qobj->facets->embedded).')';
@@ -262,8 +264,10 @@ if( DEBUG ) {
 $facetSetSource = $squery->getFacetSet();
 $facetSetSource->createFacetField('source')->setField('source')->addExclude('source');
 
-$facetSetCategory = $squery->getFacetSet();
-$facetSetCategory->createFacetField('category')->setField('category')->addExclude('category');
+if( DEBUG ) {
+	$facetSetCategory = $squery->getFacetSet();
+	$facetSetCategory->createFacetField('category')->setField('category')->addExclude('category');
+}
 
 $facetSetEmbedded = $squery->getFacetSet();
 $facetSetEmbedded->createFacetField('embedded')->setField('embedded')->addExclude('embedded');
