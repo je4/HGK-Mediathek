@@ -521,7 +521,8 @@ Themen
 					}
 ?>
 -->
-<?php								
+<?php
+if( DEBUG ) {
 				$cats = array_keys( $categories );
 				sort( $cats );
 				//var_dump( $cats );
@@ -553,6 +554,7 @@ Themen
 ?>
 
 				</div>
+<?php } /* DEBUG */ ?>				
 			</div>
 			</div>
 			
