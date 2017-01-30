@@ -508,7 +508,7 @@ Mediathek3D.prototype.renderBoxes = function( id ) {
 }
 
 Mediathek3D.prototype.boxHighlight = function( boxname, highlight ) {
-//	console.log( "Highlight( " + boxname + ", " + highlight + ")");
+	console.log( "Highlight( " + boxname + ", " + highlight + ")");
 	if(!( boxname in this.boxes )) {
 		console.log( "box " + boxname + " does not exist");
 		return;
