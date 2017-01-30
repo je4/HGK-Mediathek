@@ -181,6 +181,7 @@ foreach( $session->getGroups() as $grp ) {
 	$acl_query .= ' acl_meta:'.$helper->escapePhrase($grp);
 }
 $squery->createFilterQuery('acl_meta')->setQuery($acl_query);
+echo "<!-- filter acl_meta: {$acl_query} -->\n";
 
 switch( $qobj->area ) {
     case 'oa':
@@ -198,6 +199,8 @@ if( @is_array( $qobj->facets->catalog )) {
 		$catalogfilterquery .= ' (catalog:'.$helper->escapePhrase( $cat ).')';
 	}
 	$squery->createFilterQuery('catalog')->addTag('catalog')->setQuery( $catalogfilterquery );
+	echo "<!-- filter catalog: {$catalogfilterquery} -->\n";
+	
 }
 if( @is_array( $qobj->facets->source )) {
 	$sourcefilterquery = "";
@@ -207,7 +210,8 @@ if( @is_array( $qobj->facets->source )) {
 		else $sourcefilterquery .= ' (source:'.$helper->escapePhrase( $src ).')';
 	}
 	$squery->createFilterQuery('source')->addTag('source')->setQuery( $sourcefilterquery );
-}
+	echo "<!-- filter source: {$sourcefilterquery} -->\n";
+	}
 if( @is_array( $qobj->facets->category )) {
 	$categoryfilterquery = "";
 	foreach( $qobj->facets->category as $cat ) {
@@ -215,6 +219,8 @@ if( @is_array( $qobj->facets->category )) {
 		$categoryfilterquery .= ' (category:'.$helper->escapePhrase( $cat ).')';
 	}
     $squery->createFilterQuery('category')->addTag('category')->setQuery( $categoryfilterquery );	
+    echo "<!-- filter category: {$categoryfilterquery} -->\n";
+    
 }
 if( @is_array( $qobj->facets->embedded )) {
     $squery->createFilterQuery('embedded')->addTag('embedded')->setQuery('embedded:('.implode(' ', $qobj->facets->embedded).')'	);	
