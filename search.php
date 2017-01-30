@@ -476,7 +476,7 @@ Themen
 ?>
 			</div>
 			</div>
-
+<?php if( DEBUG ) { ?>
 			<div style="overflow:hidden;">
 			<span style="; font-weight: bold;">Kategorien</span><br />
 			<div class="facet" style="">
@@ -522,7 +522,6 @@ Themen
 ?>
 -->
 <?php
-if( DEBUG ) {
 				$cats = array_keys( $categories );
 				sort( $cats );
 				//var_dump( $cats );
@@ -554,9 +553,9 @@ if( DEBUG ) {
 ?>
 
 				</div>
+			</div>
+		</div>
 <?php } /* DEBUG */ ?>				
-			</div>
-			</div>
 			
 			
 		  </div>
