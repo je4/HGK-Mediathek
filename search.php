@@ -192,15 +192,17 @@ switch( $qobj->area ) {
         break;
 }
 
-if( @is_array( $qobj->facets->catalog )) {
-	$catalogfilterquery = "";
-	foreach( $qobj->facets->catalog as $cat ) {
-		if( $catalogfilterquery != '' ) $catalogfilterquery .= ' OR ';
-		$catalogfilterquery .= ' (catalog:'.$helper->escapePhrase( $cat ).')';
+if( DEBUG ) {
+	if( @is_array( $qobj->facets->catalog )) {
+		$catalogfilterquery = "";
+		foreach( $qobj->facets->catalog as $cat ) {
+			if( $catalogfilterquery != '' ) $catalogfilterquery .= ' OR ';
+			$catalogfilterquery .= ' (catalog:'.$helper->escapePhrase( $cat ).')';
+		}
+		$squery->createFilterQuery('catalog')->addTag('catalog')->setQuery( $catalogfilterquery );
+		echo "<!-- filter catalog: {$catalogfilterquery} -->\n";
+		
 	}
-	$squery->createFilterQuery('catalog')->addTag('catalog')->setQuery( $catalogfilterquery );
-	echo "<!-- filter catalog: {$catalogfilterquery} -->\n";
-	
 }
 if( @is_array( $qobj->facets->source )) {
 	$sourcefilterquery = "";
@@ -223,7 +225,10 @@ if( @is_array( $qobj->facets->category )) {
     
 }
 if( @is_array( $qobj->facets->embedded )) {
-    $squery->createFilterQuery('embedded')->addTag('embedded')->setQuery('embedded:('.implode(' ', $qobj->facets->embedded).')'	);	
+	$embeddedfilterquery = 'embedded:('.implode(' ', $qobj->facets->embedded).')';
+    $squery->createFilterQuery('embedded')->addTag('embedded')->setQuery($embeddedfilterquery);
+    echo "<!-- filter embedded: {$embeddedfilterquery} -->\n";
+    
 }
 if( @is_array( $qobj->facets->cluster )) {
 	$_qstr = 'cluster_ss:(';
@@ -234,6 +239,8 @@ if( @is_array( $qobj->facets->cluster )) {
 	}
 	$_qstr .= ' )';
     $squery->createFilterQuery('cluster')->addTag('cluster')->setQuery($_qstr);
+    echo "<!-- filter cluster: {$_qstr} -->\n";
+    
 }
 /*
 if( @is_array( $qobj->facets->license )) {
@@ -247,8 +254,10 @@ if( @is_array( $qobj->facets->license )) {
 */
 $squery->setQuery( $qstr );
 
-$facetSetCatalog = $squery->getFacetSet();
-$facetSetCatalog->createFacetField('catalog')->setField('catalog')->addExclude('catalog');
+if( DEBUG ) {
+	$facetSetCatalog = $squery->getFacetSet();
+	$facetSetCatalog->createFacetField('catalog')->setField('catalog')->addExclude('catalog');
+}
 
 $facetSetSource = $squery->getFacetSet();
 $facetSetSource->createFacetField('source')->setField('source')->addExclude('source');
