@@ -55,6 +55,10 @@ function initSearch( area, pagesize ) {
 		doSearch( $('#searchtext').val(), 0, pagesize ); 
 	 });
 	 
+	 $('input[type=radio][name=bestand]').change(function() {
+		doSearch( $('#searchtext').val(), 0, pagesize ); 
+	 });
+	 
 	var param = window.location.hash.replace("#","");
 	if ( param.length < 1 ) {
 	   param = searcharea;
@@ -70,7 +74,7 @@ function initSearch( area, pagesize ) {
 
 function navbarSearch(page, pagesize) {
 	searchtext = $('#searchtext').val();
-	//searcharea = window.location.hash.replace("#","");
+	searcharea = $('input[type=radio][name=bestand]').val();
 	
 	var q = {
 		query: searchtext,
@@ -153,7 +157,7 @@ function doSearch( searchtext, page, pagesize) {
     }
 	else return;
 //	searchtext = $('#searchtext').val();
-	//searcharea = window.location.hash.replace("#","");
+	searcharea = 'all'; // $('input[type=radio][name=bestand]').val();
 
 	var facets = {};
 	
@@ -170,21 +174,23 @@ function doSearch( searchtext, page, pagesize) {
 	
 	// categories
 	var selected = [];
-	var slist = $('#categorytree').jstree().get_selected(true);
-	// alle ausgewählten in liste
-	for (var obj in slist) {
-		selected.push( slist[obj].id );
-	}
-	// jetzt nur die ausgewählten in die liste, deren parent nicht schon in der liste ist
-	for (var obj in slist) {
-		var o = slist[obj];
-		if ( $.inArray( o.parent, selected ) != -1 ) {
-            continue;
-        }
-		if(!( 'category' in facets )) {
-			facets['category'] = [];
+	if( $('#categorytree').length ) {
+		var slist = $('#categorytree').jstree().get_selected(true);
+		// alle ausgewählten in liste
+		for (var obj in slist) {
+			selected.push( slist[obj].id );
 		}
-		facets['category'].push(slist[obj].id)
+		// jetzt nur die ausgewählten in die liste, deren parent nicht schon in der liste ist
+		for (var obj in slist) {
+			var o = slist[obj];
+			if ( $.inArray( o.parent, selected ) != -1 ) {
+	            continue;
+	        }
+			if(!( 'category' in facets )) {
+				facets['category'] = [];
+			}
+			facets['category'].push(slist[obj].id)
+		}
 	}
 	
 

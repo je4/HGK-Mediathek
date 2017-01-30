@@ -48,7 +48,7 @@ $page = new Resource($client, $uriTemplateProcessor, $uriJoiner, $apiRootUrl);
                 </div>
 
                 <div class="clearfix">
-                   <h2 class="small-heading">Mediathek der Künste</h2>
+                   <h2 class="small-heading">Mediathek</h2>
                     <div class="row">
                         <div class="col-md-10 col-md-offset-1 col-xs-12">
 							<p><b>Online Katalog der Mediathek HGK</b><br />

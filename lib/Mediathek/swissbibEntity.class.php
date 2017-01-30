@@ -15,7 +15,7 @@
  * @copyright   (C) 2016 Academy of Art and Design FHNW
  * @license     http://www.gnu.org/licenses/gpl-3.0
  * @link        http://mediathek.fhnw.ch
- * 
+ *
  */
 
 /**
@@ -32,7 +32,7 @@ namespace Mediathek;
 class swissbibEntity extends SOLRSource {
 	private $node;
 	private $data = null;
-	
+
 	private $record = null;
     private $xml = null;
     private $id = null;
@@ -47,11 +47,12 @@ class swissbibEntity extends SOLRSource {
     private $licenses = null;
     private $urls = null;
     private $signatures = null;
+		private $libs = null;
     private $online = null;
 	private $codes = null;
 	private $db = null;
 	private $sourceids = null;
-	private static $typeList = array( 
+	private static $typeList = array(
 			'BK01'=>'Article',
 			'CL01'=>'Collection',
 			'CL02'=>'Collection',
@@ -74,8 +75,33 @@ class swissbibEntity extends SOLRSource {
 			'MX01'=>'Materials',
 			'CL05'=>'unknown',
 	);
-    
-	
+
+	private static $bibs = array(
+			'A334'=>array('FHNW-Bib'),
+			'E40'=>array('FHNW-Bib'),
+			'E50'=>array('FHNW-Bib'),
+			'E60'=>array('FHNW-Bib'),
+			'E48'=>array('FHNW-Bib'),
+			'E75'=>array('FHNW-Bib', 'Kunst-Bib Region Basel/Aargau', 'Kunsthochschul-Bibs' ),
+			'N01'=>array('FHNW-Bib'),
+			'N02'=>array('FHNW-Bib'),
+			'N03'=>array('FHNW-Bib'),
+			'E39'=>array('FHNW-Bib'),
+			'N10'=>array('FHNW-Bib'),
+			'A334'=>array('FHNW-Bib'),
+			'A332'=>array('FHNW-Bib', 'Kunsthochschul-Bibs'),
+			'A298'=>array('Kunst-Bib Region Basel/Aargau'),
+			'A214'=>array('Kunst-Bib Region Basel/Aargau'),
+			'E65'=>array('Kunsthochschul-Bibs'),
+			'B420'=>array('Kunsthochschul-Bibs'),
+			'RE11023'=>array('Kunsthochschul-Bibs'),
+			'RE31006'=>array('Kunsthochschul-Bibs'),
+			'LUHGK'=>array('Kunsthochschul-Bibs'),
+			'RE61078'=>array('Kunsthochschul-Bibs'),
+			'LOASP'=>array('Kunsthochschul-Bibs'),
+			'E34'=>array('Kunsthochschul-Bibs'),
+	);
+
 	static function find3( $data, $ind2 ) {
 		if( $ind2 == null ) {
 			$ret = array();
@@ -111,18 +137,18 @@ class swissbibEntity extends SOLRSource {
 		if( !array_key_exists( $tag, $this->data )) return array();
 		return self::find2( $this->data[$tag], $ind1, $ind2 );
 	}
-    
+
 	function getAll( $tag, $ind1, $ind2, $code ) {
 //		echo "getAll( $tag, $ind1, $ind2, $code )\n";
 		$arr = array();
 		$result = $this->findField( $tag, $ind1, $ind2 );
 //		print_r( $result );
 		foreach( $result as $r ) {
-			if( array_key_exists( $code, $r )) 
+			if( array_key_exists( $code, $r ))
 				$arr = array_merge( $r[$code], $arr );
 		}
 //		print_r( $arr );
-		return $arr;		
+		return $arr;
 	}
 
 	function getOne( $tag, $ind1, $ind2, $code ) {
@@ -130,14 +156,14 @@ class swissbibEntity extends SOLRSource {
 		if( count( $arr ) == 0 ) return null;
 		return $arr[0];
 	}
-	
+
 	function __construct( $db ) {
 		$this->db = $db;
 	}
-	
+
     private function reset() {
 		$this->data = null;
-		
+
 		$this->record = null;
 		$this->xml = null;
 		$this->id = null;
@@ -154,10 +180,12 @@ class swissbibEntity extends SOLRSource {
 		$this->licenses = null;
 		$this->urls = null;
 		$this->signatures = null;
+		$this->libCodes = null;
+		$this->libs = null;
 		$this->online = null;
 		$this->codes = null;
 		$this->sourceids = null;
-		
+
     }
 
 	function loadNode( $id, $record, $idprefix ) {
@@ -165,7 +193,7 @@ class swissbibEntity extends SOLRSource {
         $this->id = $id;
         $this->idprefix = $idprefix;
         $this->record = $record;
-        
+
         $metadata = $record->getMetadata();
         $marc = null;
         foreach( $metadata->childNodes as $child ) {
@@ -173,9 +201,9 @@ class swissbibEntity extends SOLRSource {
         		$marc = $child;
         	}
         }
-        	
+
 		$this->data = array();
-		
+
 		if( $marc == null ) throw new \Exception( "no entity loaded" );
         $xpath = new \DOMXPath( $marc->ownerDocument );
 		$xpath->registerNamespace( 'mx', 'http://www.loc.gov/MARC21/slim' );
@@ -199,7 +227,7 @@ class swissbibEntity extends SOLRSource {
 		}
 		//var_dump( $this->data );
 	}
-	
+
 	public function getData() {
 		return $this->data;
 	}
@@ -207,15 +235,15 @@ class swissbibEntity extends SOLRSource {
 	public function getXML() {
 		return $this->record->getXML();
 	}
-	
+
     public function getID() {
-        return $this->idprefix.'-'.$this->id; 
+        return $this->idprefix.'-'.$this->id;
     }
-    
+
     public function getOriginalID() {
-        return $this->id; 
+        return $this->id;
     }
-	
+
     public function getSource() {
         return 'swissbib';
     }
@@ -224,7 +252,7 @@ class swissbibEntity extends SOLRSource {
 		$code = $this->getOne( '898', null, null, 'a' );
 		$primary = substr( $code, 0, 4 );
 		$tertiary = substr( $code, 6, 2 );
-		$this->online = ( $tertiary == '53' ); 
+		$this->online = ( $tertiary == '53' );
 		if( array_key_exists( $primary, swissbibEntity::$typeList )) {
 			return swissbibEntity::$typeList[$primary];
 		}
@@ -235,28 +263,28 @@ class swissbibEntity extends SOLRSource {
 		return false;
 	}
 
-    
+
 	public function getOpenAccess() {
 		return false;
 	}
-	
+
 	public function getLocations() {
 		if( $this->locations == null ) $this->getSignatures();
 		return $this->locations;
 	}
-	
+
 	public function getPhysicalDescription() {
 		$generalnote = $this->getAll( '300', null, null, 'a' );
 		return $generalnote;
 	}
-	
+
 	public function getGeneralNote() {
 		return array();
-		
+
 		$generalnote = $this->getAll( '245', null, null, 'a' );
 		return $generalnote;
 	}
-	
+
     public function getTitle() {
 		$title = trim( implode( ' / ', $r= $this->getAll( '245', null, null, 'a' ))
 				.' '.implode( ' / ', $r= $this->getAll( '245', null, null, 'b' )), '/:-., ' );
@@ -266,24 +294,24 @@ class swissbibEntity extends SOLRSource {
 		}
 		return trim( $title );
     }
-    
+
     public function getPublisher() {
 		$publishers = array();
 		$t = $this->getAll( '260', ' ', null, 'b' );
-		if( is_array( $t )) foreach( $t as $p ) $publishers[] = trim( $p, '/:-., ' ); 
+		if( is_array( $t )) foreach( $t as $p ) $publishers[] = trim( $p, '/:-., ' );
 		return $publishers;
     }
-    
+
     public function getYear() {
 		$year = trim( $r = $this->getOne( '260', null, null, 'c' ), '/:-., ' );
-		return $year;	
+		return $year;
     }
-    
+
     public function getCity() {
 		$city = trim( $this->getOne( '260', ' ', null, 'a' ), '/:-., ' );
 		return $city;
     }
-    
+
 	public function getTags() {
 		static $fields = array( 'subject' => array( 'personalname'=>'600',
 													'corporatename'=>'610',
@@ -295,7 +323,7 @@ class swissbibEntity extends SOLRSource {
 													'facetettopicalterm'=>'654',
 													'hierarchicalplacename'=>'662',
 													'localsubjectaccess'=>'69X',
-							
+
 						),
 								'index' => array( 'uncontrolled'=>'653',
 													'genreform'=>'655',
@@ -343,7 +371,7 @@ class swissbibEntity extends SOLRSource {
 									break;
 									case '6': // Biblioth�que de l'Universit� Laval - R�pertoire de vedettes-mati�re
 										$src = 'bulrvm';
-									break; 
+									break;
 									case '7':
 										if( array_key_exists( '2', $codes )) $src = implode( '/', $codes['2'] );
 									break;
@@ -371,18 +399,19 @@ class swissbibEntity extends SOLRSource {
 		}
         return $this->tags;
 	}
-	
-    
+
+
     public function getCluster() {
         if( $this->cluster == null) $this->getTags();
         return $this->cluster;
     }
-    
+
     public function getSignatures() {
         if( $this->signatures == null ) {
         	$this->signatures = array();
         	$this->locations = array();
         	$this->libCodes = array();
+					$this->libs = array();
         	//print_r( $this->data );
         	$rs = $this->findField( '949' );
         	foreach( $rs as $r ) {
@@ -395,19 +424,19 @@ class swissbibEntity extends SOLRSource {
 					//continue;
 					switch( $code ) {
 						case 'O':
-							$full = implode( '/', $val );
+							$full = trim( implode( '/', $val ));
 							break;
 						case 'b':
-							$lib = implode( '/', $val );
+							$lib = trim( implode( '/', $val ));
 							break;
 						case 'j':
-							$sig = implode( '/', $val );
+							$sig = trim( implode( '/', $val ));
 							break;
 						case 'B':
-							$verbund = implode( '/', $val );
+							$verbund = trim( implode( '/', $val ));
 							break;
 						case 'p':
-							$bar = implode( '/', $val );
+							$bar = trim( implode( '/', $val ));
 							break;
 						default:
 							break;
@@ -426,21 +455,23 @@ class swissbibEntity extends SOLRSource {
 						if( $loc ) {
 							$this->locations[] = "{$verbund}:{$lib}:{$loc}";
 						}
-							
+
 					}
 				}
-				if( $lib != null && $full != null ) $this->libCodes[$lib] = $full;
+				if( $lib != null ) $this->libCodes[] = $lib;
+				if( $lib != null && $full != null ) $this->libs[$lib] = $full;
 			}
         }
+        $this->libCodes = array_unique( $this->libCodes );
         return $this->signatures;
-        
+
     }
-    
+
     public function getAuthors() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
         if( $this->authors == null ) {
 			$this->authors = array();
-			
+
 			foreach( array( '100', '700') as $fld ) {
 				$tmp = $this->findField( $fld, '1', ' ' );
 				$lang = null;
@@ -471,24 +502,24 @@ class swissbibEntity extends SOLRSource {
 								$lang = implode( ';', $val );
 								break;
 						}
-						
+
 					}
 				}
-				
+
 				if( $val1 == null ) continue;
 				$result = $val1.($val4 != null ? ", {$val4}": '' ); //.($val3 != null ? "({$val3})":"");
-				$this->authors[] = $result;			
+				$this->authors[] = $result;
 			}
 			if( count($this->authors ) == 0 ) {
 				$this->authors = array_merge( $this->authors, $this->getAll( '245', null, null, 'c' ));
 			}
         }
-        return $this->authors;        
+        return $this->authors;
     }
-    
+
     public function getLoans() {
     	return array();
-    	
+
         if( $this->loans == null ) {
             $this->loans = array();
             $sql = "SELECT DISTINCT `Benutzer-ID` AS uid FROM ARC AS a, loans AS l WHERE a.Strichcode=l.Strichcode AND a.`Systemnummer`=".$this->db->qstr( ltrim( $this->id, '0' ));
@@ -501,10 +532,10 @@ class swissbibEntity extends SOLRSource {
         }
         return $this->loans;
     }
-    
+
     public function getBarcode() {
     	return array();
-    	
+
         if( $this->barcode == null ) {
             $sql = "SELECT DISTINCT `Signatur` AS sig, `Strichcode` AS bc FROM `ARC` WHERE `Systemnummer`=".$this->db->qstr( ltrim( $id, '0' ));
             $row = $db->getRow( $sql );
@@ -515,14 +546,14 @@ class swissbibEntity extends SOLRSource {
         }
         return $this->barcode;
     }
-    
+
     public function getLicenses() {
         if( $this->licenses == null ) {
             $this->licenses = array( 'restricted' );
         }
         return $this->licenses;
     }
-    
+
     public function getURLs() {
         if( $this->urls == null ) {
         	$this->urls = array();
@@ -551,15 +582,15 @@ class swissbibEntity extends SOLRSource {
 	    }
         return $this->urls;
     }
-    
+
     public function getSys() {
         return $this->id;
     }
-    
+
     public function getMeta() {
         return $this->record->getXML();
     }
-    
+
     public function getOnline() {
     	if( $this->online === null ) {
     		$this->getType();
@@ -571,7 +602,7 @@ class swissbibEntity extends SOLRSource {
 
     	$this->codes = array();
 //    	var_dump( $this->data );
-    	 
+
         foreach( array( '020', '022' ) as $tag ) {
 	        $flds = $this->findField( $tag, ' ', ' ' );
 	        $val = null;
@@ -612,10 +643,10 @@ class swissbibEntity extends SOLRSource {
 			}
 		}
 		return $categories;
-	}	
-	
-    public function getAbstract() { 
-    	return trim( implode( '; ', $this->getAll( '520', null, null, 'a' )).' '.implode( '; ', $this->getAll( '500', null, null, 'a' ))); 
+	}
+
+    public function getAbstract() {
+    	return trim( implode( '; ', $this->getAll( '520', null, null, 'a' )).' '.implode( '; ', $this->getAll( '500', null, null, 'a' )));
     }
     public function getContent() { return null; }
     public function getMetaACL() { return array( 'global/guest' ); }
@@ -623,11 +654,11 @@ class swissbibEntity extends SOLRSource {
     public function getPreviewACL() { return array(); }
 	public function getLanguages() { return array(); }
 
-	public function getIssues()  { 
+	public function getIssues()  {
 		$issues = $this->getAll( '250', null, null, 'a' );
 		return $issues;
 	}
-	
+
 	public function getSourceIDs() {
 		if( $this->sourceids == null ) {
 			$this->sourceids = array();
@@ -646,7 +677,7 @@ class swissbibEntity extends SOLRSource {
 		}
 		return $this->sourceids;
 	}
-	
+
 	public function getSourceID( $lib ) {
 		foreach( $this->getSourceIDs() as $id ) {
 			if( preg_match( "/^\({$lib}\)(.*)$/", $id, $matches )) {
@@ -655,10 +686,40 @@ class swissbibEntity extends SOLRSource {
 		}
 		return null;
 	}
-	
+
 	public function getLibCodes() {
 		if( $this->libCodes === null ) $this->getSignatures();
 		return $this->libCodes;
+	}
+
+	public function getLibNames() {
+		if( $this->libs === null ) $this->getSignatures();
+		return $this->libs;
+	}
+
+	public function getCatalogs() {
+		$libcodes = $this->getLibCodes();
+		$catalogs = array($this->getSource());
+		$categories = $this->getCategories();
+		foreach( $libcodes as $lib ) {
+			if( array_key_exists( $lib, swissbibEntity::$bibs )) {
+				foreach( swissbibEntity::$bibs[$lib] as $cat ) {
+					$catalogs[] = $cat;
+				}
+			}
+		}
+		foreach( $categories as $cat ) {
+			if( substr_compare( $cat, '2!!signature!!NATIONALLICENCE!!', 0, 31 ) == 0 ) {
+				$catalogs[] = 'NATIONALLICENCE';
+			}
+		}
+		if( array_search( 'E75', $libcodes) !== false ) {
+			$catalogs[] = 'HGK';
+		} elseif( array_search( 'FHNW-Bib', $catalogs ) !== false && $this->getOnline()) {
+			$catalogs[] = 'HGK';
+		}
+
+		return array_unique( $catalogs );
 	}
 }
 ?>

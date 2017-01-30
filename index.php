@@ -17,7 +17,7 @@ $qobj = new \stdClass();
 	$qobj->filter = array();
 	$qobj->facets = array();
 
-echo mediathekheader('home', 'Willkommen in der Mediathek der Künste', null);
+echo mediathekheader('home', 'Willkommen in der Mediathek', null);
 ?>
 
     <!-- home-page -->

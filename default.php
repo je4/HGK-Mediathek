@@ -21,7 +21,7 @@ echo mediathekheader('home', null);
 			background-size: cover;
 			-o-background-size: cover;">
 				<div class="container" style="background-color: rgba(255, 255, 255, 0.8);">
-					<h1>Herzlich Willkommen in der Mediathek der Künste</h1>
+					<h1>Herzlich Willkommen in der Mediathek</h1>
 					<p>Die Mediathek der HGK stellt wissenschaftliche Literatur und elektronische Medien aus den 
 					Bereichen Bildende Kunst, Design, Designtheorie, Innenarchitektur und Szenografie zur Verfügung. 
 					Sie richtet sich an Studierende, Dozierende und Forschende der HGK, der FHNW sowie externe Interessierte. 

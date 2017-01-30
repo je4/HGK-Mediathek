@@ -126,7 +126,11 @@ if( !$qobj ) {
 }
 
 if( $qobj->query == '' ) $qobj->query = '*';
-
+/*
+	echo "<!-- ";
+	var_dump( $qobj );
+	echo " -->\n";
+*/
 // if( $qobj ) $session->storeQuery( md5( $qobj->query ));
 
 
@@ -151,7 +155,7 @@ echo mediathekheader('search', 'Mediathek - Suche - '.$qobj->query, $qobj->area)
 
             <div class="content-container col-md-11 col-sm-12">
                 <div class="clearfix">
-                    <h2 class="small-heading">Mediathek der Künste</h2>
+                    <h2 class="small-heading">Mediathek</h2>
 
 	<div class="container-fluid" style="margin-top: 0px; padding: 0px 20px 20px 20px;">
 		<div class="row" style="margin-bottom: 30px;">
@@ -185,6 +189,14 @@ switch( $qobj->area ) {
         break;
 }
 
+if( @is_array( $qobj->facets->catalog )) {
+	$catalogfilterquery = "";
+	foreach( $qobj->facets->catalog as $cat ) {
+		if( $catalogfilterquery != '' ) $catalogfilterquery .= ' OR ';
+		$catalogfilterquery .= ' (catalog:'.$helper->escapePhrase( $cat ).')';
+	}
+	$squery->createFilterQuery('catalog')->addTag('catalog')->setQuery( $catalogfilterquery );
+}
 if( @is_array( $qobj->facets->source )) {
 	$sourcefilterquery = "";
 	foreach( $qobj->facets->source as $src ) {
@@ -226,6 +238,9 @@ if( @is_array( $qobj->facets->license )) {
 }
 */
 $squery->setQuery( $qstr );
+
+$facetSetCatalog = $squery->getFacetSet();
+$facetSetCatalog->createFacetField('catalog')->setField('catalog')->addExclude('catalog');
 
 $facetSetSource = $squery->getFacetSet();
 $facetSetSource->createFacetField('source')->setField('source')->addExclude('source');
@@ -270,7 +285,40 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 	   <div class="row">
 		  <div class="col-md-8">
 			<div class="clearfix full-height">
-			  
+
+<!--			  
+
+<div class="container-fluid">
+		
+<ul class="nav nav-tabs">
+	
+<li class="nav-item">
+<a class="nav-link" href="#">Alles</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link active" href="#">HGK Default</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="#">Alle FHNW</a>
+</li>
+
+<li class="nav-item dropdown">
+<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+Themen
+</a>
+<div class="dropdown-menu" aria-labelledby="Preview">
+<a class="dropdown-item" href="#">Kunstbibliotheken</a>
+<a class="dropdown-item" href="#">Open Access</a>
+<a class="dropdown-item" href="#">Online</a>
+</div>
+</li>
+
+</ul>
+
+</div>
+-->
 
 <?php
 	echo searchbar($qobj->query, $qobj->area );
@@ -280,13 +328,41 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 		echo $res->getResult();
 		buildPagination();
 	}
+		
 ?>
 			  </table>
 			</div>
 		  </div>
    		  <div class="col-md-4" style="background-color: transparent;">
+<?php if( DEBUG ) { ?>   		  
 			<div style="">
 			<span style="; font-weight: bold;">Kataloge</span><br />
+			<div class="facet" style="">
+				<div class="marker" style=""></div>
+<?php
+				$facetCatalog = $rs->getFacetSet()->getFacet('catalog');
+				$i = 0;
+				foreach ($facetCatalog as $value => $count) {
+?>	
+						<div class="checkbox checkbox-green">
+							<input class="facet" type="checkbox" id="catalog" value="<?php echo htmlentities($value); ?>" <?php if( @is_array( $qobj->facets->catalog ) && array_search($value, $qobj->facets->catalog) !== false ) echo " checked"; ?>>
+							<label for="catalog<?php echo $i; ?>">
+								<?php echo htmlspecialchars( $value ).' ('.number_format( $count, 0, '.', "'" ).')'; ?>
+							</label>
+						</div>
+<!--						
+						<?php if( $i ) echo "<br />"; ?><input type="checkbox" id="source<?php echo $i; ?>" class="css-checkbox" value="<?php echo htmlentities($value); ?>" <?php if( @is_array( $qobj->facets->catalog ) && array_search($value, $qobj->facets->catalog) !== false ) echo " checked"; ?>>
+						<label for="catalog<?php echo $i; ?>" name="catalog<?php echo $i; ?>_lbl" class="css-label lite-x-green"><?php echo htmlspecialchars( $value ).' ('.$count.')'; ?></label>
+-->						
+<?php					
+					$i++;
+				}
+?>
+			</div>
+			</div>
+<?php  } /* if( DEBUG ) */ ?>			
+			<div style="">
+			<span style="; font-weight: bold;">Sources</span><br />
 			<div class="facet" style="">
 				<div class="marker" style=""></div>
 <?php
@@ -298,7 +374,7 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 						<div class="checkbox checkbox-green">
 							<input class="facet" type="checkbox" id="source" value="<?php echo htmlentities($value); ?>" <?php if( @is_array( $qobj->facets->source ) && array_search($value, $qobj->facets->source) !== false ) echo " checked"; ?>>
 							<label for="source<?php echo $i; ?>">
-								<?php echo htmlspecialchars( $config['sourcemap'][$value] ).' ('.$count.')'; ?>
+								<?php echo htmlspecialchars( $config['sourcemap'][$value] ).' ('.number_format( $count, 0, '.', "'" ).')'; ?>
 							</label>
 						</div>
 <!--						
@@ -326,7 +402,7 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 						<div class="checkbox checkbox-green">
 							<input class="facet" type="checkbox" id="embedded" value="<?php echo htmlentities($value); ?>" <?php if( @is_array( $qobj->facets->embedded ) && array_search($value, $qobj->facets->embedded) !== false ) echo " checked"; ?>>
 							<label for="embedded<?php echo $i; ?>">
-								<?php echo htmlspecialchars( 'direkt verfügbar' ).' ('.$count.')'; ?>
+								<?php echo htmlspecialchars( 'direkt verfügbar' ).' ('.number_format( $count, 0, '.', "'" ).')'; ?>
 							</label>
 						</div>
 <!--						
@@ -354,7 +430,7 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 					<div class="checkbox checkbox-green">
 						<input class="facet" type="checkbox" id="cluster" value="<?php echo htmlentities($value); ?>" <?php if( @is_array( $qobj->facets->cluster ) && array_search($value, $qobj->facets->cluster) !== false ) { echo " checked"; } ?>>
 						<label for="cluster<?php echo $i; ?>">
-							<?php echo htmlspecialchars( $value ).' ('.$count.')'; ?>
+							<?php echo htmlspecialchars( $value ).' ('.number_format( $count, 0, '.', "'" ).')'; ?>
 						</label>
 					</div>
 <?php			
@@ -401,7 +477,7 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 					<div class="checkbox checkbox-green">
 						<input class="facet" type="checkbox" id="category" value="<?php echo htmlentities($value); ?>" <?php if( @is_array( $qobj->facets->category ) && array_search($value, $qobj->facets->category) !== false ) { echo " checked"; } ?>>
 						<label for="category<?php echo $i; ?>">
-							<?php echo htmlspecialchars( str_replace( '!!', ':', $value )).' ('.$count.')'; ?>
+							<?php echo htmlspecialchars( str_replace( '!!', ':', $value )).' ('.number_format( $count, 0, '.', "'" ).')'; ?>
 						</label>
 					</div>
 <?php			
@@ -470,7 +546,7 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 				<div class="row">
 					<div class="col-md-6 col-sm-12 col-xs-12">
 						<p class="copyright">Copyright &copy; 2016
-							<a href="#">Mediathek der Künste</a>
+							<a href="#">Mediathek</a>
 						</p>
 					</div>
 
@@ -507,41 +583,39 @@ function init() {
             }
 			inEvent = true;
 			console.log( "select node: %o", $('#categorytree').jstree().get_selected(true) );
-			doSearch( $('#searchtext').val(), 0, <?php echo $session->getPageSize(); ?> );
-			
-	
-		}).on('deselect_node.jstree', function (e, data) {
-			function uncheckChildren( node ) {
-				if( data.node.children.length > 0 ) {
-					for( var id in data.node.children ) {
-						data.instance.uncheck_node( data.node.children[id] );
-					}
+			doSearch( $('#searchtext').val(), 0, <?php echo $session->getPageSize(); ?> );	
+	}).on('deselect_node.jstree', function (e, data) {
+		function uncheckChildren( node ) {
+			if( data.node.children.length > 0 ) {
+				for( var id in data.node.children ) {
+					data.instance.uncheck_node( data.node.children[id] );
 				}
 			}
-			function uncheckParents( node ) {
-				if( data.node.parents.length > 0 ) {
-					for( var id in data.node.parents ) {
-						data.instance.uncheck_node( data.node.parents[id] );
-					}
+		}
+		function uncheckParents( node ) {
+			if( data.node.parents.length > 0 ) {
+				for( var id in data.node.parents ) {
+					data.instance.uncheck_node( data.node.parents[id] );
 				}
 			}
+		}
 
-			if ( inEvent ) {
-                return;
-            }
-			inEvent = true;
-    
-			console.log( "deselect node: %o", data );
+		if ( inEvent ) {
+			return;
+		}
+		inEvent = true;
 
-			//uncheckChildren( data.node );
-			//uncheckParents( data.node );
-			
-			setTimeout( function () { doSearch( $('#searchtext').val(), 0, <?php echo $session->getPageSize(); ?> ); }, 0 );
-	
-		}).jstree({ 
-			"plugins" : [ "checkbox" ], 
-			"core": { "themes":{ "icons":false  } }
-		});
+		console.log( "deselect node: %o", data );
+
+		//uncheckChildren( data.node );
+		//uncheckParents( data.node );
+		
+		setTimeout( function () { doSearch( $('#searchtext').val(), 0, <?php echo $session->getPageSize(); ?> ); }, 0 );
+
+	}).jstree({ 
+		"plugins" : [ "checkbox" ], 
+		"core": { "themes":{ "icons":false  } }
+	});
 
 	 initSearch("<?php echo $qobj->area; ?>", <?php echo $session->getPageSize(); ?>);
 
@@ -569,8 +643,7 @@ function init() {
 <script src="js/threejs/build/three.js"></script>
 <script src="js/threejs/build/TrackballControls.js"></script>
 <script src="js/threejs/build/OrbitControls.js"></script>
-<script src="js/threejs/build/CombinedCamera.js"></script>   
-<!-- script src="mediathek2.js"></script -->   
+<script src="js/threejs/build/CombinedCamera.js"></script>     
 <script src="js/mediathek.js"></script>   
 <script src="js/mediathek3d.js"></script>
 <script src="js/threex.domresize.js"></script>

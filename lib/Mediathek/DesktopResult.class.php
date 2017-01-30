@@ -33,7 +33,7 @@ class DesktopResult extends SOLRResult {
             $this->urlparams = $urlparams;
 			$this->schema = array("@context"=>"http://schema.org",
 				"@type"=>array( "ItemList", "SearchResultsPage"),
-				"publisher"=> array( '@type'=>'Organization', 'name'=>'Mediathek der Künste Basel' ),
+				"publisher"=> array( '@type'=>'Organization', 'name'=>'Mediathek Basel' ),
 				"numberOfItems"=>count( $resultSet ),
 				"itemListElement"=> array(),
 			);

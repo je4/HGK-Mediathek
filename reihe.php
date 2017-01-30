@@ -113,18 +113,21 @@ if( preg_match( '/([A-Za-z])_([0-9]{3})_([a-z])/', $qr, $matches )) {
 <?php
 }
 else {
+//
+// keine Angabe der Reihe
+	
 ?>
 
 		<div class="content-container col-md-offset-1 col-md-9 col-sm-12">
 			<div class="clearfix">
 				<h2 class="small-heading">Reihe</h2>
 <?php
-	$sql = "SELECT DISTINCT SUBSTR(marker, 1, 5 ) AS marker FROM `inventory_cache` WHERE marker like '_\____%' order by marker asc";
+	$sql = "SELECT DISTINCT SUBSTR(marker, 1, 3 ) AS marker FROM `inventory_cache` WHERE marker like '_\____%' order by marker asc";
 	$rs = $db->Execute( $sql );
 	foreach( $rs as $row ) {
-		if( preg_match( '/([A-Za-z])_([0-9]{3})/', $row['marker'], $matches )) {
-		$ra = $matches[1].'_'.$matches[2].'_a';
-		$rb = $matches[1].'_'.$matches[2].'_b';
+		if( preg_match( '/([A-Za-z])_([0-9]{1})/', $row['marker'], $matches )) {
+		$ra = $matches[1].'_'.$matches[2].'00_a';
+		$rb = $matches[1].'_'.$matches[2].'00_b';
 ?>
 				
 				<div><?php echo getDescription( $ra, $debug ); ?></div>

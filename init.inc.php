@@ -19,12 +19,12 @@ require_once 'lib/adodb5/adodb.inc.php';
 
 $db = null;
 
-function doConnectMySQL() {
+function doConnectMySQL($force = false) {
     global $db, $config;
     if( $db == null ) {
         $db = NewAdoConnection( 'mysqli' );        
     }
-    if( !$db->isConnected()) {
+    if( $force || !$db->isConnected()) {
         try {
             if( !$db->PConnect( $config['db']['host'], $config['db']['user'], $config['db']['password'], $config['db']['database'] )) {
                 sleep( 1 );

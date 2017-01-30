@@ -47,32 +47,51 @@ try {
 				echo "   deleting swissbib-{$id}...\n";
 				$solr->delete( 'swissbib-'.$id);
 				//$pg->Execute($sql);
-				continue;
-			}
+				//continue;
+			} 
+			else {
 		
-			$metadata = $record->getMetadata();
-			
-			$data = array();
-			$data['IDENTIFIER'] = array( $id );
-			$data['DATESTAMP'] = array( $record->getDatestamp() );
-			
-			//echo $metadata->ownerDocument->saveXML($metadata)."\n";
-			$marc = null;
-			foreach( $metadata->childNodes as $child ) {
-				if( is_a( $child, 'DOMElement' ) && $child->tagName == 'mx:record' ) {
-					$marc  = $child;
+				$metadata = $record->getMetadata();
+				
+				$data = array();
+				$data['IDENTIFIER'] = array( $id );
+				$data['DATESTAMP'] = array( $record->getDatestamp() );
+				
+				//echo $metadata->ownerDocument->saveXML($metadata)."\n";
+				$marc = null;
+				foreach( $metadata->childNodes as $child ) {
+					if( is_a( $child, 'DOMElement' ) && $child->tagName == 'mx:record' ) {
+						$marc  = $child;
+					}
 				}
+				
+				if( $marc == null ) continue;
+				
+				//doConnectMySQL();
+				$entity->loadNode( $id, $record, 'swissbib' );
+				echo $entity->getTitle()."\n";
+	
+				do {
+					try {
+						$done = true;
+						$solr->import( $entity );
+					}
+					catch( \ADODB_Exception $e ) {
+						if( $done ) {
+							$done = false;
+							echo "> reconnect MySQL\n";
+							doConnectMySQL( true );
+						}
+						else {
+							throw $e;
+						}
+					}
+				} while( !$done);
 			}
-			
-			if( $marc == null ) continue;
-			
-			$entity->loadNode( $id, $record, 'swissbib' );
-			echo $entity->getTitle()."\n";
-
-			$solr->import( $entity );
-			
 			if( $interval2 >= 5000 ) {
 				$interval2 = 0;
+				
+				echo "> commit...\n";
 				$update = $solrclient->createUpdate();
 				
 				// add commit command to the update query
@@ -81,10 +100,42 @@ try {
 				// this executes the query and returns the result
 				$result = $solrclient->update($update);
 				
-				doConnectPostgres();
+				$sql = "SELECT 1 as val";
+				do {
+					try {
+						$done = true;
+						$db->GetOne( $sql );
+					}
+					catch( \ADODB_Exception $e ) {
+						if( $done ) {
+							$done = false;
+							echo "> reconnect MySQL\n";
+							doConnectMySQL( true );
+						}
+						else {
+							throw $e;
+						}
+					}
+				} while( !$done);
+				
 				$sql = "UPDATE oai_pmh_source SET datestamp=".$pg->qstr( $record->getDatestamp() )." WHERE oai_pmh_source_id={$sourceid}";
 				echo "\n------\n{$sql}\n--------\n";
-				$pg->Execute( $sql );
+				do {
+					try {
+						$done = true;
+						$pg->Execute( $sql );
+					}
+					catch( \ADODB_Exception $e ) {
+						if( $done ) {
+							echo "> reconnect PostgreSQL\n";
+							$done = false;
+							doConnectPostgres( true );
+						}
+						else {
+							throw $e;
+						}
+					}
+				} while( !$done);
 			}
 			if( $interval > 500000 ) {
 				$interval = 0;
@@ -97,10 +148,24 @@ try {
 				// this executes the query and returns the result
 				$result = $solrclient->update($update);
 				
-				doConnectPostgres();
 				$sql = "UPDATE oai_pmh_source SET datestamp=".$pg->qstr( $record->getDatestamp() )." WHERE oai_pmh_source_id={$sourceid}";
 				echo "\n------\n{$sql}\n--------\n";
-				$pg->Execute( $sql );				
+				do {
+					try {
+						$done = true;
+						$pg->Execute( $sql );
+					}
+					catch( \ADODB_Exception $e ) {
+						if( $done ) {
+							echo "> reconnect PostgreSQL\n";
+							$done = false;
+							doConnectPostgres( true );
+						}
+						else {
+							throw $e;
+						}
+					}
+				} while( !$done);
 				
 				echo "sleeping 5min\n";
 				sleep( 5*60 );				

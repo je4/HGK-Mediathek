@@ -60,13 +60,17 @@ class SOLR {
 			foreach( $resultset->getDocuments() as $doc ) {
 				$update = $this->solr->createUpdate();
 				$fields = $doc->getFields();
-				if( array_key_exists( 'score', $fields )) {
-					unset( $fields['score']);
+				$flds2 = array();
+				foreach( $fields as $key=>$val ) {
+					switch( $key ) {
+						case 'score':
+						case '_version_':
+							break;
+						default:
+							$flds2[$key] = $val;
+					}
 				}
-				if( array_key_exists( '_version_', $fields )) {
-					unset( $fields['_version_']);
-				}
-				$udoc = $update->createDocument( $fields );
+				$udoc = $update->createDocument( $flds2 );
 				$udoc->setField( 'creation_date', gmdate('Y-m-d\TH:i:s\Z', time()));
 				$udoc->setField( 'deleted', true );
 				$update->addDocuments( array( $udoc ));
@@ -144,7 +148,9 @@ class SOLR {
         foreach( $src->getURLs() as $url )
             $doc->addField( 'url', $url);
         foreach( $src->getCodes() as $code )
-            $doc->addField( 'code', $code);
+           	$doc->addField( 'code', $code);        
+        foreach( $src->getCatalogs() as $cat )
+            $doc->addField( 'catalog', $cat);
         foreach( $src->getIssues() as $issue ) {
         	if( strlen( trim( $issue ))) {
         		//echo "issue: $issue <br />\n";

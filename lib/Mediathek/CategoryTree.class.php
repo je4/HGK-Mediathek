@@ -84,8 +84,10 @@ class CategoryTree {
 	
 	public function treeJS() {
 		$str = '';
-		if( $this->parent != null )
-			$str .= '<li id="'.$this->name.'" data-jstree=\'{"opened":'.($this->open ? 'true':'false').', "selected":'.($this->selected ? 'true':'false').'}\'><a href="#" class="'.($this->open ? 'jstree-open':'').'">'.htmlspecialchars( $this->label )." ({$this->count})</a>\n";
+		if( $this->parent != null ) {
+			$str .= '<li id="'.$this->name.'" data-jstree=\'{"opened":'.($this->open ? 'true':'false').', "selected":'.($this->selected ? 'true':'false').'}\'>'.
+			$str .= '<a href="#" class="'.($this->open ? 'jstree-open':'').'">'.htmlspecialchars( $this->label )." (".number_format( $this->count, 0, '.', "'" ).")</a>\n";
+		}
 		if( count( $this->children )) {
 			$str .= "   <ul>\n";
 			foreach( $this->children as $child ) {

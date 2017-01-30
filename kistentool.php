@@ -22,7 +22,7 @@ echo mediathekheader('kiste', null, '');
 			-o-background-size: cover;">
 				<div class="container" style="background-color: rgba(255, 255, 255, 0.9);">
 					<h1>Medien finden</h1>
-					<p>Mit Hilfe dieses Werkzeuges können Medien in dem Räumlichkeiten der Mediathek der Künste lokalisiert werden. Einfach eine Signatur eintippen, dann wird die zugehörige Kiste angezeigt. 
+					<p>Mit Hilfe dieses Werkzeuges können Medien in dem Räumlichkeiten der Mediathek lokalisiert werden. Einfach eine Signatur eintippen, dann wird die zugehörige Kiste angezeigt. 
 					Alternativ können auch Kistennummern gesucht werden, um sämtliche Medien, die sich darin befinden, anzuzeigen.</p>
 					</div>
 			</div>	

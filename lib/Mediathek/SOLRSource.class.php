@@ -56,13 +56,25 @@ abstract class SOLRSource {
 	abstract public function getLanguages();
 	abstract public function getIssues();
 	public function getCategories() {
-		$r = new \ReflectionMethod(get_called_class(), 'getSource');
-		return array( 'source!!'.$r->invoke($this) );
+		$rm = new \ReflectionMethod(get_called_class(), 'getSource');
+		return array( 'source!!'.$rm->invoke($this) );
 	}
 	
 	public function getSourceIDs() {
 		return array();
 	} 
+	
+	public function getCatalogs() {
+		$rc = new \ReflectionClass(get_called_class());
+		if( $rc->methodExists( 'getCatalogs' )) {
+			$rm = $rc->getMethod( 'getCatalogs' );
+			return $rm->invoke( $this );
+		}
+		else {
+			return array( $this->getSource() );
+		}
+		
+	}
 	
 }
 

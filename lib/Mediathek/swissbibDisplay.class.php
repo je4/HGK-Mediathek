@@ -174,7 +174,7 @@ class swissbibDisplay extends DisplayEntity {
 							if( is_array( $codes )) foreach( $codes as $code ) {
 								echo htmlspecialchars( str_replace( ':', ': ', $code ))."<br />\n";
 							}
-								
+
 							$rib = null;
 							/*
 							if( isset( $config['RIB'] )) {

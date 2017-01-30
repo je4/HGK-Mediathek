@@ -6,7 +6,7 @@
                             <div class="row">
                                 <div class="col-md-6 col-sm-12 col-xs-12">
                                     <p class="copyright">Copyright &copy; 2016
-                                        <a href="#">Mediathek der Künste</a>
+                                        <a href="#">Mediathek</a>
                                     </p>
                                 </div>
 

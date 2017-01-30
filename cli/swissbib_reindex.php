@@ -13,25 +13,25 @@ $solr = new SOLR( $solrclient );
 
 if( false ) {
 	$tmp = fopen( $tmpfile, 'w' );
-	
+
 	$customizer = $solrclient->getPlugin('customizerequest');
-	
+
 	$pagesize = 10000;
 	$page = 0;
 	$numPages = 1;
-	
+
 	$counter = 1;
-	
+
 	$cursormark = '*';
-	
+
 	do {
 		$squery = $solrclient->createSelect();
 		$squery->setRows( $pagesize );
-		$squery->createFilterQuery('swissbib')->setQuery("source:swissbib");
+		$squery->createFilterQuery('notdone')->setQuery("-catalog:*");
 		$squery->createFilterQuery('nodelete')->setQuery("deleted:false");
 		$squery->setFields( array( 'id' ));
 		$squery->setQuery( "*:*" );
-		$squery->addSort('id', $squery::SORT_ASC);
+		$squery->addSort('id', $squery::SORT_DESC);
 		$customizer->createCustomization( 'cursorMark' )
 			->setType( 'param' )
 			->setName( 'cursorMark' )
@@ -47,24 +47,33 @@ if( false ) {
 		$data = $rs->getData();
 		if( $cursormark == $data["nextCursorMark"] )
 			break;
-		
+
 		$cursormark = $data["nextCursorMark"];
 		$page++;
 	} while( true );
-	
+
 	fclose( $tmp );
 }
 
 $counter = 0;
 $tmp = fopen( $tmpfile, 'r' );
 while( $id = fgets( $tmp ) ) {
+	echo $id."\n";
 	$query = $solrclient->createSelect();
 	$helper = $query->getHelper();
 	$query->setQuery( 'id:'.$helper->escapeTerm( $id ));
 	$resultset = $solrclient->select( $query );
 	if( $resultset->getNumFound() == 1 ) {
 		foreach( $resultset->getDocuments() as $doc ) {
+			$source = $doc->source;
 			$data = gzdecode( base64_decode( $doc->metagz ));
+			switch( $source ) {
+				case 'swissbib':
+					break;
+				default:
+					break;
+			}
+			$class = '\\Mediathek\\'.$doc->source.'Entity';
 			$record = new OAIPMHRecord( $data );
 			$entity->loadNode( $doc->originalid, $record, 'swissbib' );
 			$solr->import( $entity, ($counter % 5000 == 0) );

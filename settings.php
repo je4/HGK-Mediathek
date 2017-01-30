@@ -37,7 +37,7 @@ echo mediathekheader('search', 'Mediathek - Settings', '');
 
             <div class="content-container col-md-11 col-sm-12">
                 <div class="clearfix full-height">
-                    <h2 class="small-heading">Mediathek der Künste</h2>
+                    <h2 class="small-heading">Mediathek</h2>
 					<div class="container-fluid" style="margin-top: 0px; padding: 0px 20px 20px 20px;">
 <?php if( $session->isLoggedIn()) { ?>
 
@@ -100,7 +100,7 @@ Bitte <a href="auth/?target=<?php echo urlencode( $_SERVER['REQUEST_SCHEME'].':/
 				<div class="row">
 					<div class="col-md-6 col-sm-12 col-xs-12">
 						<p class="copyright">Copyright &copy; 2016
-							<a href="#">Mediathek der Künste</a>
+							<a href="#">Mediathek</a>
 						</p>
 					</div>
 
