@@ -30,7 +30,7 @@ if( !file_exists( $tmpfile )) {
 		$squery = $solrclient->createSelect();
 		$squery->setRows( $pagesize );
 		$squery->createFilterQuery('notdone')->setQuery("-catalog:*");
-		$squery->createFilterQuery('nodelete')->setQuery("deleted:false");
+		$squery->createFilterQuery('nodelete')->setQuery("deleted:false OR -deleted:*");
 		$squery->setFields( array( 'id' ));
 		$squery->setQuery( "*:*" );
 		$squery->addSort('id', $squery::SORT_DESC);
