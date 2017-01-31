@@ -5,8 +5,8 @@ namespace Mediathek;
 include '../init.inc.php';
 include '../init.pg.php';
 
-$tmpfile = "/data/tmp/ids.dat";
-$cntfile = "/data/tmp/counter.dat";
+$tmpfile = $config['tmpprefix']."ids.dat";
+$cntfile = $config['tmpprefix']."counter.dat";
 
 $entity = new swissbibEntity( $db );
 $solr = new SOLR( $solrclient );
