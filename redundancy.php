@@ -12,6 +12,8 @@ if( !$session->isLoggedIn()) {
 	header( 'Location: auth/?target='.urlencode( $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']) );
 }
 
+$session->storeCustom( $_SERVER['REQUEST_URI'] );
+
 // get request values
 $new = isset( $_REQUEST['new'] ) ? $_REQUEST['new'] : null; 
 $online = isset( $_REQUEST['online'] ) ? intval( $_REQUEST['online'] ) > 0 : null;

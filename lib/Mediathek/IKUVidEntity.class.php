@@ -32,9 +32,7 @@ namespace Mediathek;
 class IKUVidEntity extends SOLRSource {
     private static $videotable = 'source_ikuvid';
     private $json = null;
-    private $data = null;
-    private $id = null;
-    private $idprefix = null;
+    private $idprefix = 'ikuvid';
     private $db = null;
     private $barcode = null;
     private $signature = null;
@@ -688,9 +686,13 @@ class IKUVidEntity extends SOLRSource {
         $this->db = $db;
     }
 
-    private function reset() {
-        $this->id = null;
-        $this->idprefix = null;
+    public function loadFromDoc( $doc) {
+    	$this->data = ( array )json_decode( gzdecode( base64_decode( $doc->metagz )));
+    	$this->id = $doc->originalid;
+    }
+    
+    public function reset() {
+    	parent::reset();
         $this->json = null;
         $this->barcode = null;
         $this->signature = null;
@@ -708,7 +710,7 @@ class IKUVidEntity extends SOLRSource {
         $this->reset();
         
         $this->id = $id;
-        $this->idprefix = $idprefix;
+        //$this->idprefix = $idprefix;
         
         $sql = "SELECT * FROM `".self::$videotable."` WHERE `Archiv-Nr` = ".$this->db->qstr( $id );
         $this->data = $this->db->GetRow( $sql );
@@ -870,7 +872,8 @@ class IKUVidEntity extends SOLRSource {
     public function getMetaACL() { return array( 'global/guest' ); }
     public function getContentACL() { return array( 'certificate/mediathek', 'fhnw/video' ); }
     public function getPreviewACL() { return array( 'location/fhnw' ); }
-
+    public function getCatalogs() { return array( $this->getSource() ); }
+    
 }
 
 ?>

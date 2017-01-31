@@ -31,9 +31,7 @@ namespace Mediathek;
 
 class DOAJEntity extends SOLRSource {
     private static $table = 'oai_pmh';
-    private $data = null;
-    private $id = null;
-    private $idprefix = null;
+    private $idprefix = 'doaj';
     private $db = null;
     private $barcode = null;
     private $signature = null;
@@ -52,8 +50,7 @@ class DOAJEntity extends SOLRSource {
     }
 
     private function reset() {
-        $this->id = null;
-        $this->idprefix = null;
+        parent::reset();
         $this->json = null;
         $this->barcode = null;
         $this->signature = null;
@@ -67,11 +64,16 @@ class DOAJEntity extends SOLRSource {
         
     }
     
+    public function loadFromDoc( $doc) {
+    	$this->data = ( array )json_decode( gzdecode( base64_decode( $doc->metagz )));
+    	$this->id = $doc->originalid;
+    }
+    
     function loadFromDatabase( string $id, string $idprefix ) {
         $this->reset();
         
         $this->id = $id;
-        $this->idprefix = $idprefix;
+        // $this->idprefix = $idprefix;
         
         $sql = "SELECT * FROM \"".self::$table."\" WHERE \"identifier\" = ".$this->db->qstr( $id );
 		$row = $this->db->GetRow( $sql );
@@ -259,6 +261,7 @@ class DOAJEntity extends SOLRSource {
 		$categories[] = 'openaccess!!DOAJ';
 		return $categories;
 	}	
+	public function getCatalogs() { return array( $this->getSource() ); }
 	
 }
 

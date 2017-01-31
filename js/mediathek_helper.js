@@ -236,7 +236,7 @@ function init3D( boxes, camJSON ) {
 		}, 
 		function( object ) {
 			mediathek.scene.add(object);
-			object.boxHighlight( hash, true );
+			//object.boxHighlight( hash, true );
 			mediathek.animate();
 			
 			object.renderBoxes(0);

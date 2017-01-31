@@ -31,12 +31,10 @@ namespace Mediathek;
 
 class swissbibEntity extends SOLRSource {
 	private $node;
-	private $data = null;
 
 	private $record = null;
     private $xml = null;
-    private $id = null;
-    private $idprefix = null;
+    private $idprefix = 'swissbib';
     private $barcode = null;
     private $locations = null;
     private $libCodes = null;
@@ -157,19 +155,21 @@ class swissbibEntity extends SOLRSource {
 		return $arr[0];
 	}
 
-	function __construct( $db ) {
+	function __construct( \ADOConnection $db ) {
 		$this->db = $db;
 	}
 
-    private function reset() {
-		$this->data = null;
+	public function loadFromDoc( $doc) {
+		$xml = ( string )gzdecode( base64_decode( $doc->metagz ));
+		$this->loadNode( $doc->originalid, new OAIPMHRecord( $xml ), null );
+	}
 
+
+    public function reset() {
+		parent::reset();
 		$this->record = null;
 		$this->xml = null;
-		$this->id = null;
-		$this->idprefix = null;
 		$this->node = null;
-		$this->data = null;
 		$this->barcode = null;
 		$this->locations = null;
 		$this->libCodes = null;
@@ -191,7 +191,7 @@ class swissbibEntity extends SOLRSource {
 	function loadNode( $id, $record, $idprefix ) {
 		$this->reset();
         $this->id = $id;
-        $this->idprefix = $idprefix;
+        // $this->idprefix = $idprefix;
         $this->record = $record;
 
         $metadata = $record->getMetadata();

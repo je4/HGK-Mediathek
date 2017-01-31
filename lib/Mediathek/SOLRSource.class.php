@@ -25,7 +25,16 @@
 namespace Mediathek;
 
 abstract class SOLRSource {
-    abstract public function getID();
+	protected $data = null;
+	protected $id = null;
+	
+	public function reset() {
+		$this->data = null;
+		$this->id = null;
+	}
+	
+	abstract public function loadFromDoc( $doc );
+	abstract public function getID();
 	abstract public function getOriginalID();
     abstract public function getSource();
     abstract public function getType();
@@ -64,10 +73,13 @@ abstract class SOLRSource {
 		return array();
 	} 
 	
-	public function getCatalogs() {
+	abstract public function getCatalogs();
+/*	{
 		$rc = new \ReflectionClass(get_called_class());
-		if( $rc->methodExists( 'getCatalogs' )) {
-			$rm = $rc->getMethod( 'getCatalogs' );
+		if( $rc->hasMethod( 'getCatalogs' )) {
+			echo get_called_class().'::getCatalogs()'."\n";
+			//$rm = $rc->getMethod( 'getCatalogs' );
+			$rm = new \ReflectionMethod(get_called_class(), 'getCatalogs');
 			return $rm->invoke( $this );
 		}
 		else {
@@ -75,7 +87,7 @@ abstract class SOLRSource {
 		}
 		
 	}
-	
+*/	
 }
 
 ?>

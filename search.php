@@ -120,9 +120,12 @@ if( !$qobj ) {
 		$query = json_encode( $qobj );
 		$q = md5($query);
 		writeQuery( $q, $qobj, $query );
+		$session->storeQuery( $q );
 	}
-	else 
+	else { 
 		$qobj = readQuery( $q );
+		$session->storeQuery( $q );
+	}
 }
 
 if( $qobj->query == '' ) $qobj->query = '*';
@@ -131,7 +134,7 @@ if( $qobj->query == '' ) $qobj->query = '*';
 	var_dump( $qobj );
 	echo " -->\n";
 */
-// if( $qobj ) $session->storeQuery( md5( $qobj->query ));
+
 
 
 echo mediathekheader('search', 'Mediathek - Suche - '.$qobj->query, $qobj->area);

@@ -10,6 +10,8 @@ $cntfile = "/data/tmp/counter.dat";
 
 $entity = new swissbibEntity( $db );
 $solr = new SOLR( $solrclient );
+$entities = array();
+
 
 if( false ) {
 	$tmp = fopen( $tmpfile, 'w' );
@@ -67,15 +69,15 @@ while( $id = fgets( $tmp ) ) {
 		foreach( $resultset->getDocuments() as $doc ) {
 			$source = $doc->source;
 			$data = gzdecode( base64_decode( $doc->metagz ));
-			switch( $source ) {
-				case 'swissbib':
-					break;
-				default:
-					break;
+			if( !array_key_exists( $source, $entities )) {
+				$class = '\\Mediathek\\'.$source.'Entity';
+				echo "creating class {$class}\n";
+				$entities[$source] = new $class( $db );
 			}
-			$class = '\\Mediathek\\'.$doc->source.'Entity';
-			$record = new OAIPMHRecord( $data );
-			$entity->loadNode( $doc->originalid, $record, 'swissbib' );
+			$entity = $entities[$source];
+			echo "   loading...";
+			$entity->loadFromDoc( $doc );
+			echo "   importing...\n";
 			$solr->import( $entity, ($counter % 5000 == 0) );
 			echo sprintf( "%08u - ", $counter ).$id."\n";
 			if($counter % 1000 == 0) {

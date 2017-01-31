@@ -31,9 +31,7 @@ namespace Mediathek;
 
 class DOABEntity extends SOLRSource {
     private static $table = 'source_doajoai';
-    private $data = null;
-    private $id = null;
-    private $idprefix = null;
+    private $idprefix = 'doab';
     private $db = null;
     private $barcode = null;
     private $signature = null;
@@ -51,9 +49,12 @@ class DOABEntity extends SOLRSource {
         $this->db = $db;
     }
 
-    private function reset() {
-        $this->id = null;
-        $this->idprefix = null;
+    public function loadFromDoc( $doc) {
+    	$this->data = ( array )json_decode( gzdecode( base64_decode( $doc->metagz )));
+    	$this->id = $doc->originalid;
+    }
+    
+    public function reset() {
         $this->json = null;
         $this->barcode = null;
         $this->signature = null;
@@ -71,7 +72,7 @@ class DOABEntity extends SOLRSource {
         $this->reset();
         
         $this->id = $id;
-        $this->idprefix = $idprefix;
+        //$this->idprefix = $idprefix;
         
         $sql = "SELECT * FROM `".self::$table."` WHERE `identifier` = ".$this->db->qstr( $id );
         $row = $this->db->GetRow( $sql );
@@ -80,7 +81,7 @@ class DOABEntity extends SOLRSource {
     
     function loadFromArray( string $id, array $data, string $idprefix ) {
         $this->id = $id;
-        $this->idprefix = $idprefix;
+        //$this->idprefix = $idprefix;
 		$this->data = $data;
 	}
 	 
@@ -261,7 +262,8 @@ class DOABEntity extends SOLRSource {
 		$categories[] = 'openaccess!!DOAB';
 		return $categories;
 	}	
-		
+	public function getCatalogs() { return array( $this->getSource() ); }
+	
 }
 
 ?>

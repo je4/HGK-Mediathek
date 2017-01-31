@@ -196,13 +196,23 @@ class Session implements \SessionHandlerInterface
   }
   
   function storeQuery( $queryid ) {
-	  $sql = "SELECT count(*) FROM session_query WHERE php_session_id=".$this->db->qstr( $this->id )." AND queryid=".$this->db->qstr( $queryid );
-	  $num = intval( $this->db->GetOne( $sql ));
-	  if( !$num ) 
-		$sql = "INSERT INTO session_query VALUES( ".$this->db->qstr( $this->id ).", ".$this->db->qstr( $queryid ).", 1, NOW())";
-	  else
-		$sql = "UPDATE session_query SET counter=counter+1, accesstime=NOW() WHERE php_session_id=".$this->db->qstr( $this->id )." AND queryid=".$this->db->qstr( $queryid );
-	  $this->db->Execute( $sql );
+  	$sql = "SELECT count(*) FROM session_query WHERE php_session_id=".$this->db->qstr( $this->id )." AND queryid=".$this->db->qstr( $queryid );
+  	$num = intval( $this->db->GetOne( $sql ));
+  	if( !$num )
+  		$sql = "INSERT INTO session_query VALUES( ".$this->db->qstr( $this->id ).", ".$this->db->qstr( $queryid ).", 1, NOW())";
+  		else
+  			$sql = "UPDATE session_query SET counter=counter+1, accesstime=NOW() WHERE php_session_id=".$this->db->qstr( $this->id )." AND queryid=".$this->db->qstr( $queryid );
+  	  $this->db->Execute( $sql );
+  }
+
+  function storeCustom( $task ) {
+  	$sql = "SELECT count(*) FROM session_custom WHERE php_session_id=".$this->db->qstr( $this->id )." AND task=".$this->db->qstr( $task );
+  	$num = intval( $this->db->GetOne( $sql ));
+  	if( !$num )
+  		$sql = "INSERT INTO session_custom VALUES( ".$this->db->qstr( $this->id ).", ".$this->db->qstr( $task ).", 1, NOW())";
+	else
+		$sql = "UPDATE session_custom SET counter=counter+1, accesstime=NOW() WHERE php_session_id=".$this->db->qstr( $this->id )." AND task=".$this->db->qstr( $task );
+    $this->db->Execute( $sql );
   }
   
   function getGroups() {

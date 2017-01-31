@@ -32,9 +32,7 @@ namespace Mediathek;
 class WenkenparkEntity extends SOLRSource {
     private static $videotable = 'source_wenkenpark';
     private $json = null;
-    private $data = null;
-    private $id = null;
-    private $idprefix = null;
+    private $idprefix = 'vww';
     private $db = null;
     private $barcode = null;
     private $signature = null;
@@ -61,9 +59,13 @@ class WenkenparkEntity extends SOLRSource {
         $this->db = $db;
     }
 
-    private function reset() {
-        $this->id = null;
-        $this->idprefix = null;
+    public function loadFromDoc( $doc) {
+    	$this->data = ( array )json_decode( gzdecode( base64_decode( $doc->metagz )));
+    	$this->id = $doc->originalid;
+    }
+    
+    public function reset() {
+    	parent::reset();
         $this->json = null;
         $this->barcode = null;
         $this->signature = null;
@@ -81,7 +83,7 @@ class WenkenparkEntity extends SOLRSource {
         $this->reset();
         
         $this->id = $id;
-        $this->idprefix = $idprefix;
+        //$this->idprefix = $idprefix;
         
         $sql = "SELECT * FROM `".self::$videotable."` WHERE `KATALOGNUMMER` = ".$this->db->qstr( $id );
         $this->data = $this->db->GetRow( $sql );
@@ -263,6 +265,7 @@ class WenkenparkEntity extends SOLRSource {
     public function getPreviewACL() { return array( 'location/fhnw' ); }
 	public function getLanguages() { return array(); }
 	public function getIssues()  { return array(); }
+	public function getCatalogs() { return array( $this->getSource() ); }
 
 }
 

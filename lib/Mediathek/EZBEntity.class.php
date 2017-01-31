@@ -31,9 +31,7 @@ namespace Mediathek;
 
 class EZBEntity extends SOLRSource {
     private $json = null;
-    private $data = null;
-    private $id = null;
-    private $idprefix = null;
+    private $idprefix = 'ezb';
     private $db = null;
     private $barcode = null;
     private $signature = null;
@@ -51,9 +49,13 @@ class EZBEntity extends SOLRSource {
         $this->db = $db;
     }
 
-    private function reset() {
-        $this->id = null;
-        $this->idprefix = null;
+    public function loadFromDoc( $doc) {
+    	$this->data = ( array )json_decode( gzdecode( base64_decode( $doc->metagz )));
+    	$this->id = $doc->originalid;
+    }
+    
+    public function reset() {
+    	parent::reset();
         $this->json = null;
         $this->barcode = null;
         $this->signature = null;
@@ -73,7 +75,7 @@ class EZBEntity extends SOLRSource {
         $this->data = $row;
         
         $this->id = $this->data['EZB-Id'];
-        $this->idprefix = $idprefix;
+        // $this->idprefix = $idprefix;
         
         //echo $this->id."\n";
         
@@ -229,6 +231,8 @@ class EZBEntity extends SOLRSource {
 
 	public function getLanguages() { return array(); }
 	public function getIssues()  { return array(); }
+	public function getCatalogs() { return array( $this->getSource() ); }
+	
 }
 
 ?>

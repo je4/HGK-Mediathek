@@ -125,7 +125,7 @@ class SOLR {
             $doc->setField( 'metagz', base64_encode( $metagz ));
             //$doc->setField( 'metatext', ( $meta ));
 		}
-        foreach( $src->getMetaACL() as $acl )
+		foreach( $src->getMetaACL() as $acl )
            $doc->addField( 'acl_meta', $acl );
         foreach( $src->getContentACL() as $acl )
            $doc->addField( 'acl_content', $acl );
@@ -166,6 +166,7 @@ class SOLR {
         $doc->setField( 'embedded', $src->getEmbedded());
         
 		$doc->setField( 'creation_date', gmdate('Y-m-d\TH:i:s\Z', time()));
+		
 		
         $update->addDocuments( array( $doc ));
         if( $commit )

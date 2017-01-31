@@ -30,22 +30,18 @@ namespace Mediathek;
  */
 
 class to_performEntity extends SOLRSource {
-    private $data = null;
-    private $id = null;
     private $idprefix = null;
 
 	static $persons = array( 'Author', 'Creator', 'Artist', );
     
    
-    function __construct( ) {
+    function __construct( \ADOConnection $db = null ) {
         
     }
 
-    private function reset() {
-        $this->id = null;
+    public function reset() {
+    	parent::reset();
         $this->idprefix = null;
-		$this->data = null;
-        
     }
     
     function loadFromArray( string $id, array $row, string $idprefix ) {
@@ -228,6 +224,8 @@ class to_performEntity extends SOLRSource {
 		else $categories[] = 'fhnw!!hsm!!fue!!prj!!to_perform';
 		return $categories;
 	}
+
+	public function getCatalogs() { return array( $this->getSource() ); }
 }
 
 ?>

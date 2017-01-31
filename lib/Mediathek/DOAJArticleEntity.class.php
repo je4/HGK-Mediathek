@@ -31,9 +31,7 @@ namespace Mediathek;
 
 class DOAJArticleEntity extends SOLRSource {
     private static $table = 'source_doajoai';
-    private $data = null;
-    private $id = null;
-    private $idprefix = null;
+    private $idprefix = 'doajarticle';
     private $db = null;
     private $barcode = null;
     private $signature = null;
@@ -51,9 +49,8 @@ class DOAJArticleEntity extends SOLRSource {
         $this->db = $db;
     }
 
-    private function reset() {
-        $this->id = null;
-        $this->idprefix = null;
+    public function reset() {
+    	parent::reset();
         $this->json = null;
         $this->barcode = null;
         $this->signature = null;
@@ -66,12 +63,17 @@ class DOAJArticleEntity extends SOLRSource {
         $this->online = false;
         
     }
+
+    public function loadFromDoc( $doc) {
+    	$this->data = ( array )json_decode( gzdecode( base64_decode( $doc->metagz )));
+    	$this->id = $doc->originalid;
+    }
     
     function loadFromDatabase( string $id, string $idprefix ) {
         $this->reset();
         
         $this->id = $id;
-        $this->idprefix = $idprefix;
+        //$this->idprefix = $idprefix;
         
         $sql = "SELECT data FROM `".self::$table."` WHERE `identifier` = ".$this->db->qstr( $id );
         $this->data = ( array )json_decode( $this->db->GetOne( $sql ));
@@ -79,7 +81,7 @@ class DOAJArticleEntity extends SOLRSource {
     
     function loadFromArray( string $id, array $data, string $idprefix ) {
         $this->id = $id;
-        $this->idprefix = $idprefix;
+        //$this->idprefix = $idprefix;
 		$this->data = $data;
 	}
 	
@@ -286,6 +288,7 @@ class DOAJArticleEntity extends SOLRSource {
 		$categories[] = 'openaccess!!DOAJArticle';
 		return $categories;
 	}	
+	public function getCatalogs() { return array( $this->getSource() ); }
 	
 }
 
