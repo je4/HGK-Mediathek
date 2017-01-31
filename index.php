@@ -37,9 +37,9 @@ echo mediathekheader('home', 'Willkommen in der Mediathek', null);
             <div class="intro-content">
               
                 <h1 style="text-shadow: 2px 2px 3px rgba(255,255,255,0.8);">
-                    Mediathek der
+                    Hochschule für Gestaltung und Kunst
                 </h1> 
-                <span style="">Künste</span><span class="number"></span>
+                <span style="">Mediathek</span><span class="number"></span>
 <!--                <p class="slogan-text text-capitalize" style=""><img style="position: static; top: auto; left: auto; width: 150px;" src="img/fhnw.png" /></p>
 -->
 				<p> 

@@ -190,12 +190,15 @@ body, button, input, select, textarea, p {
 .intro-content span {
     color: black;
 	text-shadow: 4px 4px 6px rgba(255,255,255,0.8);
+	font-size: 72px;
 }
 
 .intro-content h1 {
-    margin-bottom: 15px; /* -15px;  JE */
+    margin-bottom: 8px; /* -15px;  JE */
 	color: black;
 	text-shadow: 3px 3px 4px rgba(255,255,255,0.8);
+	font-size: 24px;
+	padding-left: 25px;
 }
 
 
