@@ -15,7 +15,7 @@
  * @copyright   (C) 2016 Academy of Art and Design FHNW
  * @license     http://www.gnu.org/licenses/gpl-3.0
  * @link        http://mediathek.fhnw.ch
- * 
+ *
  */
 
 /**
@@ -43,13 +43,13 @@ class DOAJEntity extends SOLRSource {
     private $urls = null;
     private $signatures = null;
     private $online = false;
-    
-    
+
+
     function __construct( \ADOConnection $db ) {
         $this->db = $db;
     }
 
-    private function reset() {
+    public function reset() {
         parent::reset();
         $this->json = null;
         $this->barcode = null;
@@ -61,37 +61,37 @@ class DOAJEntity extends SOLRSource {
         $this->urls = null;
         $this->signatures = null;
         $this->online = false;
-        
+
     }
-    
+
     public function loadFromDoc( $doc) {
     	$this->data = ( array )json_decode( gzdecode( base64_decode( $doc->metagz )));
     	$this->id = $doc->originalid;
     }
-    
+
     function loadFromDatabase( string $id, string $idprefix ) {
         $this->reset();
-        
+
         $this->id = $id;
         // $this->idprefix = $idprefix;
-        
+
         $sql = "SELECT * FROM \"".self::$table."\" WHERE \"identifier\" = ".$this->db->qstr( $id );
 		$row = $this->db->GetRow( $sql );
         $this->data = (array)json_decode( $row['data'] );
     }
-    
+
 	function load( string $id, string $idprefix, $data ) {
         $this->data = $data;
 	}
-	
+
     public function getID() {
-        return $this->idprefix.'-'.$this->id; 
+        return $this->idprefix.'-'.$this->id;
     }
-	
+
 	public function getOriginalID() {
 		return $this->id;
 	}
-    	
+
     public function getType() {
 		return "Journal";
 	}
@@ -103,22 +103,22 @@ class DOAJEntity extends SOLRSource {
     public function getSource() {
         return 'DOAJ';
     }
-    
+
 	public function getLocations() {
 		return array( 'DOAJ:online' );
 	}
-	
+
 	public function getOpenAccess() {
 		return true;
 	}
-	
+
     public function getTitle() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
         $title = trim( implode( '; ', $this->data['DC:TITLE'] ));
 
         return $title;
     }
-    
+
     public function getPublisher() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
         $pub = $this->data['DC:PUBLISHER'];
@@ -136,7 +136,7 @@ class DOAJEntity extends SOLRSource {
 		}
         return $codes;
     }
-    
+
     public function getYear() {
 		foreach( $this->data['DC:DATE'] as $date ) {
 			$d = new \DateTime( $date );
@@ -144,23 +144,23 @@ class DOAJEntity extends SOLRSource {
 		}
         return null;
     }
-    
+
     public function getCity() {
         return null;
     }
-    
+
 	public function getTags() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
-    
-        
+
+
         $this->tags = array();
-    
+
         $kws = $this->data['DC:SUBJECT'];
-   
+
         foreach( $kws as $kw ) {
             $this->tags[] = 'subject:hierarchical:doaj/'.md5( trim( $kw) ).'/'.trim( $kw );
         }
-        
+
         $this->tags = array_unique( $this->tags );
         $this->cluster = array();
         foreach( $this->tags as $tag ) {
@@ -171,44 +171,44 @@ class DOAJEntity extends SOLRSource {
             }
         }
         $this->cluster = array_unique( $this->cluster );
-            
-        return $this->tags;        
+
+        return $this->tags;
 	}
-	
-    
+
+
     public function getCluster() {
         if( $this->cluster == null) $this->getTags();
         return $this->cluster;
     }
-    
+
     public function getSignatures() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
-        
+
         return array();
     }
-    
+
     public function getAuthors() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
         return array();
     }
-    
+
     public function getLoans() {
         return array();
     }
-    
+
     public function getBarcode() {
         return null;
     }
-    
+
     public function getSignature() {
         return null;
     }
-    
+
     public function getLicenses() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
         return isset( $this->data['DC:RIGHTS'] ) ? $this->data['DC:RIGHTS'] : array( 'unknown' );
     }
-    
+
     public function getURLs() {
         if( $this->urls == null ) {
 	        if( $this->data == null ) throw new \Exception( "no entity loaded" );
@@ -224,15 +224,15 @@ class DOAJEntity extends SOLRSource {
         }
         return $this->urls;
     }
-    
+
     public function getSys() {
         return $this->id;
     }
-    
+
     public function getMeta() {
         return json_encode( $this->data );
     }
-    
+
     public function getOnline() {
         return true;
     }
@@ -240,17 +240,17 @@ class DOAJEntity extends SOLRSource {
    public function getAbstract() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
 
-        return null;    
+        return null;
     }
    public function getContent() { return null; }
-   
+
     public function getMetaACL() { return array( 'global/guest' ); }
     public function getContentACL() { return array(); }
     public function getPreviewACL() { return array(); }
 
 	public function getLanguages() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
-					
+
 		return isset( $this->data['DC:LANGUAGE'] ) ? $this->data['DC:LANGUAGE'] : array();
 	}
 
@@ -260,9 +260,9 @@ class DOAJEntity extends SOLRSource {
 		$categories = parent::getCategories();
 		$categories[] = 'openaccess!!DOAJ';
 		return $categories;
-	}	
+	}
 	public function getCatalogs() { return array( $this->getSource() ); }
-	
+
 }
 
 ?>
