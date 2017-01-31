@@ -15,7 +15,7 @@
  * @copyright   (C) 2016 Academy of Art and Design FHNW
  * @license     http://www.gnu.org/licenses/gpl-3.0
  * @link        http://mediathek.fhnw.ch
- * 
+ *
  */
 
 /**
@@ -25,9 +25,9 @@
 namespace Mediathek;
 
 class NEBISDisplay extends DisplayEntity {
-    
+
 	var $entity;
-	
+
     public function __construct( $doc, $urlparams, $db, $highlightedDoc ) {
         parent::__construct( $doc, $urlparams, $db, $highlightedDoc );
 
@@ -64,7 +64,7 @@ class NEBISDisplay extends DisplayEntity {
 			foreach( $publishers as $publisher ) {
 				$schema['publisher'][] = array( '@type' => 'Organization', 'legalName' => $publisher );
 			}
-		$schema['url'] = array( 'https://mediathek.hgk.fhnw.ch/detail.php?id='.urlencode( $this->doc->id ));	
+		$schema['url'] = array( 'https://mediathek.hgk.fhnw.ch/detail.php?id='.urlencode( $this->doc->id ));
 		if( is_array( $this->doc->url )) foreach( $this->doc->url as $u ) {
 			$us = explode( ':', $u );
 			if( substr( $us[1], 0, 4 ) == 'http' ) {
@@ -72,13 +72,13 @@ class NEBISDisplay extends DisplayEntity {
 				$schema['url'][] = $url;
 			}
 		}
-		
+
 		if( $this->doc->cluster_ss )
 			$schema['keywords'] = implode( '; ', $this->doc->cluster_ss );
 		$schema['license'] = implode( '; ', $this->doc->license );
 		return $schema;
 	}
-	
+
 	public function isJournal() {
 		foreach( $this->entity->getCodes() as $c ) {
 			if( preg_match( '/^ISSN:/', $c ))
@@ -86,7 +86,7 @@ class NEBISDisplay extends DisplayEntity {
 		}
 		return false;
 	}
-	
+
 	public function detailView() {
         global $config, $googleservice, $googleclient, $solrclient, $db, $urlparams, $pagesize;
         $html = '';
@@ -95,7 +95,7 @@ $cfg = array(
                    'output-xml'   => true,
                    'input-xml' => true,
                    'wrap'           => 150);
-        
+
 		$entity = $this->entity;
 		$authors = array_unique( $entity->getAuthors());
 		$js_sourcelist = '';
@@ -109,13 +109,13 @@ $cfg = array(
 		$squery = $solrclient->createSelect();
 		$helper = $squery->getHelper();
 
-		
+
         // Tidy
         $tidy = new \Tidy;
         $tidy->parseString($this->data, $cfg, 'utf8');
         $tidy->cleanRepair();
          //echo "<!--\n".$tidy."\n-->\n";
-        
+
         // Output
 //        echo $tidy;
 		$kiste = array();
@@ -123,7 +123,7 @@ $cfg = array(
 		  if( substr( $loc, 0, 10 ) == 'E75:Kiste:' ) {
 			  $kiste[] = substr( $loc, 10 );
 		  }
-		} 
+		}
 
         ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
 ?>
@@ -134,39 +134,39 @@ $cfg = array(
 					<div class="facet" style="">
 						<div class="marker" style=""></div>
 							<b><?php echo htmlspecialchars( str_replace( '>>', '', str_replace( '<<', '', $entity->getTitle()))); ?></b><br />
-							<?php 
+							<?php
 							$i = 0;
-							foreach( $authors as $author ) { 
+							foreach( $authors as $author ) {
 								if( $i > 0) echo "; "; ?>
 									<a href="javascript:doSearchFull('author:&quot;<?php echo trim( $author ); ?>&quot;', '', [], {'source':[<?php echo $js_sourcelist; ?>]}, 0, <?php echo $pagesize; ?> );">
 										<?php echo htmlspecialchars( $author ); ?>
 									</a>
-								<?php				
+								<?php
 								$i++;
 							}
-							//echo htmlspecialchars( implode( '; ', $authors )); 
+							//echo htmlspecialchars( implode( '; ', $authors ));
 							?>
-							
+
 							<br />
 <?php
 							$publishers = $entity->getPublisher();
 							$city = $entity->getCity();
 							$year = $entity->getYear();
-							if( $city ) echo htmlspecialchars( $city ).': '; 
-							if( $publishers ) { 
+							if( $city ) echo htmlspecialchars( $city ).': ';
+							if( $publishers ) {
 								foreach( $publishers as $publisher ) { ?>
 									<a href="javascript:doSearchFull('publisher:&quot;<?php echo trim( $publisher ); ?>&quot;', '', [], {'source':[<?php echo $js_sourcelist; ?>]}, 0, <?php echo $pagesize; ?> );">
 										<?php echo htmlspecialchars( $publisher ); ?>
 									</a>
-							<?php 
+							<?php
 								}
 							}
-								
+
 							if( $year ) echo htmlspecialchars( $year ).'.';
 							if( $city || $year || $publishers ) echo "<br />\n";
 
 							$codes = $entity->getCodes();
-							if( is_array( $codes )) foreach( $codes as $code ) 
+							if( is_array( $codes )) foreach( $codes as $code )
 								echo htmlspecialchars( str_replace( ':', ': ', $code ))."<br />\n";
 
 							$rib = null;
@@ -181,7 +181,7 @@ $cfg = array(
 							}
 							*/
 							$signatures = $this->doc->signature;
-							if( is_array( $signatures )) foreach( $signatures as $sig ) { 
+							if( is_array( $signatures )) foreach( $signatures as $sig ) {
 								if( substr( $sig, 0, 10 ) == 'nebis:E75:' ) {
 									echo 'Signatur: <a href="redir.php?id='.urlencode( $this->doc->id ).'&url='.urlencode( 'http://recherche.nebis.ch/primo_library/libweb/action/search.do?fn=search&ct=search&vl(freeText0)='.urlencode( $this->doc->originalid ).'&vid=NEBIS&fn=change_lang&prefLang=de_DE&prefBackUrl=http://recherche.nebis.ch/nebis/action/search.do?fn=search&ct=search&vl(freeText0)='.urlencode( $this->doc->originalid ).'&search=&backFromPreferences=true.' )
 									.'"target="_blank">'.htmlspecialchars( substr( $sig, 10 ))."</a><br />\n";
@@ -207,10 +207,10 @@ $cfg = array(
 <?php
 //        echo '<pre>'.nl2br( htmlspecialchars( $tidy )).'</pre>';
 
-?>				
+?>
 			</div>
 			<div class="col-md-3">
-<?php 	if( is_array( $this->doc->cluster_ss ))  { ?>		
+<?php 	if( is_array( $this->doc->cluster_ss ))  { ?>
 				<div style="">
 				<span style="; font-weight: bold;">Themen</span><br />
 					<div class="facet" style="">
@@ -223,19 +223,19 @@ $cfg = array(
 								<label>
 									<a href="javascript:doSearchFull('', '', [], {'source':[<?php echo $js_sourcelist; ?>], cluster: ['<?php echo htmlspecialchars( $cl ); ?>']}, 0, <?php echo $pagesize; ?> );"><?php echo htmlspecialchars( $cl ); ?></a>
 								</label><br />
-								
+
 							<!-- <div class="checkbox checkbox-green">
 								<input class="facet" type="checkbox" id="cluster" value="<?php echo htmlentities($cl); ?>">
 								<label for="cluster<?php echo $i; ?>">
 									<?php echo htmlspecialchars( $cl ); ?>
 								</label>
 							</div> -->
-<?php							
+<?php
 						}
-?>							
+?>
 					</div>
 				</div>
-						<?php  } ?>				
+						<?php  } ?>
 <!--				<div style="">
 				<span style="; font-weight: bold;">Kontext</span><br />
 					<div class="facet" style="">
@@ -260,7 +260,7 @@ if( count( $kiste )) {
 				<span style="; font-weight: bold;">Weitere Bücher in Kiste <?php echo implode( ' / ',$kiste ); ?></span><br />
 					<div class="facet" style="">
 						<div class="marker" style=""></div>
-<?php						
+<?php
 	$squery->setRows( 500 );
 	$squery->setStart( 0 );
 	$qstr = '';
@@ -281,11 +281,11 @@ if( count( $kiste )) {
 	$res = new DesktopResult( $rs, 0, 500, $db, $urlparams );
 	echo $res->getResult();
 
-?>					
+?>
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="col-md-3">
 			</div>
 		</div>
@@ -313,7 +313,7 @@ if( count( $kiste )) {
 			</div>
 		</div>
 -->
-<?php 
+<?php
   $box = '';
   $boxjson = '';
   if( is_array( $this->doc->location )) foreach( $this->doc->location as $loc ) {
@@ -340,23 +340,23 @@ if( count( $kiste )) {
 
 			}
 		</script>
-		
+
 <?php
         $html .= ob_get_contents();
         ob_end_clean();
 		return $html;
 	}
-	
+
     public function desktopList() {
         global $config, $googleservice, $googleclient;
         $html = '';
-		
+
         $cfg = array(
                    'indent'         => true,
                    'output-xml'   => true,
                    'input-xml' => true,
                    'wrap'           => 150);
-        		
+
 		$entity = $this->entity;
 
         // Tidy
@@ -364,18 +364,18 @@ if( count( $kiste )) {
         $tidy->parseString($this->data, $cfg, 'utf8');
         $tidy->cleanRepair();
          //echo "<!--\n".$tidy."\n-->\n";
-        
+
         // Output
 //        echo $tidy;
 
         $authors = array_unique( $entity->getAuthors());
-		
+
         ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
 ?>
         <tr>
             <td rowspan="2" class="list" style="text-align: right; width: 25%;">
                 <a class="entity" href="#coll_<?php echo $this->doc->id; ?>" data-toggle="collapse" aria-expanded="false" aria-controls="coll_<?php echo $this->doc->id; ?>">
-					<?php if( count( $authors )) echo htmlspecialchars( $authors[0]  ); 
+					<?php if( count( $authors )) echo htmlspecialchars( $authors[0]  );
 					 if( count( $authors ) > 1) echo " et al."; ?>
                 </a>
             </td>
@@ -383,7 +383,7 @@ if( count( $kiste )) {
             <td class="list" style="width: 70%;">
                 <a class="entity" href="#coll_<?php echo $this->doc->id; ?>" data-toggle="collapse" aria-expanded="false" aria-controls="coll_<?php echo $this->doc->id; ?>">
                     <?php echo htmlspecialchars( str_replace( '>>', '', str_replace( '<<', '', $entity->getTitle())) ); ?>
-                </a>        
+                </a>
             </td>
         </tr>
         <tr>
@@ -397,31 +397,41 @@ if( count( $kiste )) {
 					echo ($first?"":"; ").htmlspecialchars( $author );
 					$first = false;
 				}
-?>					
-				
-<?php			
+?>
+
+<?php
 				if( count( $authors ) > 1 ) echo "<br />\n";
 				$publishers = $entity->getPublisher();
 				$city = $entity->getCity();
 				$year = $entity->getYear();
-				if( $city ) echo htmlspecialchars( $city ).': '; 
+				if( $city ) echo htmlspecialchars( $city ).': ';
 				if( $publishers ) echo htmlspecialchars( implode( '/', $publishers )).', ';
 				if( $year ) echo htmlspecialchars( $year ).'.';
 				if( $city || $year || $publishers ) echo "<br />\n";
 
 				$codes = $entity->getCodes();
-				foreach( $codes as $code ) 
+				foreach( $codes as $code )
 					echo htmlspecialchars( $code )."<br />\n";
 				$signatures = $this->doc->signature;
-				if( is_array( $signatures )) foreach( $signatures as $sig ) 
+				if( is_array( $signatures )) foreach( $signatures as $sig )
 					if( substr( $sig, 0, 10 ) == 'nebis:E75:' ) echo 'Signatur: '.htmlspecialchars( substr( $sig, 10 ))."<br />\n";
 				$locations = $entity->getLocations();
-				foreach( $locations as $loc ) 
-				if( substr( $loc, 0, 4 ) == 'E75:' ) echo 'Standort: Regal <b>'.$loc{10}.'</b> Kiste <b>'.htmlspecialchars( str_replace( '_', '', substr( $loc, 12 ))).' <a style="padding: 0px;" href="#" class="btn btn-default" data-toggle="modal" data-target="#MTModal" data-kiste="'.urlencode(str_replace( '_', '', substr( $loc, 10 ))).'" ><i class="fa fa-street-view" aria-hidden="true"></i></a></b><br />'."\n";
-				$notes = $entity->getGeneralNote();
-				foreach( $notes as $note ) 
+				foreach( $locations as $loc )
+        {
+				      if( substr( $loc, 0, 4 ) == 'E75:' ) {
+                $box = urlencode(str_replace( '_', '', substr( $loc, 10 )));
+                $boxjson = null;
+                if( file_exists( $config['3djsondir']."/{$box}.json" )) {
+              	  $boxjson = file_get_contents( $config['3djsondir']."/{$box}.json" );
+                }
+                echo 'Standort: Regal <b>'.$loc{10}.'</b> Kiste <b>'.htmlspecialchars( str_replace( '_', '', substr( $loc, 12 )))
+                  .' <a style="padding: 0px;" href="#" class="btn btn-default" data-toggle="modal" data-target="#MTModal" data-kiste="'.$box.'" data-json="'.htmlspecialchars( $boxjson, ENT_QUOTES ).'"><i class="fa fa-street-view" aria-hidden="true"></i></a></b><br />'."\n";
+              }
+        }
+        $notes = $entity->getGeneralNote();
+				foreach( $notes as $note )
 					echo 'Anmerkung: '.htmlspecialchars( $note )."<br />\n";
-				
+
 				if( is_array( $this->doc->url )) foreach( $this->doc->url as $u ) {
 					$us = explode( ':', $u );
 					if( substr( $us[1], 0, 4 ) == 'http' ) {
@@ -429,18 +439,18 @@ if( count( $kiste )) {
 						echo "{$us[0]}: <i class=\"fa fa-external-link\" aria-hidden=\"true\"></i><a href=\"redir.php?id=".urlencode( $this->doc->id ).'&url='.urlencode( $url )."\" target=\"blank\">{$url}</a><br />\n";
 					}
 				}
-				
+
 				echo "ID: ".$this->doc->id."<br />\n";
 				$inKiste = false;
 				if( is_array( $this->doc->location )) foreach( $this->doc->location as $loc ) {
 					if( substr( $loc, 0, strlen( 'E75:Kiste:' )) == 'E75:Kiste:' ) {
-						$inKiste = true; 
+						$inKiste = true;
 						break;
 					}
 				}
 				if( $inKiste ) { ?>
 					<a href="detail.php?<?php echo "id=".urlencode( $this->doc->id ); foreach( $this->urlparams as $key=>$val ) echo '&'.$key.'='.urlencode($val); ?>"><i class="fa fa-folder-open" aria-hidden="true"></i> Details</a><br />
-<?php			} ?>				
+<?php			} ?>
 				<p>
 				</p>
 					<!-- <a href="detail.php?<?php echo "id=".urlencode( $this->doc->id ); foreach( $this->urlparams as $key=>$val ) echo '&'.$key.'='.urlencode($val); ?>">Detail</a><br /> -->

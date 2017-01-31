@@ -123,7 +123,7 @@ $('body').on('click', '.home-btn', function () {
 	window.location="index.php";
 });
 
-	
+
 function removeHash () {
 	history.pushState("", document.title, window.location.pathname
 		+ window.location.search);
@@ -178,7 +178,7 @@ $(document).ready(function () {
 
         }
 
- 
+
 
     $(window).on('load resize', homepageResponsive);
 
@@ -227,7 +227,7 @@ $(document).ready(function () {
     /*----------------------script for owl carousel sponsors---------------------*/
 
         $("#sponsor-list").owlCarousel({
-                 
+
             autoPlay: 3000, //Set AutoPlay to 3 seconds
             stopOnHover: true,
             items : 3,
@@ -245,7 +245,7 @@ $(document).ready(function () {
 		$("#kiste").keyup(function() {
 		   var text = $(this).val();
 		   console.log( text );
-		  if( text.length <= 2 ) { 
+		  if( text.length <= 2 ) {
 			$("#result").html("");
 			return;
 		  }
@@ -256,14 +256,16 @@ $(document).ready(function () {
 		});
 
 	$('#fullsearch').fadeIn(1200);
-	
+
 	$('#MTModal').on('shown.bs.modal', function (event) {
 	  var button = $(event.relatedTarget) // Button that triggered the modal
 	  var kiste = button.data('kiste') // Extract info from data-* attributes
+		var json = button.data('json');
+		if( json.length < 3 ) json = null;
 		if ( typeof kiste == 'undefined' ) {
 		  return;
 		}
-	  
+
 	  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
 	  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
 	  var modal = $(this)
@@ -276,7 +278,7 @@ $(document).ready(function () {
 	  renderer.height( '400px');
 	  var width = body.width();
 	  renderer.width( width );
-	  init3D( kiste, null );
+	  init3D( [kiste], JSON.stringify(json));
 	})
 
 	$('#MTModal').on('hidden.bs.modal', function (event) {
@@ -292,13 +294,13 @@ $(document).ready(function () {
 	  mediathek = null;
 	  mediathek3D = null;
 	})
-	
+
     /*  ----------------------------------------
          da suche
         ----------------------------------------  */
 //		initSearch( '' );
- 		
-		
+
+
     /*  ----------------------------------------
          Google Suche
         ----------------------------------------  */
@@ -308,7 +310,7 @@ $(document).ready(function () {
 				  return false;
 			}
 		});
-		
+
 
     /*  -------------------------------
          PopUp ( for portfolio page )
@@ -328,9 +330,9 @@ $(document).ready(function () {
     }
 
 	init();
-	
+
 
     // Show Reletive Page Onclick
 
-    
+
 });
