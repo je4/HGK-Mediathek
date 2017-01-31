@@ -13,7 +13,7 @@ $solr = new SOLR( $solrclient );
 $entities = array();
 
 
-if( false ) {
+if( !file_exists( $tmpfile )) {
 	$tmp = fopen( $tmpfile, 'w' );
 
 	$customizer = $solrclient->getPlugin('customizerequest');
