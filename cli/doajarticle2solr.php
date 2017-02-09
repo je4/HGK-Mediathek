@@ -15,7 +15,7 @@ $doajEndpoint = new \Phpoaipmh\Endpoint($doajClient, \Phpoaipmh\Granularity::DAT
 $entity = new DOAJArticleEntity( $pg );
 $solr = new SOLR( $solrclient );
 
-if( $argc > 1 && $argv[1] != 'rebuild' ) {
+if( $argc == 1 ) {
 
 	$result = $doajEndpoint->identify();
 
