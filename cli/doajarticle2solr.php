@@ -100,11 +100,15 @@ if( $argc == 1 ) {
 else {
 	$sql = "SELECT * FROM oai_pmh WHERE oai_pmh_source_id={$sourceid}";
 	$rs = $pg->Execute( $sql );
+	$rows = $rs->RecordCount();
+	$i = 1;
 	foreach( $rs as $row ) {
-		$data = json_decode( $row['data'] );
+		$data = (array)json_decode( $row['data'] );
 		$identifier = $row['identifier'];
+		echo "{$i}/{$rows}: {$identifier}\n";
 		$entity->loadFromArray( $identifier, $data, 'doajarticle' );
 		$solr->import( $entity );
+		$i++;
 	}
 }
 echo "DONE -------------------------------------------\n";
