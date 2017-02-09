@@ -82,6 +82,7 @@ class DOAJEntity extends SOLRSource {
 
     function loadFromArray( string $id, $data, string $idprefix ) {
         $this->reset();
+        $this->id = $id;
         $this->data = $data;
     }
 
