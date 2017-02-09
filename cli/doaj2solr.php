@@ -65,7 +65,7 @@ if( $argc == 1  ) {
   	//echo "\n------\n{$sql}\n--------\n";
   	$pg->Execute( $sql );
 
-  	$entity->loadFromDatabase( $record->getIdentifier(), 'doaj' );
+  	$entity->loadFromArray( $record->getIdentifier(), $data, 'doaj' );
       $solr->import( $entity );
   }
 }
@@ -78,7 +78,7 @@ else {
 		$data = (array)json_decode( $row['data'] );
 		$identifier = $row['identifier'];
 		echo "{$i}/{$rows}: {$identifier}\n";
-		$entity->loadFromArray( $identifier, $data, 'doajarticle' );
+		$entity->loadFromArray( $identifier, $data, 'doaj' );
 		$solr->import( $entity );
 		$i++;
 	}
