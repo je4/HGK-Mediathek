@@ -29,10 +29,10 @@ if( !file_exists( $tmpfile )) {
 	do {
 		$squery = $solrclient->createSelect();
 		$squery->setRows( $pagesize );
-		$squery->createFilterQuery('notdone')->setQuery("-catalog:*");
+		//$squery->createFilterQuery('notdone')->setQuery("-catalog:*");
 		$squery->createFilterQuery('nodelete')->setQuery("deleted:false");
 		$squery->setFields( array( 'id' ));
-		$squery->setQuery( "*:*" );
+		$squery->setQuery( "source:NEBIS" );
 		$squery->addSort('id', $squery::SORT_DESC);
 		$customizer->createCustomization( 'cursorMark' )
 			->setType( 'param' )
