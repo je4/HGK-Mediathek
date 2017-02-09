@@ -279,7 +279,7 @@ $facetSetEmbedded->createFacetField('embedded')->setField('embedded')->addExclud
 //$facetSetLicense->createFacetField('license')->setField('license')->addExclude('license');
 
 $facetSetCluster = $squery->getFacetSet();
-$facetSetCluster->createFacetField('cluster')->setField('cluster_ss')->setLimit( 30 ); //->addExclude('cluster');
+$facetSetCluster->createFacetField('cluster')->setField('cluster_ss')->setLimit( $config['categorylimit'] ); //->addExclude('cluster');
 
 //$facetSetAcl = $squery->getFacetSet();
 //$facetSetAcl->createFacetField('acl')->setField('acl')->addExclude('acl');
