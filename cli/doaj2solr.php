@@ -13,7 +13,7 @@ $doajEndpoint = new \Phpoaipmh\Endpoint($doajClient, \Phpoaipmh\Granularity::DAT
 $entity = new DOAJEntity( $pg );
 $solr = new SOLR( $solrclient );
 
-if( $argc > 1  ) {
+if( $argc == 1  ) {
   $result = $doajEndpoint->identify();
 
   //$sql = "SELECT DATE_FORMAT(datestamp, '%Y-%m-%dT%H:%i:%sZ') FROM source_doajoai WHERE identifier LIKE \"oai:doaj.org/journal:%\" ORDER BY datestamp DESC";
