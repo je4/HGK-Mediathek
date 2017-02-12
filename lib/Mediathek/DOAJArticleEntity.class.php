@@ -288,7 +288,7 @@ class DOAJArticleEntity extends SOLRSource {
 		$categories[] = 'openaccess!!DOAJArticle';
 		return $categories;
 	}	
-	public function getCatalogs() { return array( $this->getSource() ); }
+	public function getCatalogs() { return array( $this->getSource(), 'openaccess_journals' ); }
 	
 }
 

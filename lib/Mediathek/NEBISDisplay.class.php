@@ -417,7 +417,7 @@ if( count( $kiste )) {
 					if( substr( $sig, 0, 10 ) == 'nebis:E75:' ) echo 'Signatur: '.htmlspecialchars( substr( $sig, 10 ))."<br />\n";
 				$locations = $entity->getLocations();
 				foreach( $locations as $loc )
-        {
+		        {
 				      if( substr( $loc, 0, 4 ) == 'E75:' ) {
                 $box = urlencode(str_replace( '_', '', substr( $loc, 10 )));
                 $boxjson = null;

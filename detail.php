@@ -73,7 +73,7 @@ if( $numResults > 0 ) foreach( $rs as $doc ) {
 <?php
 	$class = '\\Mediathek\\'.$doc->source.'Display';
 
-	$output = new $class($doc, null, $db, null);
+	$output = new $class($doc, array( 'q'=>$q ), $db, null);
 	echo $output->getHeading();
 	echo $output->detailView();
 	echo '<script type="application/ld+json">'."\n".json_encode( $output->getSchema() )."\n</script>\n";

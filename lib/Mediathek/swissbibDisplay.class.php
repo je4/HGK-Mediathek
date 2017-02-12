@@ -28,13 +28,14 @@ class swissbibDisplay extends DisplayEntity {
     
 	var $entity;
 	
-    public function __construct( $doc, $urlparams, $db, $highlightedDoc ) {
+    public function __construct( $doc, $urlparams, $db, $highlightedDoc, $bypass = false ) {
         parent::__construct( $doc, $urlparams, $db, $highlightedDoc );
-
-        $this->db = $db;
-		$this->entity = new swissbibEntity( $db );
-		$record = new OAIPMHRecord( $this->data );
-		$this->entity->loadNode( $doc->originalid, $record, 'swissbib' );
+		if( !$bypass ) {
+	        $this->db = $db;
+			$this->entity = new swissbibEntity( $db );
+			$record = new OAIPMHRecord( $this->data );
+			$this->entity->loadNode( $doc->originalid, $record, 'swissbib' );
+		}
     }
 
     public function getSchema() {
@@ -45,7 +46,7 @@ class swissbibDisplay extends DisplayEntity {
 		$schema['@id'] = $this->doc->id;
 		if( $this->isJournal( $entity )) {
 			$schema['@type'] = array( 'Periodical' );
-		foreach( $this->doc->code as $c )
+		if( @isset( $this->doc->code )) foreach( $this->doc->code as $c )
 				if( preg_match( '/^ISSN:/', $c ))
 					$schema['issn'] = substr( $c, 5 );
 		}
@@ -105,7 +106,7 @@ class swissbibDisplay extends DisplayEntity {
         
 		$authors = array_unique( $entity->getAuthors());
 		$js_sourcelist = '';
-		$ds = $config['defaultsource'];
+		$ds = $config['defaultcatalog'];
 		$ds[] = 'swissbib';
 		$ds = array_unique( $ds );
 		foreach( $ds as $src )
@@ -115,14 +116,12 @@ class swissbibDisplay extends DisplayEntity {
 		$squery = $solrclient->createSelect();
 		$helper = $squery->getHelper();
 
-		
-		$kiste = array();
-		if( is_array( $this->doc->location )) foreach( $this->doc->location as $loc ) {
-		  if( substr( $loc, 0, 10 ) == 'E75:Kiste:' ) {
-			  $kiste[] = substr( $loc, 10 );
-		  }
-		} 
-
+		$kisten = array();
+		if( @is_array( $this->doc->location )) foreach( $this->doc->location as $loc ) {
+			if( strncmp( 'NEBIS:E75:', $loc, 10) == 0 ) {
+				$kisten[] = substr( $loc, 10 );
+			}
+		}
         
 ?>
 		<div class="row">
@@ -176,69 +175,52 @@ class swissbibDisplay extends DisplayEntity {
 							}
 
 							$rib = null;
-							/*
+							$nebisid = null;
+							foreach( $this->doc->sourceid as $sourceid ) {
+								if( strncmp( $sourceid, '(NEBIS)', 7 ) == 0 ) $nebisid = substr( $sourceid, 7 );
+							}
 							if( isset( $config['RIB'] )) {
 								$rib = new RIB( $config['RIB'] );
-								$rib->load( $this->doc->originalid );
+								$rib->load( $nebisid );
 							}
 							else
 							{
 								echo "<!-- error: no rib -->";
 							}
-							*/
+							$signatures = $this->doc->signature;
+							if( is_array( $signatures )) foreach( $signatures as $sig ) {
+								foreach( $config['swissbibsig'] as $prefix ) {
+									if( strncmp( $sig, $prefix, strlen( $prefix) ) == 0 ) {
+										$signature = substr( $sig, strlen( $prefix ));
+										echo 'Signatur: <a href="redir.php?id='.urlencode( $this->doc->id ).'&url='.urlencode( 'http://recherche.nebis.ch/primo_library/libweb/action/search.do?fn=search&ct=search&vl(freeText0)='.urlencode( $nebisid ).'&vid=NEBIS&fn=change_lang&prefLang=de_DE&prefBackUrl=http://recherche.nebis.ch/nebis/action/search.do?fn=search&ct=search&vl(freeText0)='.urlencode( $nebisid ).'&search=&backFromPreferences=true.' )
+										.'"target="_blank">'.htmlspecialchars( $signature )."</a><br />\n";
+										$item = $rib ? $rib->getAvailability( $signature ) : null;
+										if( $item ) {
+											echo "<span style=\"font-size: 80%; line-height: 80%\">&nbsp;&nbsp; Status: ".( $item['status'] ? ' ausgeliehen bis '.$item['status'] : 'verfügbar' )."<br />\n";
+											echo "&nbsp;&nbsp; Benutzung: ".$item['z30-item-status']."<br /></span>\n";
+										}
+									}
+								}
+							}
 ?>							<div id='RIB'></div>
 					</div>
 				</div>
 			</div>
 			<div class="col-md-6">
+<?php 
+	if( count( $kisten ) > 0 ) {
+?>				
 				<div style="">
-				<span style="; font-weight: bold;">MARC</span><br />
+				<span style="; font-weight: bold;">Raumübersicht</span><br />
 					<div class="facet" style="padding: 0px;">
 						<div class="marker" style=""></div>
-						<div>
-<table class="table table-striped">
-	<tbody>
-<?php
-	$data = $this->entity->getData();
-	foreach( $data as $field=>$val ) {
-		foreach( $val as $ind1=>$val2 ) {
-			foreach( $val2 as $ind2=>$val3 ) {
-				foreach( $val3 as $val4 ) {
-					echo "<tr>\n";
-					echo "  <td style=\"padding:.25rem;\">".$field.str_replace( ' ', '&nbsp;', $ind1.$ind2 )."</td>\n";
-					echo "  <td style=\"padding:.25rem;\">";
-					foreach( $val4 as $sub=>$val5 ) {
-						foreach( $val5 as $val6 ) {
-							echo "|{$sub} ".htmlspecialchars( $val6 );
-						}
-					}
-					echo "  </td>\n";
-					echo "</tr>\n";
-				}
-			}
-		}
-	}
-?>	
-	</tbody>
-</table>						
-						</div>
+						<div class="renderer"></div>
 					</div>
 				</div>
-				
-				<div style="">
-				<span style="; font-weight: bold;">Document</span><br />
-					<div class="facet" style="padding: 0px;">
-						<div class="marker" style=""></div>
-						<div>
-							<pre>
 <?php 
-	var_dump( $this->doc->getFields());
+	}
 ?>						
-							</pre>
-						</div>
-					</div>
-				</div>				
-				
+<!-- 				
 				<div style="">
 				<span style="; font-weight: bold;">XML</span><br />
 					<div class="facet" style="padding: 0px;">
@@ -260,7 +242,7 @@ class swissbibDisplay extends DisplayEntity {
 						</div>
 					</div>
 				</div>				
-		
+ -->		
 			</div>
 			<div class="col-md-3">
 <?php 	if( is_array( $this->doc->cluster_ss ))  { ?>		
@@ -304,22 +286,22 @@ class swissbibDisplay extends DisplayEntity {
 			</div>
 -->
 		</div>
-<?php
-if( count( $kiste )) {
-?>
 		<div class="row">
-			<div class="col-md-9">
+			<div class="col-md-12">
+<?php
+if( count( $kisten )) {
+?>
 				<div style="">
-				<span style="; font-weight: bold;">Weitere Bücher in Kiste <?php echo implode( ' / ',$kiste ); ?></span><br />
+				<span style="; font-weight: bold;">Weitere Bücher in Kiste <?php echo implode( ' / ',$kisten ); ?></span><br />
 					<div class="facet" style="">
 						<div class="marker" style=""></div>
 <?php						
 	$squery->setRows( 500 );
 	$squery->setStart( 0 );
 	$qstr = '';
-	foreach( $kiste as $k ) {
+	foreach( $kisten as $k ) {
 		if( strlen( $qstr )) $qstr .= ' OR ';
-		$qstr .= 'location:'.$helper->escapePhrase( 'E75:Kiste:'.$k );
+		$qstr .= 'location:'.$helper->escapePhrase( 'NEBIS:E75:'.$k );
 	}
 	$qstr = "({$qstr}) AND -id:".$helper->escapeTerm( $this->doc->id );
 	//echo "\n<!-- {$qstr} -->\n";
@@ -337,12 +319,67 @@ if( count( $kiste )) {
 ?>					
 					</div>
 				</div>
+<?php } ?>
+				
+<?php 
+if( DEBUG ) {
+	?>
+				<div style="">
+				<span style="; font-weight: bold;">MARC</span><br />
+					<div class="facet" style="padding: 0px;">
+						<div class="marker" style=""></div>
+						<div>
+<table class="table table-striped">
+	<tbody>
+<?php
+	$data = $this->entity->getData();
+	foreach( $data as $field=>$val ) {
+		foreach( $val as $ind1=>$val2 ) {
+			foreach( $val2 as $ind2=>$val3 ) {
+				foreach( $val3 as $val4 ) {
+					echo "<tr>\n";
+					echo "  <td style=\"padding:.25rem;\">".$field.str_replace( ' ', '&nbsp;', $ind1.$ind2 )."</td>\n";
+					echo "  <td style=\"padding:.25rem;\">";
+					foreach( $val4 as $sub=>$val5 ) {
+						foreach( $val5 as $val6 ) {
+							echo "|{$sub} ".htmlspecialchars( $val6 );
+						}
+					}
+					echo "  </td>\n";
+					echo "</tr>\n";
+				}
+			}
+		}
+	}
+?>	
+	</tbody>
+</table>						
+						</div>
+					</div>
+				</div>
+				
+				<div style="">
+				<span style="; font-weight: bold;">Document</span><br />
+					<div class="facet" style="padding: 0px;">
+						<div class="marker" style=""></div>
+						<div>
+							<pre>
+<?php 
+	print_r( $this->doc->getFields());
+?>						
+							</pre>
+						</div>
+					</div>
+				</div>		
+<?php 
+	} 
+?>				
 			</div>
-			
+<!-- 			
 			<div class="col-md-3">
 			</div>
+ -->			
 		</div>
-<?php } ?>
 <!--
 		<div style="background:  #f5f2f0;">
 			<div class="row">
@@ -369,11 +406,8 @@ if( count( $kiste )) {
 <?php 
   $box = '';
   $boxjson = '';
-  if( is_array( $this->doc->location )) foreach( $this->doc->location as $loc ) {
-	  if( substr( $loc, 0, 10 ) == 'E75:Kiste:' ) {
-		  $box = str_replace( '_', '', substr( $loc, 10 ));
-		  break;
-	  }
+  if( count( $kisten ) > 0 ) {
+  	$box = str_replace( '_', '', $kisten[0] );
   }
   if( file_exists( $config['3djsondir']."/{$box}.json" )) {
 	  $boxjson = file_get_contents( $config['3djsondir']."/{$box}.json" );
@@ -381,7 +415,25 @@ if( count( $kiste )) {
 ?>
 		<script>
 			function initswissbib() {
-
+				signatures = [<?php if( isset( $this->doc->signature )) foreach( $this->doc->signature as $sig ) if( substr( $sig, 0, 10 ) == 'nebis:E75:' ) 	echo '"'.substr( $sig, 10 ).'", '; ?>];
+				$.post( 'RIB.php', { sys: <?php echo '"'.$this->doc->originalid.'"'; ?>, sig: signatures }).done( function( data ) {
+					$('#RIB' ).html( data );
+				});
+				
+<?php 
+	if( count( $kisten ) > 0 ) {
+		$boxlist = '';
+		foreach( $kisten as $k ) {
+			if( strlen( $boxlist )) $boxlist .= ', ';
+			$boxlist .= "'".str_replace( '_', '', $k )."'";
+		}
+?>
+				var renderer = $( '.renderer' );
+				renderer.height( '400px');
+				//var width = body.width();
+				///renderer.width( width );
+				init3D( [<?php echo $boxlist; ?>], '<?php echo $boxjson; ?>'  );
+<?php } ?>
 			}
 		</script>
 		
@@ -414,6 +466,12 @@ if( count( $kiste )) {
 
         $authors = array_unique( $entity->getAuthors());
 		
+        $t = strtolower( $this->doc->type );
+        $icon = array_key_exists( $t, $config['icon'] ) ? $config['icon'][$t] : $config['icon']['default'];
+        if( @is_array( $this->doc->catalog )) 
+        	if( array_search( 'NATIONALLICENCE', $this->doc->catalog ) !== false ) 
+        		$icon = $config['icon']['nationallizenz'];	
+        
         ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
 ?>
         <tr>
@@ -423,7 +481,7 @@ if( count( $kiste )) {
 					 if( count( $authors ) > 1) echo " et al."; ?>
                 </a>
             </td>
-            <td class="list" style="width: 5%;"><i class="fa fa-book"></i></td>
+            <td class="list" style="width: 5%; font-size: 20px; white-space: nowrap;"><i class="<?php echo $icon; ?>"></i></td>
             <td class="list" style="width: 70%;">
                 <a class="entity" href="#coll_<?php echo $this->doc->id; ?>" data-toggle="collapse" aria-expanded="false" aria-controls="coll_<?php echo $this->doc->id; ?>">
                     <?php echo htmlspecialchars( str_replace( '>>', '', str_replace( '<<', '', $entity->getTitle())) ); ?>
@@ -455,7 +513,11 @@ if( count( $kiste )) {
 				}
 ?>
 				</i></p>
-<?php 									
+<?php
+				$url = $entity->getCoverImg();
+				if( $url ) echo "<object type=\"image/jpeg\" data=\"{$url}\"></object><br />\n";
+
+
 				$publishers = $entity->getPublisher();
 				$city = $entity->getCity();
 				$year = $entity->getYear();
@@ -468,11 +530,24 @@ if( count( $kiste )) {
 				foreach( $codes as $code ) 
 					echo htmlspecialchars( $code )."<br />\n";
 				$signatures = $this->doc->signature;
-				if( is_array( $signatures )) foreach( $signatures as $sig ) 
-					if( substr( $sig, 0, 10 ) == 'nebis:E75:' ) echo 'Signatur: '.htmlspecialchars( substr( $sig, 10 ))."<br />\n";
+				if( is_array( $signatures )) foreach( $signatures as $sig ) {
+					foreach( $config['swissbibsig'] as $prefix ) {
+						if( strncmp( $sig, $prefix, strlen( $prefix) ) == 0 ) echo 'Signatur: '.htmlspecialchars( substr( $sig, strlen( $prefix ) ))."<br />\n";
+					}
+				}
 				$locations = $entity->getLocations();
-				foreach( $locations as $loc ) 
-				if( substr( $loc, 0, 4 ) == 'E75:' ) echo 'Standort: Regal <b>'.$loc{10}.'</b> Kiste <b>'.htmlspecialchars( str_replace( '_', '', substr( $loc, 12 ))).' <a style="padding: 0px;" href="#" class="btn btn-default" data-toggle="modal" data-target="#MTModal" data-kiste="'.urlencode(str_replace( '_', '', substr( $loc, 10 ))).'" ><i class="fa fa-street-view" aria-hidden="true"></i></a></b><br />'."\n";
+				foreach( $locations as $loc ) { 
+					if( strncmp( 'NEBIS:E75:', $loc, 10 ) == 0 ) {
+						$box = urlencode(str_replace( '_', '', substr( $loc, 10 )));
+						$boxjson = null;
+						if( file_exists( $config['3djsondir']."/{$box}.json" )) {
+							$boxjson = file_get_contents( $config['3djsondir']."/{$box}.json" );
+						}
+						
+							echo 'Standort: Regal <b>'.$loc{10}.'</b> Kiste <b>'.htmlspecialchars( str_replace( '_', '', substr( $loc, 12 )))
+								.' <a style="padding: 0px;" href="#" class="btn btn-default" data-toggle="modal" data-target="#MTModal" data-kiste="'.$box.'" data-json="'.htmlspecialchars( $boxjson, ENT_QUOTES ).'" ><i class="fa fa-street-view" aria-hidden="true"></i></a></b><br />'."\n";
+					}
+    			}
 				$notes = $entity->getGeneralNote();
 				foreach( $notes as $note ) 
 					echo 'Anmerkung: '.htmlspecialchars( $note )."<br />\n";
@@ -481,7 +556,7 @@ if( count( $kiste )) {
 					$us = explode( ':', $u );
 					if( substr( $us[1], 0, 4 ) == 'http' ) {
 						$url = substr( $u, strlen( $us[0])+1 );
-						echo "{$us[0]}: <i class=\"fa fa-external-link\" aria-hidden=\"true\"></i><a href=\"redir.php?id=".urlencode( $this->doc->id ).'&url='.urlencode( $url )."\" target=\"blank\">{$url}</a><br />\n";
+						echo "{$us[0]}: <i class=\"fa fa-external-link\" aria-hidden=\"true\"></i><a href=\"redir.php?id=".urlencode( $this->doc->id ).'&url='.urlencode( $url )."\" target=\"blank\">".(strlen( $url ) > 40 ? substr( $url, 0, 40 ).'...':$url)."</a><br />\n";
 					}
 				}
 				

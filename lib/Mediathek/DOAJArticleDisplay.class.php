@@ -288,7 +288,13 @@ class DOAJArticleDisplay extends DisplayEntity {
 	}
 	
     public function desktopList() {
+    	global $config;
+    	
 		$html = '';
+		
+		$t = strtolower( $this->doc->type );
+		$icon = array_key_exists( $t, $config['icon'] ) ? $config['icon'][$t] : $config['icon']['default'];
+		
         ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
 ?>
         <tr>
@@ -297,7 +303,7 @@ class DOAJArticleDisplay extends DisplayEntity {
                     <?php echo htmlspecialchars( count( $this->entity->getAuthors() ) ? $this->entity->getAuthors()[0] : "" ); ?>
                 </a>
             </td>
-            <td class="list" style="width: 5%;"><i class="fa fa-newspaper-o" aria-hidden="true"></i></td>
+            <td class="list" style="width: 5%; font-size: 20px;"><i class="<?php echo $icon; ?>" aria-hidden="true"></i></td>
             <td class="list" style="width: 70%;">
                 <a class="entity" href="#coll_<?php echo $this->doc->id; ?>" data-toggle="collapse" aria-expanded="false" aria-controls="coll_<?php echo $this->doc->id; ?>">
                     <?php echo htmlspecialchars( strip_tags( $this->doc->title )); ?>

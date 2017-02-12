@@ -78,6 +78,10 @@ class EZBDisplay extends DisplayEntity {
 		$entity = new EZBEntity($this->db);
 		$entity->loadFromArray( (array)json_decode( $this->data ), $this->doc->source );
 
+		$t = strtolower( $this->doc->type );
+		$icon = array_key_exists( $t, $config['icon'] ) ? $config['icon'][$t] : $config['icon']['default'];
+		
+		
         ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
 ?>
         <tr>
@@ -86,7 +90,7 @@ class EZBDisplay extends DisplayEntity {
 					<?php echo htmlspecialchars( implode( '; ', $entity->getPublisher())  ); ?>
                 </a>
             </td>
-            <td class="list" style="width: 5%;"><i class="fa fa-newspaper-o"></i></td>
+            <td class="list" style="width: 5%;"><i class="<?php echo $icon; ?>"></i></td>
             <td class="list" style="width: 70%;">
                 <a class="entity" href="#coll_<?php echo $this->doc->id; ?>" data-toggle="collapse" aria-expanded="false" aria-controls="coll_<?php echo $this->doc->id; ?>">
                     <?php echo htmlspecialchars( $entity->getTitle() ); ?>

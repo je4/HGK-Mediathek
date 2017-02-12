@@ -7,6 +7,7 @@ include '../init.pg.php';
 
 $tmpfile = $config['tmpprefix']."ids.dat";
 $cntfile = $config['tmpprefix']."counter.dat";
+$cursorfile = $config['tmpprefix']."cursor.dat";
 
 $entity = new swissbibEntity( $db );
 $solr = new SOLR( $solrclient );
@@ -32,7 +33,7 @@ if( !file_exists( $tmpfile )) {
 		//$squery->createFilterQuery('notdone')->setQuery("-catalog:*");
 		$squery->createFilterQuery('nodelete')->setQuery("deleted:false");
 		$squery->setFields( array( 'id' ));
-		$squery->setQuery( "source:NEBIS" );
+		$squery->setQuery( "source:swissbib" );
 		$squery->addSort('id', $squery::SORT_DESC);
 		$customizer->createCustomization( 'cursorMark' )
 			->setType( 'param' )
@@ -58,9 +59,16 @@ if( !file_exists( $tmpfile )) {
 }
 
 $counter = 0;
+$start = intval( file_get_contents( $cntfile ));
 $tmp = fopen( $tmpfile, 'r' );
 while( $id = fgets( $tmp ) ) {
-	echo $id."\n";
+	echo $id;
+	if( $start >= $counter ) {
+		echo "{$start} >= {$counter}: skip\n";
+		$counter++;
+		continue;
+	}
+	echo "\n";
 	$query = $solrclient->createSelect();
 	$helper = $query->getHelper();
 	$query->setQuery( 'id:'.$helper->escapeTerm( $id ));

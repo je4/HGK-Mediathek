@@ -15,7 +15,7 @@
  * @copyright   (C) 2016 Academy of Art and Design FHNW
  * @license     http://www.gnu.org/licenses/gpl-3.0
  * @link        http://mediathek.fhnw.ch
- * 
+ *
  */
 
 /**
@@ -30,48 +30,54 @@ namespace Mediathek;
  */
 
 class to_performEntity extends SOLRSource {
-    private $idprefix = null;
+    private static $idprefix = 'to_perform';
 
 	static $persons = array( 'Author', 'Creator', 'Artist', );
-    
-   
+
+
     function __construct( \ADOConnection $db = null ) {
-        
+
     }
+
+    public function loadFromDoc( $doc) {
+  		$this->data = ( array )gzdecode( base64_decode( $doc->metagz ));
+      $this->id = $doc->originalid;
+
+  	}
 
     public function reset() {
     	parent::reset();
-        $this->idprefix = null;
+        //$this->idprefix = null;
     }
-    
+
     function loadFromArray( string $id, array $row, string $idprefix ) {
         $this->reset();
-        
+
         $this->data = $row;
-        
+
         $this->id = $this->data['Id'];
-        $this->idprefix = $idprefix;
+        //$this->idprefix = $idprefix;
     }
-    
+
     public function getID() {
-        return $this->idprefix.str_pad($this->id, 9, '0', STR_PAD_LEFT ); 
+        return self::$idprefix.'-'.str_pad($this->id, 9, '0', STR_PAD_LEFT );
     }
-	
+
 	public function getOriginalID() {
 		return $this->id;
 	}
-    
+
     public function getSource() {
         return 'to_perform';
     }
-	
+
     public function getType() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
 		if( @strlen( $this->data['Vermittlung'] )) return $this->data['Vermittlung'];
 		else return 'unknown';
 	}
 
-	
+
 	public function getEmbedded() {
 		return true;
 	}
@@ -83,21 +89,21 @@ class to_performEntity extends SOLRSource {
 	public function getLocations() {
 		return array( 'online' );
 	}
-    
+
     public function getTitle() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
 		if( array_key_exists( 'Title', $this->data )) return $this->data['Title'];
 		if( array_key_exists( 'Document Name', $this->data )) return $this->data['Document Name'];
-		
+
 		else return 'unknown';
     }
-    
+
     public function getPublisher() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
 		if( @strlen( $this->data['Verleger'] )) return array( $this->data['Verleger'] );
 		else return array( 'Hochschule für Musik Basel' );
     }
-    
+
     public function getYear() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
 		if( @preg_match( '/^({0-9]{2})\.({0-9]{2})\.({0-9]{4})$/', $this->data['Description'], $matches )) {
@@ -105,39 +111,39 @@ class to_performEntity extends SOLRSource {
 		}
         return null;
     }
-    
+
     public function getCity() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
         return 'Basel';
     }
-    
+
 	public function getTags() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
-        
+
         $this->tags = array();
         $this->cluster = array();
-		
+
 		if( false ) {
 			foreach( explode( ';', preg_replace( '/(?<! u|-)[\.,]/', ';',$this->data['Fach'])) as $fach ) {
 				$this->tags[] = 'index:medium:ezb/'.md5( trim( $fach ) ).'/'.trim( $fach );
 				$this->cluster[] = trim( $fach );
 			}
         }
-        return $this->tags;        
+        return $this->tags;
 	}
-	
-    
+
+
     public function getCluster() {
         if( $this->cluster == null) $this->getTags();
         return $this->cluster;
     }
-    
+
     public function getSignatures() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
-        
+
         return array();
     }
-    
+
     public function getAuthors() {
 		$persons = array();
 		foreach( to_performEntity::$persons as $p ) {
@@ -145,77 +151,77 @@ class to_performEntity extends SOLRSource {
 				$persons[] = $this->data[$p];
 			}
 		}
-        return $persons;        
+        return $persons;
     }
-    
+
     public function getLoans() {
         return array();
     }
-    
+
     public function getBarcode() {
         return null;
     }
-    
+
     public function getSignature() {
         return null;
     }
-    
+
     public function getLicenses() {
         if( $this->licenses == null ) {
             $this->licenses = array( 'restricted' );
         }
         return $this->licenses;
     }
-    
+
     public function getURLs() {
         $urls = array();
         return $urls;
     }
-    
+
     public function getSys() {
         return $this->id;
     }
-    
-    public function getMeta() {        
+
+    public function getMeta() {
         $json = json_encode( $this->data );
         return $json;
     }
-    
+
     public function getOnline() {
 		return true;
     }
 
    public function getAbstract() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
-		if( array_key_exists( 'Description', $this->data )) 
+		if( array_key_exists( 'Description', $this->data ))
 			return $this->data['Description'];
-        return null;    
+        return null;
 	}
-    
+
    public function getContent() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
-		if( array_key_exists( 'Full Text', $this->data )) 
+		if( array_key_exists( 'Full Text', $this->data ))
 			return $this->data['Full Text'];
-        return null;    
-   }    
+        return null;
+   }
 
    public function getCodes() {
         $codes = array();
-        
+
         return $codes;
     }
-   
+
     public function getMetaACL() { return array( 'musik/to_perform', 'global/admin' ); }
     public function getContentACL() {
         return array( 'location/fhnw' );
     }
-    public function getPreviewACL() { 
-		return array( 'location/fhnw' ); 
+    public function getPreviewACL() {
+		return array( 'location/fhnw' );
 	}
 
 	public function getLanguages() { return array(); }
 	public function getIssues()  { return array(); }
-	
+
 	public function getCategories() {
 		$categories = parent::getCategories();
 		if( preg_match( '/Projekte:to_perform:(.*)$/', $this->data['Categories'], $matches )) {

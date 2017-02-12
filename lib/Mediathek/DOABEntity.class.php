@@ -107,7 +107,7 @@ class DOABEntity extends SOLRSource {
 	}
     	
     public function getType() {
-		return "Book";
+		return "book";
 	}
 
     public function getEmbedded() {
@@ -262,7 +262,7 @@ class DOABEntity extends SOLRSource {
 		$categories[] = 'openaccess!!DOAB';
 		return $categories;
 	}	
-	public function getCatalogs() { return array( $this->getSource() ); }
+	public function getCatalogs() { return array( $this->getSource(), 'openaccess_books' ); }
 	
 }
 

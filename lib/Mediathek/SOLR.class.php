@@ -15,7 +15,7 @@
  * @copyright   (C) 2016 Academy of Art and Design FHNW
  * @license     http://www.gnu.org/licenses/gpl-3.0
  * @link        http://mediathek.fhnw.ch
- * 
+ *
  */
 
 /**
@@ -29,13 +29,17 @@ namespace Mediathek;
  *
  */
 
+//
+// http://localhost:8983/solr/base_dev/update?stream.body=%3Cdelete%3E%3Cquery%3Esource%3Aspringer%3C%2Fquery%3E%3C%2Fdelete%3E
+//
+
 class SOLR {
     private $solr = null;
-    
+
     function __construct( \Solarium\Client $solr ) {
-        $this->solr = $solr;    
+        $this->solr = $solr;
     }
-    
+
     static public function buildTag( $tags, $divider = '/' ) {
         $result = array();
         foreach( $tags as $tag ) {
@@ -50,7 +54,7 @@ class SOLR {
         }
         return $result;
     }
-	
+
 	public function delete( $id, $commit = false ) {
 		$query = $this->solr->createSelect();
 		$helper = $query->getHelper();
@@ -83,9 +87,9 @@ class SOLR {
 			}
 		}
 	}
-	
-	
-	
+
+
+
     public function import( SOLRSource $src, $commit = false ) {
         $id = $src->getID();
 		//$this->delete( $id );
@@ -93,16 +97,17 @@ class SOLR {
         $update = $this->solr->createUpdate();
         $helper = $update->getHelper();
         $doc = $update->createDocument();
-        
+
         $doc->id = $src->getID();
         $doc->setField( 'originalid', $src->getOriginalID());
         $doc->setField( 'source', $src->getSource());
-		$doc->setField( 'type', $src->getType());
+		$doc->setField( 'type', strtolower( $src->getType()));
         $doc->setField( 'openaccess', $src->getOpenAccess());
-		foreach( $src->getLocations() as $loc )
+		foreach( $src->getLocations() as $loc ) {
 			$doc->addField( 'location', $loc );
+		}
         $doc->setField( 'title', /* utf8_encode */( $src->getTitle()));
-		
+
 		$publisher = $src->getPublisher();
 		if( !is_array( $publisher )) $publisher = array( $publisher );
 		foreach( $publisher as $pub )
@@ -148,12 +153,11 @@ class SOLR {
         foreach( $src->getURLs() as $url )
             $doc->addField( 'url', $url);
         foreach( $src->getCodes() as $code )
-           	$doc->addField( 'code', $code);        
+           	$doc->addField( 'code', $code);
         foreach( $src->getCatalogs() as $cat )
             $doc->addField( 'catalog', $cat);
         foreach( $src->getIssues() as $issue ) {
         	if( strlen( trim( $issue ))) {
-        		//echo "issue: $issue <br />\n";
         		$doc->addField( 'issue', trim( $issue ));
         	}
         }
@@ -161,13 +165,13 @@ class SOLR {
             $doc->addField( 'lang', $lang);
         foreach( $src->getSourceIDs() as $sid)
            	$doc->addField( 'sourceid', $sid);
-            
+
         $doc->setField( 'online', $src->getOnline());
         $doc->setField( 'embedded', $src->getEmbedded());
-        
+
 		$doc->setField( 'creation_date', gmdate('Y-m-d\TH:i:s\Z', time()));
-		
-		
+
+
         $update->addDocuments( array( $doc ));
         if( $commit )
             $update->addCommit();
@@ -176,7 +180,7 @@ class SOLR {
         echo 'Insert query for '.$id.' executed'."\n";
 //        echo 'Query status: ' . $result->getStatus()."\n";
 //        echo 'Query time: ' . $result->getQueryTime()."\n";
-        
+
     }
-}    
+}
 ?>
