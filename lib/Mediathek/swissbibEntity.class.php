@@ -44,6 +44,7 @@ class swissbibEntity extends SOLRSource {
     private $cluster = null;
     private $licenses = null;
     private $urls = null;
+    private $urls_notes = null;
     private $signatures = null;
 	private $libs = null;
     private $online = null;
@@ -606,25 +607,41 @@ class swissbibEntity extends SOLRSource {
         	$this->licenses = array();
         	foreach( $this->getAll( '506', '0', null, 'a' ) as $lic ) 
         		$this->licenses[] = trim( $lic, '/:-., ' );
-        	foreach( $this->getAll( '540', null, null, 'a' ) as $lic ) {
-        		if( preg_match( '/Open Access/i', $lic )) {
-        			$this->openaccess = true;
-        			if( preg_match( '/(http?:\/\/[^ \)]+)/i', $lic, $matches )) {
-        				$this->licenses[] = trim( $matches[1], '/:-., ' );
+        		foreach( $this->getAll( '540', null, null, 'a' ) as $lic ) {
+        			if( preg_match( '/Open Access/i', $lic )) {
+        				$this->openaccess = true;
+        				if( preg_match( '/(http?:\/\/[^ \)]+)/i', $lic, $matches )) {
+        					$this->licenses[] = trim( $matches[1], '/:-., ' );
+        				}
+        				else $this->licenses[] = 'open access';
         			}
-        			else $this->licenses[] = 'open access';
+        		
+        		}
+        		foreach( $this->getAll( '856', null, null, 'z' ) as $lic ) {
+        			if( preg_match( '/Online via e-rara\.ch/i', $lic )) {
+        				$this->openaccess = true;
+						$this->licenses[] = 'https://creativecommons.org/licenses/by-sa/4.0/';
+        			}
+        		
         		}
         		
-        	}
-        	if( count( $this->licenses ) == 0 ) $this->licenses = array( 'restricted' );
+        		foreach( $this->getURLs() as $url ) {
+        			if( strncmp( 'eperiodica:', $url, 11 ) == 0 ) {
+        				$this->licenses[] = 'http://www.e-periodica.ch/digbib/about3';
+        				$this->openaccess = true;
+        			}
+        		}
+        		
+        		if( count( $this->licenses ) == 0 ) $this->licenses = array( 'restricted' );
         }
-        return $this->licenses;
+        return array_unique( $this->licenses );
     }
 
     public function getURLs() {
         if( $this->urls == null ) {
         	$this->urls = array();
-        	foreach( array( '856', '950', '956') as $fld ) {
+        	$this->urls_notes = array();
+        	 foreach( array( '856', '950', '956') as $fld ) {
 				$urls = $this->findField( $fld );
 				foreach( $urls as $url ) {
 					$val = null;
@@ -666,12 +683,28 @@ class swissbibEntity extends SOLRSource {
 					if( preg_match( "/Onlinezugriff via nanoo/", $note )) {
 						$type = 'nanoo';
 					}
-						$this->urls[] = "{$type}:{$val}";
+					if( preg_match( "/Online via e-rara\.ch/", $note )) {
+						$type = 'erara';
+					}
+					if( preg_match( '/\/\/www\.e-periodica\.ch/i', $val )) {
+						$type = 'eperiodica';
+					}
+					$this->urls[] = "{$type}:{$val}";
+					
+					$this->urls_notes[$val] = array( 'type'=>$type, 'url'=>$val, 'note'=>$note );
+					
 					//$this->online = true;
 				}
         	}
 	    }
         return array_unique( $this->urls );
+    }
+
+    public function getURLsNotes() {
+    	if( $this->urls_notes == null ) {
+    		$this->getURLs();
+    	}
+    	return $this->urls_notes;
     }
 
     public function getSys() {
@@ -827,6 +860,13 @@ class swissbibEntity extends SOLRSource {
 			if( strncmp( 'nanoo:', $url, 6 ) == 0 ) {
 				$catalogs[] = 'nanoo';
 			}
+			if( strncmp( 'erara:', $url, 6 ) == 0 ) {
+				$catalogs[] = 'erara';
+			}
+			if( strncmp( 'eperiodica:', $url, 11 ) == 0 ) {
+					$catalogs[] = 'eperiodica';
+			}
+				
 		}
 		
 		return array_unique( $catalogs );

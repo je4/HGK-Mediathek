@@ -115,7 +115,8 @@ class swissbibDisplay extends DisplayEntity {
 		}
 		$abstract = trim( $this->entity->getAbstract());
 		$urls = $this->entity->getURLs();
-        
+		$urls_notes = $this->entity->getURLsNotes();
+		
 ?>
 		<div class="row">
 			<div class="col-md-3">
@@ -228,11 +229,9 @@ class swissbibDisplay extends DisplayEntity {
 						<div class="marker" style=""></div>
 						<?php if( strlen( $abstract )) echo "<p>".nl2br( htmlspecialchars( $abstract ))."</p>\n"; ?>
 <?php
-if( @is_array( $urls )) foreach( $urls as $url ) {
-	if( preg_match( '/^([^:]+):(.*)$/', $url, $matches )) {
-		$url = $matches[2];
-		echo ($matches[1] == 'unknown' ? '' : $matches[1].':')." <i class=\"fa fa-external-link\" aria-hidden=\"true\"></i><a href=\"redir.php?id=".urlencode( $this->doc->id ).'&url='.urlencode( $url )."\" target=\"blank\">".(strlen( $url ) > 60 ? substr( $url, 0, 60 ).'...' : $url )."</a><br />\n";
-	}
+if( @is_array( $urls_notes )) foreach( $urls_notes as $url ) {
+		$text = ( strlen( $url['note'] ) ? $url['note'] :(strlen( $url['url'] ) > 60 ? substr( $url['url'], 0, 60 ).'...' : $url['url'] ) );
+		echo "<i class=\"fa fa-external-link\" aria-hidden=\"true\"></i><a href=\"redir.php?id=".urlencode( $this->doc->id ).'&url='.urlencode( $url['url'] )."\" target=\"blank\">".htmlspecialchars( $text )."</a><br />\n";
 }
 ?>
 					</div>
@@ -549,7 +548,14 @@ if( DEBUG ) {
 				$notes = $entity->getGeneralNote();
 				foreach( $notes as $note ) 
 					echo 'Anmerkung: '.htmlspecialchars( $note )."<br />\n";
-				
+
+				$urls_notes = $this->entity->getURLsNotes();
+				if( @is_array( $urls_notes )) foreach( $urls_notes as $url ) {
+					$text = ( strlen( $url['note'] ) ? $url['note'] :(strlen( $url['url'] ) > 60 ? substr( $url['url'], 0, 60 ).'...' : $url['url'] ) );
+					echo "<i class=\"fa fa-external-link\" aria-hidden=\"true\"></i><a href=\"redir.php?id=".urlencode( $this->doc->id ).'&url='.urlencode( $url['url'] )."\" target=\"blank\">".htmlspecialchars( $text )."</a><br />\n";
+				}
+					
+/*					
 				if( is_array( $this->doc->url )) foreach( $this->doc->url as $u ) {
 					$us = explode( ':', $u );
 					if( substr( $us[1], 0, 4 ) == 'http' ) {
@@ -557,7 +563,7 @@ if( DEBUG ) {
 						echo  ($us[0] == 'unknown' ? '' : $us[0].':')."<i class=\"fa fa-external-link\" aria-hidden=\"true\"></i><a href=\"redir.php?id=".urlencode( $this->doc->id ).'&url='.urlencode( $url )."\" target=\"blank\">".(strlen( $url ) > 40 ? substr( $url, 0, 40 ).'...':$url)."</a><br />\n";
 					}
 				}
-				
+*/				
 				echo "ID: ".$this->doc->id."<br />\n";
 				$inKiste = false;
 				if( is_array( $this->doc->location )) foreach( $this->doc->location as $loc ) {
