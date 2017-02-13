@@ -226,7 +226,7 @@ class DOAJArticleEntity extends SOLRSource {
     }
     
     public function getLicenses() {
-            if( !isset( $this->data['DC:RIGHTS'] )) return array( 'restricted' );
+            if( !isset( $this->data['DC:RIGHTS'] )) return array( 'open access' );
             return $this->data['DC:RIGHTS'];
     }
     
