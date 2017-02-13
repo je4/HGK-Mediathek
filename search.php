@@ -89,8 +89,7 @@ if( !$qobj ) {
 		$qobj['facets'] = array();
 		$qobj['filter'] = array();
 		$qobj['area'] = '';
-		if( DEBUG ) $qobj['facets']['catalog'] = $config['defaultcatalog'];
-		else $qobj['facets']['source'] = $config['defaultsource'];
+		$qobj['facets']['catalog'] = $config['defaultcatalog'];
 		$qobj['query'] = '*';
 		$query = json_encode( $qobj );
 		$q = md5($query);
@@ -163,59 +162,28 @@ foreach( $session->getGroups() as $grp ) {
 $squery->createFilterQuery('acl_meta')->setQuery($acl_query);
 echo "<!-- filter acl_meta: {$acl_query} -->\n";
 
-switch( $qobj['area'] ) {
-    case 'oa':
-        $squery->createFilterQuery('openaccess')->setQuery('openaccess:true');
-        break;
-    case 'ebooks':
-        $squery->createFilterQuery('ebooks')->setQuery('source:NEBIS AND online:true');
-        break;
-}
+$squery->createFilterQuery('nodelete')->setQuery('deleted:false');
+echo "<!-- filter nodelete: deleted:false -->\n";
 
-if( DEBUG ) {
-	if( @is_array( $qobj['facets']['catalog'] )) {
-		$catalogfilterquery = "";
-		foreach( $qobj['facets']['catalog'] as $cat ) {
-			if( $catalogfilterquery != '' ) $catalogfilterquery .= ' OR ';
-			$catalogfilterquery .= ' (catalog:'.$helper->escapePhrase( $cat ).')';
-		}
-		$squery->createFilterQuery('catalog')->addTag('catalog')->setQuery( $catalogfilterquery );
-		echo "<!-- filter catalog: {$catalogfilterquery} -->\n";
+if( @is_array( $qobj['facets']['catalog'] )) {
+	$catalogfilterquery = "";
+	foreach( $qobj['facets']['catalog'] as $cat ) {
+		if( $catalogfilterquery != '' ) $catalogfilterquery .= ' OR ';
+		$catalogfilterquery .= ' (catalog:'.$helper->escapePhrase( $cat ).')';
+	}
+	$squery->createFilterQuery('catalog')->addTag('catalog')->setQuery( $catalogfilterquery );
+	echo "<!-- filter catalog: {$catalogfilterquery} -->\n";
 
-	}
 }
-if( !DEBUG ) {
-	if( @is_array( $qobj['facets']['source'] )) {
-		$sourcefilterquery = "";
-		foreach( $qobj['facets']['source'] as $src ) {
-			if( $sourcefilterquery != '' ) $sourcefilterquery .= ' OR ';
-			if( $src == 'NEBIS' ) $sourcefilterquery .= ' (source:'.$helper->escapePhrase( $src ).' AND ( signature:'.$helper->escapePhrase('nebis:E75:*' ).' OR online:true ))';
-			else $sourcefilterquery .= ' (source:'.$helper->escapePhrase( $src ).')';
-		}
-		$squery->createFilterQuery('source')->addTag('source')->setQuery( $sourcefilterquery );
-		echo "<!-- filter source: {$sourcefilterquery} -->\n";
+if( @is_array( $qobj['facets']['category'] )) {
+	$categoryfilterquery = "";
+	foreach( $qobj['facets']['category'] as $cat ) {
+		if( $categoryfilterquery != '' ) $categoryfilterquery .= ' OR ';
+		$categoryfilterquery .= ' (category:'.$helper->escapePhrase( $cat ).')';
 	}
-}
-if( @is_array( $qobj['facets']['license'] )) {
-	$licensefilterquery = "";
-	foreach( $qobj['facets']['license'] as $lic ) {
-		if( $licensefilterquery != '' ) $licensefilterquery .= ' OR ';
-		$licensefilterquery .= ' (license:'.$helper->escapePhrase( $lic ).')';
-	}
-	$squery->createFilterQuery('license')->addTag('license')->setQuery( $licensefilterquery );
-	echo "<!-- filter license: {$licensefilterquery} -->\n";
-}
-if( DEBUG ) {
-	if( @is_array( $qobj['facets']['category'] )) {
-		$categoryfilterquery = "";
-		foreach( $qobj['facets']['category'] as $cat ) {
-			if( $categoryfilterquery != '' ) $categoryfilterquery .= ' OR ';
-			$categoryfilterquery .= ' (category:'.$helper->escapePhrase( $cat ).')';
-		}
-	    $squery->createFilterQuery('category')->addTag('category')->setQuery( $categoryfilterquery );
-	    echo "<!-- filter category: {$categoryfilterquery} -->\n";
+    $squery->createFilterQuery('category')->addTag('category')->setQuery( $categoryfilterquery );
+    echo "<!-- filter category: {$categoryfilterquery} -->\n";
 
-	}
 }
 if( @is_array( $qobj['facets']['online'] )) {
 	$onlinefilterquery = 'online:('.implode(' ', $qobj['facets']['online']).')';
@@ -250,16 +218,6 @@ if( @is_array( $qobj['facets']['cluster'] )) {
     echo "<!-- filter cluster: {$_qstr} -->\n";
 
 }
-/*
-if( @is_array( $qobj['facets']['license'] )) {
-	$_qstr = 'license:(';
-	foreach( $qobj['facets']['license'] as $lic ) {
-		$_qstr .= ' '.$helper->escapePhrase( $lic );
-	}
-	$_qstr .= ' )';
-    $squery->createFilterQuery('license')->addTag('license')->setQuery($_qstr);
-}
-*/
 
 if( true ) {
 	$dismax = $squery->getDisMax();
@@ -270,33 +228,34 @@ if( true ) {
 	$squery->setQuery( $qstr );
 }
 
-if( DEBUG ) {
-	$facetSetCatalog = $squery->getFacetSet();
-	$facetSetCatalog->createFacetField('catalog')->setField('catalog')->addExclude('catalog');
-}
+$facetSetCatalog = $squery->getFacetSet();
+$facetSetCatalog->createFacetField('catalog')->setField('catalog')->addExclude('catalog');
 
 $facetSetSource = $squery->getFacetSet();
 $facetSetSource->createFacetField('source')->setField('source')->addExclude('source');
 
-if( !DEBUG ) {
-	$facetSetLicense = $squery->getFacetSet();
-	$facetSetLicense->createFacetField('license')->setField('license')->addExclude('license');
+if( DEBUG ) {
+	if( @is_array( $qobj['facets']['license'] )) {
+		$licensefilterquery = "";
+		foreach( $qobj['facets']['license'] as $lic ) {
+			if( $licensefilterquery != '' ) $licensefilterquery .= ' OR ';
+			$licensefilterquery .= ' (license:'.$helper->escapePhrase( $lic ).')';
+		}
+		$squery->createFilterQuery('license')->addTag('license')->setQuery( $licensefilterquery );
+		echo "<!-- filter license: {$licensefilterquery} -->\n";
+	}
 }
 
-if( DEBUG ) {
-	$facetSetCategory = $squery->getFacetSet();
-	$facetSetCategory->createFacetField('category')->setField('category')->setLimit( $config['categorylimit'] )->addExclude('category');
-}
+$facetSetLicense = $squery->getFacetSet();
+$facetSetLicense->createFacetField('license')->setField('license')->addExclude('license');
 
-if( DEBUG ) {
-	$facetSetOnline = $squery->getFacetSet();
-	$facetSetOnline->createFacetField('online')->setField('online')->addExclude('online');
-	$facetSetOpenAccess = $squery->getFacetSet();
-	$facetSetOpenAccess->createFacetField('openaccess')->setField('openaccess')->addExclude('openaccess');
-	} else {	
-	$facetSetEmbedded = $squery->getFacetSet();
-	$facetSetEmbedded->createFacetField('embedded')->setField('embedded')->addExclude('embedded');
-}
+$facetSetCategory = $squery->getFacetSet();
+$facetSetCategory->createFacetField('category')->setField('category')->setLimit( $config['categorylimit'] )->addExclude('category');
+
+$facetSetOnline = $squery->getFacetSet();
+$facetSetOnline->createFacetField('online')->setField('online')->addExclude('online');
+$facetSetOpenAccess = $squery->getFacetSet();
+$facetSetOpenAccess->createFacetField('openaccess')->setField('openaccess')->addExclude('openaccess');
 
 $facetSetType = $squery->getFacetSet();
 $facetSetType->createFacetField('type')->setField('type')->addExclude('type');
@@ -350,7 +309,6 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 			</div>
 		  </div>
    		  <div class="col-md-4" style="background-color: transparent;">
-<?php if( DEBUG ) { ?>
 			<div style="">
 			<span style="; font-weight: bold;">Kataloge</span><br />
 			<div class="facet" style="">
@@ -402,38 +360,9 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 			</div>
 			</div>
 <?php  
-		} /* if( DEBUG ) */
-		else {
-?>
-			<div style="">
-			<span style="; font-weight: bold;">Sources</span><br />
-			<div class="facet" style="">
-				<div class="marker" style=""></div>
-<?php
-				$facetSource = $rs->getFacetSet()->getFacet('source');
-				$i = 0;
-				foreach ($facetSource as $value => $count) {
-					if( !isset( $config['sourcemap'][$value] )) continue;
-?>
-						<div class="checkbox checkbox-green">
-							<input class="facet" type="checkbox" id="source" value="<?php echo htmlentities($value); ?>" <?php if( @is_array( $qobj['facets']['source'] ) && array_search($value, $qobj['facets']['source']) !== false ) echo " checked"; ?>>
-							<label for="source<?php echo $i; ?>">
-								<?php echo htmlspecialchars( $config['sourcemap'][$value] ).' ('.number_format( $count, 0, '.', "'" ).')'; ?>
-							</label>
-						</div>
-<!--
-						<?php if( $i ) echo "<br />"; ?><input type="checkbox" id="source<?php echo $i; ?>" class="css-checkbox" value="<?php echo htmlentities($value); ?>" <?php if( @is_array( $qobj['facets']['source'] ) && array_search($value, $qobj['facets']['source']) !== false ) echo " checked"; ?>>
-						<label for="source<?php echo $i; ?>" name="source<?php echo $i; ?>_lbl" class="css-label lite-x-green"><?php echo htmlspecialchars( $value ).' ('.$count.')'; ?></label>
--->
-<?php
-					$i++;
-				}
-?>
-			</div>
-			</div>
-<?php 
-		} /* if !DEBUG */
-		if( !DEBUG ) {
+
+		if( DEBUG ) {
+			
 ?>
 			<div style="">
 			<span style="; font-weight: bold;">Licenses</span><br />
@@ -442,7 +371,7 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 <?php
 				$facetLicense = $rs->getFacetSet()->getFacet('license');
 				$i = 0;
-				foreach ($facetLicense as $value => $count) {
+				if( $facetLicense ) foreach ($facetLicense as $value => $count) {
 					if(!( @is_array( $qobj['facets']['license'] ) && array_search($value, $qobj['facets']['license']) !== false ) && $count == 0 ) continue;
 ?>						
 						<div class="checkbox checkbox-green">
@@ -451,10 +380,6 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 								<?php echo htmlspecialchars( $value ).' ('.number_format( $count, 0, '.', "'" ).')'; ?>
 							</label>
 						</div>
-<!--
-						<?php if( $i ) echo "<br />"; ?><input type="checkbox" id="license<?php echo $i; ?>" class="css-checkbox" value="<?php echo htmlentities($value); ?>" <?php if( @is_array( $qobj['facets']['license'] ) && array_search($value, $qobj['facets']['license']) !== false ) echo " checked"; ?>>
-						<label for="license<?php echo $i; ?>" name="license<?php echo $i; ?>_lbl" class="css-label lite-x-green"><?php echo htmlspecialchars( $value ).' ('.$count.')'; ?></label>
--->
 <?php
 					$i++;
 				}
@@ -462,9 +387,8 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 			</div>
 			</div>
 <?php 
-		}
-		
-		if( DEBUG ) { ?>
+		} 
+?>
 			<div style="">
 			<span style="; font-weight: bold;">Zugriff</span><br />
 			<div class="facet" style="">
@@ -504,36 +428,7 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 				?>
 			</div>
 			</div>
-<?php } else { ?>
-			<div style="">
-			<span style="; font-weight: bold;">Eigener digitaler Bestand</span><br />
-			<div class="facet" style="">
-				<div class="marker"></div>
-<?php
-				$facetEmbedded = $rs->getFacetSet()->getFacet('embedded');
-				$i = 0;
-				foreach ($facetEmbedded as $value => $count) {
-					//if( (@is_array( $qobj['facets']['embedded'] ) && array_search($value, $qobj['facets']['embedded']) !== false ) === false && $count == 0 ) continue;
-					if( $value == 'false' ) continue;
-?>
-						<div class="checkbox checkbox-green">
-							<input class="facet" type="checkbox" id="embedded" value="<?php echo htmlentities($value); ?>" <?php if( @is_array( $qobj['facets']['embedded'] ) && array_search($value, $qobj['facets']['embedded']) !== false ) echo " checked"; ?>>
-							<label for="embedded<?php echo $i; ?>">
-								<?php echo htmlspecialchars( 'direkt verfügbar' ).' ('.number_format( $count, 0, '.', "'" ).')'; ?>
-							</label>
-						</div>
-<!--
-						<?php if( $i ) echo "<br />"; ?><input type="checkbox" id="embedded<?php echo $i; ?>" class="css-checkbox" value="<?php echo htmlentities($value); ?>" <?php if( @is_array( $qobj['facets']['embedded'] ) && array_search($value, $qobj['facets']['embedded']) !== false ) echo " checked"; ?>>
-						<label for="embedded<?php echo $i; ?>" name="embedded<?php echo $i; ?>_lbl" class="css-label lite-x-green"><?php echo htmlspecialchars( $value ).' ('.$count.')'; ?></label>
--->
-<?php
-					$i++;
-				}
 
-?>
-			</div>
-			</div>
-<?php } ?>
 
 			<div style="">
 			<span style="; font-weight: bold;">Themen</span><br />
@@ -657,26 +552,7 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 				<div id="categorytree">
 <?php
 	$tree = CategoryTree::buildTree( $facetCategory->getValues(), isset( $qobj['facets']['category']) ? $qobj['facets']['category'] : array() );
-//	echo nl2br( str_replace( ' ', '+', htmlentities( $tree->__toString() )));
 	echo $tree->treeJS();
-?>
-<?php
-/*
-					foreach( $cats as $cat ) {
-
-						if( strlen( $cat ) > $len ) {
-							echo "	<ul>\n";
-						}
-						elseif( strlen( $cat ) < $len ) {
-							echo "	</ul>\n";
-						}
-						else {
-							if( preg_match( '/!!([^!]+)$/', $cat, $matches )) {
-								echo "		<li>".htmlentities( $matches[1] )."</li>\n";
-							}
-						}
-					}
-*/
 ?>
 
 				</div>

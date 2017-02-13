@@ -127,7 +127,7 @@ class DOAJArticleDisplay extends DisplayEntity {
 							$i = 0;
 							foreach( $authors as $author ) { 
 								if( $i > 0) echo "; "; ?>
-									<a href="javascript:doSearchFull('author:&quot;<?php echo trim( $author ); ?>&quot;', '', [], {<?php echo (DEBUG ? "'catalog':[".$this->getCatalogList()."]" : "'source':[".$this->getSourceList()."]"); ?>}, 0, <?php echo $pagesize; ?> );">
+									<a href="javascript:doSearchFull('author:&quot;<?php echo trim( $author ); ?>&quot;', '', [], {'catalog':[<?php echo $this->getCatalogList(); ?>]}, 0, <?php echo $pagesize; ?> );">
 										<?php echo htmlspecialchars( $author ); ?>
 									</a>
 								<?php				
@@ -144,7 +144,7 @@ class DOAJArticleDisplay extends DisplayEntity {
 							if( $city ) echo htmlspecialchars( $city ).': '; 
 							if( $publishers ) { 
 								foreach( $publishers as $publisher ) { ?>
-									<a href="javascript:doSearchFull('publisher:&quot;<?php echo trim( $publisher ); ?>&quot;', '', [], {<?php echo (DEBUG ? "'catalog':[".$this->getCatalogList()."]" : "'source':[".$this->getSourceList()."]"); ?>}, 0, <?php echo $pagesize; ?> );">
+									<a href="javascript:doSearchFull('publisher:&quot;<?php echo trim( $publisher ); ?>&quot;', '', [], {'catalog':[<?php echo $this->getCatalogList(); ?>]}, 0, <?php echo $pagesize; ?> );">
 										<?php echo htmlspecialchars( $publisher ); ?>
 									</a>
 							<?php 
@@ -207,7 +207,7 @@ class DOAJArticleDisplay extends DisplayEntity {
 						foreach( $this->doc->cluster_ss as $cl ) {
 ?>
 								<label>
-									<a href="javascript:doSearchFull('', '', [], {<?php echo (DEBUG ? "'catalog':[".$this->getCatalogList()."]" : "'source':[".$this->getSourceList()."]"); ?>, cluster: ['<?php echo htmlspecialchars( $cl ); ?>']}, 0, <?php echo $pagesize; ?> );"><?php echo htmlspecialchars( $cl ); ?></a>
+									<a href="javascript:doSearchFull('', '', [], {'catalog':[<?php echo $this->getCatalogList(); ?>], cluster: ['<?php echo htmlspecialchars( $cl ); ?>']}, 0, <?php echo $pagesize; ?> );"><?php echo htmlspecialchars( $cl ); ?></a>
 								</label><br />
 <?php							
 						}

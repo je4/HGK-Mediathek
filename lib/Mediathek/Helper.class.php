@@ -186,7 +186,6 @@ class Helper {
             }
         }
         $qstr = '';
-        
         foreach( $specific as $key=>$word ) {
             $fields = array();
             switch( strtolower( $key )) {
@@ -269,7 +268,7 @@ class Helper {
                 if( !$first ) {
                     $qstr .= ' OR ';
                 }
-                $qstr .= 'signature:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapeTerm( $word ))).'^5';
+                $qstr .= 'signature:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapePhrase( $word ))).'^12';
                 $first = false;
             }
             $qstr .= ' )';

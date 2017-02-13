@@ -96,10 +96,8 @@ class swissbibDisplay extends DisplayEntity {
         $entity = $this->entity;
         
         if( DEBUG ) {
-//        	ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
         	$solr = new SOLR( $solrclient );
         	$solr->import( $entity, true );
-//        	ob_end_clean();
         }
 
         ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
@@ -130,7 +128,7 @@ class swissbibDisplay extends DisplayEntity {
 							$i = 0;
 							foreach( $authors as $author ) { 
 								if( $i > 0) echo "; "; ?>
-									<a href="javascript:doSearchFull('author:&quot;<?php echo str_replace('\'', '\\\'', trim( $author )); ?>&quot;', '', [], {<?php echo (DEBUG ? "'catalog':[".$this->getCatalogList()."]" : "'source':[".$this->getSourceList()."]"); ?>}, 0, <?php echo $pagesize; ?> );">
+									<a href="javascript:doSearchFull('author:&quot;<?php echo str_replace('\'', '\\\'', trim( $author )); ?>&quot;', '', [], {'catalog':[<?php echo $this->getCatalogList(); ?>]}, 0, <?php echo $pagesize; ?> );">
 										<?php echo htmlspecialchars( $author ); ?>
 									</a>
 								<?php				
@@ -147,7 +145,7 @@ class swissbibDisplay extends DisplayEntity {
 							if( $city ) echo htmlspecialchars( $city ).': '; 
 							if( $publishers ) { 
 								foreach( $publishers as $publisher ) { ?>
-									<a href="javascript:doSearchFull('publisher:&quot;<?php echo str_replace('\'', '\\\'', trim( $publisher )); ?>&quot;', '', [], {<?php echo (DEBUG ? "'catalog':[".$this->getCatalogList()."]" : "'source':[".$this->getSourceList()."]"); ?>}, 0, <?php echo $pagesize; ?> );">
+									<a href="javascript:doSearchFull('publisher:&quot;<?php echo str_replace('\'', '\\\'', trim( $publisher )); ?>&quot;', '', [], {'catalog':[<?php echo $this->getCatalogList(); ?>]}, 0, <?php echo $pagesize; ?> );">
 										<?php echo htmlspecialchars( $publisher ); ?>
 									</a>
 							<?php 
@@ -255,7 +253,7 @@ if( @is_array( $urls )) foreach( $urls as $url ) {
 //							echo htmlspecialchars( $cl ).'<br />';
 ?>
 								<label>
-									<a href="javascript:doSearchFull('', '', [], {<?php echo (DEBUG ? "'catalog':[".$this->getCatalogList()."]" : "'source':[".$this->getSourceList()."]"); ?>, cluster: ['<?php echo htmlspecialchars( $cl ); ?>']}, 0, <?php echo $pagesize; ?> );"><?php echo htmlspecialchars( $cl ); ?></a>
+									<a href="javascript:doSearchFull('', '', [], {'catalog':[<?php echo $this->getCatalogList(); ?>], cluster: ['<?php echo htmlspecialchars( $cl ); ?>']}, 0, <?php echo $pagesize; ?> );"><?php echo htmlspecialchars( $cl ); ?></a>
 								</label><br />
 								
 							<!-- <div class="checkbox checkbox-green">
