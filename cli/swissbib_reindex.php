@@ -33,7 +33,8 @@ if( !file_exists( $tmpfile )) {
 		//$squery->createFilterQuery('notdone')->setQuery("-catalog:*");
 		$squery->createFilterQuery('nodelete')->setQuery("deleted:false");
 		$squery->setFields( array( 'id' ));
-		$squery->setQuery( "source:swissbib" );
+		$squery->createFilterQuery('category')->setQuery( 'category:"1!!signature!!NATIONALLICENCE"' );
+		$squery->createFilterQuery( "*:*" );
 		$squery->addSort('id', $squery::SORT_DESC);
 		$customizer->createCustomization( 'cursorMark' )
 			->setType( 'param' )
