@@ -108,10 +108,6 @@ function navbarSearch(page, pagesize) {
 
 function doSearchFull(query, area, filter, facets, page, pagesize ) {
 	
-	if( typeof facets.source == 'undefined' ) {
-		facets["source"] = ["NEBIS"];
-	}
-	
 	var q = {
 		query: query,
 		area: area,
@@ -213,11 +209,12 @@ var py = -5;
 var pz = 5;
 var gridWidth = 500;
 
-function init3D( boxes, camJSON ) {
+function init3D( boxes, camJSON, renderer ) {
 	
+	if( !renderer ) renderer = ".renderer";
 	mediathek = new Mediathek( {
 		camType: "perspective",
-		renderDOM: $(".renderer"),
+		renderDOM: $(renderer),
 		backgroundColor: 0x425164,
 		camJSON: null, //'[0.9993451833724976,0.015195777639746666,-0.03283816948533058,0,0.01806975156068802,0.5766857266426086,0.8167662024497986,0,0.03134870156645775,-0.816824734210968,0.5760335326194763,0,286.9632568359375,-7477.142578125,5272.96044921875,1]',
 		doWindowResize: true,

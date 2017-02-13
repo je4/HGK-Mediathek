@@ -30,6 +30,7 @@ abstract class DisplayEntity {
 	protected $urlparams = null;
 	protected $db = null;
 	protected $highlight = null;
+	protected $qobj = null;
     public function __construct( $doc, $urlparams, $db, $highlightedDoc  ) {
         $this->doc = $doc;
 		$this->urlparams = $urlparams;
@@ -51,6 +52,50 @@ abstract class DisplayEntity {
         $html .= ob_get_contents();
         ob_end_clean();
 		return $html;
+	}
+	
+	public function getCatalogList() {
+		global $config;
+		
+		if( !$this->qobj ) {
+			$this->qobj = Helper::readQuery( $this->urlparams['q'] );
+		}
+	
+		$js_catlist = '';
+		$ds = $config['defaultcatalog'];
+		if( is_array( $this->qobj['facets']['catalog'] ))
+		{
+			foreach( $this->qobj['facets']['catalog'] as $cat ) {
+				$ds[] = $cat;
+			}
+		}
+		$ds = array_unique( $ds );
+		foreach( $ds as $src )
+			$js_catlist .= ",'".trim( $src )."'";
+		$js_catlist = trim( $js_catlist, ',');
+		return $js_catlist;
+	}
+	
+	public function getSourceList() {
+		global $config;
+	
+		if( !$this->qobj ) {
+			$this->qobj = Helper::readQuery( $this->urlparams['q'] );
+		}
+		
+		$js_catlist = '';
+		$ds = $config['defaultsource'];
+		if( is_array( $this->qobj['facet']['source'] ))
+		{
+			foreach( $this->qobj['facet']['source'] as $cat ) {
+				$ds[] = $cat;
+			}
+		}
+		$ds = array_unique( $ds );
+		foreach( $ds as $src )
+			$js_catlist .= ",'".trim( $src )."'";
+		$js_catlist = trim( $js_catlist, ',');
+		return $js_catlist;
 	}
 	
 	public abstract function getSchema( );

@@ -112,7 +112,7 @@ class EZBDisplay extends DisplayEntity {
 					$us = explode( ':', $u );
 					if( substr( $us[1], 0, 4 ) == 'http' ) {
 						$url = substr( $u, strlen( $us[0])+1 );
-						echo "{$us[0]}: <i class=\"fa fa-external-link\" aria-hidden=\"true\"></i><a href=\"redir.php?id=".urlencode( $this->doc->id ).'&url='.urlencode( $url )."\" target=\"blank\">{$url}</a><br />\n";
+						echo ($us[0] == 'unknown' ? '' : $us[0].':')."<i class=\"fa fa-external-link\" aria-hidden=\"true\"></i><a href=\"redir.php?id=".urlencode( $this->doc->id ).'&url='.urlencode( $url )."\" target=\"blank\">{$url}</a><br />\n";
 					}
 				}
 				

@@ -287,7 +287,7 @@ class Helper {
     	$num = intval( $db->GetOne( $sql ));
     	if( $num > 0 ) return;
     
-    	$sql = "INSERT INTO web_query VALUES( ".$db->qstr( $md5 ).", ".$db->qstr( $qobj->query ). ", ".$db->qstr( $qobj->area ). ", ".$db->qstr( $json ).")";
+    	$sql = "INSERT INTO web_query VALUES( ".$db->qstr( $md5 ).", ".$db->qstr( $qobj['query'] ). ", ".$db->qstr( $qobj['area'] ). ", ".$db->qstr( $json ).")";
     	$db->Execute( $sql );
     }
     
@@ -297,21 +297,19 @@ class Helper {
     	if( strlen( $md5 ) > 0 ) {
 	    	$sql = "SELECT json FROM web_query WHERE queryid=".$db->qstr( $md5 );
 	    	$json = $db->GetOne( $sql );
-	    	//	var_dump( json_decode( $json ));
-	    	if( $json ) return json_decode( $json );
+	    	if( strlen( $json )) return json_decode( $json, true );
     	}
 
-    	$qobj = new \stdClass();
-    	$qobj->facets = new \stdClass();
-    	$qobj->filter = new \stdClass();
-    	$qobj->area = '';
-    	if( DEBUG ) $qobj->facets->catalog = $config['defaultcatalog'];
-    	else $qobj->facets->source = $config['defaultsource'];
-    	$qobj->query = '*';
+    	$qobj = array();
+    	$qobj['facets'] = array();
+    	$qobj['filter'] = array();
+    	$qobj['area'] = '';
+    	if( DEBUG ) $qobj['facets']['catalog'] = $config['defaultcatalog'];
+    	else $qobj['facets']['source'] = $config['defaultsource'];
+    	$qobj['query'] = '*';
     	$query = json_encode( $qobj );
     	$q = md5($query);
     	Helper::writeQuery( $q, $qobj, $query );
-    	$session->storeQuery( $q );
     	return $qobj;
     }
     

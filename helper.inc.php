@@ -35,31 +35,4 @@ function findsub( $m, $tag, $sub ) {
 	return isset( $m[$tag][$i][$sub] ) ? trim($m[$tag][$i][$sub]) : '';
 }
 
-function writeQuery( $md5, $qobj, $json ) {
-	global $db;
-
-	$sql = "SELECT COUNT(*) FROM web_query WHERE queryid=".$db->qstr( $md5 );
-	$num = intval( $db->GetOne( $sql ));
-	if( $num > 0 ) return;
-
-	$sql = "INSERT INTO web_query VALUES( ".$db->qstr( $md5 ).", ".$db->qstr( $qobj->query ). ", ".$db->qstr( $qobj->area ). ", ".$db->qstr( $json ).")";
-	$db->Execute( $sql );
-}
-
-function readQuery( $md5 ) {
-	global $db;
-
-	$sql = "SELECT json FROM web_query WHERE queryid=".$db->qstr( $md5 );
-	$json = $db->GetOne( $sql );
-	//	var_dump( json_decode( $json ));
-	if( $json ) return json_decode( $json );
-
-	$qobj = new \stdClass();
-	$qobj->query = '';
-	$qobj->area = 'all';
-	$qobj->filter = array();
-	$qobj->facets = array();
-	return $qobj;
-}
-
 ?>

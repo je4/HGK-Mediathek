@@ -35,7 +35,25 @@ foreach( $rs as $row ) {
 		echo '<td class="list" style="width: 30%;"><a href="#" data-pk="'.$row['itemid'].'" data-type="text" data-url="inventory.update.php" data-name="marker" id="'.$row['itemid'].'" class="x-editable" )">'.$box."</a></td>\n";
 	}
 	else {
-		echo '<td class="list" style="width: 30%;"><a href="#" onClick="doSearchFull( \'location:E75:Kiste:'.$box.'\', \'\', [], [], 0, '.$session->getPageSize().' )">'.$box.'</a> <a style="padding: 0px;" href="#" class="btn btn-default" data-toggle="modal" data-target="#MTModal" data-kiste="'.urlencode(str_replace( '_', '', $box)).'" > <i class="fa fa-street-view" aria-hidden="true"></i></a>'."</td>\n";
+/*		
+		if( strncmp( 'NEBIS:E75:', $loc, 10 ) == 0 ) {
+			$box = urlencode(str_replace( '_', '', substr( $loc, 10 )));
+			$boxjson = null;
+			if( file_exists( $config['3djsondir']."/{$box}.json" )) {
+				$boxjson = file_get_contents( $config['3djsondir']."/{$box}.json" );
+			}
+		
+			echo 'Standort: Regal <b>'.$loc{10}.'</b> Kiste <b>'.htmlspecialchars( str_replace( '_', '', substr( $loc, 12 )))
+			.' <a style="padding: 0px;" href="#" class="btn btn-default" data-toggle="modal" data-target="#MTModal" data-kiste="'.$box.'" data-json="'.htmlspecialchars( $boxjson, ENT_QUOTES ).'" ><i class="fa fa-street-view" aria-hidden="true"></i></a></b><br />'."\n";
+		}
+*/		
+		$boxjson = null;
+		$kbox = str_replace( '_', '', $box );
+		if( file_exists( $config['3djsondir']."/{$kbox}.json" )) {
+			$boxjson = file_get_contents( $config['3djsondir']."/{$kbox}.json" );
+		}
+		echo '<td class="list" style="width: 30%;"><a href="#" onClick="doSearchFull( \'location:NEBIS:E75:'.$box.'\', \'\', [], [], 0, '.$session->getPageSize().' )">'.$box.'</a> 
+				<a style="padding: 0px;" href="#" class="btn btn-default" data-toggle="modal" data-target="#MTModal" data-kiste="'.urlencode(str_replace( '_', '', $box)).'" data-json="'.htmlspecialchars( $boxjson, ENT_QUOTES ).'"> <i class="fa fa-street-view" aria-hidden="true"></i></a>'."</td>\n";
 	}
 	echo '<td class="list" style="width: 30%;">'.htmlspecialchars(utf8_encode($row['signatur']))."</td>\n";
 	echo '<td class="list" style="width: 40%;">'.htmlspecialchars(utf8_encode($row['itemid']))."</td>\n";

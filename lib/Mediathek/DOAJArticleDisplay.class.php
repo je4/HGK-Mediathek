@@ -113,13 +113,6 @@ class DOAJArticleDisplay extends DisplayEntity {
 		$html = '';
 		$entity = $this->entity;
 		$authors = $entity->getAuthors();
-		$js_sourcelist = '';
-		$ds = $config['defaultsource'];
-		$ds[] = 'DOAJArticle';
-		$ds = array_unique( $ds );
-		foreach( $ds as $src )
-			$js_sourcelist .= ",'".trim( $src )."'";
-		$js_sourcelist = trim( $js_sourcelist, ',');
         ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
 		echo "<!-- ".print_r( $this->metadata, true)." -->";
 ?>
@@ -134,7 +127,7 @@ class DOAJArticleDisplay extends DisplayEntity {
 							$i = 0;
 							foreach( $authors as $author ) { 
 								if( $i > 0) echo "; "; ?>
-									<a href="javascript:doSearchFull('author:&quot;<?php echo trim( $author ); ?>&quot;', '', [], {'source':[<?php echo $js_sourcelist; ?>]}, 0, <?php echo $pagesize; ?> );">
+									<a href="javascript:doSearchFull('author:&quot;<?php echo trim( $author ); ?>&quot;', '', [], {<?php echo (DEBUG ? "'catalog':[".$this->getCatalogList()."]" : "'source':[".$this->getSourceList()."]"); ?>}, 0, <?php echo $pagesize; ?> );">
 										<?php echo htmlspecialchars( $author ); ?>
 									</a>
 								<?php				
@@ -151,7 +144,7 @@ class DOAJArticleDisplay extends DisplayEntity {
 							if( $city ) echo htmlspecialchars( $city ).': '; 
 							if( $publishers ) { 
 								foreach( $publishers as $publisher ) { ?>
-									<a href="javascript:doSearchFull('publisher:&quot;<?php echo trim( $publisher ); ?>&quot;', '', [], {'source':[<?php echo $js_sourcelist; ?>]}, 0, <?php echo $pagesize; ?> );">
+									<a href="javascript:doSearchFull('publisher:&quot;<?php echo trim( $publisher ); ?>&quot;', '', [], {<?php echo (DEBUG ? "'catalog':[".$this->getCatalogList()."]" : "'source':[".$this->getSourceList()."]"); ?>}, 0, <?php echo $pagesize; ?> );">
 										<?php echo htmlspecialchars( $publisher ); ?>
 									</a>
 							<?php 
@@ -214,7 +207,7 @@ class DOAJArticleDisplay extends DisplayEntity {
 						foreach( $this->doc->cluster_ss as $cl ) {
 ?>
 								<label>
-									<a href="javascript:doSearchFull('', '', [], {source: [<?php echo $js_sourcelist; ?>], cluster: ['<?php echo htmlspecialchars( $cl ); ?>']}, 0, <?php echo $pagesize; ?> );"><?php echo htmlspecialchars( $cl ); ?></a>
+									<a href="javascript:doSearchFull('', '', [], {<?php echo (DEBUG ? "'catalog':[".$this->getCatalogList()."]" : "'source':[".$this->getSourceList()."]"); ?>, cluster: ['<?php echo htmlspecialchars( $cl ); ?>']}, 0, <?php echo $pagesize; ?> );"><?php echo htmlspecialchars( $cl ); ?></a>
 								</label><br />
 <?php							
 						}
@@ -331,6 +324,16 @@ class DOAJArticleDisplay extends DisplayEntity {
 					<?php if( count( $this->entity->getIssues() )) echo "Issue: ".htmlentities( implode( '; ', $this->entity->getIssues()))."<br />\n"; ?>
 					<?php if( count( $this->entity->getLanguages() )) echo "Language(s): ".htmlentities( implode( '; ', $this->entity->getLanguages()))."<br />\n"; ?>
 					<?php if( count( $this->entity->getLanguages() )) echo "Publisher: ".htmlentities( implode( '; ', $this->entity->getPublisher()))."<br />\n"; ?>
+
+<?php 
+					if( is_array( $this->doc->url )) foreach( $this->doc->url as $u ) {
+						$us = explode( ':', $u );
+						if( substr( $us[1], 0, 4 ) == 'http' ) {
+							$url = substr( $u, strlen( $us[0])+1 );
+							echo ($us[0] == 'unknown' ? '' : $us[0].':')."<i class=\"fa fa-external-link\" aria-hidden=\"true\"></i><a href=\"redir.php?id=".urlencode( $this->doc->id ).'&url='.urlencode( $url )."\" target=\"blank\">{$url}</a><br />\n";
+						}
+					}
+?>
 					
 					ID: <?php echo $this->doc->id; ?><br />
 					<a href="detail.php?<?php echo "id=".urlencode( $this->doc->id ); foreach( $this->urlparams as $key=>$val ) echo '&'.$key.'='.urlencode($val); ?>"><i class="fa fa-folder-open" aria-hidden="true"></i> Details</a><br />

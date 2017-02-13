@@ -157,7 +157,7 @@ class IKUVidDisplay extends DisplayEntity {
 //							echo htmlspecialchars( $cl ).'<br />';
 ?>
 								<label>
-									<a href="javascript:doSearchFull('', '', [], {source: ['IKUVid'], cluster: ['<?php echo htmlspecialchars( $cl ); ?>']}, 0, <?php echo $pagesize; ?> );"><?php echo htmlspecialchars( $cl ); ?></a>
+									<a href="javascript:doSearchFull('', '', [], {<?php echo (DEBUG ? "'catalog':[".$this->getCatalogList()."]" : "'source':[".$this->getSourceList()."]"); ?>, cluster: ['<?php echo htmlspecialchars( $cl ); ?>']}, 0, <?php echo $pagesize; ?> );"><?php echo htmlspecialchars( $cl ); ?></a>
 								</label><br />
 								
 							<!-- <div class="checkbox checkbox-green">
@@ -203,6 +203,7 @@ class IKUVidDisplay extends DisplayEntity {
 	}
 	    
     public function desktopList() {
+    	global $config;
 		$html = '';
 		$t = strtolower( $this->doc->type );
 		$icon = array_key_exists( $t, $config['icon'] ) ? $config['icon'][$t] : $config['icon']['default'];

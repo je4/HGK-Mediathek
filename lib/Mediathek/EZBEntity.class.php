@@ -231,7 +231,7 @@ class EZBEntity extends SOLRSource {
 
 	public function getLanguages() { return array(); }
 	public function getIssues()  { return array(); }
-	public function getCatalogs() { return array( $this->getSource() ); }
+	public function getCatalogs() { return array( $this->getSource(), 'HGK' ); }
 	
 }
 

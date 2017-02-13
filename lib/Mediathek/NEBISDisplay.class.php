@@ -138,7 +138,7 @@ $cfg = array(
 							$i = 0;
 							foreach( $authors as $author ) {
 								if( $i > 0) echo "; "; ?>
-									<a href="javascript:doSearchFull('author:&quot;<?php echo trim( $author ); ?>&quot;', '', [], {'source':[<?php echo $js_sourcelist; ?>]}, 0, <?php echo $pagesize; ?> );">
+									<a href="javascript:doSearchFull('author:&quot;<?php echo trim( $author ); ?>&quot;', '', [], {<?php echo (DEBUG ? "'catalog':[".$this->getCatalogList()."]" : "'source':[".$this->getSourceList()."]"); ?>}, 0, <?php echo $pagesize; ?> );">
 										<?php echo htmlspecialchars( $author ); ?>
 									</a>
 								<?php
@@ -155,7 +155,7 @@ $cfg = array(
 							if( $city ) echo htmlspecialchars( $city ).': ';
 							if( $publishers ) {
 								foreach( $publishers as $publisher ) { ?>
-									<a href="javascript:doSearchFull('publisher:&quot;<?php echo trim( $publisher ); ?>&quot;', '', [], {'source':[<?php echo $js_sourcelist; ?>]}, 0, <?php echo $pagesize; ?> );">
+									<a href="javascript:doSearchFull('publisher:&quot;<?php echo trim( $publisher ); ?>&quot;', '', [], {<?php echo (DEBUG ? "'catalog':[".$this->getCatalogList()."]" : "'source':[".$this->getSourceList()."]"); ?>}, 0, <?php echo $pagesize; ?> );">
 										<?php echo htmlspecialchars( $publisher ); ?>
 									</a>
 							<?php
@@ -221,7 +221,7 @@ $cfg = array(
 //							echo htmlspecialchars( $cl ).'<br />';
 ?>
 								<label>
-									<a href="javascript:doSearchFull('', '', [], {'source':[<?php echo $js_sourcelist; ?>], cluster: ['<?php echo htmlspecialchars( $cl ); ?>']}, 0, <?php echo $pagesize; ?> );"><?php echo htmlspecialchars( $cl ); ?></a>
+									<a href="javascript:doSearchFull('', '', [], {<?php echo (DEBUG ? "'catalog':[".$this->getCatalogList()."]" : "'source':[".$this->getSourceList()."]"); ?>, cluster: ['<?php echo htmlspecialchars( $cl ); ?>']}, 0, <?php echo $pagesize; ?> );"><?php echo htmlspecialchars( $cl ); ?></a>
 								</label><br />
 
 							<!-- <div class="checkbox checkbox-green">

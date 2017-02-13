@@ -30,7 +30,7 @@ namespace Mediathek;
  */
 
 //
-// http://localhost:8983/solr/base_dev/update?stream.body=%3Cdelete%3E%3Cquery%3Esource%3Aspringer%3C%2Fquery%3E%3C%2Fdelete%3E
+// http://localhost:8983/solr/base_dev/update?stream.body=%3Cdelete%3E%3Cquery%3Esource%3ANEBIS%3C%2Fquery%3E%3C%2Fdelete%3E
 //
 
 class SOLR {

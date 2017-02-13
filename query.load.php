@@ -19,20 +19,26 @@ if( !$query ) {
 }
 
 $md5 = null;
-$qobj = json_decode( $query );
-$invalidQuery = !( property_exists( $qobj, 'query' )
-				&& property_exists( $qobj, 'area' )
-				&& property_exists( $qobj, 'filter' )
-				&& property_exists( $qobj, 'facets' )
-   );
+$qobj = json_decode( $query, true );
+$invalidQuery = !( array_key_exists( 'query', $qobj )
+		&& array_key_exists( 'area', $qobj )
+		&& array_key_exists( 'filter', $qobj )
+		&& array_key_exists( 'facets', $qobj )
+		);
 
 if( !$invalidQuery ) {
+	if( count( $qobj['facets'] ) == 0) {
+		$qobj['facets'][(DEBUG ? 'catalog':'source')] = (DEBUG ? $config['defaultcatalog'] : $config['defaultsource']);
+	}
+	
+	$query = json_encode( $qobj );
+	
 	$md5 = md5($query);
-
+	
 	$sql = "SELECT COUNT(*) FROM web_query WHERE queryid=".$db->qstr( $md5 );
 	$num = intval( $db->GetOne( $sql ));
 	if( $num == 0 ) {
-		$sql = "INSERT INTO web_query VALUES( ".$db->qstr( $md5 ).", ".$db->qstr( $qobj->query ). ", ".$db->qstr( $qobj->area ). ", ".$db->qstr( $query ).")";
+		$sql = "INSERT INTO web_query VALUES( ".$db->qstr( $md5 ).", ".$db->qstr( $qobj['query'] ). ", ".$db->qstr( $qobj['area'] ). ", ".$db->qstr( $query ).")";
 		$db->Execute( $sql );
 	}
 }

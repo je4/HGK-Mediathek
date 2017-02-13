@@ -305,11 +305,12 @@ class swissbibEntity extends SOLRSource {
 	}
 
     public function getTitle() {
-    	$title = trim( implode( ' / ', $r= $this->getAll( '490', null, null, 'a' ))
-    			.' '.implode( ' / ', $r= $this->getAll( '490', null, null, 'v' )));
-    	if( strlen( $title )) $title .= ' ';
-    	$title .= trim( implode( ' / ', $r= $this->getAll( '245', null, null, 'a' ))
+    	$title = trim( implode( ' / ', $r= $this->getAll( '245', null, null, 'a' ))
 				.' '.implode( ' / ', $r= $this->getAll( '245', null, null, 'b' )), '/:-., ' );
+    	if( strlen( $title ) == 0 ) {
+    		$title .= trim( implode( ' / ', $r= $this->getAll( '490', null, null, 'a' ))
+    				.' '.implode( ' / ', $r= $this->getAll( '490', null, null, 'v' )));
+    	}
 		return trim( $title );
     }
 
@@ -593,40 +594,51 @@ class swissbibEntity extends SOLRSource {
     public function getURLs() {
         if( $this->urls == null ) {
         	$this->urls = array();
-			$urls = $this->findField( '856' );
-			foreach( $urls as $url ) {
-				$val = null;
-				$note = null;
-				$type = 'unknown';
-				foreach( $url as $code=>$v ) {
-					switch( $code ) {
-						case 'u':
-							$val = implode( ';', $v );
-							break;
-						case 'z':
-							$note = implode( ';', $v );
-							break;
-						case '3':
-							$type = strtolower( implode( ';', $v ));
-							break;
-									
+        	foreach( array( '856', '950', '956') as $fld ) {
+				$urls = $this->findField( $fld );
+				foreach( $urls as $url ) {
+					$val = null;
+					$note = null;
+					$type = 'unknown';
+					$org = null;
+					foreach( $url as $code=>$v ) {
+						switch( $code ) {
+							case 'u':
+								$val = implode( ';', $v );
+								break;
+							case 'z':
+							case 'y':
+								$note = implode( ';', $v );
+								break;
+							case '3':
+								$type = strtolower( implode( ';', $v ));
+								break;
+							case 'P':
+								$org = strtolower( implode( ';', $v ));
+								break;
+						}
 					}
+					if( $val == null ) continue;
+					if( $org != null && $org != '856' ) continue;
+					
+					if( preg_match( "/SFX/", $note )) {
+						$type = 'sfx';
+					}
+					if( preg_match( "/Cover/", $note )) {
+						$type = 'cover';
+					}
+					if( preg_match( "/DOI/", $note ) || preg_match( "/doi.org/", $val )) {
+						$type = 'doi';
+					}
+					if( preg_match( "/Inhalt/", $note )) {
+						$type = 'toc';
+					}
+					$this->urls[] = "{$type}:{$val}";
+					//$this->online = true;
 				}
-				if( $val == null ) continue;
-				if( preg_match( "/SFX/", $note )) {
-					$type = 'sfx';
-				}
-				if( preg_match( "/Cover/", $note )) {
-					$type = 'cover';
-				}
-				if( preg_match( "/DOI/", $note )) {
-					$type = 'doi';
-				}
-				$this->urls[] = "{$type}:{$val}";
-				//$this->online = true;
-			}
+        	}
 	    }
-        return $this->urls;
+        return array_unique( $this->urls );
     }
 
     public function getSys() {

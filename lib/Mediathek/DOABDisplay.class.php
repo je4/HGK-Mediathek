@@ -77,7 +77,7 @@ class DOABDisplay extends DisplayEntity {
                     <?php echo htmlspecialchars( implode( '; ', $this->doc->author )); ?>
                 </a>
             </td>
-            <td class="list" style="width: 5%;"><i class="fa fa-book" aria-hidden="true"></i></td>
+            <td class="list" style="width: 5%; font-size: 20px;"><i class="fa fa-book" aria-hidden="true"></i></td>
             <td class="list" style="width: 70%;">
                 <a class="entity" href="#coll_<?php echo $lineid; ?>" data-toggle="collapse" aria-expanded="false" aria-controls="coll_<?php echo $this->doc->id; ?>">
                     <?php echo htmlspecialchars( $this->doc->title ); ?>

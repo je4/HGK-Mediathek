@@ -11,11 +11,11 @@ include( 'init.inc.php' );
 
 global $db;
 
-$qobj = new \stdClass();
-	$qobj->query = '';
-	$qobj->area = 'all';
-	$qobj->filter = array();
-	$qobj->facets = array();
+$qobj = array();
+	$qobj['query'] = '';
+	$qobj['area'] = 'all';
+	$qobj['filter'] = array();
+	$qobj['facets'] = array();
 
 echo mediathekheader('home', 'Willkommen in der Mediathek', null);
 ?>
@@ -128,8 +128,8 @@ echo mediathekheader('home', 'Willkommen in der Mediathek', null);
 <script>
 
 	var q = {
-		query: '<?php echo $qobj->query; ?>',
-		area: '<?php echo $qobj->area; ?>',
+		query: '<?php echo $qobj['query']; ?>',
+		area: '<?php echo $qobj['area']; ?>',
 		filter: [],
 		facets: {},
 	}

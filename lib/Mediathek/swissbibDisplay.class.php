@@ -105,13 +105,6 @@ class swissbibDisplay extends DisplayEntity {
         ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
         
 		$authors = array_unique( $entity->getAuthors());
-		$js_sourcelist = '';
-		$ds = $config['defaultcatalog'];
-		$ds[] = 'swissbib';
-		$ds = array_unique( $ds );
-		foreach( $ds as $src )
-			$js_sourcelist .= ",'".trim( $src )."'";
-		$js_sourcelist = trim( $js_sourcelist, ',');
 
 		$squery = $solrclient->createSelect();
 		$helper = $squery->getHelper();
@@ -122,6 +115,8 @@ class swissbibDisplay extends DisplayEntity {
 				$kisten[] = substr( $loc, 10 );
 			}
 		}
+		$abstract = trim( $this->entity->getAbstract());
+		$urls = $this->entity->getURLs();
         
 ?>
 		<div class="row">
@@ -135,7 +130,7 @@ class swissbibDisplay extends DisplayEntity {
 							$i = 0;
 							foreach( $authors as $author ) { 
 								if( $i > 0) echo "; "; ?>
-									<a href="javascript:doSearchFull('author:&quot;<?php echo str_replace('\'', '\\\'', trim( $author )); ?>&quot;', '', [], {'source':[<?php echo $js_sourcelist; ?>]}, 0, <?php echo $pagesize; ?> );">
+									<a href="javascript:doSearchFull('author:&quot;<?php echo str_replace('\'', '\\\'', trim( $author )); ?>&quot;', '', [], {<?php echo (DEBUG ? "'catalog':[".$this->getCatalogList()."]" : "'source':[".$this->getSourceList()."]"); ?>}, 0, <?php echo $pagesize; ?> );">
 										<?php echo htmlspecialchars( $author ); ?>
 									</a>
 								<?php				
@@ -152,7 +147,7 @@ class swissbibDisplay extends DisplayEntity {
 							if( $city ) echo htmlspecialchars( $city ).': '; 
 							if( $publishers ) { 
 								foreach( $publishers as $publisher ) { ?>
-									<a href="javascript:doSearchFull('publisher:&quot;<?php echo str_replace('\'', '\\\'', trim( $publisher )); ?>&quot;', '', [], {'source':[<?php echo $js_sourcelist; ?>]}, 0, <?php echo $pagesize; ?> );">
+									<a href="javascript:doSearchFull('publisher:&quot;<?php echo str_replace('\'', '\\\'', trim( $publisher )); ?>&quot;', '', [], {<?php echo (DEBUG ? "'catalog':[".$this->getCatalogList()."]" : "'source':[".$this->getSourceList()."]"); ?>}, 0, <?php echo $pagesize; ?> );">
 										<?php echo htmlspecialchars( $publisher ); ?>
 									</a>
 							<?php 
@@ -176,7 +171,7 @@ class swissbibDisplay extends DisplayEntity {
 
 							$rib = null;
 							$nebisid = null;
-							foreach( $this->doc->sourceid as $sourceid ) {
+							if( @is_array( $this->doc->sourceid )) foreach( $this->doc->sourceid as $sourceid ) {
 								if( strncmp( $sourceid, '(NEBIS)', 7 ) == 0 ) $nebisid = substr( $sourceid, 7 );
 							}
 							if( isset( $config['RIB'] )) {
@@ -202,7 +197,13 @@ class swissbibDisplay extends DisplayEntity {
 									}
 								}
 							}
-?>							<div id='RIB'></div>
+?>
+							Quelle: <?php  echo $this->doc->source; ?><br />
+<?php 
+							$url = $entity->getCoverImg();
+							if( $url ) echo "<object type=\"image/jpeg\" data=\"{$url}\"></object><br />\n";
+?>							
+							<div id='RIB'></div>
 					</div>
 				</div>
 			</div>
@@ -214,35 +215,33 @@ class swissbibDisplay extends DisplayEntity {
 				<span style="; font-weight: bold;">Raumübersicht</span><br />
 					<div class="facet" style="padding: 0px;">
 						<div class="marker" style=""></div>
-						<div class="renderer"></div>
+						<div class="renderer2"></div>
 					</div>
 				</div>
 <?php 
 	}
 ?>						
-<!-- 				
+<?php 
+	if( strlen( $abstract ) > 1 || count( $urls ) ) {
+?>				
 				<div style="">
-				<span style="; font-weight: bold;">XML</span><br />
+				<span style="; font-weight: bold;">Abstract & Referenzen</span><br />
 					<div class="facet" style="padding: 0px;">
 						<div class="marker" style=""></div>
-						<div>
+						<?php if( strlen( $abstract )) echo "<p>".nl2br( htmlspecialchars( $abstract ))."</p>\n"; ?>
 <?php
-		// Tidy
-		$cfg = array(
-				'indent'         => true,
-				'output-xml'   => true,
-				'input-xml' => true,
-				'wrap'           => 150);
-		$tidy = new \Tidy;
-		$tidy->parseString($this->entity->getXML(), $cfg, 'utf8');
-		$tidy->cleanRepair();
-        echo '<pre>'.( htmlspecialchars( $tidy )).'</pre>';
-
+if( @is_array( $urls )) foreach( $urls as $url ) {
+	if( preg_match( '/^([^:]+):(.*)$/', $url, $matches )) {
+		$url = $matches[2];
+		echo ($matches[1] == 'unknown' ? '' : $matches[1].':')." <i class=\"fa fa-external-link\" aria-hidden=\"true\"></i><a href=\"redir.php?id=".urlencode( $this->doc->id ).'&url='.urlencode( $url )."\" target=\"blank\">".(strlen( $url ) > 60 ? substr( $url, 0, 60 ).'...' : $url )."</a><br />\n";
+	}
+}
 ?>
-						</div>
 					</div>
-				</div>				
- -->		
+				</div>
+<?php 
+	}
+?>						
 			</div>
 			<div class="col-md-3">
 <?php 	if( is_array( $this->doc->cluster_ss ))  { ?>		
@@ -256,7 +255,7 @@ class swissbibDisplay extends DisplayEntity {
 //							echo htmlspecialchars( $cl ).'<br />';
 ?>
 								<label>
-									<a href="javascript:doSearchFull('', '', [], {'source':[<?php echo $js_sourcelist; ?>], cluster: ['<?php echo htmlspecialchars( $cl ); ?>']}, 0, <?php echo $pagesize; ?> );"><?php echo htmlspecialchars( $cl ); ?></a>
+									<a href="javascript:doSearchFull('', '', [], {<?php echo (DEBUG ? "'catalog':[".$this->getCatalogList()."]" : "'source':[".$this->getSourceList()."]"); ?>, cluster: ['<?php echo htmlspecialchars( $cl ); ?>']}, 0, <?php echo $pagesize; ?> );"><?php echo htmlspecialchars( $cl ); ?></a>
 								</label><br />
 								
 							<!-- <div class="checkbox checkbox-green">
@@ -286,8 +285,9 @@ class swissbibDisplay extends DisplayEntity {
 			</div>
 -->
 		</div>
-		<div class="row">
-			<div class="col-md-12">
+	</div>
+	<div class="row">
+		<div class="col-md-12">
 <?php
 if( count( $kisten )) {
 ?>
@@ -428,11 +428,11 @@ if( DEBUG ) {
 			$boxlist .= "'".str_replace( '_', '', $k )."'";
 		}
 ?>
-				var renderer = $( '.renderer' );
+				var renderer = $( '.renderer2' );
 				renderer.height( '400px');
 				//var width = body.width();
 				///renderer.width( width );
-				init3D( [<?php echo $boxlist; ?>], '<?php echo $boxjson; ?>'  );
+				init3D( [<?php echo $boxlist; ?>], '<?php echo $boxjson; ?>', '.renderer2'  );
 <?php } ?>
 			}
 		</script>
@@ -556,7 +556,7 @@ if( DEBUG ) {
 					$us = explode( ':', $u );
 					if( substr( $us[1], 0, 4 ) == 'http' ) {
 						$url = substr( $u, strlen( $us[0])+1 );
-						echo "{$us[0]}: <i class=\"fa fa-external-link\" aria-hidden=\"true\"></i><a href=\"redir.php?id=".urlencode( $this->doc->id ).'&url='.urlencode( $url )."\" target=\"blank\">".(strlen( $url ) > 40 ? substr( $url, 0, 40 ).'...':$url)."</a><br />\n";
+						echo  ($us[0] == 'unknown' ? '' : $us[0].':')."<i class=\"fa fa-external-link\" aria-hidden=\"true\"></i><a href=\"redir.php?id=".urlencode( $this->doc->id ).'&url='.urlencode( $url )."\" target=\"blank\">".(strlen( $url ) > 40 ? substr( $url, 0, 40 ).'...':$url)."</a><br />\n";
 					}
 				}
 				
