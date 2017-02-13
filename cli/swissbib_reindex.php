@@ -33,7 +33,9 @@ if( !file_exists( $tmpfile )) {
 		//$squery->createFilterQuery('notdone')->setQuery("-catalog:*");
 		$squery->createFilterQuery('nodelete')->setQuery("deleted:false");
 		$squery->setFields( array( 'id' ));
-		$squery->createFilterQuery('category')->setQuery( 'category:"1!!signature!!NATIONALLICENCE"' );
+		//		$squery->createFilterQuery('category')->setQuery( 'category:"1!!signature!!NATIONALLICENCE"' );
+		$squery->createFilterQuery('category')->setQuery( 'category:"2!!signature!!NEBIS!!E65" AND online:true' );
+		
 		$squery->createFilterQuery( "*:*" );
 		$squery->addSort('id', $squery::SORT_DESC);
 		$customizer->createCustomization( 'cursorMark' )

@@ -45,8 +45,9 @@ class swissbibEntity extends SOLRSource {
     private $licenses = null;
     private $urls = null;
     private $signatures = null;
-		private $libs = null;
+	private $libs = null;
     private $online = null;
+    private $openaccess = null;
 	private $codes = null;
 	private $db = null;
 	private $sourceids = null;
@@ -276,7 +277,9 @@ class swissbibEntity extends SOLRSource {
 
 
 	public function getOpenAccess() {
-		foreach( $this->getLicenses() as $lic ) {
+		$licenses = $this->getLicenses();
+		if( $this->openaccess !== null ) return $this->openaccess; 
+		foreach( $licenses as $lic ) {
 			switch( strtolower( $lic )) {
 				case 'open access':
 					return true;
@@ -539,13 +542,30 @@ class swissbibEntity extends SOLRSource {
 
 					}
 					if( $val1 == null ) continue;
-					$result = $val1.($val4 != null ? ", {$val4}": '' ); //.($val3 != null ? "({$val3})":"");
-					$this->authors[] = $result;
+					$result = trim( $val1.($val4 != null ? ", {$val4}": '' )); //.($val3 != null ? "({$val3})":"");
+					if( preg_match( '/^\[(.*)\]$/', $result, $matches )) {
+						foreach( explode( ',', $matches[1] ) as $author ) {
+							$this->authors[] = trim( $author );
+						}
+					}
+					else {
+						$this->authors[] = $result;
+					}
 				}
 
 			}
 			if( count($this->authors ) == 0 ) {
-				$this->authors = array_merge( $this->authors, $this->getAll( '245', null, null, 'c' ));
+				$as = $this->getAll( '245', null, null, 'c' );
+				foreach( $as as $result ) {
+					if( preg_match( '/^\[(.*)\]$/', $result, $matches )) {
+						foreach( explode( ',', $matches[1] ) as $author ) {
+							$this->authors[] = trim( $author );
+						}
+					}
+					else {
+						$this->authors[] = $result;
+					}
+				}
 			}
         }
         return $this->authors;
@@ -586,7 +606,17 @@ class swissbibEntity extends SOLRSource {
         	$this->licenses = array();
         	foreach( $this->getAll( '506', '0', null, 'a' ) as $lic ) 
         		$this->licenses[] = trim( $lic, '/:-., ' );
-            if( count( $this->licenses ) == 0 ) $this->licenses = array( 'restricted' );
+        	foreach( $this->getAll( '540', null, null, 'a' ) as $lic ) {
+        		if( preg_match( '/Open Access/i', $lic )) {
+        			$this->openaccess = true;
+        			if( preg_match( '/(http?:\/\/[^ \)]+)/i', $lic, $matches )) {
+        				$this->licenses[] = trim( $matches[1], '/:-., ' );
+        			}
+        			else $this->licenses[] = 'open access';
+        		}
+        		
+        	}
+        	if( count( $this->licenses ) == 0 ) $this->licenses = array( 'restricted' );
         }
         return $this->licenses;
     }
@@ -633,7 +663,10 @@ class swissbibEntity extends SOLRSource {
 					if( preg_match( "/Inhalt/", $note )) {
 						$type = 'toc';
 					}
-					$this->urls[] = "{$type}:{$val}";
+					if( preg_match( "/Onlinezugriff via nanoo/", $note )) {
+						$type = 'nanoo';
+					}
+						$this->urls[] = "{$type}:{$val}";
 					//$this->online = true;
 				}
         	}
@@ -790,6 +823,12 @@ class swissbibEntity extends SOLRSource {
 			}
 		}
 
+		foreach( $this->getURLs() as $url ) {
+			if( strncmp( 'nanoo:', $url, 6 ) == 0 ) {
+				$catalogs[] = 'nanoo';
+			}
+		}
+		
 		return array_unique( $catalogs );
 	}
 	

@@ -234,16 +234,14 @@ $facetSetCatalog->createFacetField('catalog')->setField('catalog')->addExclude('
 $facetSetSource = $squery->getFacetSet();
 $facetSetSource->createFacetField('source')->setField('source')->addExclude('source');
 
-if( DEBUG ) {
-	if( @is_array( $qobj['facets']['license'] )) {
-		$licensefilterquery = "";
-		foreach( $qobj['facets']['license'] as $lic ) {
-			if( $licensefilterquery != '' ) $licensefilterquery .= ' OR ';
-			$licensefilterquery .= ' (license:'.$helper->escapePhrase( $lic ).')';
-		}
-		$squery->createFilterQuery('license')->addTag('license')->setQuery( $licensefilterquery );
-		echo "<!-- filter license: {$licensefilterquery} -->\n";
+if( @is_array( $qobj['facets']['license'] )) {
+	$licensefilterquery = "";
+	foreach( $qobj['facets']['license'] as $lic ) {
+		if( $licensefilterquery != '' ) $licensefilterquery .= ' OR ';
+		$licensefilterquery .= ' (license:'.$helper->escapePhrase( $lic ).')';
 	}
+	$squery->createFilterQuery('license')->addTag('license')->setQuery( $licensefilterquery );
+	echo "<!-- filter license: {$licensefilterquery} -->\n";
 }
 
 $facetSetLicense = $squery->getFacetSet();
