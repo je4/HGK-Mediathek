@@ -279,16 +279,16 @@ class swissbibEntity extends SOLRSource {
 
 	public function getOpenAccess() {
 		$licenses = $this->getLicenses();
-		if( $this->openaccess !== null ) return $this->openaccess; 
+		if( $this->openaccess !== null ) return $this->openaccess;
+		$this->openaccess = false;
 		foreach( $licenses as $lic ) {
 			switch( strtolower( $lic )) {
 				case 'open access':
-					return true;
+					$this->openaccess = true;
 					break;
-						
 			}
 		}
-		return false;
+		return $this->openaccess;
 	}
 
 	public function getLocations() {
@@ -490,7 +490,7 @@ class swissbibEntity extends SOLRSource {
 							if( $loc ) {
 								$this->locations[] = "{$verbund}:{$lib}:{$loc}";
 							}
-	
+
 						}
 					}
 					if( $lib != null ) $this->libCodes[] = $lib;
@@ -518,7 +518,7 @@ class swissbibEntity extends SOLRSource {
 				foreach( $tmp as $t )  {
 					foreach( $t as $code=>$val ) {
 						switch( $code ) {
-							case '0': 
+							case '0':
 								break;
 							case 'a':
 								$val1 = implode( ';', $val );
@@ -605,7 +605,7 @@ class swissbibEntity extends SOLRSource {
     public function getLicenses() {
         if( $this->licenses == null ) {
         	$this->licenses = array();
-        	foreach( $this->getAll( '506', '0', null, 'a' ) as $lic ) 
+        	foreach( $this->getAll( '506', '0', null, 'a' ) as $lic )
         		$this->licenses[] = trim( $lic, '/:-., ' );
         		foreach( $this->getAll( '540', null, null, 'a' ) as $lic ) {
         			if( preg_match( '/Open Access/i', $lic )) {
@@ -615,23 +615,23 @@ class swissbibEntity extends SOLRSource {
         				}
         				else $this->licenses[] = 'open access';
         			}
-        		
+
         		}
         		foreach( $this->getAll( '856', null, null, 'z' ) as $lic ) {
         			if( preg_match( '/Online via e-rara\.ch/i', $lic )) {
         				$this->openaccess = true;
-						$this->licenses[] = 'https://creativecommons.org/licenses/by-sa/4.0/';
+								$this->licenses[] = 'https://creativecommons.org/licenses/by-sa/4.0/';
         			}
-        		
+
         		}
-        		
+
         		foreach( $this->getURLs() as $url ) {
         			if( strncmp( 'eperiodica:', $url, 11 ) == 0 ) {
         				$this->licenses[] = 'http://www.e-periodica.ch/digbib/about3';
         				$this->openaccess = true;
         			}
         		}
-        		
+
         		if( count( $this->licenses ) == 0 ) $this->licenses = array( 'restricted' );
         }
         return array_unique( $this->licenses );
@@ -667,7 +667,7 @@ class swissbibEntity extends SOLRSource {
 					}
 					if( $val == null ) continue;
 					if( $org != null && $org != '856' ) continue;
-					
+
 					if( preg_match( "/SFX/", $note )) {
 						$type = 'sfx';
 					}
@@ -690,9 +690,9 @@ class swissbibEntity extends SOLRSource {
 						$type = 'eperiodica';
 					}
 					$this->urls[] = "{$type}:{$val}";
-					
+
 					$this->urls_notes[$val] = array( 'type'=>$type, 'url'=>$val, 'note'=>$note );
-					
+
 					//$this->online = true;
 				}
         	}
@@ -844,7 +844,7 @@ class swissbibEntity extends SOLRSource {
 		} elseif( array_search( 'FHNW-Bib', $catalogs ) !== false && $this->getOnline()) {
 			$catalogs[] = 'HGK';
 		}
-		
+
 		foreach( $this->getLicenses() as $lic ) {
 			switch( strtolower( $lic )) {
 				case 'open access':
@@ -852,7 +852,7 @@ class swissbibEntity extends SOLRSource {
 					elseif( $this->getType() == 'journal') $catalogs[] = 'openaccess_journals';
 					else $catalogs[] = 'openaccess';
 						break;
-					
+
 			}
 		}
 
@@ -866,12 +866,12 @@ class swissbibEntity extends SOLRSource {
 			if( strncmp( 'eperiodica:', $url, 11 ) == 0 ) {
 					$catalogs[] = 'eperiodica';
 			}
-				
+
 		}
-		
+
 		return array_unique( $catalogs );
 	}
-	
+
 	public function getCoverImg() {
 		foreach( $this->getURLs() as $u ) {
 			$us = explode( ':', $u );
