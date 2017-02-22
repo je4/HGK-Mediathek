@@ -22,7 +22,7 @@ $db = null;
 function doConnectMySQL($force = false) {
     global $db, $config;
     if( $db == null ) {
-        $db = NewAdoConnection( 'mysqli' );        
+        $db = NewAdoConnection( 'mysqli2' );        
     }
     if( $force || !$db->isConnected()) {
         try {

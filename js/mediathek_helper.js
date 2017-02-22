@@ -1,7 +1,7 @@
 
 var searcharea = "all";
 function facetSearch( q, facet, value, add ) {
-	if( add ) 
+	if( add )
 	{
 		if( !( facet in q.facets ))
 			q.facets[facet] = [];
@@ -28,11 +28,11 @@ function initSearch( area, pagesize ) {
 		   window.location.hash = param;
            searcharea = param;
 	   });
-	
+
 	$('#searchbutton').click( function(e) {
 	   doSearch( $('#searchtext').val(), 0, pagesize );
 	});
-	
+
 	 $('#searchtext').keypress(function (e) {
 		if (e.which == 13) {
 		  doSearch( $('#searchtext').val(), 0, pagesize );
@@ -43,22 +43,22 @@ function initSearch( area, pagesize ) {
 	$('#searchbutton0').click( function(e) {
 	   doSearch( $('#searchtext0').val(), 0, pagesize );
 	});
-	
+
 	 $('#searchtext0').keypress(function (e) {
 		if (e.which == 13) {
 		  doSearch( $('#searchtext0').val(), 0, pagesize );
 		  return false;    //<---- Add this line
 		}
 	 });
-     
+
 	 $('input.facet').change(function() {
-		doSearch( $('#searchtext').val(), 0, pagesize ); 
+		doSearch( $('#searchtext').val(), 0, pagesize );
 	 });
-	 
+
 	 $('input[type=radio][name=bestand]').change(function() {
-		doSearch( $('#searchtext').val(), 0, pagesize ); 
+		doSearch( $('#searchtext').val(), 0, pagesize );
 	 });
-	 
+
 	var param = window.location.hash.replace("#","");
 	if ( param.length < 1 ) {
 	   param = searcharea;
@@ -75,14 +75,14 @@ function initSearch( area, pagesize ) {
 function navbarSearch(page, pagesize) {
 	searchtext = $('#searchtext').val();
 	searcharea = $('input[type=radio][name=bestand]').val();
-	
+
 	var q = {
 		query: searchtext,
 		area: searcharea,
 		filter: [],
 		facets: {},
 	}
-	
+
 	$("input.facet").each(function() {
 		if( $(this).prop("checked") )
 		{
@@ -93,27 +93,26 @@ function navbarSearch(page, pagesize) {
 			q.facets[facet].push($(this).val())
 		}
 	});
-	
+
 	var json = JSON.stringify( q );
 	$('#searchjson').val( json );
-    
+
     var md5sum = md5( json );
     var plist = window.location.pathname.split( '/' );
     plist.pop();
     var pathname = plist.join( '/');
 	var url = window.location.origin + pathname + '/search.php?q='+encodeURIComponent( md5sum )+'&page='+page+'&pagesize='+pagesize;
-	
+
 	$('#searchform').attr('action', url).submit();
 }
 
 function doSearchFull(query, area, filter, facets, page, pagesize ) {
-	
-	var q = {
-		query: query,
-		area: area,
-		filter: filter,
-		facets: facets,
-	}
+
+	var q = {};
+	q['query'] = query;
+	q['area'] = area;
+	q['filter'] = filter;
+	q['facets'] = facets;
 
 	var json = JSON.stringify( q );
 
@@ -132,21 +131,21 @@ function doSearchFull(query, area, filter, facets, page, pagesize ) {
 	);
 
 	return;
-		
-	
+
+
 	$('#searchjson').val( json );
-    
+
     var md5sum = md5( json );
     var plist = window.location.pathname.split( '/' );
     plist.pop();
     var pathname = plist.join( '/');
 	var url = window.location.origin + pathname + '/search.php?q='+encodeURIComponent( md5sum )+'&page='+page+'&pagesize='+pagesize;
-	
+
 	$('#searchform').attr('action', url).submit();
 }
 
 function doSearch( searchtext, page, pagesize) {
-	
+
 	if ( typeof doSearch.running == 'undefined' ) {
         // It has not... perform the initialization
         doSearch.running = true;
@@ -156,7 +155,7 @@ function doSearch( searchtext, page, pagesize) {
 	searcharea = 'all'; // $('input[type=radio][name=bestand]').val();
 
 	var facets = {};
-	
+
 	$("input.facet").each(function() {
 		if( $(this).prop("checked") )
 		{
@@ -167,7 +166,7 @@ function doSearch( searchtext, page, pagesize) {
 			facets[facet].push($(this).val())
 		}
 	});
-	
+
 	// categories
 	var selected = [];
 	if( $('#categorytree').length ) {
@@ -188,7 +187,7 @@ function doSearch( searchtext, page, pagesize) {
 			facets['category'].push(slist[obj].id)
 		}
 	}
-	
+
 
 	doSearchFull( searchtext, searcharea, [], facets, page, pagesize );
 }
@@ -210,7 +209,7 @@ var pz = 5;
 var gridWidth = 500;
 
 function init3D( boxes, camJSON, renderer ) {
-	
+
 	if( !renderer ) renderer = ".renderer";
 	mediathek = new Mediathek( {
 		camType: "perspective",
@@ -220,7 +219,7 @@ function init3D( boxes, camJSON, renderer ) {
 		doWindowResize: true,
 		//controltype: 'fly',
 	})
-	
+
 	mediathek3D = new Mediathek3D( {
 			floorImage: 'img/mt_background.png',
 //			satImage: 'baselcard.jpg',
@@ -230,12 +229,12 @@ function init3D( boxes, camJSON, renderer ) {
 			//boxColorHighlight: 0x283744,
 			boxDelay: 1,
 			drawOnly: boxes,
-		}, 
+		},
 		function( object ) {
 			mediathek.scene.add(object);
 			//object.boxHighlight( hash, true );
 			mediathek.animate();
-			
+
 			object.renderBoxes(0);
 
 			for( var i = 0; i < boxes.length; i++ ) {
@@ -296,14 +295,14 @@ function init3D( boxes, camJSON, renderer ) {
 					mediathek.camera.position.set( px*gridWidth, py*gridWidth, pz*gridWidth );
 					mediathek.camera.up = new THREE.Vector3(0,0,1);
 					box = mediathek3D.boxes[hash.substring(0, 4)];
-					mediathek.controls.target.copy( box.position );				
+					mediathek.controls.target.copy( box.position );
                 }
-				
+
 			});
 		}
 	);
 }
 
 function  initBoxes(c) {
-	
+
 }

@@ -185,6 +185,7 @@ class swissbibEntity extends SOLRSource {
 		$this->libCodes = null;
 		$this->libs = null;
 		$this->online = null;
+		$this->openaccess = null;
 		$this->codes = null;
 		$this->sourceids = null;
 

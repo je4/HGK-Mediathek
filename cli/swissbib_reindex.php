@@ -35,7 +35,7 @@ if( !file_exists( $tmpfile )) {
 		$squery->setFields( array( 'id' ));
 		$squery->createFilterQuery('category')->setQuery(  'category:"1!!signature!!NATIONALLICENCE" OR category:"1!!signature!!RETROS" OR (category:"2!!signature!!NEBIS!!E01" AND online:true)' );
 		//$squery->createFilterQuery('category')->setQuery( 'category:"2!!signature!!NEBIS!!E65" AND online:true' );
-		
+
 		$squery->createFilterQuery( "*:*" );
 		$squery->addSort('id', $squery::SORT_DESC);
 		$customizer->createCustomization( 'cursorMark' )
@@ -66,8 +66,8 @@ $start = intval( file_get_contents( $cntfile ));
 $tmp = fopen( $tmpfile, 'r' );
 while( $id = fgets( $tmp ) ) {
 	echo $id;
-	if( $start >= $counter ) {
-		echo "{$start} >= {$counter}: skip\n";
+	if( $start > $counter ) {
+		echo "{$start} > {$counter}: skip\n";
 		$counter++;
 		continue;
 	}
@@ -91,8 +91,13 @@ while( $id = fgets( $tmp ) ) {
 			echo "   importing...\n";
 			$solr->import( $entity, ($counter % 5000 == 0) );
 			echo sprintf( "%08u - ", $counter ).$id."\n";
+			usleep( 10000 );
 			if($counter % 1000 == 0) {
 				file_put_contents( $cntfile, $counter );
+			}
+			if( $counter % 10000 == 0  && $counter > 0 ) {
+				echo "sleeping 5sec...\n";
+				sleep( 5 );
 			}
 		}
 	}

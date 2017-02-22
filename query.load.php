@@ -30,11 +30,11 @@ if( !$invalidQuery ) {
 	if( count( $qobj['facets'] ) == 0) {
 		$qobj['facets'][(DEBUG ? 'catalog':'source')] = (DEBUG ? $config['defaultcatalog'] : $config['defaultsource']);
 	}
-	
+
 	$query = json_encode( $qobj );
-	
+
 	$md5 = md5($query);
-	
+
 	$sql = "SELECT COUNT(*) FROM web_query WHERE queryid=".$db->qstr( $md5 );
 	$num = intval( $db->GetOne( $sql ));
 	if( $num == 0 ) {
