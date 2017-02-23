@@ -21,6 +21,7 @@ echo mediathekheader('home', 'Willkommen in der Mediathek', null);
 ?>
 
     <!-- home-page -->
+		<input type="hidden" name="facet" class="facet" value="HGK" />
 
     <div class="home-page">
 

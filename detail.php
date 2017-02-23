@@ -29,7 +29,7 @@ $qobj = Helper::readQuery( $q );
 $squery = $solrclient->createSelect();
 $helper = $squery->getHelper();
 if( $id ) $qstr = 'id:'.$helper->escapePhrase($id);
-else if( $barcode ) $qstr = 'signature:'.$helper->escapePhrase( 'barcode:E75:'.$barcode);
+else if( $barcode ) $qstr = 'signature:'.$helper->escapePhrase( 'barcode:NEBIS:E75:'.$barcode);
 else $qstr = "id:none";
 
 $acl_query = '';
@@ -45,7 +45,7 @@ $rs = $solrclient->select( $squery );
 $numResults = $rs->getNumFound();
 echo "<!-- ".$qstr." (Documents: {$numResults}) -->\n";
 $doc = ( $numResults > 0 ) ? $rs->getDocuments()[0] : null;
-	
+
 echo mediathekheader('search', 'Mediathek - Detail - '.($doc ? $doc->title : '').' ['.$id.']', '');
 ?>
 <div class="back-btn"><i class="ion-ios-search"></i></div>
@@ -79,17 +79,17 @@ if( $numResults > 0 ) foreach( $rs as $doc ) {
 	echo $output->getHeading();
 	echo $output->detailView();
 	echo '<script type="application/ld+json">'."\n".json_encode( $output->getSchema() )."\n</script>\n";
-	
+
 ?>
 <?php
 }
 else {
-?>	
+?>
 	<h2 class="small-heading">Mediathek</h2>
-	
+
 	<div class="container-fluid" style="margin-top: 0px; padding: 0px 20px 20px 20px;">
-	<h2>Error: not found</h2>	
-<?php 
+	<h2>Error: not found</h2>
+<?php
 	echo $qstr." (Documents: {$numResults})\n";
 }
 ?>
@@ -117,7 +117,7 @@ else {
 	</div>
 </div>
 </div>
-	
+
 <?php
 //include( 'bgimage.inc.php' );
 ?>
@@ -134,31 +134,29 @@ function init() {
 		<?php } else { ?>
 		window.location="auth/?target=<?php echo urlencode( $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']); ?>";
 		<?php } ?>
-		
+
 	});
 
 	$('body').on('click', '.back-btn', function () {
 		window.location="search.php?q=<?php echo urlencode( $q ); ?>&page=<?php echo urlencode( $page ); ?>&pagesize=<?php echo urlencode( $pagesize ); ?>";
 	});
-	
+
 <?php
 	if( isset( $doc )) echo "init{$doc->source}();";
 ?>
-	
+
 }
-</script>   
+</script>
 
 <script src="js/threejs/build/three.js"></script>
 <script src="js/threejs/build/TrackballControls.js"></script>
 <script src="js/threejs/build/OrbitControls.js"></script>
-<script src="js/threejs/build/CombinedCamera.js"></script>   
-<!-- script src="mediathek2.js"></script -->   
-<script src="js/mediathek.js"></script>   
+<script src="js/threejs/build/CombinedCamera.js"></script>
+<!-- script src="mediathek2.js"></script -->
+<script src="js/mediathek.js"></script>
 <script src="js/mediathek3d.js"></script>
 <script src="js/threex.domresize.js"></script>
 
 <?php
 echo mediathekfooter();
 ?>
-
-  

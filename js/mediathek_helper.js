@@ -144,7 +144,7 @@ function doSearchFull(query, area, filter, facets, page, pagesize ) {
 	$('#searchform').attr('action', url).submit();
 }
 
-function doSearch( searchtext, page, pagesize) {
+function doSearch( searchtext, page, pagesize, facets = {} ) {
 
 	if ( typeof doSearch.running == 'undefined' ) {
         // It has not... perform the initialization
@@ -154,7 +154,7 @@ function doSearch( searchtext, page, pagesize) {
 //	searchtext = $('#searchtext').val();
 	searcharea = 'all'; // $('input[type=radio][name=bestand]').val();
 
-	var facets = {};
+//	var facets = {};
 
 	$("input.facet").each(function() {
 		if( $(this).prop("checked") )
