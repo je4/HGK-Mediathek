@@ -41,12 +41,20 @@ function initSearch( area, pagesize ) {
 	 });
 
 	$('#searchbutton0').click( function(e) {
-	   doSearch( $('#searchtext0').val(), 0, pagesize );
+		var catalog = $('#facet_catalog').val();
+		var facet = {
+			'catalog': [catalog]
+		};
+	   doSearch( $('#searchtext0').val(), 0, pagesize, facet );
 	});
 
 	 $('#searchtext0').keypress(function (e) {
 		if (e.which == 13) {
-		  doSearch( $('#searchtext0').val(), 0, pagesize );
+			var catalog = $('#facet_catalog').val();
+			var facet = {
+				'catalog': [catalog]
+			};
+		   doSearch( $('#searchtext0').val(), 0, pagesize, facet );
 		  return false;    //<---- Add this line
 		}
 	 });
