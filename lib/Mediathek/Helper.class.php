@@ -15,7 +15,7 @@
  * @copyright   (C) 2016 Academy of Art and Design FHNW
  * @license     http://www.gnu.org/licenses/gpl-3.0
  * @link        http://mediathek.fhnw.ch
- * 
+ *
  */
 
 /**
@@ -33,21 +33,21 @@ use \Passbook\Pass\Structure;
 use \Passbook\Type\StoreCard;
 
 class Helper {
-  
+
 	static function createPass($id, $serial ) {
 		global $db, $session, $config;
 		$sql = "SELECT * FROM wallet.card WHERE pass=".$id." AND serial=".$db->qstr( $serial );
 		$card = $db->GetRow( $sql );
 		$sql = "SELECT * FROM wallet.pass WHERE id=".$id;
 		$pass = $db->GetRow( $sql );
-		
+
 		if( !$card || !$pass ) return false;
 		if( $pass['check'] && !$card['valid'] ) return false;
 
 		$passFile = "{$pass['folder']}/{$serial}.pkpass";
 		if( file_exists( $passFile ))
 			return $passFile;
-		
+
 		if( $pass['type'] == 'storeCard' ) {
 			$p = new StoreCard($serial, $pass['description'] );
 			$p->setBackgroundColor('rgb(255, 255, 255)');
@@ -101,7 +101,7 @@ class Helper {
 			$back2 = new Field( 'Data', "Seriennummer: ".$serial
 			."\nAAI UniqueID: ".$card['uniqueID']
 			."\nAAI Organisation: ".$session->shibHomeOrganization()
-			."\n\nhttps://mediathek.hgk.fhnw.ch/ausweis.php" 
+			."\n\nhttps://mediathek.hgk.fhnw.ch/ausweis.php"
 			);
 			$back2->setLabel( 'Informationen' );
 			$structure->addBackField( $back2 );
@@ -136,7 +136,7 @@ class Helper {
 			$auth = $db->GetOne( $sql );
 			if( $auth === null ) {
 				$auth = sha1(time() . $card['uniqueID'] . rand() );
-				
+
 				$sql = "INSERT INTO wallet.wallet (`passid`, `serial`, `auth`, `expires`)
 					VALUES (".$db->qstr( $pass['passid'] ).",
 							".$serial.",
@@ -145,9 +145,9 @@ class Helper {
 				$db->Execute( $sql );
 			}
 			$p->setAuthenticationToken( $auth );
-			
+
 			$p->setWebServiceURL( $pass['webservice'] );
-			
+
 			// Create pass factory instance
 			$factory = new PassFactory($pass['passid']
 									, $pass['teamid']
@@ -157,39 +157,39 @@ class Helper {
 									, $config['wallet']['applecert']);
 			$factory->setOutputPath( $pass['folder'] );
 			$factory->package($p);
-			
+
 			$sql = "UPDATE wallet.card SET issuedate=NOW(), expirydate=".$db->qstr( $expirationDate->format( 'Y-m-d H:i:s' ) )." WHERE pass=".$id." AND serial=".$serial;
 			$db->Execute( $sql );
-			
+
 
 			if( file_exists( $passFile ))
 				return $passFile;
 		}
 		return false;
 	}
-	
+
     static function buildSOLRQuery( $qstr ) {
         global $helper;
 
         $qstr = preg_replace( '/([a-zA-Z]+):"/', '"\1:', $qstr );
         if( !preg_match_all('/"(?:\\\\.|[^\\\\"])*"|\S+/', $qstr, $matches)) return array( $qstr );
+        //print_r( $matches );
         $global = array();
         $specific = array();
         foreach( $matches[0] as $m ) {
             $word = trim($m, " \"\t\n\r\0\x0B");
-            $ex = explode(':', $word );
-            if( count($ex) > 1 ) {
-                $specific[ trim( array_shift( $ex ))] = trim( implode( ':', $ex ));
+            if( preg_match( '/([^:]+):(.*)$/', $word, $matches2 )) {
+              $specific[ $matches2[1] ] = trim( $matches2[2] );
             }
             else {
-                $global[] = trim( $ex[0] );
+                $global[] = $word;
             }
         }
         $qstr = '';
         foreach( $specific as $key=>$word ) {
             $fields = array();
             switch( strtolower( $key )) {
-				case 'publisher':
+				        case 'publisher':
                 case 'author':
                     $fields[] = 'author';
                     $fields[] = 'publisher';
@@ -200,10 +200,10 @@ class Helper {
                 case 'signature':
                     $fields[] = $key;
                 break;
-				case 'kiste':
-					$word = 'E75:Kiste:'.$word;
-                    $fields[] = 'location';
-					break;
+				        case 'kiste':
+					           $word = 'NEBIS:E75:Kiste:'.$word;
+                     $fields[] = 'location';
+					      break;
             }
             if( count($fields) == 0 ) continue;
             $first = true;
@@ -212,16 +212,18 @@ class Helper {
                 if( !$first )
                     $qstr .= ' OR ';
                 $first = false;
-                $qstr .= $field.':'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapeTerm( $word )));
+                $qstr .= '('.$field.':'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapeTerm( $word ))).')';
             }
             $qstr .= ')';
         }
-        
+        //echo $helper->escapeTerm( $word )." - ".htmlentities($qstr);
         if( count( $global ) > 0 ) {
+            $all = implode( ' ', $global );
+            $multiple = count( $global ) > 1;
             if( strlen( $qstr ) > 0 )
                 $qstr .= ' AND ';
             $qstr .= '(';
-            
+
             $qstr .= ' (';
             $first = true;
             foreach( $global as $word ) {
@@ -231,6 +233,8 @@ class Helper {
                 $qstr .= 'title:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapeTerm( $word ))).'^10';
                 $first = false;
             }
+            if( $multiple ) $qstr .= ' OR title:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapeTerm( $all ))).'^20';
+
             $qstr .= ' )';
             $qstr .= ' OR (';
             $first = true;
@@ -241,6 +245,7 @@ class Helper {
                 $qstr .= 'author:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapeTerm( $word ))).'^10';
                 $first = false;
             }
+            if( $multiple ) $qstr .= ' OR author:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapeTerm( $all ))).'^20';
             $qstr .= ' )';
             $qstr .= ' OR (';
             $first = true;
@@ -251,6 +256,7 @@ class Helper {
                 $qstr .= 'content:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapeTerm( $word ))).'^6';
                 $first = false;
             }
+            if( $multiple ) $qstr .= ' OR content:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapeTerm( $all ))).'^12';
             $qstr .= ' )';
             $qstr .= ' OR (';
             $first = true;
@@ -261,6 +267,7 @@ class Helper {
                 $qstr .= 'abstract:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapeTerm( $word ))).'^8';
                 $first = false;
             }
+            if( $multiple ) $qstr .= ' OR abstract:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapeTerm( $word ))).'^15';
             $qstr .= ' )';
             $qstr .= ' OR (';
             $first = true;
@@ -271,25 +278,27 @@ class Helper {
                 $qstr .= 'signature:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapePhrase( $word ))).'^12';
                 $first = false;
             }
+            if( $multiple ) $qstr .= ' OR signature:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapePhrase( $word ))).'^25';
             $qstr .= ' )';
-            
+
             $qstr .= ')';
-            
+
         }
+        if( DEBUG ) echo "<tt>".htmlspecialchars( $qstr )."</tt>";
         return $qstr;
     }
-    
+
     static function writeQuery( $md5, $qobj, $json ) {
     	global $db;
-    
+
     	$sql = "SELECT COUNT(*) FROM web_query WHERE queryid=".$db->qstr( $md5 );
     	$num = intval( $db->GetOne( $sql ));
     	if( $num > 0 ) return;
-    
+
     	$sql = "INSERT INTO web_query VALUES( ".$db->qstr( $md5 ).", ".$db->qstr( $qobj['query'] ). ", ".$db->qstr( $qobj['area'] ). ", ".$db->qstr( $json ).")";
     	$db->Execute( $sql );
     }
-    
+
     static function readQuery( $md5 ) {
     	global $db, $config;
 
@@ -311,7 +320,7 @@ class Helper {
     	Helper::writeQuery( $q, $qobj, $query );
     	return $qobj;
     }
-    
+
 }
 
 ?>
