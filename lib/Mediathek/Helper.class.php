@@ -275,7 +275,7 @@ class Helper {
                 if( !$first ) {
                     $qstr .= ' OR ';
                 }
-                $qstr .= 'signature:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapePhrase( $word ))).'^12';
+                $qstr .= 'signature:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapePhrase( $word ))).($multiple ? '^12' : '^25' );
                 $first = false;
             }
             if( $multiple ) $qstr .= ' OR signature:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapePhrase( $word ))).'^25';
