@@ -34,7 +34,7 @@ function initSearch( area, pagesize ) {
 		var facet = {
 			'catalog': [catalog]
 		};
-		 doSearch( $('#searchtext0').val(), 0, pagesize, facet );
+		 doSearch( $('#searchtext').val(), 0, pagesize, facet );
 	});
 
 	 $('#searchtext').keypress(function (e) {
@@ -43,7 +43,7 @@ function initSearch( area, pagesize ) {
 			var facet = {
 				'catalog': [catalog]
 			};
-			 doSearch( $('#searchtext0').val(), 0, pagesize, facet );
+			 doSearch( $('#searchtext').val(), 0, pagesize, facet );
 		  return false;    //<---- Add this line
 		}
 	 });
