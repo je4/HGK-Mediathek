@@ -40,6 +40,10 @@ class degruyterEntity extends swissbibEntity {
     	$this->data = $data;
     }
     
+    public function loadFromDoc( $doc) {
+    	$this->id = $doc->originalid;
+    	$this->data = json_decode(( string )gzdecode( base64_decode( $doc->metagz )), true );
+    }
     
 	function loadNode( $id, $doc, $idprefix ) {
 		$this->reset();

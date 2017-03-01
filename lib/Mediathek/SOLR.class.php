@@ -152,8 +152,12 @@ class SOLR {
             $doc->addField( 'signature', $sig );
         foreach( $src->getURLs() as $url )
             $doc->addField( 'url', $url);
-        foreach( $src->getCodes() as $code )
+        foreach( $src->getCodes() as $code ) {
+        	if( preg_match( '/(ISBN|ISSN):(.*)$/', $code, $matches )) {
+        		$code = $matches[1].':'.preg_replace( '/[^0-9]/', '', $matches[2] );
+        	}
            	$doc->addField( 'code', $code);
+        }
         foreach( $src->getCatalogs() as $cat )
             $doc->addField( 'catalog', $cat);
         foreach( $src->getIssues() as $issue ) {

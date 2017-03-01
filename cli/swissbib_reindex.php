@@ -33,8 +33,9 @@ if( !file_exists( $tmpfile )) {
 		//$squery->createFilterQuery('notdone')->setQuery("-catalog:*");
 		$squery->createFilterQuery('nodelete')->setQuery("deleted:false");
 		$squery->setFields( array( 'id' ));
-		$squery->createFilterQuery('category')->setQuery(  'category:"1!!signature!!NATIONALLICENCE" OR category:"1!!signature!!RETROS" OR (category:"2!!signature!!NEBIS!!E01" AND online:true)' );
+		//$squery->createFilterQuery('category')->setQuery(  'category:"1!!signature!!NATIONALLICENCE" OR category:"1!!signature!!RETROS" OR (category:"2!!signature!!NEBIS!!E01" AND online:true)' );
 		//$squery->createFilterQuery('category')->setQuery( 'category:"2!!signature!!NEBIS!!E65" AND online:true' );
+		$squery->createFilterQuery('catalog')->setQuery( 'catalog:HGK OR catalog:FHNW-bib OR catalog:openaccess_books OR catalog:openaccess_journals OR catalog:Kunsthochschul-Bibs' );
 
 		$squery->createFilterQuery( "*:*" );
 		$squery->addSort('id', $squery::SORT_DESC);

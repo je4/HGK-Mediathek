@@ -40,6 +40,12 @@ class springerEntity extends swissbibEntity {
     	$this->data = $data;
     }
     
+    public function loadFromDoc( $doc) {
+    	$this->id = $doc->originalid;
+    	$this->data = json_decode(( string )gzdecode( base64_decode( $doc->metagz )), true );
+    	//$this->loadNode( $doc->originalid, new OAIPMHRecord( $xml ), null );
+    }
+    
     
 	function loadNode( $id, $doc, $idprefix ) {
 		$this->reset();

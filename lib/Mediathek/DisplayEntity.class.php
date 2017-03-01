@@ -15,7 +15,7 @@
  * @copyright   (C) 2016 Academy of Art and Design FHNW
  * @license     http://www.gnu.org/licenses/gpl-3.0
  * @link        http://mediathek.fhnw.ch
- * 
+ *
  */
 
 /**
@@ -39,10 +39,10 @@ abstract class DisplayEntity {
  //       echo "<!--\n".$this->data."\n-->\n";
 		$this->highlight = $highlightedDoc;
     }
-	
+
 	public function getHeading() {
 		$html = '';
-		
+
         ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
 ?>
 		                    <h2 class="small-heading">Mediathek</h2>
@@ -53,17 +53,17 @@ abstract class DisplayEntity {
         ob_end_clean();
 		return $html;
 	}
-	
+
 	public function getCatalogList() {
 		global $config;
-		
+
 		if( !$this->qobj ) {
 			$this->qobj = Helper::readQuery( $this->urlparams['q'] );
 		}
-	
+
 		$js_catlist = '';
 		$ds = $config['defaultcatalog'];
-		if( is_array( $this->qobj['facets']['catalog'] ))
+		if( @is_array( $this->qobj['facets']['catalog'] ))
 		{
 			foreach( $this->qobj['facets']['catalog'] as $cat ) {
 				$ds[] = $cat;
@@ -75,14 +75,14 @@ abstract class DisplayEntity {
 		$js_catlist = trim( $js_catlist, ',');
 		return $js_catlist;
 	}
-	
+
 	public function getSourceList() {
 		global $config;
-	
+
 		if( !$this->qobj ) {
 			$this->qobj = Helper::readQuery( $this->urlparams['q'] );
 		}
-		
+
 		$js_catlist = '';
 		$ds = $config['defaultsource'];
 		if( is_array( $this->qobj['facet']['source'] ))
@@ -97,7 +97,7 @@ abstract class DisplayEntity {
 		$js_catlist = trim( $js_catlist, ',');
 		return $js_catlist;
 	}
-	
+
 	public abstract function getSchema( );
     public abstract function detailView();
     public abstract function desktopList();

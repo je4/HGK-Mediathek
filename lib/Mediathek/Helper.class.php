@@ -269,16 +269,12 @@ class Helper {
             }
             if( $multiple ) $qstr .= ' OR abstract:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapeTerm( $word ))).'^15';
             $qstr .= ' )';
+
             $qstr .= ' OR (';
-            $first = true;
-            foreach( $global as $word ) {
-                if( !$first ) {
-                    $qstr .= ' OR ';
-                }
-                $qstr .= 'signature:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapePhrase( $word ))).($multiple ? '^12' : '^25' );
-                $first = false;
-            }
-            if( $multiple ) $qstr .= ' OR signature:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapePhrase( $word ))).'^25';
+            $qstr .= ' signature:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapePhrase( $word ))).'^25';
+            $qstr .= ' )';
+            $qstr .= ' OR (';
+            $qstr .= ' code:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapePhrase( 'ISBN:'.$word ))).'^25';
             $qstr .= ' )';
 
             $qstr .= ')';
