@@ -212,7 +212,7 @@ class Helper {
                 if( !$first )
                     $qstr .= ' OR ';
                 $first = false;
-                $qstr .= '('.$field.':'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapeTerm( $word ))).')';
+                $qstr .= '('.$field.':'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapePhrase( $word ))).')';
             }
             $qstr .= ')';
         }
@@ -230,52 +230,73 @@ class Helper {
                 if( $first == false ) {
                     $qstr .= ' OR ';
                 }
-                $qstr .= 'title:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapeTerm( $word ))).'^10';
+                $qstr .= 'title:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapePhrase( $word ))).'^10';
                 $first = false;
             }
-            if( $multiple ) $qstr .= ' OR title:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapeTerm( $all ))).'^20';
+            if( $multiple ) $qstr .= ' OR title:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapePhrase( $all ))).'^20';
 
             $qstr .= ' )';
+            // ----------------------
             $qstr .= ' OR (';
             $first = true;
             foreach( $global as $word ) {
-                if( !$first ) {
-                    $qstr .= ' OR ';
-                }
-                $qstr .= 'author:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapeTerm( $word ))).'^10';
-                $first = false;
+            	if( !$first ) {
+            		$qstr .= ' OR ';
+            	}
+            	$qstr .= 'author:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapeTerm( $word ))).'^10';
+            	$first = false;
             }
             if( $multiple ) $qstr .= ' OR author:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapeTerm( $all ))).'^20';
             $qstr .= ' )';
+            // ----------------------
+            $qstr .= ' OR (';
+            $first = true;
+            foreach( $global as $word ) {
+            	if( !$first ) {
+            		$qstr .= ' OR ';
+            	}
+            	$qstr .= 'publisher:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapeTerm( $word ))).'^8';
+            	$first = false;
+            }
+            if( $multiple ) $qstr .= ' OR publisher:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapeTerm( $all ))).'^18';
+            $qstr .= ' )';
+            // ----------------------
             $qstr .= ' OR (';
             $first = true;
             foreach( $global as $word ) {
                 if( !$first ) {
                     $qstr .= ' AND ';
                 }
-                $qstr .= 'content:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapeTerm( $word ))).'^6';
+                $qstr .= 'content:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapePhrase( $word ))).'^6';
                 $first = false;
             }
-            if( $multiple ) $qstr .= ' OR content:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapeTerm( $all ))).'^12';
+            if( $multiple ) $qstr .= ' OR content:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapePhrase( $all ))).'^12';
             $qstr .= ' )';
+            // ----------------------
             $qstr .= ' OR (';
             $first = true;
             foreach( $global as $word ) {
                 if( !$first ) {
                     $qstr .= ' AND ';
                 }
-                $qstr .= 'abstract:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapeTerm( $word ))).'^8';
+                $qstr .= 'abstract:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapePhrase( $word ))).'^8';
                 $first = false;
             }
-            if( $multiple ) $qstr .= ' OR abstract:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapeTerm( $word ))).'^15';
+            if( $multiple ) $qstr .= ' OR abstract:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapePhrase( $all ))).'^15';
             $qstr .= ' )';
-
+            // ----------------------
             $qstr .= ' OR (';
-            $qstr .= ' signature:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapePhrase( $word ))).'^25';
+            $qstr .= ' signature:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapePhrase( $all ))).'^25';
             $qstr .= ' )';
-            $qstr .= ' OR (';
-            $qstr .= ' code:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapePhrase( 'ISBN:'.$word ))).'^25';
-            $qstr .= ' )';
+            // ----------------------
+	        if( preg_match( '/^[0-9Xx-]+$/', $all)) {
+	            $qstr .= ' OR (';
+	            $qstr .= ' code:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapePhrase( 'ISBN:'.$all ))).'^25';
+	            $qstr .= ' OR code:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapePhrase( 'ISSN:'.$all ))).'^25';
+	            $qstr .= ' OR code:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapePhrase( 'ISBN:'.str_replace( '-', '', $all )))).'^25';
+	            $qstr .= ' OR code:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapePhrase( 'ISSN:'.str_replace( '-', '', $all )))).'^25';
+	             $qstr .= ' )';
+            }
 
             $qstr .= ')';
 
@@ -308,8 +329,7 @@ class Helper {
     	$qobj['facets'] = array();
     	$qobj['filter'] = array();
     	$qobj['area'] = '';
-    	if( DEBUG ) $qobj['facets']['catalog'] = $config['defaultcatalog'];
-    	else $qobj['facets']['source'] = $config['defaultsource'];
+    	$qobj['facets']['catalog'] = $config['defaultcatalog'];
     	$qobj['query'] = '*';
     	$query = json_encode( $qobj );
     	$q = md5($query);

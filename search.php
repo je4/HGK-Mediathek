@@ -175,20 +175,29 @@ if( @is_array( $qobj['facets']['catalog'] )) {
 	echo "<!-- filter catalog: {$catalogfilterquery} -->\n";
 
 }
-if( @is_array( $qobj['facets']['category'] )) {
-	$categoryfilterquery = "";
-	foreach( $qobj['facets']['category'] as $cat ) {
-		if( $categoryfilterquery != '' ) $categoryfilterquery .= ' OR ';
-		$categoryfilterquery .= ' (category:'.$helper->escapePhrase( $cat ).')';
+if( DEBUG ) {
+	if( @is_array( $qobj['facets']['category'] )) {
+		$categoryfilterquery = "";
+		foreach( $qobj['facets']['category'] as $cat ) {
+			if( $categoryfilterquery != '' ) $categoryfilterquery .= ' OR ';
+			$categoryfilterquery .= ' (category:'.$helper->escapePhrase( $cat ).')';
+		}
+	    $squery->createFilterQuery('category')->addTag('category')->setQuery( $categoryfilterquery );
+	    echo "<!-- filter category: {$categoryfilterquery} -->\n";
+	
 	}
-    $squery->createFilterQuery('category')->addTag('category')->setQuery( $categoryfilterquery );
-    echo "<!-- filter category: {$categoryfilterquery} -->\n";
-
 }
 if( @is_array( $qobj['facets']['online'] )) {
 	$onlinefilterquery = 'online:('.implode(' ', $qobj['facets']['online']).')';
 	$squery->createFilterQuery('online')->addTag('online')->setQuery($onlinefilterquery);
 	echo "<!-- filter online: {$onlinefilterquery} -->\n";
+
+}
+
+if( @is_array( $qobj['facets']['openaccess'] )) {
+	$openaccessfilterquery = 'openaccess:('.implode(' ', $qobj['facets']['openaccess']).')';
+	$squery->createFilterQuery('openaccess')->addTag('openaccess')->setQuery($openaccessfilterquery);
+	echo "<!-- filter openaccess: {$openaccessfilterquery} -->\n";
 
 }
 	
@@ -247,9 +256,10 @@ if( @is_array( $qobj['facets']['license'] )) {
 $facetSetLicense = $squery->getFacetSet();
 $facetSetLicense->createFacetField('license')->setField('license')->addExclude('license');
 
-$facetSetCategory = $squery->getFacetSet();
-$facetSetCategory->createFacetField('category')->setField('category')->setLimit( $config['categorylimit'] )->addExclude('category');
-
+if( DEBUG ) {
+	$facetSetCategory = $squery->getFacetSet();
+	$facetSetCategory->createFacetField('category')->setField('category')->setLimit( $config['categorylimit'] )->addExclude('category');
+}
 $facetSetOnline = $squery->getFacetSet();
 $facetSetOnline->createFacetField('online')->setField('online')->addExclude('online');
 $facetSetOpenAccess = $squery->getFacetSet();
@@ -353,7 +363,7 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 										</div>
 				<?php
 									$i++;
-								}
+				}
 				?>
 			</div>
 			</div>

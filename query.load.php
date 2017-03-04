@@ -28,7 +28,7 @@ $invalidQuery = !( array_key_exists( 'query', $qobj )
 
 if( !$invalidQuery ) {
 	if( count( $qobj['facets'] ) == 0) {
-		$qobj['facets'][(DEBUG ? 'catalog':'source')] = (DEBUG ? $config['defaultcatalog'] : $config['defaultsource']);
+//		$qobj['facets']['catalog'] = $config['defaultcatalog'];
 	}
 
 	$query = json_encode( $qobj );

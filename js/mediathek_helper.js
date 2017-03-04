@@ -31,18 +31,18 @@ function initSearch( area, pagesize ) {
 
 	$('#searchbutton').click( function(e) {
 		var catalog = $('#facet_catalog').val();
-		var facet = {
+		var facet = (typeof catalog != 'undefined') ?  {
 			'catalog': [catalog]
-		};
+		} : {};
 		 doSearch( $('#searchtext').val(), 0, pagesize, facet );
 	});
 
 	 $('#searchtext').keypress(function (e) {
 		if (e.which == 13) {
 			var catalog = $('#facet_catalog').val();
-			var facet = {
+			var facet = (typeof catalog != 'undefined') ?  {
 				'catalog': [catalog]
-			};
+			} : {};
 			 doSearch( $('#searchtext').val(), 0, pagesize, facet );
 		  return false;    //<---- Add this line
 		}
@@ -50,18 +50,18 @@ function initSearch( area, pagesize ) {
 
 	$('#searchbutton0').click( function(e) {
 		var catalog = $('#facet_catalog').val();
-		var facet = {
+		var facet = (typeof catalog != 'undefined') ?  {
 			'catalog': [catalog]
-		};
+		} : {};
 	   doSearch( $('#searchtext0').val(), 0, pagesize, facet );
 	});
 
 	 $('#searchtext0').keypress(function (e) {
 		if (e.which == 13) {
 			var catalog = $('#facet_catalog').val();
-			var facet = {
+			var facet = (typeof catalog != 'undefined') ?  {
 				'catalog': [catalog]
-			};
+			} : {};
 		   doSearch( $('#searchtext0').val(), 0, pagesize, facet );
 		  return false;    //<---- Add this line
 		}
