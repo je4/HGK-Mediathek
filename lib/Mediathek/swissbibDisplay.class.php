@@ -267,20 +267,6 @@ if( @is_array( $urls_notes )) foreach( $urls_notes as $url ) {
 					</div>
 				</div>
 						<?php  } ?>
-<!--				<div style="">
-				<span style="; font-weight: bold;">Kontext</span><br />
-					<div class="facet" style="">
-						<div class="marker" style=""></div>
-					</div>
-				</div>
-				<div style="">
-				<span style="; font-weight: bold;">Systematik</span><br />
-					<div class="facet" style="">
-						<div class="marker" style=""></div>
-					</div>
-				</div>
-			</div>
--->
 		</div>
 	</div>
 	<div class="row">

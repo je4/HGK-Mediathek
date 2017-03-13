@@ -184,7 +184,7 @@ if( DEBUG ) {
 		}
 	    $squery->createFilterQuery('category')->addTag('category')->setQuery( $categoryfilterquery );
 	    echo "<!-- filter category: {$categoryfilterquery} -->\n";
-	
+
 	}
 }
 if( @is_array( $qobj['facets']['online'] )) {
@@ -200,15 +200,15 @@ if( @is_array( $qobj['facets']['openaccess'] )) {
 	echo "<!-- filter openaccess: {$openaccessfilterquery} -->\n";
 
 }
-	
+
 /*
 	if( @is_array( $qobj['facets']['embedded'] )) {
 		$embeddedfilterquery = 'embedded:('.implode(' ', $qobj['facets']['embedded']).')';
 		$squery->createFilterQuery('embedded')->addTag('embedded')->setQuery($embeddedfilterquery);
 		echo "<!-- filter embedded: {$embeddedfilterquery} -->\n";
-	
+
 	}
-*/	
+*/
 if( @is_array( $qobj['facets']['type'] )) {
 	$typefilterquery = 'type:('.implode(' ', $qobj['facets']['type']).')';
 	$squery->createFilterQuery('type')->addTag('type')->setQuery($typefilterquery);
@@ -328,7 +328,7 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 				foreach ($facetCatalog as $value => $count) {
 					$catalog[$value] = $count;
 				}
-				
+
 				foreach( $config['catalogmap'] as $cat=>$title ) {
 					$value = $cat;
 					$count = 0;
@@ -347,7 +347,7 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 				}
 ?>
 					<hr />
-<?php 				
+<?php
 				foreach( $config['sourcemap'] as $cat=>$title ) {
 					$value = $cat;
 					$count = 0;
@@ -367,10 +367,10 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 				?>
 			</div>
 			</div>
-<?php  
+<?php
 
 		if( DEBUG ) {
-			
+
 ?>
 			<div style="">
 			<span style="; font-weight: bold;">Licenses</span><br />
@@ -381,7 +381,7 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 				$i = 0;
 				if( $facetLicense ) foreach ($facetLicense as $value => $count) {
 					if(!( @is_array( $qobj['facets']['license'] ) && array_search($value, $qobj['facets']['license']) !== false ) && $count == 0 ) continue;
-?>						
+?>
 						<div class="checkbox checkbox-green">
 							<input class="facet" type="checkbox" id="license" value="<?php echo htmlentities($value); ?>" <?php if( @is_array( $qobj['facets']['license'] ) && array_search($value, $qobj['facets']['license']) !== false ) echo " checked"; ?>>
 							<label for="license<?php echo $i; ?>">
@@ -394,8 +394,8 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 ?>
 			</div>
 			</div>
-<?php 
-		} 
+<?php
+		}
 ?>
 			<div style="">
 			<span style="; font-weight: bold;">Zugriff</span><br />
@@ -505,7 +505,7 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 			</div>
 			</div>
 
-			
+
 <?php if( DEBUG ) { ?>
 			<div style="overflow:hidden;">
 			<span style="; font-weight: bold;">Kategorien</span><br />

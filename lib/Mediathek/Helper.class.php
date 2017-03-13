@@ -267,10 +267,10 @@ class Helper {
                 if( !$first ) {
                     $qstr .= ' AND ';
                 }
-                $qstr .= 'content:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapePhrase( $word ))).'^6';
+                $qstr .= 'text:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapeTerm( $word.'*' ))).'^6';
                 $first = false;
             }
-            if( $multiple ) $qstr .= ' OR content:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapePhrase( $all ))).'^12';
+            if( $multiple ) $qstr .= ' OR text:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapeTerm( $all.'*' ))).'^12';
             $qstr .= ' )';
             // ----------------------
             $qstr .= ' OR (';
@@ -279,10 +279,10 @@ class Helper {
                 if( !$first ) {
                     $qstr .= ' AND ';
                 }
-                $qstr .= 'abstract:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapePhrase( $word ))).'^8';
+                $qstr .= 'abstract:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapeTerm( $word.'*' ))).'^8';
                 $first = false;
             }
-            if( $multiple ) $qstr .= ' OR abstract:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapePhrase( $all ))).'^15';
+            if( $multiple ) $qstr .= ' OR abstract:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapeTerm( $all.'*' ))).'^15';
             $qstr .= ' )';
             // ----------------------
             $qstr .= ' OR (';

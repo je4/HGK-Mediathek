@@ -1,6 +1,10 @@
 <?php
 namespace Mediathek;
 
+//header('Access-Control-Allow-Origin: https://ba14ns21403.fhnw.ch');
+//header('Access-Control-Allow-Origin: *');
+
+
 require 'navbar.inc.php';
 require 'searchbar.inc.php';
 require 'header.inc.php';

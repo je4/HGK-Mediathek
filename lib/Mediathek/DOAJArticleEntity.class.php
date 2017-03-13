@@ -57,6 +57,7 @@ class DOAJArticleEntity extends SOLRSource {
         $this->authors = null;
         $this->loans = null;
         $this->tags = null;
+        $this->cluster = null;
         $this->licenses = null;
         $this->urls = null;
         $this->signatures = null;
@@ -65,6 +66,7 @@ class DOAJArticleEntity extends SOLRSource {
     }
 
     public function loadFromDoc( $doc) {
+    	$this->reset();
     	$this->data = ( array )json_decode( gzdecode( base64_decode( $doc->metagz )));
     	$this->id = $doc->originalid;
     }

@@ -115,7 +115,10 @@ class SOLR {
 
 		$doc->setField( 'city', /* utf8_encode */( $src->getCity()));
         $doc->setField( 'year', $src->getYear());
-        $doc->setField( 'abstract', $src->getAbstract());
+        $h = $src->getAbstract();
+        if( $h != null ) $doc->setField( 'abstract', $h );
+        $h = $src->getContent();
+        if( $h != null ) $doc->setField( 'content', $h );
         $meta = $src->getMeta();
 			if( $meta == null ) {
 				echo "no meta error\n";

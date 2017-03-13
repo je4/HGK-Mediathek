@@ -21,7 +21,7 @@ function mediathekheader( $current, $title, $area ) {
 
     <title><?php echo htmlspecialchars( $title ); ?></title>
     <link rel="icon" href="assets/img/icon/fav_icon.gif">
-    
+
 
     <!--necessary stylesheets -->
 
@@ -31,24 +31,24 @@ function mediathekheader( $current, $title, $area ) {
     <link type="text/css" rel="stylesheet" href="assets/css/popup.css">
     <link type="text/css" rel="stylesheet" href="assets/css/owl.carousel.css">
     <link type="text/css" rel="stylesheet" href="assets/css/owl.theme.css">
-    <link type="text/css" rel="stylesheet" href="assets/css/style.css">    
+    <link type="text/css" rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="/unica/css/stylesheet.css" type="text/css" charset="utf-8" />
-    
-    
+
+
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-<?php if( $current == 'detail' ) { ?>	
+<?php if( $current == 'detail' ) { ?>
    <link href="css/video-js.css" rel="stylesheet">
 <?php } ?>
 
-    <link type="text/css" rel="stylesheet" href="css/mediathek.css">    
-    <link type="text/css" rel="stylesheet" href="css/checkbox.css">    
+    <link type="text/css" rel="stylesheet" href="css/mediathek.css">
+    <link type="text/css" rel="stylesheet" href="css/checkbox.css">
     <link type="text/css" rel="stylesheet" href="css/bootstrap-editable.css">
 	<link rel="stylesheet" href="css/jstree_default/style.css" />
-    
+
     <!--[if IE]>
 		<style>
 		    .flip-container:hover .back,
@@ -57,7 +57,7 @@ function mediathekheader( $current, $title, $area ) {
 			}
 		</style>
 	<![endif]-->
-	
+
 
 </head>
 
@@ -70,9 +70,9 @@ function mediathekheader( $current, $title, $area ) {
 	<div style="color: white; vertical-align: middle; top: 0px; float: right;"><a style="color: white;" href=".">Mediathek</a>&nbsp;&nbsp;&nbsp;</div>
 </div>
 <?php if( $current == 'home' ) { ?>
-	
+
     <!-- Preloader -->
-    
+
     <div id="preloader">
         <div class="loader">
             <span></span>

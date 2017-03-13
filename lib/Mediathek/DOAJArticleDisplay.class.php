@@ -112,9 +112,16 @@ class DOAJArticleDisplay extends DisplayEntity {
         global $config, $pagesize, $solrclient, $db, $urlparams;
 		$html = '';
 		$entity = $this->entity;
+
+		if( DEBUG ) {
+			$solr = new SOLR( $solrclient );
+			$solr->import( $entity, true );
+		}
+		
+		
 		$authors = $entity->getAuthors();
         ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
-		echo "<!-- ".print_r( $this->metadata, true)." -->";
+		
 ?>
 		<div class="row">
 			<div class="col-md-3">
@@ -174,6 +181,8 @@ class DOAJArticleDisplay extends DisplayEntity {
 ?>							
 					</div>
 				</div>
+				
+				
 			</div>
 			<div class="col-md-6">
 <?php
@@ -261,6 +270,40 @@ class DOAJArticleDisplay extends DisplayEntity {
 ?>					
 					</div>
 				</div>
+<?php 				
+if( DEBUG ) {
+	?>
+				<div style="">
+				<span style="; font-weight: bold;">RAW</span><br />
+					<div class="facet" style="padding: 0px;">
+						<div class="marker" style=""></div>
+						<div>
+							<pre>
+<?php 
+echo print_r( $this->metadata, true);
+?>
+							</pre>
+						</div>
+					</div>
+				</div>
+				<div style="">
+				<span style="; font-weight: bold;">Document</span><br />
+					<div class="facet" style="padding: 0px;">
+						<div class="marker" style=""></div>
+						<div>
+							<pre>
+<?php
+	var_dump( $this->doc->getFields());
+?>
+							</pre>
+						</div>
+					</div>
+				</div>				
+
+<?php 
+	}
+?>				
+				
 			</div>
 			
 			<div class="col-md-3">
