@@ -325,7 +325,7 @@ if( DEBUG ) {
         </i></p>
         <?php
 
-        if( @isset( $data['meta:thumb'] )) echo "<object type=\"image/jpeg\" data=\"".($data['meta:thumb'])."\"></object><br />\n";
+        if( @isset( $data['meta:thumb'] )) echo "<object type=\"image/jpeg\" data=\"".(is_array( $data['meta:thumb'] ) ? $data['meta:thumb'][0] : $data['meta:thumb'])."\"></object><br />\n";
 
 				echo "ID: ".$this->doc->id."<br />\n";
 ?>
