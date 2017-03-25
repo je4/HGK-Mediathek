@@ -113,7 +113,7 @@ if( $qobj['query'] == '' ) $qobj['query'] = '*';
 
 
 
-echo mediathekheader('search', 'Mediathek - Suche - '.$qobj['query'], $qobj['area']);
+echo mediathekheader('search', 'mediathek - Suche - '.$qobj['query'], $qobj['area']);
 ?>
 <div class="home-btn"><i class="ion-android-close"></i></div>
 <div class="setting-btn"><i class="<?php echo $session->isLoggedIn() ? 'ion-ios-settings-strong': 'ion-log-in'; ?>"></i></div>

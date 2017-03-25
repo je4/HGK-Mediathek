@@ -113,6 +113,7 @@ class GrenzgangEntity extends SOLRSource {
 	    	elseif( preg_match( '/^audio\//', $this->data['meta:mime'])) $type = 'sound';
 	    	elseif( preg_match( '/^image\//', $this->data['meta:mime'])) $type = '2d';
         elseif( preg_match( '/^text\//', $this->data['meta:mime'])) $type = 'ressource';
+        elseif( preg_match( '/^application\/vnd.openxmlformats-officedocument.wordprocessingml.document/', $this->data['meta:mime'])) $type = 'ressource';
         elseif( preg_match( '/^application\/pdf/', $this->data['meta:mime'])) $type = 'ressource';
 	    	elseif( preg_match( '/^application\/xml/', $this->data['meta:mime'])) $type = 'track';
     	}
@@ -273,7 +274,9 @@ class GrenzgangEntity extends SOLRSource {
     }
 
    public function getAbstract() {
-        return null;
+     $text = @trim( $this->data['Beschreibung (1)'] );
+     if( strlen( $text )) return $text;
+     return null;
     }
    public function getContent() {
    		$text = @trim( $this->data['meta:fulltext'] );
@@ -291,8 +294,11 @@ class GrenzgangEntity extends SOLRSource {
    			case 'open':
    				$access[] = 'global/guest';
    				break;
-   			case 'group':
+        case 'group':
    				$access[] = 'hgk/grenzgang';
+   				break;
+        case 'internal':
+   				$access[] = 'global/admin';
    				break;
    	    }
     	return $access;

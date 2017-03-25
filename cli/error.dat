@@ -21,4 +21,13 @@ mysqli error: [2006: MySQL server has gone away] in EXECUTE("SELECT marker FROM 
 #0 /var/www/vhosts/mediathek.fhnw.ch/html/dev/lib/adodb5/adodb.inc.php(1235): adodb_throw('postgres9', 'EXECUTE', -1, 'SSL SYSCALL err...', 'UPDATE oai_pmh_...', false, Object(ADODB_postgres9))
 #1 /var/www/vhosts/mediathek.fhnw.ch/html/dev/lib/adodb5/adodb.inc.php(1199): ADOConnection->_Execute('UPDATE oai_pmh_...', false)
 #2 /var/www/vhosts/mediathek.fhnw.ch/html/dev/cli/swissbib2solr.php(102): ADOConnection->Execute('UPDATE oai_pmh_...')
-#3 {main}
+#3 {main}Solr HTTP error: HTTP request failed, Empty reply from server
+#0 /data/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/library/Solarium/Core/Client/Adapter/Curl.php(92): Solarium\Core\Client\Adapter\Curl->check('', Array, Resource id #1451242)
+#1 /data/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/library/Solarium/Core/Client/Adapter/Curl.php(213): Solarium\Core\Client\Adapter\Curl->getResponse(Resource id #1451242, false)
+#2 /data/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/library/Solarium/Core/Client/Adapter/Curl.php(68): Solarium\Core\Client\Adapter\Curl->getData(Object(Solarium\Core\Client\Request), Object(Solarium\Core\Client\Endpoint))
+#3 /data/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/library/Solarium/Core/Client/Client.php(804): Solarium\Core\Client\Adapter\Curl->execute(Object(Solarium\Core\Client\Request), Object(Solarium\Core\Client\Endpoint))
+#4 /data/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/library/Solarium/Core/Client/Client.php(773): Solarium\Core\Client\Client->executeRequest(Object(Solarium\Core\Client\Request), Object(Solarium\Core\Client\Endpoint))
+#5 /data/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/library/Solarium/Core/Client/Client.php(864): Solarium\Core\Client\Client->execute(Object(Solarium\QueryType\Update\Query\Query), NULL)
+#6 /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/SOLR.class.php(185): Solarium\Core\Client\Client->update(Object(Solarium\QueryType\Update\Query\Query))
+#7 /data/www/vhosts/mediathek.fhnw.ch/html/dev/cli/swissbib2solr.php(77): Mediathek\SOLR->import(Object(Mediathek\swissbibEntity))
+#8 {main}

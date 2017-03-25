@@ -5,7 +5,7 @@ class Session implements \SessionHandlerInterface
 {
     // session timeout in sekunden
     static public $timeout = 3600;
-    
+
   private $alive = true;
   private $db = NULL;
   private $server = null;
@@ -13,10 +13,10 @@ class Session implements \SessionHandlerInterface
   private $name = null;
   private $groups = null;
   private $certEmail = null;
-  
+
   private $subnetsFHNW = array();
   private $localFHNW = false;
- 
+
   function __construct( $db, $server )
   {
 	$this->subnetsFHNW[] = new IPv6Net( "10.0.0.0/8" );
@@ -26,16 +26,16 @@ class Session implements \SessionHandlerInterface
     $this->db = $db;
     $this->server = $server;
     session_set_save_handler( $this, true );
-        
+
     $this->startSession();
     $this->checkUser();
   }
-  
+
    public function startSession() {
 	global $_SERVER;
-	
+
     session_start();
-    
+
     $this->id = session_id();
 
     $sql = "SELECT *, UNIX_TIMESTAMP( lastaccess) AS unix_lastaccess FROM session WHERE php_session_id=".$this->db->qstr( $this->id );
@@ -44,20 +44,20 @@ class Session implements \SessionHandlerInterface
 //	var_dump( $row );
 
 	if( isset( $_SERVER['SSL_CLIENT_S_DN'])) {
-		if( $_SERVER['SSL_CLIENT_I_DN'] == 'CN=Mediathek CA,OU=Certification Authority,O=Mediathek,O=FHNW Academy of Art and Design,L=Basel,ST=Basel Stadt,C=CH'  
-			&& $_SERVER['SSL_CLIENT_VERIFY'] == 'SUCCESS' 
+		if( $_SERVER['SSL_CLIENT_I_DN'] == 'CN=Mediathek CA,OU=Certification Authority,O=Mediathek,O=FHNW Academy of Art and Design,L=Basel,ST=Basel Stadt,C=CH'
+			&& $_SERVER['SSL_CLIENT_VERIFY'] == 'SUCCESS'
 			&& isset( $_SERVER['SSL_CLIENT_S_DN_Email'] ) ) {
 			$this->certEmail = $_SERVER['SSL_CLIENT_S_DN_Email'];
 		}
-	}		
-    
+	}
+
     // Fall 1: php session ist abgelaufen
     if( $row != null && (
                          (( time() - $row['unix_lastaccess']) > self::$timeout )
                            /* || ( $row['end'] != null ) */
                          )) {
         // start new session
-        session_regenerate_id(); 
+        session_regenerate_id();
 		$this->id = session_id();
         $sql = 'INSERT INTO session (`uniqueID`, `Shib-Session-ID`, certEmail, `php_session_id`, clientip )
             VALUES (
@@ -98,7 +98,7 @@ class Session implements \SessionHandlerInterface
                                                     || $row['end'] != null )))
     {
         // start new session
-        $this->id = session_regenerate_id(); 
+        $this->id = session_regenerate_id();
         $sql = 'INSERT INTO session (`uniqueID`, `Shib-Session-ID`, certEmail, `php_session_id`, clientip )
             VALUES (
                 '.$this->db->qstr($this->shibGetUniqueID()).'
@@ -108,22 +108,22 @@ class Session implements \SessionHandlerInterface
                 , '.$this->db->qstr($_SERVER['REMOTE_ADDR']).'
                 )';
 //		echo $sql;
-        $this->db->Execute( $sql );        
+        $this->db->Execute( $sql );
     }
     else {
         $sql = "UPDATE session SET lastaccess=NOW() WHERE php_session_id=".$this->db->qstr($this->id);
 //		echo $sql;
-        $this->db->Execute( $sql ); 
+        $this->db->Execute( $sql );
     }
   }
-  
+
   public function checkUser() {
 
     static $fields = array( 'uniqueID', 'mail', 'homeOrganization', 'homeOrganizationType', 'uid', 'givenName', 'surname', 'telephoneNumber', 'affiliation', 'entitlement', 'employeeNumber', 'orgunit-dn' );
-    
+
     if( $this->shibGetUniqueID() == null ) return;
-    
-    
+
+
     $sql = "SELECT * FROM user WHERE uniqueID=".$this->db->qstr( $this->shibGetUniqueID() );
     $row = $this->db->GetRow( $sql );
     // 1. Fall: User existiert nicht
@@ -134,7 +134,7 @@ class Session implements \SessionHandlerInterface
             if( $first ) $first = false;
             else $sql .= ", ";
             $sql .= "`{$fld}`";
-        }   
+        }
         $sql .= ") VALUES (";
         $first = true;
         foreach( $fields as $fld ) {
@@ -146,19 +146,19 @@ class Session implements \SessionHandlerInterface
         $this->db->Execute( $sql );
     }
   }
-  
+
   public function getID() {
 	return $this->id;
   }
-  
+
   public function isLoggedIn() {
     return $this->shibGetSessionID() != null;
   }
- 
+
   public function shibGetSessionID() {
     return isset( $this->server['Shib-Session-ID'] ) ? $this->server['Shib-Session-ID'] : null;
   }
-  
+
   public function shibGetUniqueID() {
     return isset( $this->server['uniqueID'] ) ? $this->server['uniqueID'] : null;
   }
@@ -166,11 +166,11 @@ class Session implements \SessionHandlerInterface
   public function shibGetMail() {
     return isset( $this->server['mail'] ) ? $this->server['mail'] : null;
   }
- 
+
   public function shibGetUsername() {
     return (isset( $this->server['givenName'] ) ? "{$this->server['givenName']} " : "" ).(isset( $this->server['surname'] ) ? $this->server['surname'] : "");
   }
-  
+
   public function shibGetGivenName() {
     return (isset( $this->server['givenName'] ) ? "{$this->server['givenName']}" : "" );
   }
@@ -178,15 +178,15 @@ class Session implements \SessionHandlerInterface
   public function shibGetSurname() {
     return (isset( $this->server['surname'] ) ? $this->server['surname'] : "");
   }
-  
+
   public function shibHomeOrganization() {
     return isset( $this->server['homeOrganization'] ) ? $this->server['homeOrganization'] : null;
   }
- 
+
   public function shibAffiliation() {
     return isset( $this->server['affiliation'] ) ? $this->server['affiliation'] : null;
   }
- 
+
   public function shibDepartement() {
 	  if( isset( $this->server['orgunit-dn'] ))
 		if( preg_match( "/OU=([A-Za-z0-9]+)(,OU=([A-Z]+))?,OU=([0-9]+),[a-zA-Z,=],DC=fhnw,DC=ch/", $this->server['orgunit-dn'], $matches )) {
@@ -194,7 +194,7 @@ class Session implements \SessionHandlerInterface
 		}
 	  return null;
   }
-  
+
   function storeQuery( $queryid ) {
   	$sql = "SELECT count(*) FROM session_query WHERE php_session_id=".$this->db->qstr( $this->id )." AND queryid=".$this->db->qstr( $queryid );
   	$num = intval( $this->db->GetOne( $sql ));
@@ -214,15 +214,15 @@ class Session implements \SessionHandlerInterface
 		$sql = "UPDATE session_custom SET counter=counter+1, accesstime=NOW() WHERE php_session_id=".$this->db->qstr( $this->id )." AND task=".$this->db->qstr( $task );
     $this->db->Execute( $sql );
   }
-  
+
   function getGroups() {
 	global $_SERVER;
-	
+
 //    if( !$this->isLoggedIn() ) return array('global/guest');
-    
+
     if( $this->groups != null ) return $this->groups;
-    
-    $this->groups = array( 'global/guest', 'global/user' );
+
+    $this->groups = array( 'global/guest' );
 
 	foreach( $this->subnetsFHNW as $sub ) {
 	  if( $sub->contains( $_SERVER['REMOTE_ADDR'])) {
@@ -233,35 +233,36 @@ class Session implements \SessionHandlerInterface
 	}
 
 	if( $this->isLoggedIn()) {
+    $this->groups[] = "global/user";
 	  $this->groups[] = $this->shibHomeOrganization().'/user';
 	  $dept = $this->shibDepartement();
-	  if( $dept != null ) 
+	  if( $dept != null )
 		  $this->groups[] = $this->shibHomeOrganization().':'.$dept.'/user';
 	  foreach( explode( ';', $this->shibAffiliation()) as $grp )
 		  $this->groups[] = $this->shibHomeOrganization().'/'.strtolower( trim( $grp ));
-		  
+
 	  if( isset( $this->server['orgunit-dn'] ))
 		if( preg_match( '/^.*,OU=([0-9]+),OU=.+,OU=.+,DC=.+,DC=ds,DC=fhnw,DC=ch/', $_SERVER['orgunit-dn'], $matches )) {
 			$this->groups[] = "fhnw.ch:{$matches[1]}/user";
   //		  $this->groups[] = strtolower( "fhnw.ch:{$matches[3]}:{$matches[1]}/user" );
 		}
-		  
+
 	}
     $sql = "SELECT grp FROM groups WHERE uniqueID=".$this->db->qstr( $this->shibGetUniqueID())." OR uniqueID=".$this->db->qstr( strtolower( $this->shibGetMail()));
     $rs = $this->db->Execute( $sql );
     foreach( $rs as $row ) {
-		if( preg_match( '/^fhnw\/.*$/', $row['grp'] ) && !$this->localFHNW ) continue; 
+		if( preg_match( '/^fhnw\/.*$/', $row['grp'] ) && !$this->localFHNW ) continue;
         $this->groups[] = strtolower( trim( $row['grp'] ));
     }
     $rs->Close();
-    
-	if( $this->certEmail ) 
+
+	if( $this->certEmail )
 		$this->groups[] = "certificate/mediathek";
-	
-	
+
+
     return $this->groups;
   }
-  
+
   public function inGroup( $grp ) {
 	$grp = strtolower( $grp );
 	foreach( $this->getGroups() as $g ) {
@@ -277,11 +278,11 @@ class Session implements \SessionHandlerInterface
 
 	return false;
   }
-  
+
   public function getPageSize() {
 	return 25;
   }
-  
+
   public function __destruct()
   {
     if($this->alive)
@@ -290,7 +291,7 @@ class Session implements \SessionHandlerInterface
       $this->alive = false;
     }
   }
- 
+
   public function delete()
   {
     if(ini_get('session.use_cookies'))
@@ -301,56 +302,56 @@ class Session implements \SessionHandlerInterface
         $params['secure'], $params['httponly']
       );
     }
- 
+
     session_destroy();
- 
+
     $this->alive = false;
   }
-  
-  
+
+
   // SessionHandler functions
-  
+
   public  function open(  $save_path ,  $name )
   {
     $this->name = $name;
     return true;
   }
- 
+
   public  function close()
   {
     return true;
   }
- 
+
   public  function read($session_id)
   {
     $sql = "SELECT `data` FROM `session` WHERE `php_session_id`=".$this->db->qstr($session_id)." LIMIT 1";
     $data = $this->db->GetOne( $sql );
 
-    return $data == null ? '' : $data; 
+    return $data == null ? '' : $data;
   }
- 
+
   public  function write( $session_id ,  $session_data)
   {
     $this->data = $session_data;
     $sql = "UPDATE `session` SET `data`=".$this->db->qstr($session_data)." WHERE php_session_id=".$this->db->qstr($session_data);
     $this->db->query($sql);
- 
+
     return $this->db->Affected_Rows();
   }
- 
+
   public  function destroy( $session_id)
   {
     $sql = "UPDATE `session` SET `end`=NOW() WHERE php_session_id=".$this->db->qstr($session_id);
     $this->db->query($sql);
- 
+
     return $this->db->Affected_Rows();
   }
- 
+
   public  function gc( $maxlifetime)
   {
     $sql = "UPDATE `session` SET `end`=NOW() WHERE DATE_ADD(`lastaccess`, INTERVAL ".(int) $maxlifetime." SECOND) < NOW()";
     $this->db->query($sql);
- 
+
     return $this->db->Affected_Rows();
   }
 }

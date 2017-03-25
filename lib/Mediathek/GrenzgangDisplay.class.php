@@ -104,8 +104,22 @@ class GrenzgangDisplay extends DisplayEntity {
 						<div class="marker" style=""></div>
 						<h5><?php echo htmlspecialchars( $data['Titel'] ); ?></h5>
 						<?php if( array_key_exists( 'Autor (Nachname, Vorname', $data )) { ?>
-						<b>Author: </b><?php echo htmlspecialchars( $data['Autor (Nachname, Vorname'] ); ?><br />
-						<?php } ?>
+							<b>Autor(en): </b>
+							<?php
+							$authors = explode( ';', $data['Autor (Nachname, Vorname'] );
+							$i = 0;
+							foreach( $authors as $author ) {
+								if( $i > 0) echo "; "; ?>
+							<a href="javascript:doSearchFull('author:&quot;<?php echo str_replace('\'', '\\\'', trim( $author )); ?>&quot;', '', [], {'catalog':[<?php echo $this->getCatalogList(); ?>]}, 0, <?php echo $pagesize; ?> );">
+								<?php echo htmlspecialchars( $author ); ?>
+							</a>
+							<?php
+						 		$i++;
+							}
+						?>
+						<?php
+							echo "<br />\n";
+					 	} ?>
 						<?php if( array_key_exists( 'Datum (JJJJ-MM-TT)', $data ) && strlen( trim( $data['Datum (JJJJ-MM-TT)']))) { ?>
 						<b>Datum: </b><?php echo htmlspecialchars( $data['Datum (JJJJ-MM-TT)'] ); ?><br />
 						<?php } ?>
@@ -113,8 +127,27 @@ class GrenzgangDisplay extends DisplayEntity {
 						<b>Ort / Strecke: </b><?php echo htmlspecialchars( $data['Ort / Strecke'] ); ?><br />
 						<?php } ?>
 						<?php if( array_key_exists( 'Beteiligt', $data )  && strlen( trim( $data['Beteiligt']))) { ?>
-						<b>Durchgeführt: </b><?php echo htmlspecialchars( $data['Beteiligt'] == "Team" ? "im Team" : $data['Beteiligt'] ); ?><br />
-						<?php } ?>
+							<b>Beteiligt: </b>
+							<?php
+							if( $data['Beteiligt'] == "Team" ) echo "im Team";
+							else {
+								$authors = explode( ';', $data['Beteiligt'] );
+								$i = 0;
+								foreach( $authors as $author ) {
+									if( $i > 0) echo "; "; ?>
+								<!--
+								<a href="javascript:doSearchFull('author:&quot;<?php echo str_replace('\'', '\\\'', trim( $author )); ?>&quot;', '', [], {'catalog':[<?php echo $this->getCatalogList(); ?>]}, 0, <?php echo $pagesize; ?> );">
+								-->
+									<?php echo htmlspecialchars( $author ); ?>
+								<!-- 	</a> -->
+								<?php
+							 		$i++;
+								}
+							}
+						}
+						?>
+
+
 						<?php if( array_key_exists( 'Projektname', $data ) && strlen( trim( $data['Projektname']))) { ?>
 						<b>Projekt: </b><?php echo htmlspecialchars( $data['Projektname'] ); ?><br />
 						<?php } ?>

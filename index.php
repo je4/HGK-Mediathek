@@ -17,7 +17,7 @@ $qobj = array();
 	$qobj['filter'] = array();
 	$qobj['facets'] = array();
 
-echo mediathekheader('home', 'Willkommen in der Mediathek', null);
+echo mediathekheader('home', 'Willkommen in der mediathek', null);
 ?>
 
     <!-- home-page -->
