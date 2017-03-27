@@ -110,7 +110,8 @@ class GrenzgangEntity extends SOLRSource {
       if( pathinfo($this->data['Dateiname'], PATHINFO_EXTENSION) == 'mp3' ) $type = 'sound';
     	elseif( array_key_exists( 'meta:mime', $this->data )) {
 	    	if( preg_match( '/^video\//', $this->data['meta:mime'])) $type = 'projectable';
-	    	elseif( preg_match( '/^audio\//', $this->data['meta:mime'])) $type = 'sound';
+        elseif( preg_match( '/^application\/mp4/', $this->data['meta:mime'])) $type = 'projectable';
+        elseif( preg_match( '/^audio\//', $this->data['meta:mime'])) $type = 'sound';
 	    	elseif( preg_match( '/^image\//', $this->data['meta:mime'])) $type = '2d';
         elseif( preg_match( '/^text\//', $this->data['meta:mime'])) $type = 'ressource';
         elseif( preg_match( '/^application\/vnd.openxmlformats-officedocument.wordprocessingml.document/', $this->data['meta:mime'])) $type = 'ressource';
@@ -142,7 +143,8 @@ class GrenzgangEntity extends SOLRSource {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
 
         $title = trim( $this->data['Titel'] );
-		if( !strlen( $title )) $title = trim( $this->data['Dateiname'] );
+        if( !strlen( $title )) $title = trim( $this->data['Dateiname'] );
+        if( !strlen( $title )) $title = 'o.T.';
 
         return $title;
     }
@@ -300,6 +302,8 @@ class GrenzgangEntity extends SOLRSource {
         case 'internal':
    				$access[] = 'global/admin';
    				break;
+        default:
+          $access[] = 'global/user';
    	    }
     	return $access;
     }
