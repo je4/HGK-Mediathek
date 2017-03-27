@@ -358,12 +358,14 @@ if( DEBUG ) {
 				<?php
         }
         ?>
-				<?php if( array_key_exists( 'Datum (JJJJ-MM-TT)', $data ) && strlen( trim( $data['Datum (JJJJ-MM-TT)']))) { ?>
-				<b>Datum: </b><?php echo htmlspecialchars( $data['Datum (JJJJ-MM-TT)'] ); ?><br />
-				<?php } ?>
         <?php
 
         if( @isset( $data['meta:thumb'] )) echo "<object type=\"image/jpeg\" data=\"".(is_array( $data['meta:thumb'] ) ? $data['meta:thumb'][0] : $data['meta:thumb'])."\"></object><br />\n";
+				if( array_key_exists( 'Datum (JJJJ-MM-TT)', $data ) && strlen( trim( $data['Datum (JJJJ-MM-TT)']))) {
+				?>
+				Datum: <?php echo htmlspecialchars( $data['Datum (JJJJ-MM-TT)'] ); ?><br />
+				<?php
+				}
 
 				echo "ID: ".$this->doc->id."<br />\n";
 ?>
