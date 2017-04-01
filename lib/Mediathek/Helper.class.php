@@ -267,10 +267,10 @@ class Helper {
                 if( !$first ) {
                     $qstr .= ' AND ';
                 }
-                $qstr .= 'text:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapeTerm( $word.'*' ))).'^6';
+                $qstr .= 'content:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapeTerm( $word.'*' ))).'^6';
                 $first = false;
             }
-            if( $multiple ) $qstr .= ' OR text:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapeTerm( $all.'*' ))).'^12';
+            if( $multiple ) $qstr .= ' OR content:'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapeTerm( $all.'*' ))).'^12';
             $qstr .= ' )';
             // ----------------------
             $qstr .= ' OR (';
