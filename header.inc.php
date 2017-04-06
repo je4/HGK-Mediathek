@@ -1,5 +1,5 @@
 <?php
-function mediathekheader( $current, $title, $area ) {
+function mediathekheader( $current, $title, $area, $csss = array() ) {
     ob_start();
 ?>
 <!doctype html>
@@ -34,7 +34,6 @@ function mediathekheader( $current, $title, $area ) {
     <link type="text/css" rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="/unica/css/stylesheet.css" type="text/css" charset="utf-8" />
 
-
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -47,7 +46,14 @@ function mediathekheader( $current, $title, $area ) {
     <link type="text/css" rel="stylesheet" href="css/mediathek.css">
     <link type="text/css" rel="stylesheet" href="css/checkbox.css">
     <link type="text/css" rel="stylesheet" href="css/bootstrap-editable.css">
-	<link rel="stylesheet" href="css/jstree_default/style.css" />
+	  <link rel="stylesheet" href="css/jstree_default/style.css" />
+<?php
+foreach( $csss as $css ) {
+?>
+    <link type="text/css" rel="stylesheet" href="<?php echo $css; ?>">
+<?php
+}
+ ?>
 
     <!--[if IE]>
 		<style>

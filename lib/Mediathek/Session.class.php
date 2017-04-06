@@ -52,10 +52,7 @@ class Session implements \SessionHandlerInterface
 	}
 
     // Fall 1: php session ist abgelaufen
-    if( $row != null && (
-                         (( time() - $row['unix_lastaccess']) > self::$timeout )
-                           /* || ( $row['end'] != null ) */
-                         )) {
+    if( $row != null && (( time() - $row['unix_lastaccess']) > self::$timeout )) {
         // start new session
         session_regenerate_id();
 		$this->id = session_id();

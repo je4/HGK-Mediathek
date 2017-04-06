@@ -1,14 +1,14 @@
 <?php
 global $session;
 
-function mediathekfooter() {
+function mediathekfooter( $jss = array()) {
     ob_start();
-	if( DEBUG && false ) { 
+	if( DEBUG && false ) {
 		echo "<pre>".print_r( $_SERVER, true )."</pre>";
 		echo "<pre>".print_r( $_REQUEST, true )."</pre>";
 	}
 ?>
-  
+
     <script type="text/javascript" src="assets/js/jquery-2.1.3.min.js"></script>
     <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="assets/js/modernizr.js"></script>
@@ -20,15 +20,21 @@ function mediathekfooter() {
     <script type="text/javascript" src="assets/js/script.js"></script>
     <script type="text/javascript" src="js/mediathek_helper.js"></script>
     <script type="text/javascript" src="js/mediathek_gui.js"></script>
-	<script type="text/javascript" src="js/md5.min.js"></script>  
-	<script type="text/javascript" src="js/tether.min.js"></script>  
-	<script type="text/javascript" src="js/bootstrap-editable.js"></script>  
-	<script type="text/javascript" src="js/jstree.min.js"></script>  
-	
+	<script type="text/javascript" src="js/md5.min.js"></script>
+	<script type="text/javascript" src="js/tether.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap-editable.js"></script>
+	<script type="text/javascript" src="js/jstree.min.js"></script>
+<?php
+foreach( $jss as $js ) {
+?>
+    <script type="text/javascript" src="<?php echo $js; ?>"></script>
+<?php
+}
+ ?>
 	<script language="javascript">
 	   $( document ).ready(function() {
 		   return;
-		
+
 		   init();
 		   	$('#MTModal').on('shown.bs.modal', function (event) {
 				var button = $(event.relatedTarget) // Button that triggered the modal
@@ -42,17 +48,17 @@ function mediathekfooter() {
 				modal.find('.modal-title').html(user);
 				body = modal.find('.modal-body');
 				body.empty();
-			    
+
 				var str = '<p><?php global $session; echo htmlspecialchars( $session->shibGetMail()); ?><br /><b>Gruppen</b><br /><?php
 global $session;
 foreach( $session->getGroups() as $grp) {
 	echo htmlspecialchars( $grp )."<br />";
 }
 ?>';
-			
+
 				body.append( str );
 			  })
-		  
+
 			  $('#MTModal').on('hidden.bs.modal', function (event) {
 				var modal = $(this)
 				var button = $(event.relatedTarget) // Button that triggered the modal
@@ -61,7 +67,7 @@ foreach( $session->getGroups() as $grp) {
 				  return;
 				}
 			  })
-			  
+
 	   });
 	</script>
 
