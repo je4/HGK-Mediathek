@@ -47,14 +47,16 @@ class Helper {
 		if( $pass['check'] && !$card['valid'] ) return false;
 
 		$barcodeFile = $config['tmpprefix'].$card['barcode'].'.png';
-		$im     = imagecreatetruecolor(375, 25);
+		$im     = imagecreatetruecolor(375, 30);
 		$black  = ImageColorAllocate($im,0x00,0x00,0x00);
 		$white  = ImageColorAllocate($im,0xff,0xff,0xff);
-		imagefilledrectangle($im, 0, 0, 375, 25, $white);
-		$data = \Barcode::gd($im, $black, 375/2, 15, 0, "code39", $card['barcode'], 2, 20);
+		imagefilledrectangle($im, 0, 0, 375, 30, $white);
+		$data = \Barcode::gd($im, $black, 375/2, 18, 0, "code39", $card['barcode'], 2, 25);
 		imagepng( $im, $barcodeFile );
 
-		$cmd = "composite -gravity South ".escapeshellarg($barcodeFile)." nwallet_olten_strip.png ../html/test2.png";
+		$stripfile = $config['tmpprefix'].$card['barcode'].'_strip.png';
+		$cmd = "composite -gravity South ".escapeshellarg($barcodeFile)." ".escapeshellarg( $pass['strip'] )." ".escapeshellarg( $stripfile );
+		$result = shell_exec( $cmd );
 
 		$passFile = "{$pass['folder']}/{$serial}.pkpass";
 		if( file_exists( $passFile ))
@@ -135,7 +137,7 @@ class Helper {
 			$p->addImage($logo);
 
 			// Add strip image
-			$strip = new Image($pass['strip'], 'strip');
+			$strip = new Image(/* $pass['strip'] */ $stripfile, 'strip');
 			$p->addImage($strip);
 
 			// Add barcode
