@@ -30,7 +30,7 @@
   </style>
 </head>
 <body>
-  <form class="form-inline" method=GET action="https://mediathek.hgk.fhnw.ch/dev/search.php" target="_blank">
+  <form class="form-inline" method=GET action="search.php" target="_blank">
 
     <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="Suchbegriff" name="search">
     <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="inlineFormCustomSelect" name="facets[catalog][]">
