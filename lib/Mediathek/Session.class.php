@@ -21,7 +21,7 @@ class Session implements \SessionHandlerInterface
   {
 	$this->subnetsFHNW[] = new IPv6Net( "10.0.0.0/8" );
 	$this->subnetsFHNW[] = new IPv6Net( "192.168.0.0/16" );
-	$this->subnetsFHNW[] = new IPv6Net( "147.86.0.0/19" );
+	$this->subnetsFHNW[] = new IPv6Net( "147.86.0.0/16" );
 
     $this->db = $db;
     $this->server = $server;

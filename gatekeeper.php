@@ -18,7 +18,7 @@ if( !$session->isLoggedIn()) {
 	header( 'Location: auth/?target='.urlencode( $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']) );
 }
 
-echo mediathekheader('gatekeeper', 'Mediathek - Gatekeeper', '', array( 'css/jquery.dynatable.css' ));
+echo mediathekheader('gatekeeper', 'Mediathek - Gatekeeper', '', array( 'css/dataTables.bootstrap4.min.css' ));
 ?>
 
 <div class="back-btn"><i class="ion-ios-search"></i></div>
@@ -40,34 +40,34 @@ if( $session->inGroup( 'global/admin' )) {
 
 <div id="faq" role="tablist" aria-multiselectable="true">
 
-  <div class="card">
-    <div class="card-header" role="tab" id="eventsH">
-      <h5 class="card-title">
-        <a class="collapsed" data-toggle="collapse" data-parent="#faq" href="#events" aria-expanded="true" aria-controls="events">
-        Events
-        </a>
-      </h5>
-    </div>
-    <div id="events" class="collapse in" role="tabcard" aria-labelledby="eventsH">
-      <div class="card-block">
-        <table id="eventtable" class="table">
-          <thead>
-            <tr>
-              <th>Time</th>
-              <th>Gate</th>
-              <th>UID</th>
-              <th>AFI</th>
-              <th>Status</th>
-              <th>Item</th>
-              <th>ISIL</th>
-            </tr>
-          </thead>
-          <tbody>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
+	  <div class="card">
+	    <div class="card-header" role="tab" id="events2H">
+	      <h5 class="card-title">
+	        <a class="collapsed" data-toggle="collapse" data-parent="#faq" href="#events2" aria-expanded="true" aria-controls="events2">
+	        Events
+	        </a>
+	      </h5>
+	    </div>
+	    <div id="events" class="collapse in" role="tabcard" aria-labelledby="events2H">
+	      <div class="card-block">
+	        <table id="eventtable2" class="table">
+	          <thead>
+	            <tr>
+	              <th>Time</th>
+	              <th>Gate</th>
+	              <th>UID</th>
+	              <th>AFI</th>
+	              <th>Status</th>
+	              <th>Item</th>
+	              <th>ISIL</th>
+	            </tr>
+	          </thead>
+	          <tbody>
+	          </tbody>
+	        </table>
+	      </div>
+	    </div>
+	  </div>
 
 <div class="card">
   <div class="card-header" role="tab" id="hourGateH">
@@ -332,27 +332,29 @@ function init() {
 	google.charts.setOnLoadCallback(drawDayChart_n);
 	google.charts.setOnLoadCallback(drawDayChart_s);
 
-  $('#eventtable').dynatable({
-		dataset: {
-			ajax: true,
-			ajaxUrl: 'gatekeeper_event.php',
-			ajaxOnLoad: true,
-			records: []
-		},
-		table: {
-			defaultColumnIdStyle: 'camelCase',
-			columns: null,
-			headRowSelector: 'thead tr', // or e.g. tr:first-child
-			bodyRowSelector: 'tbody tr',
-			headRowClass: null
-		},
-	});
-
+ $('#eventtable2').DataTable( {
+	 serverSide: true,
+	 ajax: {
+			 url: 'gatekeeper_event2.php',
+			 type: 'POST'
+	 },
+	 "order": [[ 0, "desc" ]],
+	 "columnDefs": [ {
+    "targets": 5,
+    "render": function ( data, type, full, meta ) {
+      return '<a href="https://mediathek.hgk.fhnw.ch/detail.php?barcode='+data+'">'+data+'</a>';
+    }
+  } ]
+ });
 
 }
 </script>
 
 
 <?php
-echo mediathekfooter( array( "https://www.gstatic.com/charts/loader.js", "js/jquery.dynatable.js" ));
+echo mediathekfooter( array( 'https://www.gstatic.com/charts/loader.js'
+//	, 'js/jquery.dynatable.js'
+	, 'js/jquery.dataTables.min.js'
+	, 'js/dataTables.bootstrap4.min.js'
+ ));
 ?>

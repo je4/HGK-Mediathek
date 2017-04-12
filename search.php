@@ -29,6 +29,10 @@ $topicmap = array(
 );
 
 // get request values
+$search = isset( $_REQUEST['search'] ) ? $_REQUEST['search'] : null;
+$facets = isset( $_REQUEST['facets'] ) ? $_REQUEST['facets'] : null;
+
+
 $query = isset( $_REQUEST['query'] ) ? $_REQUEST['query'] : null;
 $q = isset( $_REQUEST['q'] ) ? strtolower( trim( $_REQUEST['q'] )): null;
 $page = isset( $_REQUEST['page'] ) ? intval( $_REQUEST['page'] ) : 0;
@@ -54,7 +58,6 @@ function buildPagination() {
 </nav>
 <?php
 }
-
 
 
 if( $query ) {
@@ -89,12 +92,19 @@ if( !$qobj ) {
 		$qobj['facets'] = array();
 		$qobj['filter'] = array();
 		$qobj['area'] = '';
-		$qobj['facets']['catalog'] = $config['defaultcatalog'];
-		$qobj['query'] = '*';
+		if( is_array( $facets )) $qobj['facets'] = $facets;
+		else $qobj['facets']['catalog'] = $config['defaultcatalog'];
+		$qobj['query'] = $search ? $search : '*';
 		$query = json_encode( $qobj );
 		$q = md5($query);
 		Helper::writeQuery( $q, $qobj, $query );
 		$session->storeQuery( $q );
+
+		if( $search && false ) {
+			var_dump( $_REQUEST );
+			exit;
+		}
+
 		header("Location: ?q={$q}&page={$page}&pagesize={$pagesize}");
 		exit;
 	}

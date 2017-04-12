@@ -24,6 +24,8 @@
 
 namespace Mediathek;
 
+include( dirname(__DIR__).'/php-barcode.php' );
+
 use \Passbook\Pass\Field;
 use \Passbook\Pass\Location;
 use \Passbook\Pass\Image;
@@ -43,6 +45,16 @@ class Helper {
 
 		if( !$card || !$pass ) return false;
 		if( $pass['check'] && !$card['valid'] ) return false;
+
+		$barcodeFile = $config['tmpprefix'].$card['barcode'].'.png';
+		$im     = imagecreatetruecolor(375, 25);
+		$black  = ImageColorAllocate($im,0x00,0x00,0x00);
+		$white  = ImageColorAllocate($im,0xff,0xff,0xff);
+		imagefilledrectangle($im, 0, 0, 375, 25, $white);
+		$data = \Barcode::gd($im, $black, 375/2, 15, 0, "code39", $card['barcode'], 2, 20);
+		imagepng( $im, $barcodeFile );
+
+		$cmd = "composite -gravity South ".escapeshellarg($barcodeFile)." nwallet_olten_strip.png ../html/test2.png";
 
 		$passFile = "{$pass['folder']}/{$serial}.pkpass";
 		if( file_exists( $passFile ))
