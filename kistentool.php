@@ -22,10 +22,10 @@ echo mediathekheader('kiste', null, '');
 			-o-background-size: cover;">
 				<div class="container" style="background-color: rgba(255, 255, 255, 0.9);">
 					<h1>Medien finden</h1>
-					<p>Mit Hilfe dieses Werkzeuges können Medien in dem Räumlichkeiten der Mediathek lokalisiert werden. Einfach eine Signatur eintippen, dann wird die zugehörige Kiste angezeigt. 
+					<p>Mit Hilfe dieses Werkzeuges können Medien in dem Räumlichkeiten der Mediathek lokalisiert werden. Einfach eine Signatur eintippen, dann wird die zugehörige Kiste angezeigt.
 					Alternativ können auch Kistennummern gesucht werden, um sämtliche Medien, die sich darin befinden, anzuzeigen.</p>
 					</div>
-			</div>	
+			</div>
 		<div class="row" style="margin-bottom: 30px;">
 		  <div class="col-md-offset-2 col-md-8">
 			<div class="input-group">
@@ -42,38 +42,38 @@ echo mediathekheader('kiste', null, '');
 ?>
 			</div>
 		</div>
-			
+
 		</div>
 	   </div>
-		
+
 	   <div class="row">
 
 	   </div>
 	</div>
 
-	
+
 <?php
 
 ?>
 <script src="js/threejs/build/three.js"></script>
 <script src="js/threejs/build/TrackballControls.js"></script>
 <script src="js/threejs/build/OrbitControls.js"></script>
-<script src="js/threejs/build/CombinedCamera.js"></script>   
-<!-- script src="mediathek2.js"></script -->   
-<script src="js/mediathek.js"></script>   
+<script src="js/threejs/build/CombinedCamera.js"></script>
+<!-- script src="mediathek2.js"></script -->
+<script src="js/mediathek.js"></script>
 <script src="js/mediathek3d.js"></script>
 <script src="js/threex.domresize.js"></script>
 
 
 <?php
-include( 'bgimage.inc.php' );
+//include( 'bgimage.inc.php' );
 ?>
 <script>
 
 function loadResult() {
 	  text = $(".search-query").val();
 	  console.log( text );
-	  if( text.length <= 2 ) { 
+	  if( text.length <= 2 ) {
 		$("#result").html("");
 		return;
 	  }
@@ -81,12 +81,12 @@ function loadResult() {
 //                alert("loaded");
             });
 }
-   
+
 function init() {
    $(".search-query").keyup(function() {
 	   loadResult();
    });
-   
+
 	$('#MTModal').on('shown.bs.modal', function (event) {
 	  var button = $(event.relatedTarget) // Button that triggered the modal
 	  var kiste = button.data('kiste') // Extract info from data-* attributes
@@ -121,13 +121,11 @@ function init() {
 	  mediathek = null;
 	  mediathek3D = null;
 	})
-	
-   
-   
+
+
+
 }
-</script>   
+</script>
 <?php
 echo mediathekfooter();
 ?>
-
-  
