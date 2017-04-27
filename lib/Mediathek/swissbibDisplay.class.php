@@ -493,10 +493,6 @@ if( DEBUG ) {
 ?>
 				</i></p>
 <?php
-				$url = $entity->getCoverImg();
-				if( $url ) echo "<object type=\"image/jpeg\" data=\"{$url}\"></object><br />\n";
-
-
 				$publishers = $entity->getPublisher();
 				$city = $entity->getCity();
 				$year = $entity->getYear();
