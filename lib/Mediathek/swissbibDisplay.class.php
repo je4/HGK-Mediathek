@@ -198,10 +198,6 @@ class swissbibDisplay extends DisplayEntity {
 							}
 ?>
 							Quelle: <?php  echo $this->doc->source; ?><br />
-<?php
-							$url = $entity->getCoverImg();
-							if( $url ) echo "<object type=\"image/jpeg\" data=\"{$url}\"></object><br />\n";
-?>
 							<div id='RIB'></div>
 					</div>
 				</div>
