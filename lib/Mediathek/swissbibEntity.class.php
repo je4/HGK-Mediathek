@@ -46,7 +46,8 @@ class swissbibEntity extends SOLRSource {
     private $urls = null;
     private $urls_notes = null;
     private $signatures = null;
-	private $libs = null;
+		private $libs = null;
+		private $libsigcode = null;
     private $online = null;
     private $openaccess = null;
 	private $codes = null;
@@ -188,7 +189,7 @@ class swissbibEntity extends SOLRSource {
 		$this->openaccess = null;
 		$this->codes = null;
 		$this->sourceids = null;
-
+		$this->libsigcode = null;
     }
 
 	function loadNode( $id, $record, $idprefix ) {
@@ -446,63 +447,84 @@ class swissbibEntity extends SOLRSource {
         	$this->signatures = array();
         	$this->locations = array();
         	$this->libCodes = array();
-			$this->libs = array();
+					$this->libsigcode = array();
+					$this->libs = array();
         	//print_r( $this->data );
         	foreach( array( '949', '852' ) as $fld ) {
 	        	$rs = $this->findField( $fld );
 	        	foreach( $rs as $r ) {
-	        		$lib = null;
-	        		$sig = null;
-	        		$verbund = null;
-	        		$bar = null;
-	        		$full = null;
-					foreach( $r as $code=>$val ) {
-						//continue;
-						switch( $code ) {
-							case 'O':
-								$full = trim( implode( '/', $val ));
-								break;
-							case 'b':
-								$lib = trim( implode( '/', $val ));
-								break;
-							case 'j':
-								$sig = trim( implode( '/', $val ));
-								break;
-							case 'B':
-								$verbund = trim( implode( '/', $val ));
-								break;
-							case 'p':
-								$bar = trim( implode( '/', $val ));
-								break;
-							default:
-								break;
-						}
-					}
-					//echo "verbund: $verbund // lib: $lib // sig: $sig // bar: $bar <br />\n";
-					if( $verbund != null && $lib != null ) {
-						if( $sig != null ) $this->signatures[] = "signature:{$verbund}:{$lib}:{$sig}";
-						if( $this->getOnline()) $this->signatures[] = "signature:{$verbund}:{$lib}:online";
-						if( $bar != null ) {
-							$this->signatures[] = "barcode:{$verbund}:{$lib}:{$bar}";
-							$sql = "SELECT marker FROM location WHERE verbund=".$this->db->qstr( $verbund ).
-								" AND library=".$this->db->qstr( $lib ).
-								" AND itemid=".$this->db->qstr( $bar );
-							$loc = $this->db->GetOne( $sql );
-							if( $loc ) {
-								$this->locations[] = "{$verbund}:{$lib}:{$loc}";
-							}
+		        		$lib = null;
+		        		$sig = null;
+		        		$verbund = null;
+		        		$bar = null;
+		        		$full = null;
+								foreach( $r as $code=>$val ) {
+									//continue;
+									switch( $code ) {
+										case 'O':
+											$full = trim( implode( '/', $val ));
+											break;
+										case 'b':
+											$lib = trim( implode( '/', $val ));
+											break;
+										case 'j':
+											$sig = trim( implode( '/', $val ));
+											break;
+										case 'B':
+											$verbund = trim( implode( '/', $val ));
+											break;
+										case 'p':
+											$bar = trim( implode( '/', $val ));
+											break;
+										default:
+											break;
+									}
+								}
+								//echo "verbund: $verbund // lib: $lib // sig: $sig // bar: $bar <br />\n";
+								if( $verbund != null && $lib != null ) {
+									if( $sig != null ) $this->signatures[] = "signature:{$verbund}:{$lib}:{$sig}";
+									if( $this->getOnline()) $this->signatures[] = "signature:{$verbund}:{$lib}:online";
+									if( $bar != null ) {
+										$this->signatures[] = "barcode:{$verbund}:{$lib}:{$bar}";
+										$sql = "SELECT marker FROM location WHERE verbund=".$this->db->qstr( $verbund ).
+											" AND library=".$this->db->qstr( $lib ).
+											" AND itemid=".$this->db->qstr( $bar );
+										$loc = $this->db->GetOne( $sql );
+										if( $loc ) {
+											$this->locations[] = "{$verbund}:{$lib}:{$loc}";
+										}
 
-						}
-					}
-					if( $lib != null ) $this->libCodes[] = $lib;
-					if( $lib != null && $full != null ) $this->libs[$lib] = $full;
-				}
+									}
+									$this->libsigcode[] = array(
+										  'verbund'=>$verbund
+								 		, 'lib'=>$lib
+										, 'sig'=>$sig
+									  , 'bar'=>$bar
+									);
+								}
+								if( $lib != null ) $this->libCodes[] = $lib;
+								if( $lib != null && $full != null ) $this->libs[$lib] = $full;
+							}
         	}
         }
         $this->libCodes = array_unique( $this->libCodes );
         return $this->signatures;
-
     }
+
+		public function getSigCode( $verbund, $lib ) {
+			if( $this->libsigcode == null ) {
+				$this->getSignatures();
+			}
+//			print_r( $this->libsigcode );
+//			print_r( $this->getCategories());
+			$result = array();
+			foreach( $this->libsigcode as $lsc ) {
+				if( $lsc['verbund'] == $verbund && $lsc['lib'] == $lib ) {
+					$result[$lsc['bar']] = $lsc['sig'];
+				}
+			}
+			return $result;
+		}
 
     public function getAuthors() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );

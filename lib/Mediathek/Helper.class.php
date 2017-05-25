@@ -212,6 +212,7 @@ class Helper {
                 case 'source':
                 case 'location':
                 case 'signature':
+								case 'issue':
                     $fields[] = $key;
                 break;
 				        case 'kiste':

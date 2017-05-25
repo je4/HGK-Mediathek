@@ -465,7 +465,7 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 					<div class="checkbox checkbox-green">
 						<input class="facet" type="checkbox" id="cluster" value="<?php echo htmlentities($value); ?>" <?php if( @is_array( $qobj['facets']['cluster'] ) && array_search($value, $qobj['facets']['cluster']) !== false ) { echo " checked"; } ?>>
 						<label for="cluster<?php echo $i; ?>">
-							<?php echo htmlspecialchars( $value ).' ('.number_format( $count, 0, '.', "'" ).')'; ?>
+							<?php echo ( $value ).' ('.number_format( $count, 0, '.', "'" ).')'; ?>
 						</label>
 					</div>
 <?php

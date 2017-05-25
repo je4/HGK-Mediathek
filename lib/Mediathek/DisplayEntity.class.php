@@ -34,25 +34,45 @@ abstract class DisplayEntity {
     public function __construct( $doc, $urlparams, $db, $highlightedDoc  ) {
         $this->doc = $doc;
 		$this->urlparams = $urlparams;
-		$this->db = null;
+		$this->db = $db;
         $this->data = gzdecode( base64_decode( $doc->metagz ));
  //       echo "<!--\n".$this->data."\n-->\n";
 		$this->highlight = $highlightedDoc;
     }
 
-	public function getHeading() {
-		$html = '';
+    public function getHeading() {
+  		$html = '';
 
-        ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
-?>
-		                    <h2 class="small-heading">Mediathek</h2>
+          ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
+  ?>
+  		                    <h2 class="small-heading">Mediathek</h2>
 
-					<div class="container-fluid" style="margin-top: 0px; padding: 0px 20px 20px 20px;">
-<?php
-        $html .= ob_get_contents();
-        ob_end_clean();
-		return $html;
-	}
+  					<div class="container-fluid" style="margin-top: 0px; padding: 0px 20px 20px 20px;">
+  <?php
+          $html .= ob_get_contents();
+          ob_end_clean();
+  		return $html;
+  	}
+
+    public function getMainHeading() {
+      $html = '';
+
+          ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
+  ?>
+  <div class="image-container col-md-1 col-sm-12">
+      <div class="mask">
+      </div>
+      <div style="left: 20%;" class="main-heading">
+          <h1>Detail</h1>
+      </div>
+  </div>
+  <?php
+          $html .= ob_get_contents();
+          ob_end_clean();
+      return $html;
+    }
+
+
 
 	public function getCatalogList() {
 		global $config;
