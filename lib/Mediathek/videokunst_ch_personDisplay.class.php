@@ -113,16 +113,19 @@ class videokunst_ch_personDisplay extends DisplayEntity {
 	</div>
 	<div class="col-md-6">
 
-    <?php if( strlen( $this->metadata['artisttext'])) { ?>
 		<div style="">
 			<span style="; font-weight: bold;">Beschreibung</span><br />
 		<div class="facet" style="padding-bottom: 5px;">
 			<div class="marker" style=""></div>
+			<b>Direktlink auf videokunst.ch</b><br />
+			<i class="fa fa-external-link" aria-hidden="true"></i><a href="redir.php?id=<?php echo urlencode( $this->doc->id ).'&url='.urlencode( $this->metadata['artistlink'] )."\" target=\"blank\">".htmlspecialchars( $this->metadata['artistlink'] ); ?></a><br />
+			<?php if( strlen( trim($this->metadata['artisttext']))) { ?>
+			&nbsp;<br />
 			<?php echo $this->metadata['artisttext']; ?><br />
+			<?php } ?>
 	</div>
 </div>
 <?php
-  }
 
   if( strlen( $this->metadata['bio1'])) { ?>
   <div style="">
@@ -130,10 +133,10 @@ class videokunst_ch_personDisplay extends DisplayEntity {
   <div class="facet" style="padding-bottom: 5px;">
     <div class="marker" style=""></div>
     <?php echo $this->metadata['bio1']; ?><br />
-    <?php if( strlen( $this->metadata['bio2'])) { ?>
+    <?php if( @strlen( $this->metadata['bio2'])) { ?>
       <?php echo $this->metadata['bio2']; ?><br />
     <?php } ?>
-    <?php if( strlen( $this->metadata['bio3'])) { ?>
+    <?php if( @strlen( $this->metadata['bio3'])) { ?>
       <?php echo $this->metadata['bio3']; ?><br />
     <?php } ?>
 </div>
@@ -179,6 +182,7 @@ class videokunst_ch_personDisplay extends DisplayEntity {
 	$qstr = "({$qstr}) AND -id:".$helper->escapeTerm( $this->doc->id );
 	//echo "\n<!-- {$qstr} -->\n";
 	$squery->setQuery( $qstr );
+	$squery->createFilterQuery('source')->setQuery('source:videokunst_ch_work OR source:videokunst_ch_person');
 	$rs = $solrclient->select( $squery );
 	$numResults = $rs->getNumFound();
 	$numPages = floor( $numResults / 500 );

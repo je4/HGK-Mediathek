@@ -106,6 +106,8 @@ class videokunst_ch_workEntity extends SOLRSource {
     }
 
     public function getYear() {
+        $y = intval( $this->data['viddate']);
+        if( $y ) return $y;
         return null;
     }
 

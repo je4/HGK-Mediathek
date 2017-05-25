@@ -99,22 +99,23 @@ class videokunst_ch_workDisplay extends DisplayEntity {
 		<span style="; font-weight: bold;">Aktuelles Objekt</span><br>
 		<div class="facet" style="">
 			<div class="marker" style=""></div>
-			<h5><?php
+			<h5><span style="font-weight: normal; font-size: 1.1rem;"><?php
       $first = true;
 					$author = $this->metadata['artistname'];
 					?>
 					<a href="javascript:doSearchFull('author:&quot;<?php echo htmlspecialchars( $author ); ?>&quot;', '', [], {'catalog':[<?php echo $this->getCatalogList(); ?>]}, 0, <?php echo $pagesize; ?> );">
 						<?php echo htmlspecialchars( $author ); ?>
-					</a>
+					</a></span>
 					<?php
 
+        echo '<br />'.htmlentities( $this->metadata['vidtitel'] );
+				if( $this->entity->getYear() ) {
+						?>
+							<span style="font-size: 80%;">(<?php echo htmlspecialchars( $this->entity->getYear() );?>)</span>
+						<?php
+				}
+				?>
 
-
-
-
-
-        echo ': '.htmlentities( $this->metadata['vidtitel'] );?>
-        <span style="font-size: 80%;"><?php echo htmlspecialchars( $this->entity->getYear() );?></span>
       </h5>
     </span>
 		</div>
@@ -123,9 +124,55 @@ class videokunst_ch_workDisplay extends DisplayEntity {
 
     <?php if( strlen( $this->metadata['vidtext'])) { ?>
 		<div style="">
-			<span style="; font-weight: bold;">Beschreibung</span><br />
+			<span style="; font-weight: bold;">Werk</span><br />
 		<div class="facet" style="padding-bottom: 5px;">
 			<div class="marker" style=""></div>
+<?php
+	if( file_exists( "{$config['videokunst.ch']['mediapath']}/{$this->doc->originalid}_00003.png" )) {
+		$shots = glob( "{$config['videokunst.ch']['mediapath']}/{$this->doc->originalid}_*" );
+		$n = max( floor( count( $shots ) / 4 ), 1 );
+?>
+	<center>
+      <table style="width: 100%">
+        <tr>
+          <td rowspan="4" style="width: 80%; padding-right: 5px; text-align: right;">
+            <img style="max-width: 100%; height: 288px;" id="mainimg" src="<?php echo $config['videokunst.ch']['mediaurl'].substr( $shots[$n-1], strlen( "{$config['videokunst.ch']['mediapath']}" )); ?>" />
+          </td>
+					<td style="width: 20%; height: 96px; background-image: url(<?php echo $config['videokunst.ch']['mediaurl'].substr( $shots[$n-1], strlen( "{$config['videokunst.ch']['mediapath']}" )); ?>); background-size: cover;">
+						<div style="width: 100%; height: 100%;" onclick="$('#mainimg').attr( 'src', '<?php echo $config['videokunst.ch']['mediaurl'].substr( $shots[$n-1], strlen( "{$config['videokunst.ch']['mediapath']}" )); ?>');">
+						</div>
+          </td>
+        </tr>
+        <tr>
+					<td style="width: 20%; height: 96px; background-image: url(<?php echo $config['videokunst.ch']['mediaurl'].substr( $shots[2*$n-1], strlen( "{$config['videokunst.ch']['mediapath']}" )); ?>); background-size: cover;">
+						<div style="width: 100%; height: 100%;" onclick="$('#mainimg').attr( 'src', '<?php echo $config['videokunst.ch']['mediaurl'].substr( $shots[2*$n-1], strlen( "{$config['videokunst.ch']['mediapath']}" )); ?>');">
+						</div>
+          </td>
+				</tr>
+				<tr>
+          <td style="width: 20%; height: 96px; background-image: url(<?php echo $config['videokunst.ch']['mediaurl'].substr( $shots[3*$n-1], strlen( "{$config['videokunst.ch']['mediapath']}" )); ?>); background-size: cover;">
+						<div style="width: 100%; height: 100%;" onclick="$('#mainimg').attr( 'src', '<?php echo $config['videokunst.ch']['mediaurl'].substr( $shots[3*$n-1], strlen( "{$config['videokunst.ch']['mediapath']}" )); ?>');">
+						</div>
+          </td>
+				</tr>
+				<tr>
+					<td style="height: 100%;"></td>
+        </tr>
+      </table>
+		</center>
+<?php
+	}
+?>
+	&nbsp;<br />
+	<b>Direktlink auf videokunst.ch</b><br />
+	<i class="fa fa-external-link" aria-hidden="true"></i><a href="redir.php?id=<?php echo urlencode( $this->doc->id ).'&url='.urlencode( $this->metadata['vidhtml'] )."\" target=\"blank\">".htmlspecialchars( $this->metadata['vidhtml'] ); ?></a><br />
+</div>
+</div>
+<div style="">
+	<span style="; font-weight: bold;">Beschreibung</span><br />
+<div class="facet" style="padding-bottom: 5px;">
+	<div class="marker" style=""></div>
+
 			<?php echo $this->metadata['vidtext']; ?><br />
 	</div>
 </div>
@@ -170,6 +217,7 @@ class videokunst_ch_workDisplay extends DisplayEntity {
 //	$qstr = "({$qstr}) AND -id:".$helper->escapeTerm( $this->doc->id );
 	//echo "\n<!-- {$qstr} -->\n";
 	$squery->setQuery( $qstr );
+	$squery->createFilterQuery('source')->setQuery('source:videokunst_ch_work OR source:videokunst_ch_person');
 	$rs = $solrclient->select( $squery );
 	$numResults = $rs->getNumFound();
 	$numPages = floor( $numResults / 500 );
@@ -258,6 +306,11 @@ class videokunst_ch_workDisplay extends DisplayEntity {
             </td>
             <td class="detail">
                 <div class="collapse" id="coll_<?php echo str_replace( '.', '_', $this->doc->id); ?>">
+									<?php
+										if( file_exists( "{$config['videokunst.ch']['mediapath']}/{$this->doc->originalid}_00003.png" )) {
+											?><img width="120" src="<?php echo "{$config['videokunst.ch']['mediaurl']}/{$this->doc->originalid}_00003.png"; ?>" /><br /><?php
+										}
+									?>
                   <?php
                   				$first = true;
                   				foreach( $authors as $author ) {
@@ -267,6 +320,7 @@ class videokunst_ch_workDisplay extends DisplayEntity {
                   				if( count( $authors ) > 0 ) echo "<br />\n";
                   ?>
 					<!--<i class="fa fa-external-link" aria-hidden="true"></i> <a href="http://www.imdb.com/find?ref_=nv_sr_fn&q=<?php echo urlencode(trim($this->metadata['Titel1'] )); ?>&s=all" target="_blank"><img src="img/imdb.png"></a><br /> -->
+					<i class="fa fa-external-link" aria-hidden="true"></i><a href="redir.php?id=<?php echo urlencode( $this->doc->id ).'&url='.urlencode( $this->metadata['vidhtml'] )."\" target=\"blank\">".htmlspecialchars( $this->metadata['vidhtml'] ); ?></a><br />
 
 					ID: <?php echo $this->doc->id; ?><br />
 					<a href="detail.php?<?php echo "id=".urlencode( $this->doc->id ); foreach( $this->urlparams as $key=>$val ) echo '&'.$key.'='.urlencode($val); ?>"><i class="fa fa-folder-open" aria-hidden="true"></i> Details</a><br />
