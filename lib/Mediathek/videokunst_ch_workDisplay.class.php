@@ -130,28 +130,32 @@ class videokunst_ch_workDisplay extends DisplayEntity {
 <?php
 	if( file_exists( "{$config['videokunst.ch']['mediapath']}/{$this->doc->originalid}_00003.png" )) {
 		$shots = glob( "{$config['videokunst.ch']['mediapath']}/{$this->doc->originalid}_*" );
-		$n = max( floor( count( $shots ) / 4 ), 1 );
+		$n = max( floor( count( $shots ) / 3 ), 1 );
+//		print_r( $shots );
+//		echo "{$n}\n";
+		$diff = -1;
+		if( $n == 1 && count( $shots ) > 3 ) $diff = 0;
 ?>
 	<center>
       <table style="width: 100%">
         <tr>
           <td rowspan="4" style="width: 80%; padding-right: 5px; text-align: right;">
-            <img style="max-width: 100%; height: 288px;" id="mainimg" src="<?php echo $config['videokunst.ch']['mediaurl'].substr( $shots[$n-1], strlen( "{$config['videokunst.ch']['mediapath']}" )); ?>" />
+            <img style="max-width: 100%; height: 288px;" id="mainimg" src="<?php echo $config['videokunst.ch']['mediaurl'].substr( $shots[$n+$diff], strlen( "{$config['videokunst.ch']['mediapath']}" )); ?>" />
           </td>
-					<td style="width: 20%; height: 96px; background-image: url(<?php echo $config['videokunst.ch']['mediaurl'].substr( $shots[$n-1], strlen( "{$config['videokunst.ch']['mediapath']}" )); ?>); background-size: cover;">
-						<div style="width: 100%; height: 100%;" onclick="$('#mainimg').attr( 'src', '<?php echo $config['videokunst.ch']['mediaurl'].substr( $shots[$n-1], strlen( "{$config['videokunst.ch']['mediapath']}" )); ?>');">
+					<td style="width: 20%; height: 96px; background-image: url(<?php echo $config['videokunst.ch']['mediaurl'].substr( $shots[$n+$diff], strlen( "{$config['videokunst.ch']['mediapath']}" )); ?>); background-size: cover;">
+						<div style="width: 100%; height: 100%;" onclick="$('#mainimg').attr( 'src', '<?php echo $config['videokunst.ch']['mediaurl'].substr( $shots[$n+$diff], strlen( "{$config['videokunst.ch']['mediapath']}" )); ?>');">
 						</div>
           </td>
         </tr>
         <tr>
-					<td style="width: 20%; height: 96px; background-image: url(<?php echo $config['videokunst.ch']['mediaurl'].substr( $shots[2*$n-1], strlen( "{$config['videokunst.ch']['mediapath']}" )); ?>); background-size: cover;">
-						<div style="width: 100%; height: 100%;" onclick="$('#mainimg').attr( 'src', '<?php echo $config['videokunst.ch']['mediaurl'].substr( $shots[2*$n-1], strlen( "{$config['videokunst.ch']['mediapath']}" )); ?>');">
+					<td style="width: 20%; height: 96px; background-image: url(<?php echo $config['videokunst.ch']['mediaurl'].substr( $shots[2*$n+$diff], strlen( "{$config['videokunst.ch']['mediapath']}" )); ?>); background-size: cover;">
+						<div style="width: 100%; height: 100%;" onclick="$('#mainimg').attr( 'src', '<?php echo $config['videokunst.ch']['mediaurl'].substr( $shots[2*$n+$diff], strlen( "{$config['videokunst.ch']['mediapath']}" )); ?>');">
 						</div>
           </td>
 				</tr>
 				<tr>
-          <td style="width: 20%; height: 96px; background-image: url(<?php echo $config['videokunst.ch']['mediaurl'].substr( $shots[3*$n-1], strlen( "{$config['videokunst.ch']['mediapath']}" )); ?>); background-size: cover;">
-						<div style="width: 100%; height: 100%;" onclick="$('#mainimg').attr( 'src', '<?php echo $config['videokunst.ch']['mediaurl'].substr( $shots[3*$n-1], strlen( "{$config['videokunst.ch']['mediapath']}" )); ?>');">
+          <td style="width: 20%; height: 96px; background-image: url(<?php echo $config['videokunst.ch']['mediaurl'].substr( $shots[3*$n+$diff], strlen( "{$config['videokunst.ch']['mediapath']}" )); ?>); background-size: cover;">
+						<div style="width: 100%; height: 100%;" onclick="$('#mainimg').attr( 'src', '<?php echo $config['videokunst.ch']['mediaurl'].substr( $shots[3*$n+$diff], strlen( "{$config['videokunst.ch']['mediapath']}" )); ?>');">
 						</div>
           </td>
 				</tr>

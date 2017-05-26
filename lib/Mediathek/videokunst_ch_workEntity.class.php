@@ -31,7 +31,7 @@ namespace Mediathek;
 
 class videokunst_ch_workEntity extends SOLRSource {
 
-    private $idprefix = 'videokunst_ch_work';
+    private $idprefix = 'videokunst_ch';
     private $db = null;
 
 

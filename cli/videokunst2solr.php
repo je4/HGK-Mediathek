@@ -52,7 +52,6 @@ for( $i = 1; $i < 20; $i++ ) {
   }
 }
 
-/*
 foreach( $data['artist'] as $artistid=>$artist ) {
   foreach( $artist['video'] as $videoid=>$video ) {
     foreach( array( 'artistlink', 'artistname', 'artisttext', 'bio1', 'bio2', 'bio3' ) as $classname ) {
@@ -63,6 +62,7 @@ foreach( $data['artist'] as $artistid=>$artist ) {
   unset( $data['artist'][$artistid]['video'] );
 }
 
+/*
 unlink( $wgetfile );
 foreach( $data['video'] as $k=>$v ) {
   if( !file_exists( '/data/www/vhosts/mediathek.fhnw.ch/content/videokunst.ch/'.substr( $v['vid-mp4'], strlen( 'http://web199.login-67.hoststar.ch/images/' )))) {
@@ -71,9 +71,8 @@ foreach( $data['video'] as $k=>$v ) {
   file_put_contents( $wgetfile, "ffmpeg -i ".escapeshellarg( $v['vid-mp4'] )." -r 0.05 -f image2 shots/{$k}_%05d.png\n", FILE_APPEND );
 
 }
-
-exit;
 */
+
 
 $entity = new videokunst_ch_personEntity( $db );
 

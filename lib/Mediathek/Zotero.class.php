@@ -100,8 +100,9 @@ class Zotero {
             $this->db->Execute( $sql );
             $id = $this->db->insert_Id();
           }
-          $sql = "INSERT INTO zotero.creators2items( itemKey, role, creatorsId ) VALUES(
-              ".$this->db->qstr( $i['key'] )."
+          $sql = "INSERT INTO zotero.creators2items( itemKey, libraryId, role, creatorsId ) VALUES(
+            ".$this->db->qstr( $i['key'] )."
+            , {$i['library']['id']}
             , ".$this->db->qstr( $c['creatorType'] )."
             , {$id}
           );";
@@ -110,8 +111,9 @@ class Zotero {
         $sql = "DELETE FROM zotero.items2collections WHERE itemKey=".$this->db->qstr( $i['key'] );
         $this->db->Execute( $sql );
         if( @is_array( $i['data']['collections'] )) foreach( $i['data']['collections'] as $k ) {
-          $sql = "INSERT INTO zotero.items2collections( itemKey, collectionsKey ) VALUES(
+          $sql = "INSERT INTO zotero.items2collections( itemKey, libraryId, collectionsKey ) VALUES(
               ".$this->db->qstr( $i['key'] )."
+              , {$i['library']['id']}
             , ".$this->db->qstr( $k )."
           );";
           $this->db->Execute( $sql );
