@@ -6,22 +6,24 @@ include '../init.inc.php';
 
 $hdlprefix = '20.500.11806/mediathek/';
 $urlbase = 'https://mediathek.hgk.fhnw.ch/detail.php?id=';
-$apiurl = 'https://api.zotero.org';
-$apikey = 'XxuGdxZuXiB1epXH8B9XX2oR';
 $groups = array( 1387750 );
 
 $solr = new SOLR( $solrclient );
 
 
-$zotero = new Zotero( $db, $apiurl, $apikey );
-
-foreach( $groups as $group ) {
-  $zotero->syncItems( $group );
+$zotero = new Zotero( $db, $config['zotero']['apiurl'], $config['zotero']['apikey'], $config['zotero']['mediapath'], STDOUT );
+try {
+  foreach( $groups as $group ) {
+        $zotero->syncItems( $group );
+  }
+} catch (\ADODB_Exception $e) {
+  var_dump($e);
+  adodb_backtrace($e->gettrace());
 }
-
 exit;
 
 $entity = new videokunst_ch_workEntity( $db );
+
 
 $cnt = 1;
 foreach( $data['video'] as $video ) {
