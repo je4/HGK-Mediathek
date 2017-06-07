@@ -25,6 +25,7 @@
 namespace Mediathek;
 
 use \Httpful\Request;
+use \Mediathek\Zotero\Item;
 
 class Zotero {
   var $db;
@@ -73,7 +74,7 @@ class Zotero {
 
   function syncCollection( $id ) {
     $this->log( "Syncing collections of group: {$id}" );
-    $sql = "SELECT MAX(version) FROM zotero.collection WHERE librarid={$id}";
+    $sql = "SELECT MAX(version) FROM zotero.collections WHERE libraryid={$id}";
     $lastversion = intval($this->db->GetOne( $sql ));
     $uri = $this->apiurl.'/groups/'.$id."/collections?since={$lastversion}";
     $response = Request::get( $uri )
@@ -94,123 +95,193 @@ class Zotero {
         'data'=>null,
       );
       $this->db->Replace( 'zotero.collections', $replace, array( '`key`', 'libraryid' ), $autoquote=true );
-      $this->db->UpdateBlob( 'zotero.collections', 'data', gzencode( $response ), "`key`=".$this->db->qstr( $c['key'] )." AND libraryid={$id}" );
+      $this->db->UpdateBlob( 'zotero.collections', 'data', gzencode( json_encode( $c ) ), "`key`=".$this->db->qstr( $c['key'] )." AND libraryid={$id}" );
     }
   }
 
-  function syncItems( $groupid ) {
-    $this->syncGroup( $groupid );
-    $this->syncCollection( $groupid );
+  function syncItem( $id, $item, $trash ) {
+    @$this->log( "   {$id}:{$item['key']} ".($trash?"[TRASH] ":"")."{$item['data']['itemType']} - {$item['data']['title']}" );
+    $replace = array(
+      '`key`'=>$item['key'],
+      'libraryid'=>$id,
+      'version'=>$item['version'],
+      'parentKey'=>array_key_exists( 'parentItem', $item['data'] ) ? $item['data']['parentItem'] : null,
+      'itemType'=>$item['data']['itemType'],
+      'linkMode'=>array_key_exists( 'linkMode', $item['data'] ) ? $item['data']['linkMode'] : null,
+      'title'=>array_key_exists( 'title', $item['data'] ) ? $item['data']['title'] : null,
+      'trash'=>$trash,
+      'dateModified'=>$item['data']['dateModified'],
+      'dateAdded'=>$item['data']['dateAdded'],
+      'data'=>null,
+    );
+    $this->db->Replace( 'zotero.items', $replace, array( '`key`', 'libraryid' ), $autoquote = true );
+    $this->db->UpdateBlob( 'zotero.items', 'data', gzencode( json_encode( $item )), "`key`=".$this->db->qstr( $item['key'] )." AND libraryid={$id}" );
 
-    $this->log( "Syncing items of group: {$groupid}" );
+    $sql = "DELETE FROM zotero.creators2items WHERE itemKey=".$this->db->qstr( $item['key'] );
+    $this->db->Execute( $sql );
 
-    $sql = "SELECT numItems FROM zotero.groups WHERE id={$groupid}";
-    $numItems = intval( $this->db->getOne( $sql ));
+    if( @is_array( $item['data']['creators'] )) foreach( $item['data']['creators'] as $c ) {
+      $sql = "SELECT id FROM zotero.creators
+        WHERE ".(array_key_exists( 'lastName', $c ) ? "lastName LIKE ".$this->db->qstr( $c['lastName'] )." AND firstName LIKE ".$this->db->qstr( $c['firstName'] ) : "name LIKE ".$this->db->qstr( $c['name'] ));
+      $cid = intval( $this->db->getOne( $sql ));
+      if( !$cid ) {
+        if( array_key_exists( 'lastName', $c )) $sql = "INSERT INTO zotero.creators ( lastName, firstName ) VALUES (".$this->db->qstr( $c['lastName'] ).", ".$this->db->qstr( $c['firstName'] ).")";
+        else $sql = "INSERT INTO zotero.creators ( name ) VALUES (".$this->db->qstr( $c['name'] ).")";
+        $this->db->Execute( $sql );
+        $cid = $this->db->insert_Id();
+      }
+      $sql = "INSERT INTO zotero.creators2items( itemKey, libraryId, role, creatorsId ) VALUES(
+        ".$this->db->qstr( $item['key'] )."
+        , {$item['library']['id']}
+        , ".$this->db->qstr( $c['creatorType'] )."
+        , {$cid}
+      );";
+      $this->db->Execute( $sql );
+    }
+    $sql = "DELETE FROM zotero.items2collections WHERE itemKey=".$this->db->qstr( $item['key'] );
+    $this->db->Execute( $sql );
+    if( @is_array( $item['data']['collections'] )) foreach( $item['data']['collections'] as $k ) {
+      $sql = "INSERT INTO zotero.items2collections( itemKey, libraryId, collectionsKey ) VALUES(
+          ".$this->db->qstr( $item['key'] )."
+          , {$item['library']['id']}
+        , ".$this->db->qstr( $k )."
+      );";
+      $this->db->Execute( $sql );
+    }
+
+    if( array_key_exists( 'enclosure', $item['links'])) {
+      $enc = $item['links']['enclosure'];
+      if( !is_dir( "{$this->contentpath}/enclosure/{$id}" )) mkdir( "{$this->contentpath}/enclosure/{$id}" );
+      $filename_rel = "enclosure/{$id}/{$item['key']}";
+      $filename = "{$this->contentpath}/{$filename_rel}";
+      $uri = $enc['href'];
+      $this->log( "      Downloading file: {$uri}" );
+
+      $ch = curl_init();
+      curl_setopt($ch, CURLOPT_URL, $uri);
+      curl_setopt($ch, CURLOPT_HTTPHEADER, array( 'Authorization: Bearer '.$this->apikey ));
+      curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+      /*
+      curl_setopt($ch, CURLOPT_VERBOSE, 1);
+      curl_setopt($ch, CURLOPT_HEADER, 1);
+      $response = curl_exec ($ch);
+      $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+      $header = substr($response, 0, $header_size);
+      $body = substr($response, $header_size);
+      print_r( $header );
+      */
+      $body = curl_exec ($ch);
+      file_put_contents( $filename,  $body );
+      if( filesize( $filename )) {
+        $fulltext = null;
+        $pages = null;
+        switch( $enc['type'] ) {
+          case 'application/pdf':
+            $cmd = 'pdftotext '.escapeshellarg( $filename ).' '.escapeshellarg( $filename.'.txt' );
+            $this->log( "      Extracting fulltext (pdf): $filename_rel" );
+            shell_exec( $cmd );
+            $dir = $filename.'_pages';
+            if( !is_dir( $dir )) mkdir( $dir );
+            $cmd = 'convert '.escapeshellarg( $filename ).' -resize x800 '.escapeshellarg( $dir.'/'.$item['key'].'-%03d.jpg' );
+            $this->log( "      Generating pages (pdf): $filename_rel" );
+            shell_exec( $cmd );
+            $cmd = 'pdfinfo '.escapeshellarg( $filename );
+            $this->log( "      Counting pages (pdf): $filename_rel" );
+            $ret = shell_exec( $cmd );
+            if( preg_match( '/Pages:\s*(\d+)/i', $ret, $matches )) {
+              $pages = intval( $matches[1] );
+            }
+            break;
+            case 'text/html':
+              file_put_contents( $filename.'.txt', strip_tags( file_get_contents( $filename )));
+              $this->log( "      Extracting fulltext (html): $filename_rel" );
+              break;
+            case 'text/plain':
+              file_put_contents( $filename.'.txt', file_get_contents( $filename ));
+              $this->log( "      Extracting fulltext (text): $filename_rel" );
+              break;
+        }
+        $replace = array(
+          '`key`'=>$item['key'],
+          'libraryid'=>$id,
+          'type'=>array_key_exists( 'type', $enc ) ? $enc['type'] : null,
+          'href'=>array_key_exists( 'href', $enc ) ? $enc['href'] : null,
+          'title'=>array_key_exists( 'title', $enc ) ? $enc['title'] : null,
+          'pages'=>$pages,
+          'length'=>array_key_exists( 'length', $enc ) ? $enc['length'] : null,
+          'filename'=>$filename_rel,
+          '`fulltext`'=>null,
+        );
+        $this->db->Replace( 'zotero.enclosures', $replace, array( '`key`', 'libraryid' ), $autoquote = true );
+        $this->db->UpdateBlob( 'zotero.enclosures', '`fulltext`', file_exists( $filename.'.txt' ) ? gzencode( file_get_contents( $filename.'.txt' )) : null, "`key`=".$this->db->qstr( $item['key'] )." AND libraryid={$id}" );
+      }
+    }
+  }
+
+  function syncItems( $id ) {
+    $this->syncGroup( $id );
+    $this->syncCollection( $id );
+
+    $this->log( "Syncing items of group: {$id}" );
+
     $start = 0;
     $limit = 100;
-    while( $start < $numItems ) {
-      $uri = "{$this->apiurl}/groups/{$groupid}/items?limit={$limit}&start={$start}";
+    $sql = "SELECT MAX(version) FROM zotero.items WHERE trash=false AND libraryid={$id}";
+    $lastversion = intval($this->db->GetOne( $sql ));
+
+    do {
+      $uri = "{$this->apiurl}/groups/{$id}/items?limit={$limit}&start={$start}&since={$lastversion}";
       $response = Request::get( $uri )
         ->addHeader( 'Authorization', 'Bearer '.$this->apikey )
         ->send();
 
       $items = json_decode( $response, true );
       foreach( $items as $i ) {
-        @$this->log( "   {$groupid}:{$i['key']} {$i['data']['itemType']} - {$i['data']['title']}" );
-        $replace = array(
-          '`key`'=>$i['key'],
-          'libraryid'=>$groupid,
-          'version'=>$i['version'],
-          'parentKey'=>array_key_exists( 'parentItem', $i['data'] ) ? $i['data']['parentItem'] : null,
-          'itemType'=>$i['data']['itemType'],
-          'linkMode'=>array_key_exists( 'linkMode', $i['data'] ) ? $i['data']['linkMode'] : null,
-          'title'=>array_key_exists( 'title', $i['data'] ) ? $i['data']['title'] : null,
-          'dateModified'=>$i['data']['dateModified'],
-          'dateAdded'=>$i['data']['dateAdded'],
-          'data'=>null,
-        );
-        $this->db->Replace( 'zotero.items', $replace, array( '`key`', 'libraryid' ), $autoquote = true );
-        $this->db->UpdateBlob( 'zotero.items', 'data', gzencode( $response ), "`key`=".$this->db->qstr( $i['key'] )." AND libraryid={$groupid}" );
-
-        $sql = "DELETE FROM zotero.creators2items WHERE itemKey=".$this->db->qstr( $i['key'] );
-        $this->db->Execute( $sql );
-
-        if( @is_array( $i['data']['creators'] )) foreach( $i['data']['creators'] as $c ) {
-          $sql = "SELECT id FROM zotero.creators
-            WHERE ".(array_key_exists( 'lastName', $c ) ? "lastName LIKE ".$this->db->qstr( $c['lastName'] )." AND firstName LIKE ".$this->db->qstr( $c['firstName'] ) : "name LIKE ".$this->db->qstr( $c['name'] ));
-          $id = intval( $this->db->getOne( $sql ));
-          if( !$id ) {
-            if( array_key_exists( 'lastName', $c )) $sql = "INSERT INTO zotero.creators ( lastName, firstName ) VALUES (".$this->db->qstr( $c['lastName'] ).", ".$this->db->qstr( $c['firstName'] ).")";
-            else $sql = "INSERT INTO zotero.creators ( name ) VALUES (".$this->db->qstr( $c['name'] ).")";
-            $this->db->Execute( $sql );
-            $id = $this->db->insert_Id();
-          }
-          $sql = "INSERT INTO zotero.creators2items( itemKey, libraryId, role, creatorsId ) VALUES(
-            ".$this->db->qstr( $i['key'] )."
-            , {$i['library']['id']}
-            , ".$this->db->qstr( $c['creatorType'] )."
-            , {$id}
-          );";
-          $this->db->Execute( $sql );
-        }
-        $sql = "DELETE FROM zotero.items2collections WHERE itemKey=".$this->db->qstr( $i['key'] );
-        $this->db->Execute( $sql );
-        if( @is_array( $i['data']['collections'] )) foreach( $i['data']['collections'] as $k ) {
-          $sql = "INSERT INTO zotero.items2collections( itemKey, libraryId, collectionsKey ) VALUES(
-              ".$this->db->qstr( $i['key'] )."
-              , {$i['library']['id']}
-            , ".$this->db->qstr( $k )."
-          );";
-          $this->db->Execute( $sql );
-        }
-
-        if( array_key_exists( 'enclosure', $i['links'])) {
-          $enc = $i['links']['enclosure'];
-          if( !is_dir( "{$this->contentpath}/enclosure/{$groupid}" )) mkdir( "{$this->contentpath}/enclosure/{$groupid}" );
-          $filename_rel = "enclosure/{$groupid}/{$i['key']}";
-          $filename = "{$this->contentpath}/{$filename_rel}";
-          $uri = $enc['href'];
-          $this->log( "      Downloading file: {$uri}" );
-
-          $ch = curl_init();
-          curl_setopt($ch, CURLOPT_URL, $uri);
-          curl_setopt($ch, CURLOPT_HTTPHEADER, array( 'Authorization: Bearer '.$this->apikey ));
-          curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-          curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-          /*
-          curl_setopt($ch, CURLOPT_VERBOSE, 1);
-          curl_setopt($ch, CURLOPT_HEADER, 1);
-          $response = curl_exec ($ch);
-          $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
-          $header = substr($response, 0, $header_size);
-          $body = substr($response, $header_size);
-          print_r( $header );
-          */
-          $body = curl_exec ($ch);
-          file_put_contents( $filename,  $body );
-          if( filesize( $filename )) {
-            $fulltext = null;
-            if( $enc['type'] == 'application/pdf' ) {
-              $cmd = 'pdftotext '.escapeshellarg( $filename ).' '.escapeshellarg( $filename.'.txt' );
-              $this->log( "      Extracting fulltext: $filename_rel" );
-              $fulltext = shell_exec( $cmd );
-            }
-            $replace = array(
-              '`key`'=>$i['key'],
-              'libraryid'=>$groupid,
-              'type'=>array_key_exists( 'type', $enc ) ? $enc['type'] : null,
-              'href'=>array_key_exists( 'href', $enc ) ? $enc['href'] : null,
-              'title'=>array_key_exists( 'title', $enc ) ? $enc['title'] : null,
-              'length'=>array_key_exists( 'length', $enc ) ? $enc['length'] : null,
-              'filename'=>$filename_rel,
-              '`fulltext`'=>null,
-            );
-            $this->db->Replace( 'zotero.enclosures', $replace, array( '`key`', 'libraryid' ), $autoquote = true );
-            $this->db->UpdateBlob( 'zotero.enclosures', '`fulltext`', gzencode( file_get_contents( $filename.'.txt' ) ), "`key`=".$this->db->qstr( $i['key'] )." AND libraryid={$groupid}" );
-          }
-        }
+        $this->syncItem( $id, $i, false );
       }
       $start += $limit;
-    }
+    } while( count( $items ) == 100 );
+
+    $start = 0;
+    $limit = 100;
+    $sql = "SELECT MAX(version) FROM zotero.items WHERE libraryid={$id} AND trash=true";
+    $lastversion = intval($this->db->GetOne( $sql ));
+
+    do {
+      $uri = "{$this->apiurl}/groups/{$id}/items/trash?limit={$limit}&start={$start}&since={$lastversion}";
+      $response = Request::get( $uri )
+        ->addHeader( 'Authorization', 'Bearer '.$this->apikey )
+        ->send();
+
+      $items = json_decode( $response, true );
+      foreach( $items as $i ) {
+        $this->syncItem( $id, $i, true );
+      }
+      $start += $limit;
+    } while( count( $items ) == 100 );
   }
+
+  public function loadChildren( $groupid, $itemkey=null ) {
+    $sql = "SELECT data, trash FROM zotero.items WHERE libraryid={$groupid} AND parentKey".($itemkey ? '='.$this->db->qstr( $itemkey ) : ' IS NULL');
+    if( $itemkey ) $sql .= " AND trash=false";
+    //echo "{$sql}\n";
+    $rs = $this->db->Execute( $sql );
+    foreach( $rs as $row ) {
+      $data = json_decode( gzdecode( $row['data']), true );
+      $trash = $row['trash'];
+      $sql = "SELECT pages FROM zotero.enclosures WHERE `key`=".$this->db->qstr( $data['key'] );
+      $pages = intval( $this->db->getOne( $sql ));
+      $data['data']['pages'] = $pages;
+      $item = new Item( $data, $trash );
+      if( $item->numChildren()) {
+        foreach( $this->loadChildren( $groupid, $item->getKey()) as $child ) {
+          $item->addChild( $child );
+        }
+      }
+      yield $item;
+    }
+    $rs->Close();
+  }
+
 }

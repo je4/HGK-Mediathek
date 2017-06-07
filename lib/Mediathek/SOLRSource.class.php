@@ -15,7 +15,7 @@
  * @copyright   (C) 2016 Academy of Art and Design FHNW
  * @license     http://www.gnu.org/licenses/gpl-3.0
  * @link        http://mediathek.fhnw.ch
- * 
+ *
  */
 
 /**
@@ -27,12 +27,12 @@ namespace Mediathek;
 abstract class SOLRSource {
 	protected $data = null;
 	protected $id = null;
-	
+
 	public function reset() {
 		$this->data = null;
 		$this->id = null;
 	}
-	
+
 	abstract public function loadFromDoc( $doc );
 	abstract public function getID();
 	abstract public function getOriginalID();
@@ -40,17 +40,17 @@ abstract class SOLRSource {
     abstract public function getType();
 	abstract public function getOpenAccess();
 	abstract public function getLocations();
-    abstract public function getTitle();    
+    abstract public function getTitle();
     abstract public function getCodes();
     abstract public function getAbstract();
     abstract public function getContent();
-    abstract public function getTags();    
-    abstract public function getSignatures();    
-    abstract public function getAuthors();    
-    abstract public function getLoans();    
-    abstract public function getBarcode();    
-    abstract public function getLicenses();    
-    abstract public function getURLs();    
+    abstract public function getTags();
+    abstract public function getSignatures();
+    abstract public function getAuthors();
+    abstract public function getLoans();
+    //abstract public function getBarcode();    
+    abstract public function getLicenses();
+    abstract public function getURLs();
     abstract public function getSys();
     abstract public function getPublisher();
     abstract public function getYear();
@@ -68,11 +68,11 @@ abstract class SOLRSource {
 		$rm = new \ReflectionMethod(get_called_class(), 'getSource');
 		return array( 'source!!'.$rm->invoke($this) );
 	}
-	
+
 	public function getSourceIDs() {
 		return array();
-	} 
-	
+	}
+
 	abstract public function getCatalogs();
 /*	{
 		$rc = new \ReflectionClass(get_called_class());
@@ -85,9 +85,9 @@ abstract class SOLRSource {
 		else {
 			return array( $this->getSource() );
 		}
-		
+
 	}
-*/	
+*/
 }
 
 ?>

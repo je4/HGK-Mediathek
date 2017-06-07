@@ -20,35 +20,24 @@ try {
   var_dump($e);
   adodb_backtrace($e->gettrace());
 }
-exit;
 
-$entity = new videokunst_ch_workEntity( $db );
+$entity = new zoteroEntity( $db );
+$cnt = 0;
+foreach( $groups as $group ) {
+  foreach( $zotero->loadChildren( $group ) as $item ) {
+    echo $item; if( $item->isTrashed()) echo "  [TRASH]\n";
+    $entity->reset();
+    $entity->loadFromArray( $item->getData() );
+    $title = $entity->getTitle();
+    echo "Title: ".$title."\n";
 
-
-$cnt = 1;
-foreach( $data['video'] as $video ) {
-  $entity->reset();
-  $entity->loadFromArray( $video );
-  $title = $entity->getTitle();
-  echo "Title: ".$title."\n";
-
-  $tags = $entity->getTags();
-  echo "Tags: ";
-  print_r( $tags );
-
-  $cluster = $entity->getCluster();
-  echo "Cluster: ";
-  print_r( $cluster );
-
-  $authors = $entity->getAuthors();
-  echo "Authors: ";
-  print_r( $authors );
-
-  $urls = $entity->getURLs();
-  echo "URLs: ";
-  print_r( $urls );
-
-  $solr->import( $entity );
-  echo "{$cnt}\n";
-  $cnt++;
+    if( $item->isTrashed()) {
+      $solr->delete( $entity->getID() );
+    }
+    else {
+      $solr->import( $entity );
+    }
+    echo "{$cnt}\n";
+    $cnt++;
+  }
 }

@@ -24,6 +24,9 @@ function mediathekfooter( $jss = array()) {
 	<script type="text/javascript" src="js/tether.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap-editable.js"></script>
 	<script type="text/javascript" src="js/jstree.min.js"></script>
+  <script src="js/turnjs/turn.js"></script>
+  <script src="js/turnjs/scissor.js"></script>
+
 <?php
 foreach( $jss as $js ) {
 ?>

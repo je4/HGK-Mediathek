@@ -61,6 +61,7 @@ class SOLR {
 	public function delete( $id, $commit = false ) {
 		$query = $this->solr->createSelect();
 		$helper = $query->getHelper();
+    echo "Trying to delete {$id}\n";
 		$query->setQuery( 'id:'.$helper->escapeTerm( $id ));
 		$resultset = $this->solr->select( $query );
 		if( $resultset->getNumFound() == 1 ) {
@@ -89,6 +90,9 @@ class SOLR {
 				break;
 			}
 		}
+    else {
+        echo "    not found...\n";
+    }
 	}
 
 

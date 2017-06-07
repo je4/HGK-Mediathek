@@ -95,11 +95,12 @@ class swissbibDisplay extends DisplayEntity {
 
         $entity = $this->entity;
 
+/*
         if( DEBUG ) {
         	$solr = new SOLR( $solrclient );
         	$solr->import( $entity, true );
         }
-
+*/
         ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
 
 		$authors = array_unique( $entity->getAuthors());
