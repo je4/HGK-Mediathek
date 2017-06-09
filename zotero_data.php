@@ -47,7 +47,7 @@ if( $key ) {
       return;
 */
       header( "Content-type: ".$child->getType());
-      header( "Content-disposition: filename=\"".$child->getFilename()."\"" );
+      header( "Content-disposition: attachment; filename=\"".$child->getFilename()."\"" );
       readfile( $path );
     }
 

@@ -1,31 +1,47 @@
 <?php
 global $session;
 
+$footer_js = array(
+  "assets/js/jquery-2.1.3.min.js",
+  "assets/js/bootstrap.min.js",
+  "assets/js/modernizr.js",
+  "assets/js/jquery.easing.min.js",
+  "assets/js/jquery.mixitup.min.js",
+  "assets/js/jquery.popup.min.js",
+  "assets/js/owl.carousel.min.js",
+  "assets/js/contact.js",
+  "assets/js/script.js",
+  "js/mediathek_helper.js",
+  "js/mediathek_gui.js",
+  "js/md5.min.js",
+  "js/tether.min.js",
+  "js/bootstrap-editable.js",
+  "js/jstree.min.js"
+
+);
+
+function addJS( $js ) {
+  global $footer_js;
+  if( is_array( $js )) {
+      $footer_js = array_merge( $footer_js, $js );
+  }
+  else {
+    $footer_js[] = $js;
+  }
+}
+
+
 function mediathekfooter( $jss = array()) {
+  global $footer_js;
     ob_start();
 	if( DEBUG && false ) {
 		echo "<pre>".print_r( $_SERVER, true )."</pre>";
 		echo "<pre>".print_r( $_REQUEST, true )."</pre>";
 	}
+  foreach( $footer_js as $js ) {
+    echo '<script type="text/javascript" src="'.$js.'"></script>'."\n";
+  }
 ?>
-
-    <script type="text/javascript" src="assets/js/jquery-2.1.3.min.js"></script>
-    <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="assets/js/modernizr.js"></script>
-    <script type="text/javascript" src="assets/js/jquery.easing.min.js"></script>
-    <script type="text/javascript" src="assets/js/jquery.mixitup.min.js"></script>
-    <script type="text/javascript" src="assets/js/jquery.popup.min.js"></script>
-    <script type="text/javascript" src="assets/js/owl.carousel.min.js"></script>
-    <script type="text/javascript" src="assets/js/contact.js"></script>
-    <script type="text/javascript" src="assets/js/script.js"></script>
-    <script type="text/javascript" src="js/mediathek_helper.js"></script>
-    <script type="text/javascript" src="js/mediathek_gui.js"></script>
-	<script type="text/javascript" src="js/md5.min.js"></script>
-	<script type="text/javascript" src="js/tether.min.js"></script>
-	<script type="text/javascript" src="js/bootstrap-editable.js"></script>
-	<script type="text/javascript" src="js/jstree.min.js"></script>
-  <script src="js/turnjs/turn.js"></script>
-  <script src="js/turnjs/scissor.js"></script>
 
 <?php
 foreach( $jss as $js ) {

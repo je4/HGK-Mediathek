@@ -73,7 +73,7 @@ class zoteroDisplay extends DisplayEntity {
 
 			ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
 ?>
-				<h2 class="small-heading">videokunst.ch</h2>
+				<h2 class="small-heading">Mediathek</h2>
 
 				<div class="container-fluid" style="margin-top: 0px; padding: 0px 20px 20px 20px;">
 <?php
@@ -97,13 +97,8 @@ class zoteroDisplay extends DisplayEntity {
 
         ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
 ?>
-<style>
-/* Only resize the element if PDF is embedded */
-.pdfobject-container {
-   width: 200px;
-   height: 500px;
-}
-</style>
+<link type="text/css" rel="stylesheet" href="css/dflip/dflip.css">
+<link type="text/css" rel="stylesheet" href="css/dflip/themify-icons.css">
 
 <div class="row">
 	<div class="col-md-3">
@@ -136,99 +131,32 @@ class zoteroDisplay extends DisplayEntity {
       </h5>
     </span>
 		</div>
+		<?php foreach( $this->item->getImages() as $img ) { ?>
+		<span style="; font-weight: bold;"><?php echo htmlspecialchars( $img->getTitle()); ?></span><br>
+		<div class="facet" style="">
+			<div class="marker" style=""></div>
+			<img style="max-width: 100%;" src="zotero_data.php?id=zotero-<?php echo $img->getGroupId(); ?>.<?php echo $this->item->getKey(); ?>&key=<?php echo $img->getKey(); ?>" />
+		</div>
+	<?php } ?>
+	<?php
+		foreach( $this->item->getNotes() as $note ) { ?>
+	<span style="; font-weight: bold;">Note</span><br>
+	<div class="facet" style="">
+		<div class="marker" style=""></div>
+		<?php echo $note->getNote(); ?>
+	</div>
+	<?php } ?>
 	</div>
 	<div class="col-md-6">
-<style type="text/css">
-
-.page {
-	display: inherit;
-}
-
-.flipbook-viewport{
-	overflow:hidden;
-	width:100%;
-	height:100%;
-}
-
-.flipbook-viewport .container{
-	position:absolute;
-	top:50%;
-	left:50%;
-	margin:auto;
-}
-
-.flipbook-viewport .flipbook{
-	width:800px;
-	height:400px;
-	left:-400px;
-	top:-200px;
-}
-
-.flipbook-viewport .page{
-	width:400px;
-	height:400px;
-	background-color:white;
-	background-repeat:no-repeat;
-	background-size:100% 100%;
-}
-
-.flipbook .page{
-	-webkit-box-shadow:0 0 20px rgba(0,0,0,0.2);
-	-moz-box-shadow:0 0 20px rgba(0,0,0,0.2);
-	-ms-box-shadow:0 0 20px rgba(0,0,0,0.2);
-	-o-box-shadow:0 0 20px rgba(0,0,0,0.2);
-	box-shadow:0 0 20px rgba(0,0,0,0.2);
-}
-
-.flipbook-viewport .page img{
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	-khtml-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-	margin:0;
-}
-
-.flipbook-viewport .shadow{
-	-webkit-transition: -webkit-box-shadow 0.5s;
-	-moz-transition: -moz-box-shadow 0.5s;
-	-o-transition: -webkit-box-shadow 0.5s;
-	-ms-transition: -ms-box-shadow 0.5s;
-
-	-webkit-box-shadow:0 0 20px #ccc;
-	-moz-box-shadow:0 0 20px #ccc;
-	-o-box-shadow:0 0 20px #ccc;
-	-ms-box-shadow:0 0 20px #ccc;
-	box-shadow:0 0 20px #ccc;
-}
-
-.flipbook-viewport .double{
-	width:800px;
-	height:400px;
-	background-size:100% 100%;
-}
-
-</style>
-
 <?php foreach( $pdfs as $pdf ) { ?>
 	<div style="">
 		<span style="; font-weight: bold;">Preview</span><br />
 	<div class="facet" style="padding-bottom: 5px;">
 		<div class="marker" style=""></div>
-<?php
-
-?>
-
-<div class="flipbook" id="pdf_<?php echo $pdf->getGroupId(); ?>_<?php echo $pdf->getKey(); ?>">
-	<?php
-	for( $i = 0; $i < $pdf->getPages(); $i++ ) {
-		if( $i == 0 ) echo '<div class="page" style="background-image:url('.sprintf( "/pdf/".$pdf->getGroupId()."/".$pdf->getKey()."_pages/".$pdf->getKey()."-%03d.jpg", $i ).')"></div>'."\n";
-		elseif( $i == $pdf->getPages()-1 && $pdf->getPages() % 2 == 1 ) echo '<div class="page" style="background-image:url('.sprintf( "/pdf/".$pdf->getGroupId()."/".$pdf->getKey()."_pages/".$pdf->getKey()."-%03d.jpg", $i ).')"></div>'."\n";
-		else echo '<div class="double" style="background-image:url('.sprintf( "/pdf/".$pdf->getGroupId()."/".$pdf->getKey()."_pages/".$pdf->getKey()."-%03d.jpg", $i ).')"></div>'."\n";
-	}
-	?>
-</div>
+		<div id="pdf_<?php echo $pdf->getGroupId(); ?>_<?php echo $pdf->getKey(); ?>">
+		</div>
+		<div style="text-align: center;"><a href="zotero_data.php?id=zotero-<?php echo $pdf->getGroupId(); ?>.<?php echo $this->item->getKey(); ?>&key=<?php echo $pdf->getKey(); ?>" >Download PDF</a></div>
+	</div>
 </div>
 
 <?php } ?>
@@ -276,7 +204,7 @@ class zoteroDisplay extends DisplayEntity {
 	<div class="col-md-9">
 
 	<?php
-	if( DEBUG ) {
+	if( DEBUG && $loggedin ) {
 		?>
 		<div style="">
 		<span style="; font-weight: bold;">RAW Data</span><br />
@@ -311,20 +239,15 @@ class zoteroDisplay extends DisplayEntity {
 ?>
 			var pages = <?php echo $pages; ?>;
 			var container = $("#pdf_<?php echo $pdf->getGroupId(); ?>_<?php echo $pdf->getKey(); ?>");
-			container.turn( {
-					width: 1132,
-					height: 800,
-					elevation: 50,
-					gradients: true,
-					autoCenter: true
-				});
-				for( i = 0; i < pages; i++ ) {
-//					element = $("<div />").html("Loading...");
-					src="url(/pdf/<?php echo $pdf->getGroupId(); ?>/<?php echo $pdf->getKey(); ?>_pages/<?php echo $pdf->getKey(); ?>-"+(([1e15]+i).slice(-3))+".jpg)";
-					element = $('<div />',{'class': 'double', css:{backgroundImage:src}});
-	//				container.turn("addPage", element, i+1);
-				}
+
+			var pdf = 'zotero_data.php?id=zotero-<?php echo $pdf->getGroupId(); ?>.<?php echo $this->item->getKey(); ?>&key=<?php echo $pdf->getKey(); ?>';
+
+    var options = {height: 700, duration: 800};
+
+    var flipBook = container.flipBook(pdf, options);
+
 <?php } ?>
+
 			}
 		</script>
 
@@ -332,6 +255,7 @@ class zoteroDisplay extends DisplayEntity {
 
         $html .= ob_get_contents();
         ob_end_clean();
+				addJS( "js/dflip/dflip.js");
 		return $html;
 	}
 
@@ -374,7 +298,8 @@ class zoteroDisplay extends DisplayEntity {
                   				}
                   				if( count( $authors ) > 0 ) echo "<br />\n";
                   ?>
-					<?php if( $this->item->getUrl()) { ?><i class="fa fa-external-link" aria-hidden="true"></i><a href="redir.php?id=<?php echo urlencode( $this->doc->id ).'&url='.urlencode( $this->item->getUrl())."\" target=\"blank\">".htmlspecialchars( $this->item->getUrl() ); ?></a><br />
+					<?php if( $this->item->getUrl()) { ?><i class="fa fa-external-link" aria-hidden="true"></i><a href="redir.php?id=<?php echo urlencode( $this->doc->id ).'&url='.urlencode( $this->item->getUrl())."\" target=\"blank\">".htmlspecialchars( $this->item->getUrl() )."</a>"; ?>
+					<br />
           <?php } ?>
 
 					ID: <?php echo $this->doc->id; ?><br />

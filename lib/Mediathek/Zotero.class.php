@@ -26,6 +26,7 @@ namespace Mediathek;
 
 use \Httpful\Request;
 use \Mediathek\Zotero\Item;
+use \Mediathek\Zotero\Collection;
 
 class Zotero {
   var $db;
@@ -90,6 +91,7 @@ class Zotero {
         'libraryid'=>$id,
         'version'=>$c['version'],
         'name'=>$c['data']['name'],
+        'parentCollection'=>$c['data']['parentCollection'],
         'numItems'=>$c['meta']['numItems'],
         'numCollections'=>$c['meta']['numCollections'],
         'data'=>null,
@@ -282,6 +284,10 @@ class Zotero {
       yield $item;
     }
     $rs->Close();
+  }
+
+  public function loadCollections() {
+    $sql = "";
   }
 
 }

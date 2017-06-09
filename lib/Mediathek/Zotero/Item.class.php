@@ -73,6 +73,10 @@ class Item {
     return $this->data['data']['itemType'];
   }
 
+  public function getNote() {
+    return $this->data['data']['note'];
+  }
+
   public function getTitle() {
     return array_key_exists( 'title', $this->data['data'] ) ? $this->data['data']['title'] : '';
   }
@@ -178,15 +182,30 @@ class Item {
     return null;
   }
 
+  public function getNotes() {
+    $notes = array();
+    foreach( $this->children as $child ) {
+      if( $child->getType() == 'note' ) $notes[] = $child;
+    }
+    return $notes;
+  }
+
+  public function getImages() {
+    return $this->getAttachments( array( '/image\//' ));
+  }
+
   public function getPDFs() {
-    return $this->getAttachments( array( 'application/pdf' ));
+    return $this->getAttachments( array( '/application\/pdf/' ));
   }
   public function getAttachments( $types = array()) {
     $pdfs = array();
     foreach( $this->children as $child ) {
-      if( $child->getType() == 'attachment'
-      && (in_array( $child->getContentType(), $types ) || count( $types ) == 0)) {
-        $pdfs[] = $child;
+      if( $child->getType() == 'attachment' ) {
+        $contentType = $child->getContentType();
+        if( count( $types ) == 0 ) $pdfs[] = $child;
+        else foreach( $types as $type ) {
+          if( preg_match( $type, $contentType )) $pdfs[] = $child;
+        }
       }
     }
     return $pdfs;

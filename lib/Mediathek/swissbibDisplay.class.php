@@ -434,6 +434,18 @@ if( DEBUG ) {
 <?php
         $html .= ob_get_contents();
         ob_end_clean();
+
+				addJS( array(
+					"js/threejs/build/three.js",
+					"js/threejs/build/TrackballControls.js",
+					"js/threejs/build/OrbitControls.js",
+					"js/threejs/build/CombinedCamera.js",
+					"js/mediathek.js",
+					"js/mediathek3d.js",
+					"js/threex.domresize.js",
+				));
+
+
 		return $html;
 	}
 
