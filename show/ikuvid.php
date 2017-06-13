@@ -30,7 +30,7 @@ $ids = array();
 $sql = "SELECT * FROM source_ikuvid_online ORDER BY RAND() LIMIT 0, ".$cards;
 $rs = $db->Execute( $sql );
 foreach( $rs as $row ) {
-  $ids[] = $row['id'];
+  $ids[] = intval( $row['id'] );
 ?>
     <div class="card" style="width: 730px; text-align: center;">
     <div id="<?php echo $row['id']; ?>" style="padding: 5px; height: 576px;"><img class="card-img-top" style="width:720px;" src="https://ba14ns21403.fhnw.ch/pics/intern/<?php echo $row['id'] ?>.00003.big.png" alt="<?php echo htmlspecialchars( $row['Titel1'] ); ?>"></div>
