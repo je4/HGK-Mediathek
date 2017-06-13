@@ -26,17 +26,12 @@ namespace Mediathek\Zotero;
 
 class Collection {
   var $parent = null;
-  var $trash = false;
-  var $children = array();
 
-  function __construct( $parent, $data, $trash = false ) {
+  function __construct( $data ) {
     $this->data = $data;
-    $this->trash = $trash;
-    $this->parent = $parent;
-    if( @is_array( $this->data['children'] )) {
-      foreach( $this->data['children'] as $d ) {
-        $this->addChild( new Item( $d ));
-      }
+    if( array_key_exists( 'parent', $this->data )) {
+      $p = new Collection( $this->data['parent']);
+      $this->setParent( $p );
     }
   }
 
@@ -48,17 +43,16 @@ class Collection {
     return $str;
   }
 
-  public function isTrashed() {
-    return $this->trash;
+  public function getParentKey() {
+    return $this->data['data']['parentCollection'] ? $this->data['data']['parentCollection'] : null;
+  }
+
+  public function setParent( $parent ) {
+    $this->parent = $parent;
   }
 
   public function getData() {
-      if( count( $this->children )) {
-        $this->data['children'] = array();
-        foreach( $this->children as $child ) {
-          $this->data['children'][] = $child->getData();
-        }
-      }
+      if( $this->parent ) $this->data['parent'] = $this->parent->getData();
       return $this->data;
   }
 
@@ -74,6 +68,19 @@ class Collection {
     return array_key_exists( 'name', $this->data['data'] ) ? $this->data['data']['name'] : '';
   }
 
+  public function getFullName() {
+    $pname = '';
+    if( $this->parent ) $pname = $this->parent->getFullName().':';
+    return $pname.$this->getName();
+  }
+
+  public function getNames() {
+    $names = array();
+    if( $this->parent ) $names = $this->parent->getNames();
+    $names[] = $this->getName();
+    return $names;
+  }
+
   public function getNumItems() {
     return array_key_exists( 'numItems', $this->data['meta'] ) ? $this->data['meta']['numItems'] : 0;
   }
@@ -81,19 +88,6 @@ class Collection {
   public function getNumCollections() {
     if( !array_key_exists( 'numCollections', $this->data['meta'])) return 0;
     return intval( $this->data['meta']['numCollections'] );
-  }
-
-  public function addChild( $child ) {
-      $this->children[] = $child;
-  }
-
-  public function getChild( $key ) {
-    foreach( $this->children as $child ) {
-      if( $child->getKey() == $key ) {
-        return $child;
-      }
-    }
-    return null;
   }
 
 }

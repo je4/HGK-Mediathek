@@ -297,6 +297,17 @@ class zoteroDisplay extends DisplayEntity {
                   					$first = false;
                   				}
                   				if( count( $authors ) > 0 ) echo "<br />\n";
+													if ($this->highlight && count( $this->highlight )) {
+									?>
+													<p style="background-color: #f0f0f0; margin-left: +20px; border-top: 1px solid black; border-bottom: 1px solid black;"><i>
+									<?php
+														foreach ($this->highlight as $field => $highlight) {
+															echo '(...) '.strip_tags( implode(' (...) ', $highlight), '<b></b>') . ' (...)' . '<br/>';
+														}
+													}
+									?>
+													</i></p>
+									<?php
                   ?>
 					<?php if( $this->item->getUrl()) { ?><i class="fa fa-external-link" aria-hidden="true"></i><a href="redir.php?id=<?php echo urlencode( $this->doc->id ).'&url='.urlencode( $this->item->getUrl())."\" target=\"blank\">".htmlspecialchars( $this->item->getUrl() )."</a>"; ?>
 					<br />

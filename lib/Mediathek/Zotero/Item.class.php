@@ -28,6 +28,7 @@ class Item {
   var $parent = null;
   var $trash = false;
   var $children = array();
+  var $collections = array();
 
   function __construct( $data, $trash = false ) {
     $this->data = $data;
@@ -35,6 +36,12 @@ class Item {
     if( @is_array( $this->data['children'] )) {
       foreach( $this->data['children'] as $d ) {
         $this->addChild( new Item( $d ));
+      }
+    }
+    if( @is_array( $this->data['collections'] )) {
+      foreach( $this->data['collections'] as $d ) {
+        $coll = new Collection( $d );
+        $this->addCollection( $coll );
       }
     }
   }
@@ -52,13 +59,19 @@ class Item {
   }
 
   public function getData() {
-      if( count( $this->children )) {
-        $this->data['children'] = array();
-        foreach( $this->children as $child ) {
-          $this->data['children'][] = $child->getData();
-        }
+    if( count( $this->children )) {
+      $this->data['children'] = array();
+      foreach( $this->children as $child ) {
+        $this->data['children'][] = $child->getData();
       }
-      return $this->data;
+    }
+    if( count( $this->collections )) {
+      $this->data['collections'] = array();
+      foreach( $this->collections as $coll ) {
+        $this->data['collections'][] = $coll->getData();
+      }
+    }
+    return $this->data;
   }
 
   public function getGroupId() {
@@ -143,7 +156,13 @@ class Item {
       return array_key_exists( 'filename', $this->data['data'] ) ? $this->data['data']['filename'] : null;
     }
 
-
+  public function getFulltext() {
+    $ret = array_key_exists( 'fulltext', $this->data ) ? "{$this->data['fulltext']}" : '';
+    foreach( $this->getChildren() as $child ) {
+      $ret .= "\n".$child->getFulltext();
+    }
+    return $ret;
+  }
 
   public function getUrls() {
     $urls = array();
@@ -163,6 +182,14 @@ class Item {
     return trim( $abstract );
   }
 
+  public function getCollectionKeys() {
+    if( !array_key_exists( 'collections', $this->data['data'])) return array();
+    return $this->data['data']['collections'];
+  }
+
+  public function getCollections() {
+    return $this->collections;
+  }
 
   public function numChildren() {
     if( !array_key_exists( 'numChildren', $this->data['meta'])) return 0;
@@ -171,6 +198,14 @@ class Item {
 
   public function addChild( $child ) {
       $this->children[] = $child;
+  }
+
+  public function addCollection( $coll ) {
+      $this->collections[] = $coll;
+  }
+
+  public function getChildren() {
+    return $this->children;
   }
 
   public function getChild( $key ) {

@@ -163,12 +163,22 @@ class zoteroEntity extends SOLRSource {
 
           }
         }
+        foreach( $this->item->getCollections() as $coll ) {
+          $tag = $coll->getFullName();
+          $this->tags[] = 'coll:unknown/'.md5( $tag ).'/'.$tag;
+
+          foreach( $coll->getNames() as $tag ) {
+            $this->tags[] = 'subcoll:unknown/'.md5( $tag ).'/'.$tag;
+          }
+        }
 
         $this->tags = array_unique( $this->tags );
         $this->cluster = array();
         foreach( $this->tags as $tag ) {
               $ts = explode( '/', $tag );
-              $this->cluster[] = $ts[count( $ts )-1];
+              if( !in_array( $ts[0], array( 'coll:unknown' ))) {
+                $this->cluster[] = $ts[count( $ts )-1];
+              }
         }
         $this->cluster = array_unique( $this->cluster );
 
@@ -222,7 +232,33 @@ class zoteroEntity extends SOLRSource {
     }
 
     public function getMeta() {
-        return json_encode( $this->data );
+      $json = json_encode( $this->data );
+
+      $err = json_last_error();
+      switch($err) {
+        case JSON_ERROR_NONE:
+        break;
+        case JSON_ERROR_DEPTH:
+            echo $err.' - Maximale Stacktiefe überschritten';
+        break;
+        case JSON_ERROR_STATE_MISMATCH:
+            echo $err.' - Unterlauf oder Nichtübereinstimmung der Modi';
+        break;
+        case JSON_ERROR_CTRL_CHAR:
+            echo $err.' - Unerwartetes Steuerzeichen gefunden';
+        break;
+        case JSON_ERROR_SYNTAX:
+            echo $err.' - Syntaxfehler, ungültiges JSON';
+        break;
+        case JSON_ERROR_UTF8:
+            echo $err.' - Missgestaltete UTF-8 Zeichen, möglicherweise fehlerhaft kodiert';
+        break;
+        default:
+            echo $err.' - Unbekannter Fehler';
+        break;
+    }
+
+        return $json;
     }
 
     public function getOnline() {
@@ -236,7 +272,7 @@ class zoteroEntity extends SOLRSource {
     }
 
    public function getContent() {
-     return '';
+     return $this->item->getFulltext();
    }
 
     public function getMetaACL() {
@@ -286,7 +322,9 @@ class zoteroEntity extends SOLRSource {
 
 	public function getCategories() {
 		$categories = parent::getCategories();
-		$categories[] = 'zotero';
+    foreach( $this->item->getCollections() as $coll ) {
+      $categories[] = 'fhnw!!hgk!!pub!!'.str_replace( ':', '!!', $coll->getFullName() );
+    }
 		return $categories;
 	}
 

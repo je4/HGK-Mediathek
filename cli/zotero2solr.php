@@ -10,7 +10,6 @@ $groups = array( 1387750 );
 
 $solr = new SOLR( $solrclient );
 
-
 $zotero = new Zotero( $db, $config['zotero']['apiurl'], $config['zotero']['apikey'], $config['zotero']['mediapath'], STDOUT );
 try {
   foreach( $groups as $group ) {
@@ -27,10 +26,10 @@ foreach( $groups as $group ) {
   foreach( $zotero->loadChildren( $group ) as $item ) {
     echo $item; if( $item->isTrashed()) echo "  [TRASH]\n";
     $entity->reset();
-    $entity->loadFromArray( $item->getData() );
+    $data = $item->getData();
+    $entity->loadFromArray( $data );
     $title = $entity->getTitle();
     echo "Title: ".$title."\n";
-
     if( $item->isTrashed()) {
       $solr->delete( $entity->getID() );
     }

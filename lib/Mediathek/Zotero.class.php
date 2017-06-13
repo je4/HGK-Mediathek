@@ -77,28 +77,34 @@ class Zotero {
     $this->log( "Syncing collections of group: {$id}" );
     $sql = "SELECT MAX(version) FROM zotero.collections WHERE libraryid={$id}";
     $lastversion = intval($this->db->GetOne( $sql ));
-    $uri = $this->apiurl.'/groups/'.$id."/collections?since={$lastversion}";
-    $response = Request::get( $uri )
-      ->addHeader( 'Authorization', 'Bearer '.$this->apikey )
-      ->send();
-  //    echo( $response );
-    $cs = json_decode( $response, true );
-    foreach( $cs as $c ) {
-      $this->log( "   {$c['key']}:{$c['data']['name']}");
 
-      $replace = array(
-        '`key`'=>$c['key'],
-        'libraryid'=>$id,
-        'version'=>$c['version'],
-        'name'=>$c['data']['name'],
-        'parentCollection'=>$c['data']['parentCollection'],
-        'numItems'=>$c['meta']['numItems'],
-        'numCollections'=>$c['meta']['numCollections'],
-        'data'=>null,
-      );
-      $this->db->Replace( 'zotero.collections', $replace, array( '`key`', 'libraryid' ), $autoquote=true );
-      $this->db->UpdateBlob( 'zotero.collections', 'data', gzencode( json_encode( $c ) ), "`key`=".$this->db->qstr( $c['key'] )." AND libraryid={$id}" );
-    }
+    $start = 0;
+    $limit = 100;
+    do {
+      $uri = $this->apiurl.'/groups/'.$id."/collections?limit={$limit}&start={$start}&since={$lastversion}";
+      $response = Request::get( $uri )
+        ->addHeader( 'Authorization', 'Bearer '.$this->apikey )
+        ->send();
+    //    echo( $response );
+      $cs = json_decode( $response, true );
+      foreach( $cs as $c ) {
+        $this->log( "   {$c['key']}:{$c['data']['name']}");
+
+        $replace = array(
+          '`key`'=>$c['key'],
+          'libraryid'=>$id,
+          'version'=>$c['version'],
+          'name'=>$c['data']['name'],
+          'parentCollection'=>$c['data']['parentCollection'],
+          'numItems'=>$c['meta']['numItems'],
+          'numCollections'=>$c['meta']['numCollections'],
+          'data'=>null,
+        );
+        $this->db->Replace( 'zotero.collections', $replace, array( '`key`', 'libraryid' ), $autoquote=true );
+        $this->db->UpdateBlob( 'zotero.collections', 'data', gzencode( json_encode( $c ) ), "`key`=".$this->db->qstr( $c['key'] )." AND libraryid={$id}" );
+      }
+      $start += $limit;
+    } while( count( $cs ) == 100 );
   }
 
   function syncItem( $id, $item, $trash ) {
@@ -183,11 +189,13 @@ class Zotero {
             $cmd = 'pdftotext '.escapeshellarg( $filename ).' '.escapeshellarg( $filename.'.txt' );
             $this->log( "      Extracting fulltext (pdf): $filename_rel" );
             shell_exec( $cmd );
+            /*
             $dir = $filename.'_pages';
             if( !is_dir( $dir )) mkdir( $dir );
             $cmd = 'convert '.escapeshellarg( $filename ).' -resize x800 '.escapeshellarg( $dir.'/'.$item['key'].'-%03d.jpg' );
             $this->log( "      Generating pages (pdf): $filename_rel" );
             shell_exec( $cmd );
+            */
             $cmd = 'pdfinfo '.escapeshellarg( $filename );
             $this->log( "      Counting pages (pdf): $filename_rel" );
             $ret = shell_exec( $cmd );
@@ -196,7 +204,36 @@ class Zotero {
             }
             break;
             case 'text/html':
-              file_put_contents( $filename.'.txt', strip_tags( file_get_contents( $filename )));
+              $text = file_get_contents( $filename );
+              $text = preg_replace(
+                  array(
+                    // Remove invisible content
+                      '@<head[^>]*?>.*?</head>@siu',
+                      '@<style[^>]*?>.*?</style>@siu',
+                      '@<script[^>]*?.*?</script>@siu',
+                      '@<object[^>]*?.*?</object>@siu',
+                      '@<embed[^>]*?.*?</embed>@siu',
+                      '@<applet[^>]*?.*?</applet>@siu',
+                      '@<noframes[^>]*?.*?</noframes>@siu',
+                      '@<noscript[^>]*?.*?</noscript>@siu',
+                      '@<noembed[^>]*?.*?</noembed>@siu',
+                    // Add line breaks before and after blocks
+                      '@</?((address)|(blockquote)|(center)|(del))@iu',
+                      '@</?((div)|(h[1-9])|(ins)|(isindex)|(p)|(pre))@iu',
+                      '@</?((dir)|(dl)|(dt)|(dd)|(li)|(menu)|(ol)|(ul))@iu',
+                      '@</?((table)|(th)|(td)|(caption))@iu',
+                      '@</?((form)|(button)|(fieldset)|(legend)|(input))@iu',
+                      '@</?((label)|(select)|(optgroup)|(option)|(textarea))@iu',
+                      '@</?((frameset)|(frame)|(iframe))@iu',
+                  ),
+                  array(
+                      ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
+                      "\n\$0", "\n\$0", "\n\$0", "\n\$0", "\n\$0", "\n\$0",
+                      "\n\$0", "\n\$0",
+                  ),
+                  $text );
+              $text = strip_tags( $text );
+              file_put_contents( $filename.'.txt', $text);
               $this->log( "      Extracting fulltext (html): $filename_rel" );
               break;
             case 'text/plain':
@@ -213,7 +250,7 @@ class Zotero {
           'pages'=>$pages,
           'length'=>array_key_exists( 'length', $enc ) ? $enc['length'] : null,
           'filename'=>$filename_rel,
-          '`fulltext`'=>null,
+          '`fulltext`'=> null,
         );
         $this->db->Replace( 'zotero.enclosures', $replace, array( '`key`', 'libraryid' ), $autoquote = true );
         $this->db->UpdateBlob( 'zotero.enclosures', '`fulltext`', file_exists( $filename.'.txt' ) ? gzencode( file_get_contents( $filename.'.txt' )) : null, "`key`=".$this->db->qstr( $item['key'] )." AND libraryid={$id}" );
@@ -264,7 +301,32 @@ class Zotero {
     } while( count( $items ) == 100 );
   }
 
+  public function loadCollections($groupid) {
+    $collections = array();
+    $sql = "SELECT data FROM zotero.collections WHERE libraryid={$groupid}";
+    $rs = $this->db->Execute( $sql );
+    foreach( $rs as $row ) {
+      $data = json_decode( gzdecode( $row['data']), true );
+      $coll = new Collection( $data );
+      $collections[$coll->getKey()] = $coll;
+    }
+    $rs->Close();
+    foreach( $collections as $coll ) {
+      $pKey = $coll->getParentKey();
+      if( $pKey ) {
+        if( !array_key_exists( $pKey, $collections )) {
+          print_r( array_keys( $collections ));
+          die( "Collection {$pKey} not found");
+        }
+        $coll->setParent( $collections[$pKey]);
+      }
+    }
+    return $collections;
+  }
+
   public function loadChildren( $groupid, $itemkey=null ) {
+    $collections = $this->loadCollections($groupid);
+
     $sql = "SELECT data, trash FROM zotero.items WHERE libraryid={$groupid} AND parentKey".($itemkey ? '='.$this->db->qstr( $itemkey ) : ' IS NULL');
     if( $itemkey ) $sql .= " AND trash=false";
     //echo "{$sql}\n";
@@ -272,8 +334,15 @@ class Zotero {
     foreach( $rs as $row ) {
       $data = json_decode( gzdecode( $row['data']), true );
       $trash = $row['trash'];
-      $sql = "SELECT pages FROM zotero.enclosures WHERE `key`=".$this->db->qstr( $data['key'] );
-      $pages = intval( $this->db->getOne( $sql ));
+      $pages = 0;
+      $sql = "SELECT pages, `fulltext` FROM zotero.enclosures WHERE libraryid={$groupid} AND `key`=".$this->db->qstr( $data['key'] );
+      $row2 = $this->db->getRow( $sql );
+      if( $row2 ) {
+        $pages = intval( $row2['pages']);
+        if( strlen( $row2['fulltext'])) {
+          $data['fulltext'] = gzdecode( $row2['fulltext'] );
+        }
+      }
       $data['data']['pages'] = $pages;
       $item = new Item( $data, $trash );
       if( $item->numChildren()) {
@@ -281,13 +350,15 @@ class Zotero {
           $item->addChild( $child );
         }
       }
+      foreach( $item->getCollectionKeys() as $key ) {
+        if( array_key_exists( $key, $collections )) {
+          $item->addCollection( $collections[$key] );
+        }
+      }
       yield $item;
     }
     $rs->Close();
   }
 
-  public function loadCollections() {
-    $sql = "";
-  }
 
 }

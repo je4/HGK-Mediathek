@@ -345,8 +345,7 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 					if( array_key_exists( $cat, $catalog )) {
 						$count = $catalog[$cat];
 					}
-					if( $count > 0 ) {
-?>
+					if( ( @is_array( $qobj['facets']['catalog'] ) && array_search($value, $qobj['facets']['catalog']) !== false ) || $count > 0 ) { ?>
 						<div class="checkbox checkbox-green">
 							<input class="facet" type="checkbox" id="catalog" value="<?php echo htmlentities($value); ?>" <?php if( @is_array( $qobj['facets']['catalog'] ) && array_search($value, $qobj['facets']['catalog']) !== false ) echo " checked"; ?>>
 							<label for="catalog<?php echo $i; ?>">
@@ -366,7 +365,7 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 					if( array_key_exists( $cat, $catalog )) {
 						$count = $catalog[$cat];
 					}
-						if( $count > 0 ) {
+						if( ( @is_array( $qobj['facets']['catalog'] ) && array_search($value, $qobj['facets']['catalog']) !== false ) || $count > 0 ) {
 					?>
 										<div class="checkbox checkbox-green">
 											<input class="facet" type="checkbox" id="catalog" value="<?php echo htmlentities($value); ?>" <?php if( @is_array( $qobj['facets']['catalog'] ) && array_search($value, $qobj['facets']['catalog']) !== false ) echo " checked"; ?>>
