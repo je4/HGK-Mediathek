@@ -338,6 +338,10 @@ class zoteroEntity extends SOLRSource {
     return $cats;
   }
 
+  public function getCSL() {
+    return $this->item->getCSL();
+  }
+
 }
 
 ?>

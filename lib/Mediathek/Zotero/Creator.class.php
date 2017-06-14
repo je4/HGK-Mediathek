@@ -39,4 +39,8 @@ class Creator {
   public function getType() {
     return $this->data['creatorType'];
   }
+
+  public function getData() {
+    return $this->data;
+  }
 }

@@ -18,10 +18,17 @@ if( $cards == 0 ) $cards = 6;
   .card-deck .card {
       /* margin-right: 15px; */
       margin: 10px;
+      background-color: #f0f0f0;
+      background-image: url("concrete.png");
+
+
+  }
+  .card-deck .card:not(:first-child) {
+      margin-left: 10px;
   }
   </style>
 </head>
-<body style="text-align: center; vertical-align: middle; height: 100%;">
+<body style="text-align: center; vertical-align: middle; height: 100%; background-color: black; overflow:hidden;">
   <div class="container-fluid">
     <div class="card-deck-wrapper">
     <div class="card-deck">

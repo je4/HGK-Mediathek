@@ -207,6 +207,21 @@ class zoteroDisplay extends DisplayEntity {
 	if( DEBUG && $loggedin ) {
 		?>
 		<div style="">
+		<span style="; font-weight: bold;">CSL Data</span><br />
+			<div class="facet" style="padding: 0px;">
+				<div class="marker" style=""></div>
+				<div>
+					<pre>
+						<?php echo ( $this->entity->cite( 'apa.csl', 'ch', 'bibliography' ) ); ?>
+						<hr />
+						<?php echo ( $this->entity->cite( 'chicago-annotated-bibliography.csl', 'ch', 'citation' ) ); ?>
+						<hr />
+						<?php var_dump(  $this->entity->getCSL()); ?>
+					</pre>
+				</div>
+			</div>
+		</div>
+		<div style="">
 		<span style="; font-weight: bold;">RAW Data</span><br />
 			<div class="facet" style="padding: 0px;">
 				<div class="marker" style=""></div>

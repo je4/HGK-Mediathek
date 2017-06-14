@@ -24,9 +24,13 @@
 
 namespace Mediathek;
 
+include dirname(__FILE__).'/../CiteProc.inc.php';
+
+
 abstract class SOLRSource {
 	protected $data = null;
 	protected $id = null;
+	private static $cite = array();
 
 	public function reset() {
 		$this->data = null;
@@ -48,7 +52,7 @@ abstract class SOLRSource {
     abstract public function getSignatures();
     abstract public function getAuthors();
     abstract public function getLoans();
-    //abstract public function getBarcode();    
+    //abstract public function getBarcode();
     abstract public function getLicenses();
     abstract public function getURLs();
     abstract public function getSys();
@@ -88,6 +92,22 @@ abstract class SOLRSource {
 
 	}
 */
+
+public function getCSL() {
+		return array();
+}
+
+public function cite( $style, $lang, $mode ) {
+      global $config;
+      if( !array_key_exists( $style.$lang, self::$cite )) {
+        $csl_style = file_get_contents( $config['zotero']['csl_styles'].'/'.$style );
+        self::$cite[$style.$lang] = new \citeproc( $csl_style );
+      }
+
+      $csl_json = $this->getCSL();
+      return self::$cite[$style.$lang]->render( (object)$csl_json , $mode );
+    }
+
 }
 
 ?>
