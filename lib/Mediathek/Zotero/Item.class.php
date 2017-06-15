@@ -411,17 +411,23 @@ class Item {
   		foreach (self::$zoteroDateMap as $key=>$val) {
         if( array_key_exists( $val, $this->data['data'] )) {
           $t = trim( $this->data['data'][$val] );
-          $dt = null;
-          try {
-            $dt = new \DateTime( $t );
-            $cslItem[$key] = (object)array("raw" => $dt->format( 'Y-m-d' ));
+          if( !strlen( $t )) continue;
+          if( preg_match( '/^([0-9]{4})$/', $t, $matches )) {
+              $cslItem[$key] = (object)array("date-parts" => array(array($matches[1] )));
           }
-          catch( \Exception $ex ) {
-            if( preg_match( '/^([0-9]{1,2})\.([0-9]{4})$/', $t, $matches )) {
-                $cslItem[$key] = (object)array("date-parts" => array(array($matches[2], $matches[1] )));
+          elseif( preg_match( '/^([0-9]{1,2})\.([0-9]{4})$/', $t, $matches )) {
+              $cslItem[$key] = (object)array("date-parts" => array(array($matches[2], $matches[1] )));
+          }
+          elseif( preg_match( '/^([0-9]{4)-([0-9]{1,2})$/', $t, $matches )) {
+              $cslItem[$key] = (object)array("date-parts" => array(array($matches[1], $matches[2] )));
+          }
+          else {
+            $dt = null;
+            try {
+              $dt = new \DateTime( $t );
+              $cslItem[$key] = (object)array("date-parts" => array( array( $dt->format( 'Y' ), $dt->format( 'm' ), $dt->format( 'd' ))));
             }
-            elseif( preg_match( '/^([0-9]{4)-([0-9]{1,2})$/', $t, $matches )) {
-                $cslItem[$key] = (object)array("date-parts" => array(array($matches[1], $matches[2] )));
+            catch( \Exception $ex ) {
             }
           }
         }

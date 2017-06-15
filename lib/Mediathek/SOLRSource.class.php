@@ -101,7 +101,7 @@ public function cite( $style, $lang, $mode ) {
       global $config;
       if( !array_key_exists( $style.$lang, self::$cite )) {
         $csl_style = file_get_contents( $config['zotero']['csl_styles'].'/'.$style );
-        self::$cite[$style.$lang] = new \citeproc( $csl_style );
+        self::$cite[$style.$lang] = new \citeproc( $csl_style, $lang );
       }
 
       $csl_json = $this->getCSL();

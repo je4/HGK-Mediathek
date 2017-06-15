@@ -212,7 +212,7 @@ class zoteroDisplay extends DisplayEntity {
 				<div class="marker" style=""></div>
 				<div>
 					<pre>
-						<?php echo ( $this->entity->cite( 'apa.csl', 'ch', 'bibliography' ) ); ?>
+						<?php echo ( $this->entity->cite( 'apa-de.csl', 'ch', 'bibliography' ) ); ?>
 						<hr />
 						<?php echo ( $this->entity->cite( 'chicago-annotated-bibliography.csl', 'ch', 'citation' ) ); ?>
 						<hr />
