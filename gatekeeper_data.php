@@ -22,7 +22,7 @@ if( $_gate == null ) $result = array( array(
   'Counter',
   'North #1',
   'North #2',
-  'North #3',
+  'Eintritt Nord (North #3)',
   'North #4',
   'South #1',
   'South #2',
@@ -34,7 +34,7 @@ elseif( $_gate == 'north' ) $result = array( array(
   'Counter',
   'North #1',
   'North #2',
-  'North #3',
+  'Eintritt Nord (North #3)',
   'North #4',
   array( 'role'=>'annotation' ),
 ) );
