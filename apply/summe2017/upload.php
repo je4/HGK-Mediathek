@@ -5,8 +5,11 @@ require( 'lib/class.phpmailer.php' );
 require( 'lib/class.smtp.php' );
 
 $md5 = trim( $_SERVER['PATH_INFO'], ' /' );
-$sql = "SELECT formid FROM form WHERE link=".$db->qstr( $md5 );
-$formid = intval( $db->GetOne( $sql ));
+$sql = "SELECT formid, status FROM form WHERE link=".$db->qstr( $md5 );
+$row = $db->GetRow( $sql );
+$formid = intval( $row['formid' ]);
+$status = $row['status'];
+
 $sql = "SELECT name,value FROM formdata WHERE formid = {$formid}";
 $data = array();
 $rs = $db->Execute( $sql );
@@ -118,7 +121,7 @@ $rs->Close();
 
       <section class="jumbotron text-center">
         <div class="container">
-          <h1 class="jumbotron-heading">Dateien hochladen</h1>
+          <?php if( $status != 'upload') { ?><h1 class="jumbotron-heading">Dateien hochladen</h1><?php } ?>
           <p class="lead text-muted">
             <h2><?php echo htmlentities($data['titel']); ?> (<?php echo htmlentities($data['werkjahr']); ?>)</h2>
             <h3><?php echo htmlentities($data['vorname']); ?> <?php echo htmlentities($data['nachname']); ?></h3>
@@ -127,31 +130,40 @@ $rs->Close();
 
         </div>
       </section>
-
+<?php if( $status == 'upload') { ?>
+  <div class="container-fluid">
+    <p>
+    Die Einreichung wurde bereits abgeschlossen. Bei weiteren Fragen wenden sie sich bitte an summe@betalabs.ch
+    </p>
+  </div>
+<?php } else { ?>
       <div id="uploader"> </div>
 
     <div class="container-fluid">
-      <div id="filecontent" class="card-deck">
+      <p>
+        <form method="POST" action="submit2.php?form=<?php echo $md5; ?>" role="form" id="finish">
+          <div class="form-group row">
+            <label for="<?php echo $id; ?>" class="col-sm-2 col-form-label">Weitere Bemerkungen zur Einreichung</label>
+            <div class="col-sm-10">
+              <textarea rows=3 name="data[remark]" type="text" class="form-control" id="remark" aria-describedby="remarkHelp" placeholder=""></textarea>
+              <small id="remarkHelp" class="form-text text-muted">Bitte hier weitere Erläuterungen zu den hochgeladenen Daten erfassen.</small>
+            </div>
+          </div>
+
+          <div class="form-group row" style="margin: 15px;">
+            <button type="submit" value="Validate!" class="btn btn-secondary btn-block">Einreichung abschliessen</button>
+          </div>
+        </form>
+      </p>
+      <div id="filecontent">
       </div>
-      <p />
-
-<pre>
-<?php
-//  print_r( $_SERVER );
- ?>
- </pre>
     </div>
-
+<?php
+}
+?>
 <hr />
-      <footer class="text-muted">
-        <div class="container">
-          <p class="float-right">
-            <a href="#">Back to top</a>
-          </p>
-          <p>Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
-          <p>New to Bootstrap? <a href="../../">Visit the homepage</a> or read our <a href="../../getting-started/">getting started guide</a>.</p>
-        </div>
-      </footer>
+<?php include( 'footer.inc.php' ); ?>
+
 
  <script
    src="https://code.jquery.com/jquery-3.2.1.min.js"

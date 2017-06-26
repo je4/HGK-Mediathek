@@ -109,9 +109,10 @@ if ($method == "POST") {
           if( $stream['codec_type'] == 'video') $isVideo = true;
         }
         if( $isVideo ) {
-          shell_exec( 'ffmpeg -i '.escapeshellarg( "files/{$uuid}/{$name}" ).' -ss 00:00:08 -vframes 1 '.escapeshellarg( "files/{$uuid}/{$name}.png" )." 2>&1");
-          if( file_exists("files/{$uuid}/{$name}.png")) {
-            $result['thumbnailUrl'] = "files/{$uuid}/{$name}.png";
+          @mkdir( "thumbs/{$uuid}" );
+          shell_exec( 'ffmpeg -i '.escapeshellarg( "files/{$uuid}/{$name}" ).' -ss 00:00:08 -vframes 1 '.escapeshellarg( "thumbs/{$uuid}/{$name}.png" )." 2>&1");
+          if( file_exists("thumbs/{$uuid}/{$name}.png")) {
+            $result['thumbnailUrl'] = "thumbs/{$uuid}/{$name}.png";
           }
         }
         // ffmpeg -i input.flv -ss 00:00:14.435 -vframes 1 out.png
@@ -121,15 +122,17 @@ if ($method == "POST") {
       }
       elseif( preg_match( '/^application\/pdf/', $mime ) ) {
         $tech = shell_exec( 'pdfinfo '.escapeshellarg( "files/{$uuid}/{$name}" )." 2>&1");
-        shell_exec( 'convert '.escapeshellarg( "files/{$uuid}/{$name}" ).'[0] '.escapeshellarg( "files/{$uuid}/{$name}.png" )." 2>&1");
-        if( file_exists("files/{$uuid}/{$name}.png")) {
-          $result['thumbnailUrl'] = "files/{$uuid}/{$name}.png";
+        @mkdir( "thumbs/{$uuid}" );
+        shell_exec( 'convert '.escapeshellarg( "files/{$uuid}/{$name}" ).'[0] '.escapeshellarg( "thumbs/{$uuid}/{$name}.png" )." 2>&1");
+        if( file_exists("thumbs/{$uuid}/{$name}.png")) {
+          $result['thumbnailUrl'] = "thumbs/{$uuid}/{$name}.png";
         }
       }
 
-      $sql = "INSERT INTO files( formid, name, filename, mimetype, size, tech, uploadtime ) VALUES ({$formid}
+      $sql = "INSERT INTO files( formid, name, filename, thumbname, mimetype, size, tech, uploadtime ) VALUES ({$formid}
         , ".$db->qstr( $name )."
         , ".$db->qstr( "files/{$uuid}/{$name}" )."
+        , ".(file_exists("thumbs/{$uuid}/{$name}.png") ? $db->qstr( "thumbs/{$uuid}/{$name}.png" ) : "NULL" )."
         , ".$db->qstr( $mime )."
         , ".filesize( "files/{$uuid}/{$name}" )."
         , ".$db->qstr( $tech )."

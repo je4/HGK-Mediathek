@@ -89,7 +89,7 @@ $text = "Liebe/r {$data['vorname']} {$data['nachname']},
 vielen Dank für die Einreichung von \"{$data['titel']}\" ({$data['werkjahr']}) zur Summe.
 
 Der Datenupload für die Einreichung erfolgt unter:
-https://mediathek.hgk.fhnw.ch/dev/apply/summe2017/upload.php/{$md5}
+https://mediathek.hgk.fhnw.ch/apply/summe2017/upload.php/{$md5}
 
 Viele Grüsse
   Summe
@@ -120,24 +120,17 @@ Liebe/r <?php echo "{$data['vorname']} {$data['nachname']}"; ?>,
 
 vielen Dank für die Einreichung von "<?php echo htmlentities( $data['titel'] ); ?>" (<?php echo $data['werkjahr']; ?>) zur Summe.
 
-Es wurde eine Email an <?php echo htmlentities( $data['email'] ); ?> gesendet mit weiteren Informationen zum Upload der zur Einreichung benötigten Daten.
+Es wurde eine Email an <?php echo htmlentities( $data['email'] ); ?> gesendet welche die weiteren Informationen zum Upload der zur Einreichung benötigten Daten.
 <?php
 }
-  print_r( $_REQUEST );
+  //print_r( $_REQUEST );
  ?>
  </pre>
     </div>
 
 <hr />
-      <footer class="text-muted">
-        <div class="container">
-          <p class="float-right">
-            <a href="#">Back to top</a>
-          </p>
-          <p>Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
-          <p>New to Bootstrap? <a href="../../">Visit the homepage</a> or read our <a href="../../getting-started/">getting started guide</a>.</p>
-        </div>
-      </footer>
+<?php include( 'footer.inc.php' ); ?>
+
 
  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
