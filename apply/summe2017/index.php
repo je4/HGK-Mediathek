@@ -172,20 +172,16 @@ formSelect( 'bezug', 'Bezug zu Basel', 'In welchem Bezug steht die Arbeit zu Bas
         , 'keiner'
       ) );
 ?>
+<hr />
+
 <div class="form-group row">
-  <label for="lizenz" class="col-sm-2 col-form-label">Lizenz(en) und Nachnutzung</label>
+  <label for="lizenz" class="col-sm-2 col-form-label">Lizenz(en) und Nachnutzung<a class="required" href="#" data-toggle="tooltip" title="Pflichtfeld">*</a></label>
   <div class="col-sm-10">
-    <p>Es bestehen keine expliziten Lizenzbedingungen.<br />
-    Das eingereichte Werk ist lizenzrechtlich geschützt. Eine Kopie der Lizenzbedingungen wird beigefügt (siehe Upload).</p>
-<!--
     <label class="custom-control custom-radio">
       <input id="lizenz1" type="radio" class="custom-control-input" value="cc-by" name="data[lizenz]">
       <span class="custom-control-indicator"></span>
       <span class="custom-control-description">
-        Das eingereichte Werk ist urheberrechtlich geschützt.
-        Es soll unter Nennung meines Namens frei zugänglich sein.
-        Es wird unter der <a href="https://creativecommons.org/licenses/by/4.0/deed.de">Creative-Commons Lizenz CC - BY</a>
-        zugänglich gemacht.
+        Es bestehen keine expliziten Lizenzbedingungen
       </span>
     </label>
     <br />
@@ -193,12 +189,10 @@ formSelect( 'bezug', 'Bezug zu Basel', 'In welchem Bezug steht die Arbeit zu Bas
       <input id="lizenz2" type="radio" class="custom-control-input" value="cc-by-nc" name="data[lizenz]">
       <span class="custom-control-indicator"></span>
       <span class="custom-control-description">
-        Das eingereichte Werk ist urheberrechtlich geschützt.
-        Es soll unter Nennung meines Namens für nicht kommerzielle Zwecke frei zugänglich sein.
-        Es wird unter der <a target="_blank" href="https://creativecommons.org/licenses/by-nc/4.0/deed.de">Creative-Commons Lizenz CC - BY - NC</a>
-        zugänglich gemacht.
+        Das eingereichte Werk ist lizenzrechtlich geschützt. Eine Kopie der Lizenzbedingungen wird beigefügt (siehe Upload).
       </span>
     </label>
+    <!--
     <br />
     <label class="custom-control custom-radio">
       <input id="lizenz3" type="radio" class="custom-control-input" value="cc-by-nd" name="data[lizenz]">
@@ -357,6 +351,7 @@ formSelect( 'bezug', 'Bezug zu Basel', 'In welchem Bezug steht die Arbeit zu Bas
               minlength: 2,
             }
           },
+          /*
           "data[rechte]": {
             required: true,
             min: {
@@ -364,6 +359,7 @@ formSelect( 'bezug', 'Bezug zu Basel', 'In welchem Bezug steht die Arbeit zu Bas
               minlength: 2,
             }
           }
+          */
         },
        errorPlacement: function(error, element) {
           // error.appendTo( element.parent("td").next("td") );
