@@ -20,6 +20,7 @@ $rs->Close();
 
  ?><html>
 <head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <base href="<?php echo dirname( $_SERVER['SCRIPT_NAME']); ?>/">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
   <link href="fine-uploader/fine-uploader-gallery.min.css" rel="stylesheet">
