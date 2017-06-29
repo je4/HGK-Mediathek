@@ -43,6 +43,10 @@ class Item {
         $this->addCollection( $coll );
       }
     }
+    // kill nebis grabbed items
+    if( array_key_exists( 'url', $this->data['data'] ) ) {
+      if( preg_match( '@://[^/]*nebis.ch/@', $this->data['data']['url'] )) unset( $this->data['data']['url'] );
+    }
   }
 
   function __toString() {
@@ -148,7 +152,11 @@ class Item {
   }
 
   public function getUrl() {
-    return array_key_exists( 'url', $this->data['data'] ) ? $this->data['data']['url'] : null;
+    if( array_key_exists( 'url', $this->data['data'] ) ) {
+//      if( preg_match( '@://[^/]*nebis.ch/@', $this->data['data']['url'] )) return null;
+      return $this->data['data']['url'];
+    }
+    return null;
   }
 
     public function getContentType() {

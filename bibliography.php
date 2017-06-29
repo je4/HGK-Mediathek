@@ -10,6 +10,8 @@ include( 'init.inc.php' );
 
 global $db;
 
+$style = array_key_exists( 'style', $_REQUEST ) ? $_REQUEST['style'] : 'apa.csl';
+
 $topicmap = array(
 	'subject:personalname'=>'Personenname',
 	'subject:corporatename'=>'Körperschaftsname',
@@ -36,6 +38,8 @@ $facets = isset( $_REQUEST['facets'] ) ? $_REQUEST['facets'] : null;
 $query = isset( $_REQUEST['query'] ) ? $_REQUEST['query'] : null;
 $q = isset( $_REQUEST['q'] ) ? strtolower( trim( $_REQUEST['q'] )): null;
 $page = isset( $_REQUEST['page'] ) ? intval( $_REQUEST['page'] ) : 0;
+$html = array_key_exists( 'html', $_REQUEST );
+if( $q == null ) $q = '7db6da599d7ca9bbd845ae37ffcf7047';
 // $pagesize = isset( $_REQUEST['pagesize'] ) ? intval( $_REQUEST['pagesize'] ) : 1500;
 $pagesize = 1500;
 if( $page < 0 ) $page = 0;
@@ -365,15 +369,28 @@ echo "<!-- ".$qstr." (Documents: {$numResults} // Page ".($page+1)." of {$numPag
     <div class="card-block">
 
     <?php
+		if( $html ) echo htmlspecialchars( '<ul>' )."\n";
     foreach( $entities as $entity ) {
-      if( count( $entity->getItem()->getPDFs())) {
-        echo '<a href="https://mediathek.hgk.fhnw.ch/dev/detail.php?id='.urlencode($entity->getID()).'">'.$entity->cite( 'apa-de.csl', 'ch', 'bibliography' )."</a>\n";
-      }
-      else {
-        echo ''.$entity->cite( 'apa-de.csl', 'ch', 'bibliography' )."\n";
-      }
+			if( $html ) {
+				echo htmlspecialchars( '<li>' )."<br />\n";
+				echo ''.htmlspecialchars(preg_replace('@((http|https)://([\w-.]+)+(:\d+)?(/([\w/_\-.]*(\?\S+)?)?)?)@',
+             '<a href="$1" class="" target="_blank">$1</a>',strip_tags($entity->cite( $style, 'ch', 'bibliography' ))));
+				if( count( $entity->getItem()->getPDFs())) {
+	        echo htmlspecialchars( ' (<a target="_blank" href="https://mediathek.hgk.fhnw.ch/detail.php?id='.urlencode($entity->getID()).'">&rarr;&nbsp;Volltext</a>)' )."\n";
+	      }
+				echo "<br />".htmlspecialchars( '</li>' )."<br />\n";
+			}
+			else {
+	      if( count( $entity->getItem()->getPDFs())) {
+	        echo '<a href="https://mediathek.hgk.fhnw.ch/detail.php?id='.urlencode($entity->getID()).'">'.$entity->cite( $style, 'ch', 'bibliography' )."</a>\n";
+	      }
+	      else {
+	        echo ''.$entity->cite( $style, 'ch', 'bibliography' )."\n";
+	      }
+			}
 //      echo '<a href="https://mediathek.hgk.fhnw.ch/dev/detail.php?id='.urlencode($item->getID()).'">&rarr;</a>'."<br />\n";
     }
+		if( $html ) echo htmlspecialchars( '<ul>' )."\n";
     ?>
     </div>
   </div>
