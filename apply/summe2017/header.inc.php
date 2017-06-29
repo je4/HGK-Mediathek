@@ -9,8 +9,8 @@
         und möchten die audiovisuelle regionalen Produktionen in ihrer Vielfalt an Themen und Herangehensweisen sehen und zeigen.
         Dein Video Beitrag wird einsehbar gemacht und allen Projekträumen für ihre kuratorische Wahl zur Verfügung gestellt.
         Im November während der Summe 2017 werden dann die Videos in verschiedenen Präsentationsformen gezeigt. Unter anderem
-        wird es eine Ausstellung mit dem Titel "Videoförmig" auch für installative Arbeiten im <a href="http://www.kaskadenkondensator.ch" target="_blank">Kaskadenkondensator</a>
-        geben und Screenings im <a href="https://neueskinobasel.ch" target="_blank">Neuen Kino</a> Summe. Im M54 findet erneut „nachtflimmern“ statt. Dort werden ausgewählte Arbeiten in
+        wird es eine Ausstellung mit dem Titel "Videoförmig" auch für installative Arbeiten im <a href="http://www.kasko.ch" target="_blank">Kaskadenkondensator</a>
+        geben und Screenings im <a href="https://neueskinobasel.ch" target="_blank">Neuen Kino</a> Summe. Im <a href="http://www.visarte-basel.ch/" target="_blank">M54</a> findet erneut „nachtflimmern“ statt. Dort werden ausgewählte Arbeiten in
         installativer Form präsentiert und laden mit der einsehBar zum Verweilen ein .
         Wir arbeiten mit der Mediathek der Hochschule für Gestaltung und Kunst FHNW zusammen um die eingereichten Arbeiten auch nach der Summe längerfristig zugänglich zu machen.
       </p>
