@@ -201,9 +201,51 @@ class zoteroDisplay extends DisplayEntity {
 			</div>
 </div>
 <div class="row">
-	<div class="col-md-9">
+	<div class="col-md-12">
+		<p />
+		<div style="">
+<?php
+			$categories = array();
+			$collections = array();
+			foreach( $this->item->getCollections() as $coll ) {
+				$fname = $coll->getFullName();
+				$parts = count( explode( ':', $fname ));
+
+				$categories[] = ($parts+2).'!!fhnw!!hgk!!pub!!'.str_replace( ':', '!!', $fname );
+				$collections[] = $fname;
+			}
+?>
+		<span style="; font-weight: bold;">Weitere Inhalte aus "<?php echo implode( '; ', $collections ); ?>"</span><br />
+			<div class="facet" style="">
+				<div class="marker" style=""></div>
+		<?php
+		$squery->setRows( 500 );
+		$squery->setStart( 0 );
+		$qstr = '';
+		foreach( $categories as $key=>$cat ) {
+			$qstr .= ($key == 0 ? '' : ' OR ').'category: '.$helper->escapeTerm($cat);
+		}
+		if( strlen( $qstr )) $qstr = "({$qstr})";
+	//	$qstr = "({$qstr}) AND -id:".$helper->escapeTerm( $this->doc->id );
+		//echo "\n<!-- {$qstr} -->\n";
+		$squery->setQuery( $qstr );
+//		$squery->createFilterQuery('source')->setQuery('source: zotero');
+		$rs = $solrclient->select( $squery );
+		$numResults = $rs->getNumFound();
+		$numPages = floor( $numResults / 500 );
+		if( $numResults % 500 > 0 ) $numPages++;
+
+		echo "<!-- ".$qstr." (Documents: {$numResults} // Page ".(1)." of {$numPages}) -->\n";
+
+		$res = new DesktopResult( $rs, 0, 500, $this->db, $urlparams );
+		echo $res->getResult();
+
+		?>
+			</div>
+		</div>
 
 	<?php
+
 	if( DEBUG && $loggedin ) {
 		?>
 		<div style="">
