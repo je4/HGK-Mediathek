@@ -157,9 +157,9 @@ formSelect( 'ton', 'Ton', 'Ton.', true,
       ) );
 formString( 'sprache', 'Sprache', 'Sprache des Werkes.', false );
 formSelect( 'art', 'Art/Kategorie', 'Einordnung der Arbeit.', true,
-  array(  'Kunstvideo'
-        , 'Komentarfilm'
-        , 'Animation'
+  array( 'Animation'
+        , 'Dokumentation/Dokumentarfilm'
+        , 'Kunstvideo'
         , 'Mobile Video'
         , 'Netzkunst'
         , 'sonstiges'
@@ -173,8 +173,11 @@ formSelect( 'bezug', 'Bezug zu Basel', 'In welchem Bezug steht die Arbeit zu Bas
       ) );
 ?>
 <div class="form-group row">
-  <label for="lizenz" class="col-sm-2 col-form-label">Lizenz(en) und Nachnutzung<a class="required" href="#" data-toggle="tooltip" title="Pflichtfeld">*</a></label>
+  <label for="lizenz" class="col-sm-2 col-form-label">Lizenz(en) und Nachnutzung</label>
   <div class="col-sm-10">
+    <p>Es bestehen keine expliziten Lizenzbedingungen.<br />
+    Das eingereichte Werk ist lizenzrechtlich geschützt. Eine Kopie der Lizenzbedingungen wird beigefügt (siehe Upload).</p>
+<!--
     <label class="custom-control custom-radio">
       <input id="lizenz1" type="radio" class="custom-control-input" value="cc-by" name="data[lizenz]">
       <span class="custom-control-indicator"></span>
@@ -244,26 +247,53 @@ formSelect( 'bezug', 'Bezug zu Basel', 'In welchem Bezug steht die Arbeit zu Bas
         Das eingereichte Werk darf über die Website der Mediathek HGK öffentlich gesichtet werden.
       </span>
     </label>
+  -->
   </div>
 </div>
 
 
 <div class="form-group row">
-  <label for="urheberrechte" class="col-sm-2 col-form-label">Urheberrechte<a class="required" href="#" data-toggle="tooltip" title="Pflichtfeld">*</a></label>
+  <label for="rechtemediathek" class="col-sm-2 col-form-label">Rechte zur Nutzung in der Mediathek HGK</label>
   <div class="col-sm-10">
+    <p>Hiermit übertrage ich die Nutzungsrechte für die eingereichte Arbeit an die Mediathek HGK.</p>
+
     <label class="custom-control custom-radio">
-      <input id="rechte1" type="radio" class="custom-control-input" value="keine-dritte" name="data[rechte]">
+      <input id="rechte1" type="radio" class="custom-control-input" value="internet" name="data[rechte]">
       <span class="custom-control-indicator"></span>
       <span class="custom-control-description">
-        Hiermit bestätige ich, dass an dem /den folgend eingereichten Videodaten keinerlei Rechtsansprüche Dritter bestehen.
+        Die Arbeit darf frei im Internet gezeigt werden.
       </span>
     </label>
     <br />
     <label class="custom-control custom-radio">
-      <input id="rechte2" type="radio" class="custom-control-input" value="dritte-ok" name="data[rechte]">
+      <input id="rechte2" type="radio" class="custom-control-input" value="hochschulnetz" name="data[rechte]">
       <span class="custom-control-indicator"></span>
       <span class="custom-control-description">
-        Hiermit bestätige ich, dass alle an dem / den folgend eingereichten Videodaten beteiligten Dritten der Einreichung zugestimmt haben.
+        Die Arbeit darf im Schweizer Hochschulnetz in voller Länge gezeigt werden. Im Internet dürfen nur Vorschaubilder gezeigt werden.
+      </span>
+    </label>
+    <br />
+    <label class="custom-control custom-radio">
+      <input id="rechte3" type="radio" class="custom-control-input" value="hgk" name="data[rechte]">
+      <span class="custom-control-indicator"></span>
+      <span class="custom-control-description">
+        Die Arbeit darf nur in der HGK in voller Länge gezeigt werden. Im Internet dürfen nur Vorschaubilder gezeigt werden.
+      </span>
+    </label>
+    <br />
+    <label class="custom-control custom-radio">
+      <input id="rechte4" type="radio" class="custom-control-input" value="mediathek" name="data[rechte]">
+      <span class="custom-control-indicator"></span>
+      <span class="custom-control-description">
+        Die Arbeit darf nur in der Mediathek in voller Länge gezeigt werden. Im Internet dürfen nur Vorschaubilder gezeigt werden.
+      </span>
+    </label>
+    <br />
+    <label class="custom-control custom-radio">
+      <input id="rechte5" type="radio" class="custom-control-input" value="sichtungsstation" name="data[rechte]">
+      <span class="custom-control-indicator"></span>
+      <span class="custom-control-description">
+        Die Arbeit darf nur an einer Sichtungsstation in der Mediathek in voller Länge gezeigt werden. Im Internet dürfen nur Vorschaubilder gezeigt werden.
       </span>
     </label>
   </div>
