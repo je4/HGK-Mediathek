@@ -323,7 +323,6 @@ class videokunst_ch_workDisplay extends DisplayEntity {
                   				}
                   				if( count( $authors ) > 0 ) echo "<br />\n";
                   ?>
-					<!--<i class="fa fa-external-link" aria-hidden="true"></i> <a href="http://www.imdb.com/find?ref_=nv_sr_fn&q=<?php echo urlencode(trim($this->metadata['Titel1'] )); ?>&s=all" target="_blank"><img src="img/imdb.png"></a><br /> -->
 					<i class="fa fa-external-link" aria-hidden="true"></i><a href="redir.php?id=<?php echo urlencode( $this->doc->id ).'&url='.urlencode( $this->metadata['vidhtml'] )."\" target=\"blank\">".htmlspecialchars( $this->metadata['vidhtml'] ); ?></a><br />
 
 					ID: <?php echo $this->doc->id; ?><br />
