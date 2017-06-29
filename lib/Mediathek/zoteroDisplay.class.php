@@ -223,7 +223,7 @@ class zoteroDisplay extends DisplayEntity {
 		$squery->setStart( 0 );
 		$qstr = '';
 		foreach( $categories as $key=>$cat ) {
-			$qstr .= ($key == 0 ? '' : ' OR ').'category: '.$helper->escapeTerm($cat);
+			$qstr .= ($key == 0 ? '' : ' OR ').'category: '.$helper->escapePhrase($cat);
 		}
 		if( strlen( $qstr )) $qstr = "({$qstr})";
 	//	$qstr = "({$qstr}) AND -id:".$helper->escapeTerm( $this->doc->id );
