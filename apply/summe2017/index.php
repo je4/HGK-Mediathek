@@ -75,7 +75,7 @@ function formSelect( $id, $label, $descr, $required, $sel ) {
   </div>
       <div class="navbar navbar-inverse bg-inverse">
         <div class="container d-flex justify-content-between">
-          <a href="#" class="navbar-brand">Ausschreibung &Sigma; Summe-VIDEO</a>
+          <a href="#" class="navbar-brand">Ausschreibung &Sigma; Summe &ndash; VIDEO</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -84,11 +84,11 @@ function formSelect( $id, $label, $descr, $required, $sel ) {
 
       <section class="jumbotron text-center">
         <div class="container">
-          <h1 class="jumbotron-heading">Ausschreibung für VIDEO-Beiträge zur &Sigma; Summe-VIDEO<br />
+          <h1 class="jumbotron-heading">Ausschreibung für Video-Beiträge zur &Sigma; Summe &ndash; VIDEO<br />
             4. – 19. November 2017</h1>
           <p class="lead text-muted">
-              Unter dem Zeichen &Sigma; — für Summe — versammeln sich unabhängige Projekträume
-              aus dem Raum Basel: Sie laden diesesmal zur Videowerkschau ein! Sie kuratieren
+              Unter dem Zeichen &Sigma; &ndash; für Summe &ndash; versammeln sich unabhängige Projekträume
+              aus dem Raum Basel: Wir laden diesesmal zur Videowerkschau ein! Die verschiedenen Räume kuratieren
               eigenständige Ausstellungen und Programme und zeigen im Monat November audiovisuelle
               Arbeiten aus dem aktuellen Videoschaffen.
             </p>
@@ -148,7 +148,7 @@ formSelect( 'medium', 'Medium', 'Medium der Arbeit.', true,
         , 'Installation'
       ) );
 formString( 'anderesformat', 'Anderes Format', 'Bitte bei speziellen Formaten ausfüllen.', false );
-formString( 'dauer', 'Dauer', 'Abspieldauer des Werkes.', true );
+formString( 'dauer', 'Dauer', 'Dauer des Werkes (z.B. 75:30 für 1h 15min 30sec).', true );
 formString( 'auflage', 'Auflage', 'Auflage des Werkes.', false );
 formSelect( 'ton', 'Ton', 'Ton.', true,
   array(  'ohne Ton'
@@ -156,7 +156,7 @@ formSelect( 'ton', 'Ton', 'Ton.', true,
         , 'Stereo'
         , 'Mehrkanal'
       ) );
-formString( 'sprache', 'Sprache', 'Sprache des Werkes.', false );
+formString( 'sprache', 'Sprache', 'Verwendete Sprachen: Gesprochen und/ oder Untertitel.', false );
 formSelect( 'art', 'Art/Kategorie', 'Einordnung der Arbeit.', true,
   array( 'Animation'
         , 'Dokumentation/Dokumentarfilm'
@@ -167,16 +167,15 @@ formSelect( 'art', 'Art/Kategorie', 'Einordnung der Arbeit.', true,
       ) );
 formText( 'descr', 'Kurzbeschreibung (600-900 Zeichen max.)', 'Beschreibung der Arbeit.', true, 8 );
 formSelect( 'bezug', 'Bezug zu Basel', 'In welchem Bezug steht die Arbeit zu Basel.', true,
-  array(  'Heimat, Geburtsort, Wohnort'
-        , 'Werk'
-        , 'beides'
-        , 'keiner'
+  array(  'persönlicher Bezug der / des  Kunstschaffenden zur Region Basel (Wohn- oder Geburtsort / Studium etc.)'
+        , 'Werk hat einen direkten Bezug zur Region Basel  ( Drehort, Mitwirkende, Themen etc.)'
+        , 'kein direkter Bezug zur Region Basel'
       ) );
 ?>
 <hr />
 
 <div class="form-group row">
-  <label for="lizenz" class="col-sm-2 col-form-label">Lizenz(en) und Nachnutzung<a class="required" href="#" data-toggle="tooltip" title="Pflichtfeld">*</a></label>
+  <label for="lizenz" class="col-sm-2 col-form-label">Lizenz(en)<a class="required" href="#" data-toggle="tooltip" title="Pflichtfeld">*</a></label>
   <div class="col-sm-10">
     <label class="custom-control custom-radio">
       <input id="lizenz1" type="radio" class="custom-control-input" value="cc-by" name="data[lizenz]">
@@ -246,11 +245,30 @@ formSelect( 'bezug', 'Bezug zu Basel', 'In welchem Bezug steht die Arbeit zu Bas
   </div>
 </div>
 
+<hr />
+<div class="form-group row">
+  <label for="rechtesumme" class="col-sm-2 col-form-label">Nutzung<a class="required" href="#" data-toggle="tooltip" title="Pflichtfeld">*</a></label>
+    <div class="col-sm-10">
+      <p>Rechte zur Nutzung während der ∑&nbsp;&ndash;&nbsp;Summe 2017</p>
+  <div class="form-check">
+      <label class="custom-control custom-checkbox">
+        <input id="rechtesumme" type="checkbox" class="custom-control-input" value="ok" name="data[rechtesumme]">
+        <span class="custom-control-indicator"></span>
+        <span class="custom-control-description">
+          Hiermit übertrage ich die Nutzungsrechte für die eingereichte Arbeit an die ∑-Summe 2017.
+        </span>
+      </label>
+    </div>
+    <hr />
+
+  </div>
+</div>
+
 
 <div class="form-group row">
-  <label for="rechtemediathek" class="col-sm-2 col-form-label">Rechte zur Nutzung in der Mediathek HGK</label>
+  <label for="rechtemediathek" class="col-sm-2 col-form-label"><!-- Rechte zur Nutzung in der Mediathek HGK --></label>
   <div class="col-sm-10">
-    <p>Hiermit übertrage ich die Nutzungsrechte für die eingereichte Arbeit an die Mediathek HGK.</p>
+    <p>Zu folgenden Bedingungen übertrage ich die Nutzungsrechte für die eingereichte Arbeit  zusätzlich  an die Mediathek HGK.</p>
 
     <label class="custom-control custom-radio">
       <input id="rechte1" type="radio" class="custom-control-input" value="internet" name="data[rechte]">
@@ -291,22 +309,18 @@ formSelect( 'bezug', 'Bezug zu Basel', 'In welchem Bezug steht die Arbeit zu Bas
         Die Arbeit darf nur an einer Sichtungsstation in der Mediathek in voller Länge gezeigt werden. Im Internet dürfen nur Vorschaubilder gezeigt werden.
       </span>
     </label>
+    <br />
+    <label class="custom-control custom-radio">
+      <input id="rechte6" type="radio" class="custom-control-input" value="nocoll" name="data[nocoll]">
+      <span class="custom-control-indicator"></span>
+      <span class="custom-control-description">
+        Die Arbeit soll nicht in die Sammlungen der Mediathek aufgenommen werden.
+      </span>
+    </label>
   </div>
 </div>
 
-<hr />
-<div class="form-group">
-  <label for="rechtesumme">Rechte zur Nutzung während der ∑-Summe 2017<a class="required" href="#" data-toggle="tooltip" title="Pflichtfeld">*</a></label>
-  <div class="form-check">
-      <label class="custom-control custom-checkbox">
-        <input id="rechtesumme" type="checkbox" class="custom-control-input" value="ok" name="data[rechtesumme]">
-        <span class="custom-control-indicator"></span>
-        <span class="custom-control-description">
-          Hiermit übertrage ich die Nutzungsrechte für die eingereichte Arbeit an die ∑-Summe 2017.
-        </span>
-      </label>
-    </div>
-</div>
+
 <p />
             <div class="form-group row">
               <button type="submit" value="Validate!" class="btn btn-secondary btn-block">Absenden</button>

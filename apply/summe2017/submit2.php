@@ -40,7 +40,7 @@ $rs->Close();
   </div>
       <div class="navbar navbar-inverse bg-inverse">
         <div class="container d-flex justify-content-between">
-          <a href="#" class="navbar-brand">Ausschreibung &Sigma; Summe-VIDEO</a>
+          <a href="#" class="navbar-brand">Ausschreibung &Sigma; Summe &ndash; VIDEO</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -48,17 +48,7 @@ $rs->Close();
       </div>
 
       <section class="jumbotron text-center">
-        <div class="container">
-          <h1 class="jumbotron-heading">Ausschreibung für VIDEO-Beiträge zur &Sigma; Summe-VIDEO 4. – 19. November 2017</h1>
-          <p class="lead text-muted">
-              Unter dem Zeichen &Sigma; — für Summe — versammeln sich unabhängige Projekträume
-              aus dem Raum Basel: Sie laden diesesmal zur Videowerkschau ein! Sie kuratieren
-              eigenständige Ausstellungen und Programme und zeigen im Monat November audiovisuelle
-              Arbeiten aus dem aktuellen Videoschaffen.
-            </p>
-
-
-        </div>
+<?php include 'header.inc.php'; ?>
       </section>
 
     <div class="container">
@@ -88,25 +78,28 @@ vielen Dank für die Einreichung von \"{$data['titel']}\" ({$data['werkjahr']}) 
 
 Die Einreichung ist nun mit den Datenupload abgeschlossen.
 
-Viele Grüsse
-  Summe
-
+Mit lieben Grüssen
+ Das Σ-Team
+";
+/*
+$text .= "
 -------------------
 Sie haben folgende Daten eingereicht:
 ";
 foreach( $data as $key=>$val ) {
   $text.= "{$key}:\n{$val}\n\n";
 }
-
+*/
 $mail->Body    = utf8_decode( $text );
 
 if(!$mail->send()) {
 ?>
 <div class="alert alert-danger" role="alert">
   Fehler beim Versenden der Email an "<?php echo htmlentities( $data['email'] ); ?>".<br />
-  Bitte wenden sie sich an blah@blubb.xoxo um ihre Einreichung zu ermöglichen.
+  Bitte wenden sie sich an summe@betalabs.ch um ihre Einreichung zu ermöglichen.
 </div>
 <?php
+
 }
 else {
 ?>
@@ -120,6 +113,35 @@ vielen Dank für die Einreichung von "<?php echo htmlentities( $data['titel'] );
 Die Einreichung ist nun abgeschlossen.
 
 <?php
+$mail = new \PHPMailer();
+//    $mail->SMTPDebug = 3;
+$mail->isSMTP();                                      // Set mailer to use SMTP
+$mail->Host = 'lmailer.ict.fhnw.ch';                    // Specify main and backup SMTP servers
+$mail->SMTPAuth = false; // true;                               // Enable SMTP authentication
+//    $mail->Username = 'user@example.com';                 // SMTP username
+//    $mail->Password = 'secret';                           // SMTP password
+$mail->SMTPAutoTLS = false;
+$mail->SMTPSecure = ''; // 'tls';                            // Enable TLS encryption, `ssl` also accepted
+$mail->Port = 25; // 587;                                    // TCP port to connect to
+//$mail -> charSet = "UTF-8";
+$mail->setFrom('noreply@fhnw.ch', "=?UTF-8?B?".base64_encode("Summe - Upload (no reply)")."?=");
+$mail->addAddress('summe2@betalabs.ch', utf8_decode( "Sammeladresse Summe" ));
+//if( strlen( $card['email2'])) $mail->addAddress($card['email2'], utf8_decode( $card['name']));
+$mail->addReplyTo($data['email'], utf8_decode( $data['vorname'].' '.$data['nachname'] ));
+$mail->isHTML(false);
+$mail->Subject = utf8_decode( "[Summe2017] Upload von {$data['nachname']}, {$data['vorname']}" );
+
+$text = "{$data['vorname']} {$data['nachname']} hat den Upload zur Summe 2017 abgeschlossen.
+
+-------------------
+Folgende Daten wurden erfasst:
+";
+foreach( $data as $key=>$val ) {
+  $text.= "{$key}:\n{$val}\n\n";
+}
+$mail->Body = utf8_decode( $text );
+
+$mail->send();
 }
   //print_r( $_REQUEST );
  ?>
