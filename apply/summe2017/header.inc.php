@@ -6,7 +6,7 @@
         Deine Video- und Filmarbeiten der letzten zwei Jahre sind gefragt!
         Raus aus den Computern, rein in die Kunsträume und Kinos mit Publikum, Videoschaffenden und Aufmerksamkeit!
         Im Rahmen der dies jährigen ∑ &ndash; Summe, stellen die unabhängigen Kunsträume in Basel das Video in den Mittelpunkt
-        und möchten die audiovisuelle regionalen Produktionen in ihrer Vielfalt an Themen und Herangehensweisen sehen und zeigen.
+        und möchten die audiovisuellen, regionalen Produktionen in ihrer Vielfalt an Themen und Herangehensweisen sehen und zeigen.
         Dein Video Beitrag wird einsehbar gemacht und allen Projekträumen für ihre kuratorische Wahl zur Verfügung gestellt.
         Im November während der Summe 2017 werden dann die Videos in verschiedenen Präsentationsformen gezeigt. Unter anderem
         wird es eine Ausstellung mit dem Titel "Videoförmig" auch für installative Arbeiten im <a href="http://www.kasko.ch" target="_blank">Kaskadenkondensator</a>
