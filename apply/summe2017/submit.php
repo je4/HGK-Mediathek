@@ -138,7 +138,7 @@ $mail->SMTPSecure = ''; // 'tls';                            // Enable TLS encry
 $mail->Port = 25; // 587;                                    // TCP port to connect to
 //$mail -> charSet = "UTF-8";
 $mail->setFrom('noreply@fhnw.ch', "=?UTF-8?B?".base64_encode("Summe - Formular (no reply)")."?=");
-$mail->addAddress('summe2@betalabs.ch', utf8_decode( "Sammeladresse Summe" ));
+$mail->addAddress('summe@betalabs.ch', utf8_decode( "Sammeladresse Summe" ));
 //if( strlen( $card['email2'])) $mail->addAddress($card['email2'], utf8_decode( $card['name']));
 $mail->addReplyTo($data['email'], utf8_decode( $data['vorname'].' '.$data['nachname'] ));
 $mail->isHTML(false);
