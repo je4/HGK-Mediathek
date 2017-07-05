@@ -144,7 +144,7 @@ $rs->Close();
       <p>
         <form method="POST" action="submit2.php?form=<?php echo $md5; ?>" role="form" id="finish">
           <div class="form-group row">
-            <label for="<?php echo $id; ?>" class="col-sm-2 col-form-label">Weitere Bemerkungen zur Einreichung</label>
+            <label for="remark" class="col-sm-2 col-form-label">Weitere Bemerkungen zur Einreichung</label>
             <div class="col-sm-10">
               <textarea rows=3 name="data[remark]" type="text" class="form-control" id="remark" aria-describedby="remarkHelp" placeholder=""></textarea>
               <small id="remarkHelp" class="form-text text-muted">Bitte hier weitere Erläuterungen zu den hochgeladenen Daten erfassen.</small>

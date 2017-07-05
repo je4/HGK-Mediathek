@@ -92,7 +92,7 @@ Der Datenupload für die Einreichung erfolgt unter:
 https://mediathek.hgk.fhnw.ch/apply/summe2017/upload.php/{$md5}
 
 Mit lieben Grüssen
- Das Σ-Team
+ Das Summe-Team
 ";
 /*
 $text .= "

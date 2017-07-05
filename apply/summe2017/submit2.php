@@ -9,8 +9,9 @@ $sql = "SELECT formid FROM form WHERE link=".$db->qstr( $md5 );
 $formid = intval( $db->GetOne( $sql ));
 
 $data = $_REQUEST['data'];
+
 foreach( $data  as $key=>$val ){
-  $sql = "INSERT INTO formdata( formid, name, value ) VALUES(
+  $sql = "REPLACE INTO formdata( formid, name, value ) VALUES(
       {$formid}
     , ".$db->qstr( $key )."
     , ".$db->qstr( $val )."
@@ -48,7 +49,15 @@ $rs->Close();
       </div>
 
       <section class="jumbotron text-center">
-<?php include 'header.inc.php'; ?>
+        <div class="container">
+          <h1 class="jumbotron-heading">Ausschreibung für Video-Beiträge zur &Sigma; Summe &ndah; VIDEO 4. – 19. November 2017</h1>
+          <p class="lead text-muted">
+              Unter dem Zeichen &Sigma; &ndash; für Summe &ndash; versammeln sich unabhängige Projekträume
+              aus dem Raum Basel: Wir laden diesesmal zur Videowerkschau ein! Die verschiedenen Räume kuratieren
+              eigenständige Ausstellungen und Programme und zeigen im Monat November audiovisuelle
+              Arbeiten aus dem aktuellen Videoschaffen.
+            </p>
+        </div>
       </section>
 
     <div class="container">
@@ -79,7 +88,7 @@ vielen Dank für die Einreichung von \"{$data['titel']}\" ({$data['werkjahr']}) 
 Die Einreichung ist nun mit den Datenupload abgeschlossen.
 
 Mit lieben Grüssen
- Das Σ-Team
+ Das Summe-Team
 ";
 /*
 $text .= "
@@ -136,6 +145,30 @@ $text = "{$data['vorname']} {$data['nachname']} hat den Upload zur Summe 2017 ab
 -------------------
 Folgende Daten wurden erfasst:
 ";
+$sql = "SELECT * FROM files WHERE formid=".$formid;
+$rs = $db->Execute( $sql );
+foreach( $rs as $row ) {
+  $text .= "\n{$row['name']} ({$row['mimetype']})\n";
+  $text .= "https://mediathek.hgk.fhnw.ch".dirname( $_SERVER['SCRIPT_NAME'])."/{$row['filename']}\n\n";
+  if( preg_match( '/^(audio|video)\//', $row['mimetype'])) {
+    $ffprobe = json_decode( $row['tech'], true );
+    if( array_key_exists( 'format', $ffprobe )) {
+      $format = $ffprobe['format'];
+      $text .= "format\n";
+      if( array_key_exists( 'format_long_name', $format )) $text .= "   container: {$format['format_long_name']}\n";
+      if( array_key_exists( 'duration', $format )) $text .= "   duration:".intval($format['duration'])."sec\n";
+    }
+    foreach( $ffprobe['streams'] as $stream ) {
+      $text .= "stream #{$stream['index']}:\n";
+      if( array_key_exists( 'codec_long_name', $stream )) $text .= "   codec: {$stream['codec_long_name']}\n";
+      $text .= "   type:  {$stream['codec_type']}\n";
+      if( array_key_exists( 'width', $stream )) $text .= "   size:  {$stream['width']}x{$stream['height']}\n";
+      if( array_key_exists( 'duration', $stream )) $text .= "   duration:".intval($stream['duration'])."sec\n";
+    }
+  }
+}
+$rs->Close();
+
 foreach( $data as $key=>$val ) {
   $text.= "{$key}:\n{$val}\n\n";
 }
