@@ -160,8 +160,13 @@ formString( 'sprache', 'Sprache', 'Verwendete Sprachen: Gesprochen und/ oder Unt
 formSelect( 'art', 'Art/Kategorie', 'Einordnung der Arbeit.', true,
   array( 'Animation'
         , 'Dokumentation/Dokumentarfilm'
+        , 'Essayfilm'
+        , 'Fiktion'
+        , 'Handy Video'
+        , 'Installation'
         , 'Kunstvideo'
-        , 'Mobile Video'
+        , 'Medienexperiment'
+        , 'Musikclip'
         , 'Netzkunst'
         , 'sonstiges'
       ) );
