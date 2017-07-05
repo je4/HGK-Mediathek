@@ -134,7 +134,7 @@ $rs->Close();
 <?php if( $status == 'upload') { ?>
   <div class="container-fluid">
     <p>
-    Die Einreichung wurde bereits abgeschlossen. Bei weiteren Fragen wenden sie sich bitte an summe@betalabs.ch
+    Die Einreichung zur Summe 2017 wurde bereits abgeschlossen. Bei weiteren Fragen wenden sie sich bitte an summe@betalabs.ch
     </p>
   </div>
 <?php } else { ?>

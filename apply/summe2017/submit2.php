@@ -83,7 +83,7 @@ $mail->Subject = utf8_decode( "Einreichung Summe 2017" );
 
 $text = "Liebe/r {$data['vorname']} {$data['nachname']},
 
-vielen Dank für die Einreichung von \"{$data['titel']}\" ({$data['werkjahr']}) zur Summe.
+vielen Dank für die Einreichung von \"{$data['titel']}\" ({$data['werkjahr']}) zur Summe 2017.
 
 Die Einreichung ist nun mit den Datenupload abgeschlossen.
 
@@ -117,7 +117,7 @@ else {
 </div>
 Liebe/r <?php echo "{$data['vorname']} {$data['nachname']}"; ?>,
 
-vielen Dank für die Einreichung von "<?php echo htmlentities( $data['titel'] ); ?>" (<?php echo $data['werkjahr']; ?>) zur Summe.
+vielen Dank für die Einreichung von "<?php echo htmlentities( $data['titel'] ); ?>" (<?php echo $data['werkjahr']; ?>) zur Summe 2017.
 
 Die Einreichung ist nun abgeschlossen.
 

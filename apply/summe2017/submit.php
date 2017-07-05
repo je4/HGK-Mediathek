@@ -122,7 +122,7 @@ else {
 </div>
 Liebe/r <?php echo "{$data['vorname']} {$data['nachname']}"; ?>,
 
-vielen Dank für die Einreichung von "<?php echo htmlentities( $data['titel'] ); ?>" (<?php echo $data['werkjahr']; ?>) zur Summe.
+vielen Dank für die Einreichung von "<?php echo htmlentities( $data['titel'] ); ?>" (<?php echo $data['werkjahr']; ?>) zur Summe 2017.
 
 Es wurde eine Email an <?php echo htmlentities( $data['email'] ); ?> gesendet, die den Link zum Upload enthält.
 <?php
