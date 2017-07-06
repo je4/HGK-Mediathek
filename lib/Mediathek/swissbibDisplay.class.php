@@ -322,6 +322,7 @@ if( DEBUG ) {
 					echo "  <td style=\"padding:.25rem;\">";
 					foreach( $val4 as $sub=>$val5 ) {
 						foreach( $val5 as $val6 ) {
+
 							echo "|{$sub} ".htmlspecialchars( $val6 );
 						}
 					}

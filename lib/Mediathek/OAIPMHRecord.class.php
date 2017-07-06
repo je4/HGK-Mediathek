@@ -15,7 +15,7 @@
  * @copyright   (C) 2016 Academy of Art and Design FHNW
  * @license     http://www.gnu.org/licenses/gpl-3.0
  * @link        http://mediathek.fhnw.ch
- * 
+ *
  */
 
 /**
@@ -29,7 +29,7 @@ class OAIPMHRecord {
 	protected $metadata = null;
 	protected $identifier, $datestampm, $status;
 	protected $dom;
-	
+
 	function __construct( $xml ) {
 		$this->dom = new \DOMDocument( '1.0', 'UTF-8' );
 		$this->dom->LoadXML( $xml );
@@ -37,28 +37,28 @@ class OAIPMHRecord {
 		$tmpLst = $this->dom->getElementsByTagName( 'header' );
 		if( $tmpLst->length != 1 ) throw new \Exception( "invalid xml" );
 		$this->header = $tmpLst->item(0);
-		
+
 		$tmpLst = $this->header->getElementsByTagName( 'identifier' );
 		if( $tmpLst->length != 1 ) throw new \Exception( "invalid xml" );
 		$this->identifier = $tmpLst->item(0)->nodeValue;
-    	
+
 		$tmpLst = $this->header->getElementsByTagName( 'datestamp' );
 		if( $tmpLst->length != 1 ) throw new \Exception( "invalid xml" );
 		$this->datestamp = $tmpLst->item(0)->nodeValue;
-    	
+
 		$this->status = $this->header->getAttribute( 'status' );
 
-		if( !$this->isDeleted()) {			
+		if( !$this->isDeleted()) {
 			$tmpLst = $this->dom->getElementsByTagName( 'metadata' );
 			if( $tmpLst->length != 1 ) throw new \Exception( "invalid xml" );
 			$this->metadata = $tmpLst->item(0);
 		}
 	}
-	
+
 	public function isDeleted() {
 		return $this->status == 'deleted';
 	}
-	
+
 	public function getIdentifier() {
 		return $this->identifier;
 	}
@@ -66,12 +66,12 @@ class OAIPMHRecord {
 	public function getDatestamp() {
 		return $this->datestamp;
 	}
-	
-	
+
+
 	public function getMetadata() {
 		return $this->metadata;
 	}
-	
+
 	public function getXML() {
 		return $this->dom->saveXML();
 	}

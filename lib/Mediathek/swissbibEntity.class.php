@@ -163,7 +163,7 @@ class swissbibEntity extends SOLRSource {
 	}
 
 	public function loadFromDoc( $doc) {
-		$xml = ( string )gzdecode( base64_decode( $doc->metagz ));
+		$xml = Normalizer::normalize(( string )gzdecode( base64_decode( $doc->metagz )));
 		$this->loadNode( $doc->originalid, new OAIPMHRecord( $xml ), null );
 	}
 
@@ -225,7 +225,7 @@ class swissbibEntity extends SOLRSource {
 				if( !(is_a( $child, 'DOMElement' ) && $child->tagName == 'mx:subfield' )) continue;
 				$code = $child->getAttribute( 'code' );
 				if( !array_key_exists( $code, $elem )) $elem[$code] = array();
-				$elem[$code][] = $child->textContent;
+				$elem[$code][] = \Normalizer::normalize($child->textContent);
 			}
 			$this->data[$tag][$ind1][$ind2][] = $elem;
 		}
