@@ -105,7 +105,7 @@ else {
 			<div class="col-md-10 col-md-offset-1 col-xs-10 col-xs-offset-1">
 				<div class="row">
 					<div class="col-md-6 col-sm-12 col-xs-12">
-						<p class="copyright">Copyright &copy; 2017
+						<p class="copyright">Enjoy 2017
 							<a href="#">Mediathek</a>
 						</p>
 					</div>

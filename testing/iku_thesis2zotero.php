@@ -7,14 +7,15 @@ use Httpful;
 include '../init.inc.php';
 
 function thesis2zotero(){
+    global $config;
     echo "Enter ikuthesis";
 
-    $DBNAME = 'rfid';
-    $DBHOST = 'ba14ns21402.adm.ds.fhnw.ch';
-    $DBUSER = 'root';
-    $DBUPWD = 'yGobAvttdBPCbZ9T2emGJq3';
-    $APIKEY = 'S321LmGUjscgc2ZfDMmkb9Nh';
-    $APIURL = 'https://api.zotero.org';
+    $DBNAME = $config['db']['database'];
+    $DBHOST = $config['db']['host'];
+    $DBUSER = $config['db']['user'];
+    $DBUPWD = $config['db']['password'];
+    $APIKEY = $config['zotero']['apikey'];
+    $APIURL = $config['zotero']['apiurl'];
 
 
     //Get Zotero thesis template
@@ -58,9 +59,9 @@ function thesis2zotero(){
         $currThesis->extra = $rowThesis->Extra;
         $currThesis->tags[] = array('tag'=>$rowThesis->Tag1);
         $currThesis->tags[] = array('tag'=>$rowThesis->Tag2);
-        var_dump($currThesis);
+        //var_dump($currThesis);
         postThesis($currThesis);
-        break;
+        //break;
     }
 
 
@@ -90,61 +91,24 @@ function getCreators($creatorType, $name){
   }
 }
 function postThesis($thesis){
-    $APIKEY = 'S321LmGUjscgc2ZfDMmkb9Nh';
-    $APIURL = 'https://api.zotero.org';
+    global $config;
+    $APIKEY = $config['zotero']['apikey'];
+    $APIURL = $config['zotero']['apiurl'];
     $ZOTGRP = '1510088';
 
     $uriPostThesis = "$APIURL/groups/$ZOTGRP/items";
-    $jsonThesis = json_encode($thesis);
+    $jsonThesis = '['.json_encode($thesis).']';
+    echo "Posting thesis {$thesis->title}...";
     $resPostThesis = Httpful\Request::post($uriPostThesis)->addHeader('Authorization', "Bearer $APIKEY")->body($jsonThesis)->sendsJson()->send();
-    var_dump($resPostThesis);
+    var_dump($resPostThesis->code);
     if($resPostThesis->code!=200){
-        echo "Zotero template not loaded";
+        echo "Error: Code {$resPostThesis->code}\n";
         die();
     }
+    echo "OK\n";
 
 }
 
 thesis2zotero();
-
-
-
-exit();
-$hdlprefix = '20.500.11806/mediathek/';
-$urlbase = 'https://mediathek.hgk.fhnw.ch/detail.php?id=';
-$groups = array( 1387750 );
-
-$solr = new SOLR( $solrclient );
-
-$zotero = new Zotero( $db, $config['zotero']['apiurl'], $config['zotero']['apikey'], $config['zotero']['mediapath'], STDOUT );
-try {
-  foreach( $groups as $group ) {
-        $zotero->syncItems( $group );
-  }
-} catch (\ADODB_Exception $e) {
-  var_dump($e);
-  adodb_backtrace($e->gettrace());
-}
-
-$entity = new zoteroEntity( $db );
-$cnt = 0;
-foreach( $groups as $group ) {
-  foreach( $zotero->loadChildren( $group ) as $item ) {
-    echo $item; if( $item->isTrashed()) echo "  [TRASH]\n";
-    $entity->reset();
-    $data = $item->getData();
-    $entity->loadFromArray( $data );
-    $title = $entity->getTitle();
-    echo "Title: ".$title."\n";
-    if( $item->isTrashed()) {
-      $solr->delete( $entity->getID() );
-    }
-    else {
-      $solr->import( $entity );
-    }
-    echo "{$cnt}\n";
-    $cnt++;
-  }
-}
 
 ?>
