@@ -188,7 +188,7 @@ class swissbibDisplay extends DisplayEntity {
 									if( strncmp( $sig, $prefix, strlen( $prefix) ) == 0 ) {
 										$signature = substr( $sig, strlen( $prefix ));
 										echo 'Signatur: <a href="redir.php?id='.urlencode( $this->doc->id ).'&url='.urlencode( 'http://recherche.nebis.ch/primo_library/libweb/action/search.do?fn=search&ct=search&vl(freeText0)='.urlencode( $nebisid ).'&vid=NEBIS&fn=change_lang&prefLang=de_DE&prefBackUrl=http://recherche.nebis.ch/nebis/action/search.do?fn=search&ct=search&vl(freeText0)='.urlencode( $nebisid ).'&search=&backFromPreferences=true.' )
-										.'"target="_blank">'.htmlspecialchars( $signature )."</a><br />\n";
+										.'" target="_blank">'.htmlspecialchars( $signature )."</a><br />\n";
 										$item = $rib ? $rib->getAvailability( $signature ) : null;
 										if( $item ) {
 											echo "<span style=\"font-size: 80%; line-height: 80%\">&nbsp;&nbsp; Status: ".( $item['status'] ? ' ausgeliehen bis '.$item['status'] : 'verfügbar' )."<br />\n";
@@ -517,9 +517,12 @@ if( DEBUG ) {
 					foreach ($this->highlight as $field => $highlight) {
 						echo '(...) '.strip_tags( implode(' (...) ', $highlight), '<b></b>') . ' (...)' . '<br/>';
 					}
+?>
+</i></p>
+
+<?php
 				}
 ?>
-				</i></p>
 <?php
 				$publishers = $entity->getPublisher();
 				$city = $entity->getCity();

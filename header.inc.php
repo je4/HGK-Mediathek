@@ -32,7 +32,7 @@ function mediathekheader( $current, $title, $area, $csss = array() ) {
     <link type="text/css" rel="stylesheet" href="assets/css/owl.carousel.css">
     <link type="text/css" rel="stylesheet" href="assets/css/owl.theme.css">
     <link type="text/css" rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="/unica/css/stylesheet.css" type="text/css" charset="utf-8" />
+    <link rel="stylesheet" href="/unica/css/stylesheet.css" type="text/css" />
 
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
