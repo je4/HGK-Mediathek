@@ -144,6 +144,15 @@ $rs->Close();
       <p>
         <form method="POST" action="submit2.php?form=<?php echo $md5; ?>" role="form" id="finish">
           <div class="form-group row">
+            <label for="remark" class="col-sm-2 col-form-label">&nbsp;</label>
+            <div class="col-sm-10">
+              <p style="margin-right: 100px;">
+                Bitte alle Files (Video, Installationsansichten- und skizzen,  Artikel, Filmstils und Screenshots, Lizenzen etc.) auf das Feld ziehen und erst den „Einreichung abschliessen“
+                Button drücken, wenn alle Files hochgeladen wurden (Spinning-Rad dreht nicht mehr).
+              </p>
+            </div>
+          </div>
+          <div class="form-group row">
             <label for="remark" class="col-sm-2 col-form-label">Weitere Bemerkungen zur Einreichung</label>
             <div class="col-sm-10">
               <textarea rows=3 name="data[remark]" type="text" class="form-control" id="remark" aria-describedby="remarkHelp" placeholder=""></textarea>
@@ -152,11 +161,11 @@ $rs->Close();
           </div>
 
           <div class="form-group row" style="margin: 15px;">
-            <button type="submit" value="Validate!" class="btn btn-secondary btn-block">Einreichung abschliessen</button>
+            <button id="submitButton" type="submit" value="Validate!" class="btn btn-secondary btn-block">Einreichung abschliessen</button>
           </div>
         </form>
       </p>
-      <div id="filecontent">
+      <div style="margin-top: 100px;" id="filecontent">
       </div>
     </div>
 <?php
@@ -192,8 +201,11 @@ $rs->Close();
     }).on('complete', function (event, id, filename, responseJSON) {
         var path = responseJSON.uuid+"/"+filename;
         $( "#filecontent" ).load( "file_cards.load.php?form=<?php echo $md5; ?>" );
-
+        $('#submitButton').attr("disabled", false);
         //alert( path );
+    }).on('submit', function (event, id, filename, responseJSON) {
+      $('#submitButton').attr("disabled", true);
+
     });
 
     $( "#filecontent" ).load( "file_cards.load.php?form=<?php echo $md5; ?>" );

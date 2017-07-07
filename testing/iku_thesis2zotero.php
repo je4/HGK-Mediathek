@@ -8,7 +8,7 @@ include '../init.inc.php';
 
 function thesis2zotero(){
     global $config;
-    echo "Enter ikuthesis";
+    echo "Entering ikuthesis\n";
 
     $DBNAME = $config['db']['database'];
     $DBHOST = $config['db']['host'];
@@ -17,17 +17,25 @@ function thesis2zotero(){
     $APIKEY = $config['zotero']['apikey'];
     $APIURL = $config['zotero']['apiurl'];
 
+    //Get Zotero note template
+    $uriGetTemplateNote = "$APIURL/items/new?itemType=note";
+    $resGetTemplateNote = Httpful\Request::get($uriGetTemplateNote)->send();
+    if($resGetTemplateNote->code!=200){
+        echo "Zotero note template not loaded";
+        die();
+    }
+    $tmplNote = $resGetTemplateNote->body;
 
     //Get Zotero thesis template
-    $uriGetTemplate = "$APIURL/items/new?itemType=thesis";
-    $resGetTemplate = Httpful\Request::get($uriGetTemplate)->send();
-    if($resGetTemplate->code!=200){
+    $uriGetTemplateThesis = "$APIURL/items/new?itemType=thesis";
+    $resGetTemplateThesis = Httpful\Request::get($uriGetTemplateThesis)->send();
+    if($resGetTemplateThesis->code!=200){
         echo "Zotero template not loaded";
         die();
     }
-    $tmplThesis = $resGetTemplate->body;
+    $tmplThesis = $resGetTemplateThesis->body;
 
-    //Set temolate standard values
+    //Set template standard values
     $tmplThesis->university = 'HGK FHNW, Institut Kunst';
     $tmplThesis->place = 'Basel';
     $tmplThesis->rights = 'internal use only';
@@ -42,8 +50,10 @@ function thesis2zotero(){
         die();
     }
 
+    $stmtSetInserted = $db->prepare("Update source_ikuthesis set inserted = 1 where id = ?");
+
     //Clone thesis from template, fill the appropriate values and POST to Zotero
-    foreach ($db->query('select * from source_ikuthesis where Strichcode is NULL', PDO::FETCH_OBJ) as $rowThesis){
+    foreach ($db->query('select * from source_ikuthesis where Strichcode is NULL and inserted = 0', PDO::FETCH_OBJ) as $rowThesis){
         $currThesis = clone $tmplThesis;
         $currThesis->title = $rowThesis->Title;
         $authors = getCreators('author', $rowThesis->Autor);
@@ -57,11 +67,21 @@ function thesis2zotero(){
         $currThesis->date = $rowThesis->Date;
         $currThesis->callNumber = $rowThesis->callNumber;
         $currThesis->extra = $rowThesis->Extra;
-        $currThesis->tags[] = array('tag'=>$rowThesis->Tag1);
-        $currThesis->tags[] = array('tag'=>$rowThesis->Tag2);
+        if(!empty($rowThesis->Tag1))$currThesis->tags[] = array('tag'=>$rowThesis->Tag1);
+        if(!empty($rowThesis->Tag2))$currThesis->tags[] = array('tag'=>$rowThesis->Tag2);
         //var_dump($currThesis);
-        postThesis($currThesis);
-        //break;
+        $keyThesis = postThesis($currThesis, $rowThesis->Note);
+        if(is_null($keyThesis)) continue;
+
+        //Add Note
+        if(!empty($rowThesis->Note) ){
+            $currNote = clone $tmplNote;
+            $currNote->note = "<p>{$rowThesis->Note}</p>";
+            $currNote->parentItem = $keyThesis;
+            if(!postNote($currNote)) continue;
+        }
+
+        $stmtSetInserted->execute(array($rowThesis->id));
     }
 
 
@@ -90,23 +110,48 @@ function getCreators($creatorType, $name){
       yield $creator;
   }
 }
+function postNote($note){
+    global $config;
+    $APIKEY = $config['zotero']['apikey']; //'S321LmGUjscgc2ZfDMmkb9Nh';
+    $APIURL = $config['zotero']['apiurl'];
+    $ZOTGRP = '1512203';//'1510088';
+
+    $uriPostNote = "$APIURL/groups/$ZOTGRP/items";
+    $jsonNote = '['.json_encode($note).']';
+    echo "Posting note...";
+    $resPostNote = Httpful\Request::post($uriPostNote)->addHeader('Authorization', "Bearer $APIKEY")->body($jsonNote)->sendsJson()->send();
+    //var_dump($resPostThesis);
+
+    if($resPostNote->code==200 && count(get_object_vars($resPostNote->body->success)) ==1){
+        echo "OK\n";
+        return true;
+    }else{
+        echo "Error: Code {$resPostNote->code}\n";
+        return false;
+    }
+
+}
 function postThesis($thesis){
     global $config;
-    $APIKEY = $config['zotero']['apikey'];
+    $APIKEY = 'S321LmGUjscgc2ZfDMmkb9Nh';//$config['zotero']['apikey'];
     $APIURL = $config['zotero']['apiurl'];
-    $ZOTGRP = '1510088';
+    $ZOTGRP = '1512203';//'1510088';
 
     $uriPostThesis = "$APIURL/groups/$ZOTGRP/items";
     $jsonThesis = '['.json_encode($thesis).']';
     echo "Posting thesis {$thesis->title}...";
     $resPostThesis = Httpful\Request::post($uriPostThesis)->addHeader('Authorization', "Bearer $APIKEY")->body($jsonThesis)->sendsJson()->send();
-    var_dump($resPostThesis->code);
-    if($resPostThesis->code!=200){
-        echo "Error: Code {$resPostThesis->code}\n";
-        die();
-    }
-    echo "OK\n";
+    //var_dump($resPostThesis);
 
+    if($resPostThesis->code==200 && count(get_object_vars($resPostThesis->body->success)) ==1){
+        $keyThesis = get_object_vars($resPostThesis->body->success)[0];
+        echo "OK, Key $keyThesis\n";
+        return $keyThesis;
+
+    }
+
+    echo "Error: Code {$resPostThesis->code}\n";
+    return null;
 }
 
 thesis2zotero();
