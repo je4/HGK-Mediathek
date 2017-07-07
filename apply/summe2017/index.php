@@ -402,8 +402,8 @@ formSelect( 'bezug', 'Bezug zu Basel', 'In welchem Bezug steht die Arbeit zu Bas
          var errors = validator.numberOfInvalids();
           if (errors) {
             var message = errors == 1
-              ? 'You missed 1 field. It has been highlighted'
-              : 'You missed ' + errors + ' fields. They have been highlighted';
+              ? '1 Feld wurde nicht korrekt Ausgefüllt. Es wurde markiert'
+              : errors + ' Felder wurden nicht korrekt ausgefüllt. Sie wurden markiert';
             $("div.error span").html(message);
             $("div.error").show();
           } else {
