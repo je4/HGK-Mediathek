@@ -1,0 +1,4 @@
+authType basic
+authName Summe2017
+authUserFile /data/www/vhosts/mediathek.fhnw.ch/summe2017.pwd
+Require valid-user

@@ -32,7 +32,7 @@ class Session implements \SessionHandlerInterface
   }
 
    public function startSession() {
-	global $_SERVER;
+	    global $_SERVER;
 
     session_start();
 
@@ -152,6 +152,10 @@ class Session implements \SessionHandlerInterface
     return $this->shibGetSessionID() != null;
   }
 
+  public function isAdmin() {
+    global $config;
+    return $this->inGroup( $config['admingroup'] );
+  }
   public function shibGetSessionID() {
     return isset( $this->server['Shib-Session-ID'] ) ? $this->server['Shib-Session-ID'] : null;
   }
@@ -240,10 +244,13 @@ class Session implements \SessionHandlerInterface
 
 	  if( isset( $this->server['orgunit-dn'] ))
 		if( preg_match( '/^.*,OU=([0-9]+),OU=.+,OU=.+,DC=.+,DC=ds,DC=fhnw,DC=ch/', $_SERVER['orgunit-dn'], $matches )) {
-			$this->groups[] = "fhnw.ch:{$matches[1]}/user";
+			$this->groups[] = "fhnw.ch_{$matches[1]}/user";
   //		  $this->groups[] = strtolower( "fhnw.ch:{$matches[3]}:{$matches[1]}/user" );
 		}
-
+    if( preg_match( '/^.*,OU=([0-9a-zA-Z]+),OU=([0-9]+),OU=.+,OU=.+,DC=.+,DC=ds,DC=fhnw,DC=ch/', $_SERVER['orgunit-dn'], $matches )) {
+      $this->groups[] = "fhnw.ch_{$matches[2]}/".strtolower($matches[1]);
+    //		  $this->groups[] = strtolower( "fhnw.ch:{$matches[3]}:{$matches[1]}/user" );
+    }
 	}
     $sql = "SELECT grp FROM groups WHERE uniqueID=".$this->db->qstr( $this->shibGetUniqueID())." OR uniqueID=".$this->db->qstr( strtolower( $this->shibGetMail()));
     $rs = $this->db->Execute( $sql );

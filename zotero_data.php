@@ -35,7 +35,7 @@ $item = new Zotero\Item( $data );
 if( $key ) {
   $child = $item->getChild( $key );
   if( $child ) {
-    $path = $config['zotero']['mediapath'].'/enclosure/'.$child->getGroupId().'/'.$child->getKey();
+    $path = $config['zotero']['mediapath'].'/enclosure/'.$child->getLibraryId().'/'.$child->getKey();
     if( !file_exists( $path )) {
       echo $path." not found";
     }

@@ -5,8 +5,8 @@ ini_set("display_errors", 1);
 
 include 'config.inc.php';
 
-require_once '../../lib/adodb5/adodb-exceptions.inc.php';
-require_once '../../lib/adodb5/adodb.inc.php';
+require_once dirname(__FILE__) .'/../../lib/adodb5/adodb-exceptions.inc.php';
+require_once dirname(__FILE__) .'/../../lib/adodb5/adodb.inc.php';
 
 $db = null;
 

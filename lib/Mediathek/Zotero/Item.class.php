@@ -28,6 +28,7 @@ class Item {
   var $trash = false;
   var $children = array();
   var $collections = array();
+  var $library = null;
 
   function __construct( $data, $trash = false ) {
     $this->data = $data;
@@ -43,6 +44,9 @@ class Item {
         $this->addCollection( $coll );
       }
     }
+    if( @is_array( $this->data['group'] )) {
+      $this->library = new Library( $this->data['group'] );
+    }
     // kill nebis grabbed items
     if( array_key_exists( 'url', $this->data['data'] ) ) {
       if( preg_match( '@://[^/]*nebis.ch/@', $this->data['data']['url'] )) unset( $this->data['data']['url'] );
@@ -50,7 +54,7 @@ class Item {
   }
 
   function __toString() {
-    $str = $this->getGroupId().':'.$this->getKey().' ['.$this->getType().'] - '.$this->getTitle()."\n";
+    $str = $this->getLibraryId().':'.$this->getKey().' ['.$this->getType().'] - '.$this->getTitle()."\n";
     foreach( $this->children as $child ) {
       $str .= '   '.$child;
     }
@@ -77,8 +81,16 @@ class Item {
     return $this->data;
   }
 
-  public function getGroupId() {
+  public function getLibraryId() {
     return $this->data['library']['id'];
+  }
+
+  public function getLibraryName() {
+    return $this->data['library']['name'];
+  }
+
+  public function getLibrary() {
+    return $this->library;
   }
 
   public function getKey() {
@@ -369,7 +381,7 @@ class Item {
       				&& self::$citePaperJournalArticleURL);
 
       $cslItem = array(
-      			'id' => $this->getGroupId() . "/" . $this->getKey(),
+      			'id' => $this->getLibraryId() . "/" . $this->getKey(),
       			'type' => $cslType
       		);
 

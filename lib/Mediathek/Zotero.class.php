@@ -25,6 +25,7 @@
 namespace Mediathek;
 
 use \Httpful\Request;
+use \Mediathek\Zotero\Library;
 use \Mediathek\Zotero\Item;
 use \Mediathek\Zotero\Collection;
 
@@ -163,97 +164,99 @@ class Zotero {
       $filename_rel = "enclosure/{$id}/{$item['key']}";
       $filename = "{$this->contentpath}/{$filename_rel}";
       $uri = $enc['href'];
-      $this->log( "      Downloading file: {$uri}" );
+      if( !file_exists( $filename )) {
+        $this->log( "      Downloading file: {$uri}" );
 
-      $ch = curl_init();
-      curl_setopt($ch, CURLOPT_URL, $uri);
-      curl_setopt($ch, CURLOPT_HTTPHEADER, array( 'Authorization: Bearer '.$this->apikey ));
-      curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-      curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-      /*
-      curl_setopt($ch, CURLOPT_VERBOSE, 1);
-      curl_setopt($ch, CURLOPT_HEADER, 1);
-      $response = curl_exec ($ch);
-      $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
-      $header = substr($response, 0, $header_size);
-      $body = substr($response, $header_size);
-      print_r( $header );
-      */
-      $body = curl_exec ($ch);
-      file_put_contents( $filename,  $body );
-      if( filesize( $filename )) {
-        $fulltext = null;
-        $pages = null;
-        switch( $enc['type'] ) {
-          case 'application/pdf':
-            $cmd = 'pdftotext '.escapeshellarg( $filename ).' '.escapeshellarg( $filename.'.txt' );
-            $this->log( "      Extracting fulltext (pdf): $filename_rel" );
-            shell_exec( $cmd );
-            /*
-            $dir = $filename.'_pages';
-            if( !is_dir( $dir )) mkdir( $dir );
-            $cmd = 'convert '.escapeshellarg( $filename ).' -resize x800 '.escapeshellarg( $dir.'/'.$item['key'].'-%03d.jpg' );
-            $this->log( "      Generating pages (pdf): $filename_rel" );
-            shell_exec( $cmd );
-            */
-            $cmd = 'pdfinfo '.escapeshellarg( $filename );
-            $this->log( "      Counting pages (pdf): $filename_rel" );
-            $ret = shell_exec( $cmd );
-            if( preg_match( '/Pages:\s*(\d+)/i', $ret, $matches )) {
-              $pages = intval( $matches[1] );
-            }
-            break;
-            case 'text/html':
-              $text = file_get_contents( $filename );
-              $text = preg_replace(
-                  array(
-                    // Remove invisible content
-                      '@<head[^>]*?>.*?</head>@siu',
-                      '@<style[^>]*?>.*?</style>@siu',
-                      '@<script[^>]*?.*?</script>@siu',
-                      '@<object[^>]*?.*?</object>@siu',
-                      '@<embed[^>]*?.*?</embed>@siu',
-                      '@<applet[^>]*?.*?</applet>@siu',
-                      '@<noframes[^>]*?.*?</noframes>@siu',
-                      '@<noscript[^>]*?.*?</noscript>@siu',
-                      '@<noembed[^>]*?.*?</noembed>@siu',
-                    // Add line breaks before and after blocks
-                      '@</?((address)|(blockquote)|(center)|(del))@iu',
-                      '@</?((div)|(h[1-9])|(ins)|(isindex)|(p)|(pre))@iu',
-                      '@</?((dir)|(dl)|(dt)|(dd)|(li)|(menu)|(ol)|(ul))@iu',
-                      '@</?((table)|(th)|(td)|(caption))@iu',
-                      '@</?((form)|(button)|(fieldset)|(legend)|(input))@iu',
-                      '@</?((label)|(select)|(optgroup)|(option)|(textarea))@iu',
-                      '@</?((frameset)|(frame)|(iframe))@iu',
-                  ),
-                  array(
-                      ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
-                      "\n\$0", "\n\$0", "\n\$0", "\n\$0", "\n\$0", "\n\$0",
-                      "\n\$0", "\n\$0",
-                  ),
-                  $text );
-              $text = strip_tags( $text );
-              file_put_contents( $filename.'.txt', $text);
-              $this->log( "      Extracting fulltext (html): $filename_rel" );
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $uri);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array( 'Authorization: Bearer '.$this->apikey ));
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        /*
+        curl_setopt($ch, CURLOPT_VERBOSE, 1);
+        curl_setopt($ch, CURLOPT_HEADER, 1);
+        $response = curl_exec ($ch);
+        $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+        $header = substr($response, 0, $header_size);
+        $body = substr($response, $header_size);
+        print_r( $header );
+        */
+        $body = curl_exec ($ch);
+        file_put_contents( $filename,  $body );
+        if( filesize( $filename )) {
+          $fulltext = null;
+          $pages = null;
+          switch( $enc['type'] ) {
+            case 'application/pdf':
+              $cmd = 'pdftotext '.escapeshellarg( $filename ).' '.escapeshellarg( $filename.'.txt' );
+              $this->log( "      Extracting fulltext (pdf): $filename_rel" );
+              shell_exec( $cmd );
+              /*
+              $dir = $filename.'_pages';
+              if( !is_dir( $dir )) mkdir( $dir );
+              $cmd = 'convert '.escapeshellarg( $filename ).' -resize x800 '.escapeshellarg( $dir.'/'.$item['key'].'-%03d.jpg' );
+              $this->log( "      Generating pages (pdf): $filename_rel" );
+              shell_exec( $cmd );
+              */
+              $cmd = 'pdfinfo '.escapeshellarg( $filename );
+              $this->log( "      Counting pages (pdf): $filename_rel" );
+              $ret = shell_exec( $cmd );
+              if( preg_match( '/Pages:\s*(\d+)/i', $ret, $matches )) {
+                $pages = intval( $matches[1] );
+              }
               break;
-            case 'text/plain':
-              file_put_contents( $filename.'.txt', file_get_contents( $filename ));
-              $this->log( "      Extracting fulltext (text): $filename_rel" );
-              break;
+              case 'text/html':
+                $text = file_get_contents( $filename );
+                $text = preg_replace(
+                    array(
+                      // Remove invisible content
+                        '@<head[^>]*?>.*?</head>@siu',
+                        '@<style[^>]*?>.*?</style>@siu',
+                        '@<script[^>]*?.*?</script>@siu',
+                        '@<object[^>]*?.*?</object>@siu',
+                        '@<embed[^>]*?.*?</embed>@siu',
+                        '@<applet[^>]*?.*?</applet>@siu',
+                        '@<noframes[^>]*?.*?</noframes>@siu',
+                        '@<noscript[^>]*?.*?</noscript>@siu',
+                        '@<noembed[^>]*?.*?</noembed>@siu',
+                      // Add line breaks before and after blocks
+                        '@</?((address)|(blockquote)|(center)|(del))@iu',
+                        '@</?((div)|(h[1-9])|(ins)|(isindex)|(p)|(pre))@iu',
+                        '@</?((dir)|(dl)|(dt)|(dd)|(li)|(menu)|(ol)|(ul))@iu',
+                        '@</?((table)|(th)|(td)|(caption))@iu',
+                        '@</?((form)|(button)|(fieldset)|(legend)|(input))@iu',
+                        '@</?((label)|(select)|(optgroup)|(option)|(textarea))@iu',
+                        '@</?((frameset)|(frame)|(iframe))@iu',
+                    ),
+                    array(
+                        ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
+                        "\n\$0", "\n\$0", "\n\$0", "\n\$0", "\n\$0", "\n\$0",
+                        "\n\$0", "\n\$0",
+                    ),
+                    $text );
+                $text = strip_tags( $text );
+                file_put_contents( $filename.'.txt', $text);
+                $this->log( "      Extracting fulltext (html): $filename_rel" );
+                break;
+              case 'text/plain':
+                file_put_contents( $filename.'.txt', file_get_contents( $filename ));
+                $this->log( "      Extracting fulltext (text): $filename_rel" );
+                break;
+          }
+          $replace = array(
+            '`key`'=>$item['key'],
+            'libraryid'=>$id,
+            'type'=>array_key_exists( 'type', $enc ) ? $enc['type'] : null,
+            'href'=>array_key_exists( 'href', $enc ) ? $enc['href'] : null,
+            'title'=>array_key_exists( 'title', $enc ) ? $enc['title'] : null,
+            'pages'=>$pages,
+            'length'=>array_key_exists( 'length', $enc ) ? $enc['length'] : null,
+            'filename'=>$filename_rel,
+            '`fulltext`'=> null,
+          );
+          $this->db->Replace( 'zotero.enclosures', $replace, array( '`key`', 'libraryid' ), $autoquote = true );
+          $this->db->UpdateBlob( 'zotero.enclosures', '`fulltext`', file_exists( $filename.'.txt' ) ? gzencode( file_get_contents( $filename.'.txt' )) : null, "`key`=".$this->db->qstr( $item['key'] )." AND libraryid={$id}" );
         }
-        $replace = array(
-          '`key`'=>$item['key'],
-          'libraryid'=>$id,
-          'type'=>array_key_exists( 'type', $enc ) ? $enc['type'] : null,
-          'href'=>array_key_exists( 'href', $enc ) ? $enc['href'] : null,
-          'title'=>array_key_exists( 'title', $enc ) ? $enc['title'] : null,
-          'pages'=>$pages,
-          'length'=>array_key_exists( 'length', $enc ) ? $enc['length'] : null,
-          'filename'=>$filename_rel,
-          '`fulltext`'=> null,
-        );
-        $this->db->Replace( 'zotero.enclosures', $replace, array( '`key`', 'libraryid' ), $autoquote = true );
-        $this->db->UpdateBlob( 'zotero.enclosures', '`fulltext`', file_exists( $filename.'.txt' ) ? gzencode( file_get_contents( $filename.'.txt' )) : null, "`key`=".$this->db->qstr( $item['key'] )." AND libraryid={$id}" );
       }
     }
   }
@@ -261,6 +264,7 @@ class Zotero {
   function syncItems( $id ) {
     $this->syncGroup( $id );
     $this->syncCollection( $id );
+    $library = $this->loadLibrary($id);
 
     $this->log( "Syncing items of group: {$id}" );
 
@@ -277,6 +281,7 @@ class Zotero {
 
       $items = json_decode( $response, true );
       foreach( $items as $i ) {
+        $i['group'] = $library->getData();
         $this->syncItem( $id, $i, false );
       }
       $start += $limit;
@@ -295,10 +300,18 @@ class Zotero {
 
       $items = json_decode( $response, true );
       foreach( $items as $i ) {
+        $i['group'] = $library->getData();
         $this->syncItem( $id, $i, true );
       }
       $start += $limit;
     } while( count( $items ) == 100 );
+  }
+
+  public function loadLibrary($groupid) {
+    $sql = "SELECT data FROM zotero.groups WHERE id={$groupid}";
+    $json = gzdecode($this->db->GetOne( $sql ));
+    $data = json_decode( $json );
+    return new Library( $data );
   }
 
   public function loadCollections($groupid) {
@@ -326,6 +339,7 @@ class Zotero {
 
   public function loadChildren( $groupid, $itemkey=null ) {
     $collections = $this->loadCollections($groupid);
+//    $group = $this->loadGroup($groupid);
 
     $sql = "SELECT data, trash FROM zotero.items WHERE libraryid={$groupid} AND parentKey".($itemkey ? '='.$this->db->qstr( $itemkey ) : ' IS NULL');
     if( $itemkey ) $sql .= " AND trash=false";
@@ -344,6 +358,8 @@ class Zotero {
         }
       }
       $data['data']['pages'] = $pages;
+//      $data['group'] = $group->getData();
+
       $item = new Item( $data, $trash );
       if( $item->numChildren()) {
         foreach( $this->loadChildren( $groupid, $item->getKey()) as $child ) {

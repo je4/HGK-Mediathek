@@ -36,7 +36,7 @@ function thesis2zotero(){
     $tmplThesis = $resGetTemplateThesis->body;
 
     //Set template standard values
-    $tmplThesis->university = 'HGK FHNW, Institut Kunst';
+    $tmplThesis->university = 'HGK FHNW, Institut Hyperwerk';
     $tmplThesis->place = 'Basel';
     $tmplThesis->rights = 'internal use only';
 
@@ -67,9 +67,11 @@ function thesis2zotero(){
         $currThesis->date = $rowThesis->Date;
         $currThesis->callNumber = $rowThesis->callNumber;
         $currThesis->extra = $rowThesis->Extra;
+        $currThesis->url = $rowThesis->URL;
         if(!empty($rowThesis->Tag1))$currThesis->tags[] = array('tag'=>$rowThesis->Tag1);
         if(!empty($rowThesis->Tag2))$currThesis->tags[] = array('tag'=>$rowThesis->Tag2);
         //var_dump($currThesis);
+        //exit();
         $keyThesis = postThesis($currThesis, $rowThesis->Note);
         if(is_null($keyThesis)) continue;
 
@@ -82,10 +84,10 @@ function thesis2zotero(){
         }
 
         $stmtSetInserted->execute(array($rowThesis->id));
+
+
     }
 
-
-    exit();
 }
 
 //Returns a generator object with all the creators of the type, like 'author', 'contributor'

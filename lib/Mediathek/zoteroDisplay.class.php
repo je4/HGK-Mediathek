@@ -135,7 +135,7 @@ class zoteroDisplay extends DisplayEntity {
 		<span style="; font-weight: bold;"><?php echo htmlspecialchars( $img->getTitle()); ?></span><br>
 		<div class="facet" style="">
 			<div class="marker" style=""></div>
-			<img style="max-width: 100%;" src="zotero_data.php?id=zotero-<?php echo $img->getGroupId(); ?>.<?php echo $this->item->getKey(); ?>&key=<?php echo $img->getKey(); ?>" />
+			<img style="max-width: 100%;" src="zotero_data.php?id=zotero-<?php echo $img->getLibraryId(); ?>.<?php echo $this->item->getKey(); ?>&key=<?php echo $img->getKey(); ?>" />
 		</div>
 	<?php } ?>
 	<?php
@@ -148,17 +148,35 @@ class zoteroDisplay extends DisplayEntity {
 	<?php } ?>
 	</div>
 	<div class="col-md-6">
-<?php foreach( $pdfs as $pdf ) { ?>
+<?php
+	$show = true;
+	if( @is_array( $this->doc->acl_content )) {
+		$show = $session->inAnyGroup( $this->doc->acl_content ) || $session->isAdmin();
+	}
+	if( $show ) foreach( $pdfs as $pdf ) {
+?>
 	<div style="">
 		<span style="; font-weight: bold;">Preview</span><br />
 	<div class="facet" style="padding-bottom: 5px;">
 		<div class="marker" style=""></div>
-		<div id="pdf_<?php echo $pdf->getGroupId(); ?>_<?php echo $pdf->getKey(); ?>">
+		<div id="pdf_<?php echo $pdf->getLibraryId(); ?>_<?php echo $pdf->getKey(); ?>">
 		</div>
-		<div style="text-align: center;"><a href="zotero_data.php?id=zotero-<?php echo $pdf->getGroupId(); ?>.<?php echo $this->item->getKey(); ?>&key=<?php echo $pdf->getKey(); ?>" >Download PDF</a></div>
+		<div style="text-align: center;"><a href="zotero_data.php?id=zotero-<?php echo $pdf->getLibraryId(); ?>.<?php echo $this->item->getKey(); ?>&key=<?php echo $pdf->getKey(); ?>" >Download PDF</a></div>
 	</div>
 </div>
 
+<?php } elseif( count( $pdfs ) > 0 ) { ?>
+	<div style="">
+		<span style="; font-weight: bold;">Keine Berechtigung</span><br />
+	<div class="facet" style="padding-bottom: 5px;">
+		<div class="marker" style=""></div>
+		Um die Inhalte zu sehen, müssen Sie Mitglied einer der folgenden Gruppen sein:<br />
+		<ul>
+<?php foreach( $this->doc->acl_content as $grp ) echo "<li>{$grp}</li>\n"; ?>
+		</ul>
+		<?php if( !$session->isLoggedIn() ) echo "<b>Hinweis: Sie sind nicht angemeldet.</b>\n"; ?>
+	</div>
+</div>
 <?php } ?>
     <?php if( strlen( $this->item->getAbstract())) { ?>
 		<div style="">
@@ -207,15 +225,16 @@ class zoteroDisplay extends DisplayEntity {
 <?php
 			$categories = array();
 			$collections = array();
+			$libname = $this->item->getLibraryName();
 			foreach( $this->item->getCollections() as $coll ) {
 				$fname = $coll->getFullName();
 				$parts = count( explode( ':', $fname ));
 
-				$categories[] = ($parts+2).'!!fhnw!!hgk!!pub!!'.str_replace( ':', '!!', $fname );
+				$categories[] = ($parts+3).'!!fhnw!!hgk!!pub!!'.$libname.'!!'.str_replace( ':', '!!', $fname );
 				$collections[] = $fname;
 			}
 ?>
-		<span style="; font-weight: bold;">Weitere Inhalte aus "<?php echo implode( '; ', $collections ); ?>"</span><br />
+		<span style="; font-weight: bold;">Weitere Inhalte aus "<?php echo $libname.' - '.implode( '; ', $collections ); ?>"</span><br />
 			<div class="facet" style="">
 				<div class="marker" style=""></div>
 		<?php
@@ -295,9 +314,9 @@ class zoteroDisplay extends DisplayEntity {
 		$pages = $pdf->getPages();
 ?>
 			var pages = <?php echo $pages; ?>;
-			var container = $("#pdf_<?php echo $pdf->getGroupId(); ?>_<?php echo $pdf->getKey(); ?>");
+			var container = $("#pdf_<?php echo $pdf->getLibraryId(); ?>_<?php echo $pdf->getKey(); ?>");
 
-			var pdf = 'zotero_data.php?id=zotero-<?php echo $pdf->getGroupId(); ?>.<?php echo $this->item->getKey(); ?>&key=<?php echo $pdf->getKey(); ?>';
+			var pdf = 'zotero_data.php?id=zotero-<?php echo $pdf->getLibraryId(); ?>.<?php echo $this->item->getKey(); ?>&key=<?php echo $pdf->getKey(); ?>';
 
     var options = {height: 700, duration: 800};
 

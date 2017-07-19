@@ -63,7 +63,7 @@ class zoteroEntity extends SOLRSource {
     public function loadFromArray( $data ) {
       $this->data = $data;
       $this->item = new Item( $this->data );
-      $this->id =  $this->item->getGroupId().'.'.$this->item->getKey();
+      $this->id =  $this->item->getLibraryId().'.'.$this->item->getKey();
     }
 
     public function getItem() {
@@ -147,7 +147,7 @@ class zoteroEntity extends SOLRSource {
 
         foreach( $this->item->getTags() as $tag ) {
           if( !preg_match( '/^(signature|barcode):[^:]+:[^:]+:/i', $tag )
-            && !preg_match( '/^(doi|isbn|issn|aclmeta|aclcontent|aclpreview|catalog):/i', $tag )) {
+            && !preg_match( '/^(doi|isbn|issn|acl_meta|acl_content|acl_preview|catalog):/i', $tag )) {
             if( preg_match( '/^[^:]+:[^\/]+\/[^\/]+\//', $tag)) {
               $this->tags[] = $tag;
             }
@@ -163,6 +163,9 @@ class zoteroEntity extends SOLRSource {
 
           }
         }
+
+        $this->tags[] = 'index:unknown/'.md5( $this->item->getLibraryName() ).'/'.$this->item->getLibraryName();
+
         foreach( $this->item->getCollections() as $coll ) {
           $tag = $coll->getFullName();
           $this->tags[] = 'coll:unknown/'.md5( $tag ).'/'.$tag;
@@ -263,7 +266,7 @@ class zoteroEntity extends SOLRSource {
 
     public function getOnline() {
       if( $this->item == null ) throw new \Exception( "no entity loaded" );
-      return $this->item->getUrl() != null;
+      return ($this->item->getUrl() != null) || (count($this->item->getPDFs()) > 0);
     }
 
    public function getAbstract() {
@@ -279,8 +282,14 @@ class zoteroEntity extends SOLRSource {
       if( $this->item == null ) throw new \Exception( "no entity loaded" );
       $acls = array();
       foreach( $this->item->getTags() as $tag ) {
-        if( preg_match( '/^(aclmeta):([^\/]+)\/([^\/]+)$/i', $tag, $matches )) {
+        if( preg_match( '/^(acl_meta):([^\/]+)\/([^\/]+)$/i', $tag, $matches )) {
           $acls[] = $matches[2].'/'.$matches[3];
+        }
+      }
+      $lib = $this->item->getLibrary();
+      if( preg_match_all( '/acl_meta:([^\/]+\/[^\/<>]+)/i', $lib->getDescription(), $matches )) {
+        foreach( $matches[1] as $acl ) {
+          $acls[] = $acl;
         }
       }
       if( count( $acls ) == 0 ) $acls[] = 'global/guest';
@@ -292,8 +301,17 @@ class zoteroEntity extends SOLRSource {
       if( $this->item == null ) throw new \Exception( "no entity loaded" );
       $acls = array();
       foreach( $this->item->getTags() as $tag ) {
-        if( preg_match( '/^(aclcontent):([^\/]+)\/([^\/]+)$/i', $tag, $matches )) {
+        if( preg_match( '/^(acl_content):([^\/]+)\/([^\/]+)$/i', $tag, $matches )) {
           $acls[] = $matches[2].'/'.$matches[3];
+        }
+      }
+      $lib = $this->item->getLibrary();
+      $descr = $lib->getDescription();
+//      var_dump( $descr );
+//      exit;
+      if( preg_match_all( '/acl_content:([^\/]+\/[^\/<>]+)/i', $descr, $matches )) {
+        foreach( $matches[1] as $acl ) {
+          $acls[] = $acl;
         }
       }
       if( count( $acls ) == 0 ) $acls[] = 'global/guest';
@@ -305,8 +323,14 @@ class zoteroEntity extends SOLRSource {
       if( $this->item == null ) throw new \Exception( "no entity loaded" );
       $acls = array();
       foreach( $this->item->getTags() as $tag ) {
-        if( preg_match( '/^(aclpreview):([^\/]+)\/([^\/]+)$/i', $tag, $matches )) {
+        if( preg_match( '/^(acl_preview):([^\/]+)\/([^\/]+)$/i', $tag, $matches )) {
           $acls[] = $matches[2].'/'.$matches[3];
+        }
+      }
+      $lib = $this->item->getLibrary();
+      if( preg_match_all( '/acl_preview:([^\/]+\/[^\/<>]+)/i', $lib->getDescription(), $matches )) {
+        foreach( $matches[1] as $acl ) {
+          $acls[] = $acl;
         }
       }
       if( count( $acls ) == 0 ) $acls[] = 'global/guest';
@@ -323,7 +347,7 @@ class zoteroEntity extends SOLRSource {
 	public function getCategories() {
 		$categories = parent::getCategories();
     foreach( $this->item->getCollections() as $coll ) {
-      $categories[] = 'fhnw!!hgk!!pub!!'.str_replace( ':', '!!', $coll->getFullName() );
+      $categories[] = 'fhnw!!hgk!!pub!!'.$this->item->getLibraryName().'!!'.str_replace( ':', '!!', $coll->getFullName() );
     }
 		return $categories;
 	}
