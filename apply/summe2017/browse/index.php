@@ -2,6 +2,11 @@
 
 include( '../init.inc.php' );
 
+$status = array(
+  'submit'=>'Metadaten erfasst',
+  'upload'=>'Einreichung vollständig',
+)
+
 ?><html>
 <head>
  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -53,7 +58,7 @@ $rs->Close();
       <ul class="nav nav-tabs">
 <?php foreach( $stats as $key=>$stat ) { ?>
         <li class="nav-item">
-          <a class="nav-link<?php echo $key == 0 ? ' active':''; ?>" id="apers" data-toggle="tab" href="#<?php echo $stat['status']; ?>" role="tab"><?php echo "{$stat['status']} ({$stat['num']})"; ?></a>
+          <a class="nav-link<?php echo $key == 0 ? ' active':''; ?>" id="apers" data-toggle="tab" href="#<?php echo $stat['status']; ?>" role="tab"><?php echo "{$status[$stat['status']]} ({$stat['num']})  "; ?></a>
         </li>
 <?php } ?>
       </ul>
@@ -106,7 +111,7 @@ $rs->Close();
             foreach( $rs2 as $row2 ) {
               echo "<b>{$row2['name']} ({$row2['mimetype']})</b><br />\n";
               $link = "https://mediathek.hgk.fhnw.ch".dirname( $_SERVER['SCRIPT_NAME'])."/../{$row2['filename']}";
-              echo "<a href=\"{$link}\">{$link}</a><br />\n";
+              echo "<a href=\"".htmlspecialchars( $link, ENT_QUOTES )."\">{$link}</a><br />\n";
               if( preg_match( '/^(audio|video)\//', $row2['mimetype'])) {
                 $ffprobe = json_decode( $row2['tech'], true );
                 if( array_key_exists( 'format', $ffprobe )) {

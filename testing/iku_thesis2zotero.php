@@ -26,6 +26,24 @@ function thesis2zotero(){
     }
     $tmplNote = $resGetTemplateNote->body;
 
+    //Get Zotero blogPost template
+    $uriGetTemplateBlogPost = "$APIURL/items/new?itemType=blogPost";
+    $resGetTemplateBlogPost = Httpful\Request::get($uriGetTemplateBlogPost)->send();
+    if($resGetTemplateNote->code!=200){
+        echo "Zotero note template not loaded";
+        die();
+    }
+    $tmplBlogPost = $resGetTemplateBlogPost->body;
+
+    //Get Zotero webpage template
+    $uriGetTemplateWebpage = "$APIURL/items/new?itemType=webpage";
+    $resGetTemplateWebpage = Httpful\Request::get($uriGetTemplateWebpage)->send();
+    if($resGetTemplateWebpage->code!=200){
+        echo "Zotero note template not loaded";
+        die();
+    }
+    $tmplWebpage = $resGetTemplateWebpage->body;
+
     //Get Zotero thesis template
     $uriGetTemplateThesis = "$APIURL/items/new?itemType=thesis";
     $resGetTemplateThesis = Httpful\Request::get($uriGetTemplateThesis)->send();
@@ -36,11 +54,13 @@ function thesis2zotero(){
     $tmplThesis = $resGetTemplateThesis->body;
 
     //Set template standard values
-    $tmplThesis->university = 'HGK FHNW, Institut Hyperwerk';
+    $tmplThesis->university = 'HGK FHNW';
     $tmplThesis->place = 'Basel';
     $tmplThesis->rights = 'internal use only';
 
     $tmplThesis->creators = array();
+    $tmplBlogPost->creators = array();
+    $tmplWebpage->creators = array();
 
     try {
         $db = new PDO("mysql:host=$DBHOST;dbname=$DBNAME;charset=utf8", $DBUSER, $DBUPWD);
@@ -54,25 +74,49 @@ function thesis2zotero(){
 
     //Clone thesis from template, fill the appropriate values and POST to Zotero
     foreach ($db->query('select * from source_ikuthesis where Strichcode is NULL and inserted = 0', PDO::FETCH_OBJ) as $rowThesis){
-        $currThesis = clone $tmplThesis;
-        $currThesis->title = $rowThesis->Title;
-        $authors = getCreators('author', $rowThesis->Autor);
-        foreach ($authors as $author) {
-            $currThesis->creators[] = $author;
+
+        switch ($rowThesis->ItemType){
+            case "thesis":
+                $objZotero = clone $tmplThesis;
+                break;
+            case "blogPost":
+                $objZotero = clone $tmplBlogPost;
+                break;
+            case "webpage":
+                $objZotero = clone $tmplWebpage;
+                break;
+            default:
+                echo "Unknown Item Type";
+                continue;
         }
-        $contributors = getCreators('contributor', $rowThesis->Contributor);
-        foreach ($contributors as $contributor){
-            $currThesis->creators[] = $contributor;
+
+        if (in_array($rowThesis->ItemType, ['thesis','blogPost','webpage'])){
+            $objZotero->title = $rowThesis->Title;
+            $authors = getCreators('author', $rowThesis->Autor);
+            foreach ($authors as $author) {
+                $objZotero->creators[] = $author;
+            }
+            $objZotero->date = $rowThesis->Date;
+            $objZotero->extra = $rowThesis->Extra;
+            $objZotero->url = $rowThesis->URL;
+            if(!empty($rowThesis->Tag1))$objZotero->tags[] = array('tag'=>$rowThesis->Tag1);
+            if(!empty($rowThesis->Tag2))$objZotero->tags[] = array('tag'=>$rowThesis->Tag2);
         }
-        $currThesis->date = $rowThesis->Date;
-        $currThesis->callNumber = $rowThesis->callNumber;
-        $currThesis->extra = $rowThesis->Extra;
-        $currThesis->url = $rowThesis->URL;
-        if(!empty($rowThesis->Tag1))$currThesis->tags[] = array('tag'=>$rowThesis->Tag1);
-        if(!empty($rowThesis->Tag2))$currThesis->tags[] = array('tag'=>$rowThesis->Tag2);
-        //var_dump($currThesis);
+        if (in_array($rowThesis->ItemType, ['thesis'])){
+            $contributors = getCreators('contributor', $rowThesis->Contributor);
+            foreach ($contributors as $contributor){
+                $objZotero->creators[] = $contributor;
+            }
+            $objZotero->callNumber = $rowThesis->CallNumber;
+
+        }
+
+
+
+
+        //var_dump($objZotero);
         //exit();
-        $keyThesis = postThesis($currThesis, $rowThesis->Note);
+        $keyThesis = postObject($objZotero);
         if(is_null($keyThesis)) continue;
 
         //Add Note
@@ -133,7 +177,8 @@ function postNote($note){
     }
 
 }
-function postThesis($thesis){
+function postObject($thesis){
+    //var_dump($thesis);
     global $config;
     $APIKEY = 'S321LmGUjscgc2ZfDMmkb9Nh';//$config['zotero']['apikey'];
     $APIURL = $config['zotero']['apiurl'];
@@ -141,7 +186,7 @@ function postThesis($thesis){
 
     $uriPostThesis = "$APIURL/groups/$ZOTGRP/items";
     $jsonThesis = '['.json_encode($thesis).']';
-    echo "Posting thesis {$thesis->title}...";
+    echo "Posting object {$thesis->title}...";
     $resPostThesis = Httpful\Request::post($uriPostThesis)->addHeader('Authorization', "Bearer $APIKEY")->body($jsonThesis)->sendsJson()->send();
     //var_dump($resPostThesis);
 
@@ -153,6 +198,7 @@ function postThesis($thesis){
     }
 
     echo "Error: Code {$resPostThesis->code}\n";
+
     return null;
 }
 
