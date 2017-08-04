@@ -146,12 +146,16 @@ $mail->Subject = utf8_decode( "[Summe2017] Anmeldung von {$data['nachname']}, {$
 
 $text = "{$data['vorname']} {$data['nachname']} hat das Formular zur Summe 2017 ausgefüllt.
 
+Der Datenupload für die Einreichung erfolgt unter:
+https://mediathek.hgk.fhnw.ch/apply/summe2017/upload.php/{$md5}
+
 -------------------
 Folgende Daten wurden erfasst:
 ";
 foreach( $data as $key=>$val ) {
   $text.= "{$key}:\n{$val}\n\n";
 }
+
 $mail->Body = utf8_decode( $text );
 
 $mail->send();

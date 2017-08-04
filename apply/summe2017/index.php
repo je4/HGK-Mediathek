@@ -92,6 +92,15 @@ function formSelect( $id, $label, $descr, $required, $sel ) {
               eigenständige Ausstellungen und Programme und zeigen im Monat November audiovisuelle
               Arbeiten aus dem aktuellen Videoschaffen.
             </p>
+            <noscript>
+              <h2>
+                Diese Seite benötigt Javascript. Bitte verwenden Sie einen Webbrowser, der Javascript unterstützt.
+              </h2>
+              <p>
+                Sollten sie keinen Browser mit Javascript unterstützung besitzen wenden Sie sich bitte an summw@betalabs.ch
+              </p>
+              ...
+            </noscript>
 
 
         </div>

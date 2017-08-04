@@ -68,11 +68,13 @@ $rs->Close();
         <div class="tab-pane fade show active" id="<?php echo $stat['status']; ?>" role="tabpanel">
           <p>
           <?php
-            $sql = "SELECT * FROM form WHERE projectid=1 AND status=".$db->qstr( $stat['status'] );
+            $sql = "SELECT * FROM form WHERE projectid=1 AND status=".$db->qstr( $stat['status'] )." ORDER BY changed DESC";
             $rs = $db->Execute( $sql );
             foreach( $rs as $row ) {
               $formid = $row['formid'];
               $status = $row['status'];
+              $changed = $row['changed'];
+
               $sql = "SELECT * FROM formdata WHERE formid=".$formid;
               $rs2 = $db->Execute( $sql );
               $meta = array();
@@ -80,9 +82,9 @@ $rs->Close();
                 $meta[$row2['name']] = $row2['value'];
               }
               $rs2->Close();
-                echo "<h3>#{$formid} {$status}:<br />\n";
-                echo htmlspecialchars( $meta['vorname']).' '.htmlspecialchars( $meta['nachname'])."<br />\n";
-                echo htmlspecialchars( $meta['titel']).'('.htmlspecialchars( $meta['werkjahr']).')'."</h3>\n";
+                echo "<h3>#{$formid} {$status} ({$changed}):<br />\n";
+                echo @htmlspecialchars( $meta['vorname']).' '.@htmlspecialchars( $meta['nachname'])."<br />\n";
+                echo @htmlspecialchars( $meta['titel']).'('.@htmlspecialchars( $meta['werkjahr']).')'."</h3>\n";
           ?>
               <p>
                 <table class="table table-striped">
