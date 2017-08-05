@@ -126,6 +126,8 @@ vielen Dank für die Einreichung von "<?php echo htmlentities( $data['titel'] );
 
 Es wurde eine Email an <?php echo htmlentities( $data['email'] ); ?> gesendet, die den Link zum Upload enthält.
 <?php
+}
+
 $mail = new \PHPMailer();
 //    $mail->SMTPDebug = 3;
 $mail->isSMTP();                                      // Set mailer to use SMTP
@@ -160,7 +162,7 @@ $mail->Body = utf8_decode( $text );
 
 $mail->send();
 
-}
+//}
   //print_r( $_REQUEST );
  ?>
  </pre>
