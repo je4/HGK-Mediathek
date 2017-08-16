@@ -53,6 +53,15 @@ function thesis2zotero(){
     }
     $tmplThesis = $resGetTemplateThesis->body;
 
+    //Get Zotero video recording template
+    $uriGetTemplateVideo = "$APIURL/items/new?itemType=videoRecording";
+    $resGetTemplateVideo = Httpful\Request::get($uriGetTemplateVideo)->send();
+    if($resGetTemplateVideo->code!=200){
+        echo "Zotero template not loaded";
+        die();
+    }
+    $tmplVideo = $resGetTemplateVideo->body;
+
     //Set template standard values
     $tmplThesis->university = 'HGK FHNW';
     $tmplThesis->place = 'Basel';
@@ -61,6 +70,7 @@ function thesis2zotero(){
     $tmplThesis->creators = array();
     $tmplBlogPost->creators = array();
     $tmplWebpage->creators = array();
+    $tmplVideo->creators = array();
 
     try {
         $db = new PDO("mysql:host=$DBHOST;dbname=$DBNAME;charset=utf8", $DBUSER, $DBUPWD);
@@ -85,12 +95,15 @@ function thesis2zotero(){
             case "webpage":
                 $objZotero = clone $tmplWebpage;
                 break;
+            case "videoRecording":
+                $objZotero = clone $tmplVideo;
+                break;
             default:
                 echo "Unknown Item Type";
                 continue;
         }
 
-        if (in_array($rowThesis->ItemType, ['thesis','blogPost','webpage'])){
+        if (in_array($rowThesis->ItemType, ['thesis','blogPost','webpage','videoRecording'])){
             $objZotero->title = $rowThesis->Title;
             $authors = getCreators('author', $rowThesis->Autor);
             foreach ($authors as $author) {
@@ -109,6 +122,21 @@ function thesis2zotero(){
             }
             $objZotero->callNumber = $rowThesis->CallNumber;
 
+        }
+        if (in_array($rowThesis->ItemType, ['videoRecording'])){
+            $objZotero->creators = array();
+            $authors = getCreators('director', $rowThesis->Autor);
+            foreach ($authors as $author) {
+                $objZotero->creators[] = $author;
+            }
+            $contributors = getCreators('castMember', $rowThesis->Contributor);
+            foreach ($contributors as $contributor) {
+                $objZotero->creators[] = $contributor;
+            }
+            $objZotero->url = $rowThesis->Filename;
+            $objZotero->abstractNote = $rowThesis->Abstract;
+            $objZotero->seriesTitle = $rowThesis->SeriesTitle;
+            $objZotero->place = $rowThesis->Place;
         }
 
 
@@ -138,7 +166,7 @@ function thesis2zotero(){
 function getCreators($creatorType, $name){
 
     if(empty($name)) return null;
-
+    $name = rtrim($name,';');
   $creatornames = explode(';', $name);
 
   foreach ($creatornames as $creatorname){
@@ -199,6 +227,9 @@ function postObject($thesis){
 
     echo "Error: Code {$resPostThesis->code}\n";
 
+//    var_dump($resPostThesis->body);
+//    var_dump($thesis);
+//    exit();
     return null;
 }
 

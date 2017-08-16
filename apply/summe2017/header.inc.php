@@ -23,7 +23,7 @@
         Dann bekommt ihr einen Link zum Hochladen eurer Beiträge.
       </p>
       <p class="text-muted">
-        <span style="color: red;">Anmeldeschluss ist der 14. August 2017</span>
+        <span style="color: red;">Anmeldeschluss ist der 24. August 2017</span>
       </p>
 
       <p class="text-muted">
@@ -50,12 +50,7 @@
       </p>
     </div>
     <div class="col-sm-4 py-4">
-      <h4 class="text-white">Contact</h4>
-      <ul class="list-unstyled">
-        <li><a href="#" class="text-white">Follow on Twitter</a></li>
-        <li><a href="#" class="text-white">Like on Facebook</a></li>
-        <li><a href="#" class="text-white">Email me</a></li>
-      </ul>
+
     </div>
   </div>
 </div>
