@@ -49,6 +49,9 @@ foreach( $rs as $row ) {
     elseif( preg_match( '/^(image)\//', $row['mimetype'])) {
       echo "<tt>{$row['tech']}</tt>";
     }
+    elseif( preg_match( '/^application\//pdf', $row['mimetype'])) {
+      echo "<tt>{$row['tech']}</tt>";
+    }
 
 ?>
         </tt>
