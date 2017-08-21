@@ -180,6 +180,10 @@ class Session implements \SessionHandlerInterface
     return (isset( $this->server['surname'] ) ? $this->server['surname'] : "");
   }
 
+  public function shibGetEmployeenumber() {
+    return (isset( $this->server['employeeNumber'] ) ? $this->server['employeeNumber'] : "");
+  }
+
   public function shibHomeOrganization() {
     return isset( $this->server['homeOrganization'] ) ? $this->server['homeOrganization'] : null;
   }

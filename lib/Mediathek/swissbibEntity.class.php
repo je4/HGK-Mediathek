@@ -163,7 +163,7 @@ class swissbibEntity extends SOLRSource {
 	}
 
 	public function loadFromDoc( $doc) {
-		$xml = Normalizer::normalize(( string )gzdecode( base64_decode( $doc->metagz )));
+		$xml = \Normalizer::normalize(( string )gzdecode( base64_decode( $doc->metagz )));
 		$this->loadNode( $doc->originalid, new OAIPMHRecord( $xml ), null );
 	}
 

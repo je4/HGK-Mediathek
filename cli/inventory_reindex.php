@@ -80,6 +80,12 @@ if( !file_exists( $idfile ) || $num == 0 ) {
   }
 }
 
+$update = $solrclient->CreateUpdate();
+$update->addCommit();
+$result = $solrclient->update( $update );
+echo "Commit query executed\n";
+echo 'Query status: ' . $result->getStatus()."\n";
+echo 'Query time: ' . $result->getQueryTime()."\n";
 
 doConnectMySQL();
 ?>

@@ -2,7 +2,6 @@
 
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
-
 include 'config.inc.php';
 
 include 'vendor/autoload.php';
@@ -33,7 +32,14 @@ function doConnectMySQL($force = false) {
         }
         catch( Exception $e ) {
             sleep( 1 );
-            $db->PConnect( $config['db']['host'], $config['db']['user'], $config['db']['password'], $config['db']['database'] );
+            try {
+              $db->PConnect( $config['db']['host'], $config['db']['user'], $config['db']['password'], $config['db']['database'] );
+            }
+            catch( Exception $e ) {
+              print_r( $config['db']);
+              throw $e;
+
+            }
         }
         $db->SetCharSet('utf8');
     }

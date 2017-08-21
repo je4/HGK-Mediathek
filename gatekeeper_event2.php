@@ -90,7 +90,7 @@ foreach( $rs as $row ) {
 */
   $status = $row['status'];
   $statusstring = $status;
-  if( $status == 0) $statusstring .= ' - Ok';
+  if( $status == 0) $statusstring .= ' - no manipulation';
   if( $status & (1 << 0)) $statusstring .= ' - CRC Error';
   if( $status & (1 << 1)) $statusstring .= ' - Falscher Barcode';
   if( $status & (1 << 2)) $statusstring .= ' - Unbekanntes Buch';

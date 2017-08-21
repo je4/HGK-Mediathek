@@ -48,7 +48,7 @@ if(true) {
 		$numPages = floor( $numResults / $pagesize );
 		foreach( $rs as $doc ) {
 			echo sprintf( "%0.2f - %08d ", $counter*100/$numResults, $counter ).$doc->id."\n";
-			echo $doc->id."\n";
+			//echo $doc->id."\n";
       $source = $doc->source;
       if( !strlen( $doc->metagz )) {
         echo "    ERROR!!!\n";
