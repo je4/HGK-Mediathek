@@ -41,12 +41,13 @@ echo mediathekheader('search', 'Mediathek - Settings', '');
 					<div class="container-fluid" style="margin-top: 0px; padding: 0px 20px 20px 20px;">
 <?php if( $session->isLoggedIn()) { ?>
 
-<h4><a href="<?php echo $_SERVER['Meta-organizationURL']; ?>"><?php 
-	if( isset( $_SERVER['Meta-largeLogo'])) echo $_SERVER['Meta-largeLogo']; 
+<h4><a href="<?php echo $_SERVER['Meta-organizationURL']; ?>"><?php
+	if( isset( $_SERVER['Meta-largeLogo'])) echo $_SERVER['Meta-largeLogo'];
 	echo "&nbsp;&nbsp;".$_SERVER['Meta-displayName'];
 ?></a></h4>
 <h3><?php echo htmlspecialchars( $session->shibGetUsername()); ?></h3>
 <h4><a href="mailto:<?php echo $session->shibGetMail(); ?>"><?php echo $session->shibGetMail(); ?></a></h4>
+<h5>#<?php echo $session->shibGetEmployeenumber(); ?></h5>
 <div class="row">
 	<div class="col-md-6 col-sm-6 col-xs-12 price-catagory full-height">
 		<div class="price-box">
@@ -58,14 +59,14 @@ echo mediathekheader('search', 'Mediathek - Settings', '');
 		<div class="price-box">
 			<p class="pricing-catagory-name">Sicherheitsgruppen</p>
 			<ul>
-<?php			
+<?php
 	foreach( $session->getGroups() as $grp )
 		echo "			<li>".htmlspecialchars( $grp )."</li>\n";
-?>				
+?>
 			</ul>
 		</div>
 	</div>
-<!--	
+<!--
 	<div class="col-md-6 col-sm-6 col-xs-12 price-catagory">
 		<div class="price-box">
 			<p class="pricing-catagory-name">Business</p>
@@ -81,7 +82,7 @@ echo mediathekheader('search', 'Mediathek - Settings', '');
 			<a href="#" class="btn">learn more</a>
 		</div>
 	</div>
--->	
+-->
 </div>
 <pre>
 <!-- <?php nl2br (htmlspecialchars( print_r( $_SERVER ))); ?> -->
@@ -90,7 +91,7 @@ echo mediathekheader('search', 'Mediathek - Settings', '');
 <?php  } else { ?>
 Bitte <a href="auth/?target=<?php echo urlencode( $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']); ?>">anmelden</a>, um einen digitalen NEBIS-Ausweis zu erstellen oder die persönlichen Einstellungen anzupassen.
 <?php } ?>
-					
+
 					</div>
 				</div>
 			</div>
@@ -115,7 +116,7 @@ Bitte <a href="auth/?target=<?php echo urlencode( $_SERVER['REQUEST_SCHEME'].':/
 	</div>
 </div>
 </div>
-	
+
 <?php
 //include( 'bgimage.inc.php' );
 ?>
@@ -129,20 +130,18 @@ function init() {
 	$('body').on('click', '.back-btn', function () {
 		window.location="search.php";
 	});
-	
+
 }
-</script>   
+</script>
 
 <script src="js/threejs/build/three.js"></script>
 <script src="js/threejs/build/TrackballControls.js"></script>
 <script src="js/threejs/build/OrbitControls.js"></script>
-<script src="js/threejs/build/CombinedCamera.js"></script>   
-<!-- script src="mediathek2.js"></script -->   
-<script src="js/mediathek.js"></script>   
+<script src="js/threejs/build/CombinedCamera.js"></script>
+<!-- script src="mediathek2.js"></script -->
+<script src="js/mediathek.js"></script>
 <script src="js/mediathek3d.js"></script>
 
 <?php
 echo mediathekfooter();
 ?>
-
-  
