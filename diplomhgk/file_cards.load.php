@@ -19,7 +19,9 @@ foreach( $rs as $row ) {
     <td style="width: 300px;" rowspan="2">
       <?php   if( $row['thumbname'] && $row['webname'] ) { ?>
       <a href="<?php echo $row['webname']; ?>" target="_blank"><img src="<?php echo $row['thumbname']; ?>" style="max-width: 300px; max-height: 200px;" /></a>
-    <?php } else { ?>
+    <?php } elseif( $row['thumbname'] ) { ?>
+    <a href="<?php echo $row['filename']; ?>" target="_blank"><img src="<?php echo $row['thumbname']; ?>" style="max-width: 300px; max-height: 200px;" /></a>
+  <?php } else { ?>
       &nbsp;
     <?php } ?>
     </td>
