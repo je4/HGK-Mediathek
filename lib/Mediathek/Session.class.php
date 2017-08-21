@@ -184,6 +184,10 @@ class Session implements \SessionHandlerInterface
     return (isset( $this->server['employeeNumber'] ) ? $this->server['employeeNumber'] : "");
   }
 
+  public function shibGetUID() {
+    return (isset( $this->server['uid'] ) ? $this->server['uid'] : "");
+  }
+
   public function shibHomeOrganization() {
     return isset( $this->server['homeOrganization'] ) ? $this->server['homeOrganization'] : null;
   }

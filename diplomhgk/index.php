@@ -32,7 +32,9 @@ function personRow( $row ) {
 
 
 $mail = $session->shibGetMail();
-$number = $session->shibGetEmployeenumber();
+$sql = "SELECT IDPerson FROM source_diplom2017_map WHERE sam=".$db->qstr( $session->shibGetUID());
+$number = intval($db->GetOne( $sql ));
+//$number = $session->shibGetEmployeenumber();
 $username = $session->shibGetUsername();
 
  ?><html>
@@ -100,7 +102,7 @@ $username = $session->shibGetUsername();
 
 if( array_key_exists( $mail, $auth )) {
   foreach( $auth[$mail] as $anlass ) {
-    $sql = "SELECT * FROM source_diplom2017 WHERE Anlassbezeichnung=".$db->qstr( $anlass )." ORDER BY Anlassbezeichnung, Nachname, Vornamen";
+    $sql = "SELECT * FROM source_diplom2017 WHERE Anlassnummer=".$db->qstr( $anlass )." ORDER BY Nachname, Vornamen";
     $rs = $db->Execute( $sql );
     $num = $rs->RecordCount();
     foreach( $rs as $row ) {
