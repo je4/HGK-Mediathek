@@ -46,6 +46,10 @@ foreach( $rs as $row ) {
       }
 
     }
+    elseif( preg_match( '/^(audio|video)\//', $row['mimetype'])) {
+      echo "<tt>{$row['tech']}</tt>";
+    }
+
 ?>
         </tt>
       </p>
