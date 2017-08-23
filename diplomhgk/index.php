@@ -4,7 +4,15 @@ namespace Mediathek;
 
 include( '../init.inc.php' );
 
+
+
 function personRow( $row ) {
+static $badge = array(
+  -1=>array('type'=>'default', 'title'=>'gespeichert'),
+  0=>array('type'=>'warning', 'title'=>'neu'),
+  1=>array('type'=>'success', 'title'=>'erledigt'),
+);
+
   $id = intval( $row['IDPerson']);
   if( $id > 0 ) {
 ?>
@@ -12,7 +20,7 @@ function personRow( $row ) {
 <td><a href="form.php?id=<?php echo $id; ?>"><?php echo htmlspecialchars( $row['Anlassbezeichnung']); ?></a></td>
 <td><a href="form.php?id=<?php echo $id; ?>"><?php echo htmlspecialchars( $row['Nachname']); ?></a></td>
 <td><a href="form.php?id=<?php echo $id; ?>"><?php echo htmlspecialchars( $row['Vornamen']); ?></a></td>
-<td><span class="badge badge-<?php echo ($row['done'] == 1 ? 'success':'warning'); ?>"><?php echo ($row['done'] == 1 ? 'erledigt':'neu'); ?></span></td>
+<td><span class="badge badge-<?php echo $badge[$row['done']]['type']; ?>"><?php echo $badge[$row['done']]['title']; ?></span></td>
 </tr>
 <?php
   } // $id > 0
@@ -22,7 +30,7 @@ function personRow( $row ) {
 <td><?php echo htmlspecialchars( $row['Anlassbezeichnung']); ?></td>
 <td><?php echo htmlspecialchars( $row['Nachname']); ?></td>
 <td><?php echo htmlspecialchars( $row['Vornamen']); ?></td>
-<td><span class="badge badge-<?php echo ($row['done'] == 1 ? 'success':'warning'); ?>"><?php echo ($row['done'] == 1 ? 'erledigt':'neu'); ?></span></td>
+<td><span class="badge badge-<?php echo $badge[$row['done']]['type']; ?>"><?php echo $badge[$row['done']]['title']; ?></span></td>
 </tr>
 <?php
 

@@ -8,8 +8,9 @@ $number = $session->shibGetEmployeenumber();
 $id = @intval( $_REQUEST['id']);
 
 $submit = array_key_exists( 'submit', $_REQUEST );
+$save = array_key_exists( 'save', $_REQUEST );
 
-if( $submit && $id>0 ) {
+if( ($save || $submit) && $id>0 ) {
   $data = $_REQUEST['data'];
 
   foreach( $data  as $key=>$val ){
@@ -21,31 +22,51 @@ if( $submit && $id>0 ) {
     $db->Execute( $sql );
   }
 
-  $sql = "UPDATE source_diplom2017 SET done=1 WHERE idperson=".$id;
+  $sql = "UPDATE source_diplom2017 SET done=".($submit?1:-1)." WHERE idperson=".$id;
   $db->Execute( $sql );
 }
+
+$vals = array();
+$sql = "SELECT * FROM source_diplom2017_data WHERE idperson=".$id;
+$rs = $db->Execute( $sql );
+foreach( $rs as $row ) {
+  $vals[$row['name']] = $row['value'];
+}
+$rs->Close();
 
 $sql = "SELECT * FROM source_diplom2017 WHERE idperson=".$id;
 $user = $db->GetRow( $sql );
 
-function formString( $id, $label, $descr, $required ) {
+function formString( $id, $label, $descr, $required, $value ) {
 ?>
   <div class="form-group row">
     <label for="<?php echo $id; ?>" class="col-sm-2 col-form-label"><?php echo htmlspecialchars( $label ); if( $required ) echo '<a class="required" href="#" data-toggle="tooltip" title="Pflichtfeld">*</a>'; ?></label>
     <div class="col-sm-10">
-      <input name="data[<?php echo $id; ?>]" type="text" class="form-control" id="<?php echo $id; ?>" aria-describedby="<?php echo $id; ?>Help" placeholder="" <?php echo $required ? 'required' : ''; ?>>
+      <input value="<?php echo htmlspecialchars( $value ); ?>" name="data[<?php echo $id; ?>]" type="text" class="form-control" id="<?php echo $id; ?>" aria-describedby="<?php echo $id; ?>Help" placeholder="" <?php echo $required ? 'required' : ''; ?>>
       <small id="<?php echo $id; ?>Help" class="form-text text-muted"><?php echo htmlspecialchars( $descr ); ?></small>
     </div>
   </div>
 <?php
 }
 
-function formText( $id, $label, $descr, $required, $lines=3 ) {
+function formEmail( $id, $label, $descr, $required, $value ) {
+?>
+  <div class="form-group row">
+    <label for="<?php echo $id; ?>" class="col-sm-2 col-form-label"><?php echo htmlspecialchars( $label ); if( $required ) echo '<a class="required" href="#" data-toggle="tooltip" title="Pflichtfeld">*</a>'; ?></label>
+    <div class="col-sm-10">
+      <input value="<?php echo htmlspecialchars( $value ); ?>" name="data[<?php echo $id; ?>]" type="email" class="form-control" id="<?php echo $id; ?>" aria-describedby="<?php echo $id; ?>Help" placeholder="" <?php echo $required ? 'required' : ''; ?>>
+      <small id="<?php echo $id; ?>Help" class="form-text text-muted"><?php echo htmlspecialchars( $descr ); ?></small>
+    </div>
+  </div>
+<?php
+}
+
+function formText( $id, $label, $descr, $required, $lines, $value ) {
 ?>
 <div class="form-group row">
   <label for="<?php echo $id; ?>" class="col-sm-2 col-form-label"><?php echo htmlspecialchars( $label ); if( $required ) echo '<a class="required" href="#" data-toggle="tooltip" title="Pflichtfeld">*</a>'; ?></label>
   <div class="col-sm-10">
-    <textarea rows=6 name="data[<?php echo $id; ?>]" type="text" class="form-control" id="<?php echo $id; ?>" aria-describedby="<?php echo $id; ?>Help" placeholder="" <?php echo $required ? 'required' : ''; ?>></textarea>
+    <textarea rows=6 name="data[<?php echo $id; ?>]" type="text" class="form-control" id="<?php echo $id; ?>" aria-describedby="<?php echo $id; ?>Help" placeholder="" <?php echo $required ? 'required' : ''; ?>><?php echo htmlspecialchars( $value ); ?></textarea>
     <small id="<?php echo $id; ?>Help" class="form-text text-muted"><?php echo nl2br( htmlspecialchars( $descr )); ?></small>
   </div>
 </div>
@@ -181,7 +202,7 @@ function formSelect( $id, $label, $descr, $required, $sel ) {
   </div>
       <div class="navbar navbar-inverse bg-inverse">
         <div class="container d-flex justify-content-between">
-          <a href="#" class="navbar-brand">Diplom HGK 2017 - Upload</a>
+          <a href="index.php" class="navbar-brand">Diplom HGK 2017 - Upload</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -206,7 +227,6 @@ function formSelect( $id, $label, $descr, $required, $sel ) {
 
     <div class="container">
       <form method="POST" action="form.php" role="form" id="apply">
-        <input type="hidden" name="submit" value="yes" />
         <input type="hidden" name="id" value="<?php echo $id; ?>" />
         <div class="error alert alert-danger" role="alert">
           <span>&nbsp;</span>
@@ -242,25 +262,28 @@ else {
   echo '<h2>'.htmlentities( "{$user['Vornamen']} {$user['Nachname']} ({$user['IDPerson']})" ).'</h2>';
   echo '<h3>'.htmlentities( "{$user['Anlassbezeichnung']}" ).'</h3>';
 echo "<p />";
-formString( 'email', 'Email Adresse', 'Emailadresse für die DiplomHGK Seite', false );
-formString( 'web1', 'Webseite #1', 'Kontakt Webseite (persönliche Website)', false );
-formString( 'web2', 'Webseite #2', 'Zusätzliche Webseite (Projektseite etc...)', false );
-formString( 'titel', 'Titel (Diplomarbeit)', 'Bsp: Complexity', true );
-formString( 'untertitel', 'Untertitel (Diplomarbeit)', 'Bsp: Der Reichtum der Unterschiede', true );
-formText( 'beschreibung', 'Beschreibung', 'Projektbeschrieb (Diplomarbeit)', true );
+formString( 'email', 'Email Adresse', 'Emailadresse für die DiplomHGK Seite', false, $vals['email'] );
+formString( 'web1', 'Webseite #1', 'Kontakt Webseite (persönliche Website)', false, $vals['web1'] );
+formString( 'web1', 'Webseite #2', 'Zusätzliche Webseite (Projektseite etc...)', false, $vals['web1'] );
+formString( 'titel', 'Titel (Diplomarbeit)', 'Bsp: Complexity', true, $vals['titel'] );
+formString( 'untertitel', 'Untertitel (Diplomarbeit)', 'Bsp: Der Reichtum der Unterschiede', true, $vals['untertitel'] );
+formString( 'betreuer1', 'Betreuer/in #1', 'Prüfer/in, Betreuer/in', false, $vals['betreuer1'] );
+formString( 'betreuer2', 'Betreuer/in #2', 'Prüfer/in, Betreuer/in', false, $vals['betreuer2'] );
+formText( 'beschreibung', 'Beschreibung', 'Projektbeschrieb (Diplomarbeit)', 6, true, $vals['beschreibung'] );
 formText( 'webmedia', 'Webadressen', 'Webadressen für Video, Audio und Pdf: Vimeo, YouTube, Issuu, Soundcloud
 Z.B.:
 https://vimeo.com/39825378
 https://youtu.be/Yyl1xxdatn8
 http://issuu.com/interiordesignandscenography/docs/iis_yearbook2013/1
-https://soundcloud.com/fhnw-hgk-iku/mah02448mp4-dance', false );
+https://soundcloud.com/fhnw-hgk-iku/mah02448mp4-dance', false, 6, $vals['webmedia'] );
  ?>
 <p>
   <div id="uploader"> </div>
 </p>
 <p>
             <div class="form-group row">
-              <button type="submit" value="Validate!" class="btn btn-primary btn-block" style="height: 100px; font-size: 36px;">Fertig</button>
+              <button type="submit" name="save" value="" class="btn btn-secondary btn-block" style="height: 100px; font-size: 36px;">Speichern</button>
+              <button type="submit" name="submit" value="Validate!" class="btn btn-primary btn-block" style="height: 100px; font-size: 36px;">Fertig</button>
             </div>
           </p>
     </form>
@@ -315,32 +338,6 @@ https://soundcloud.com/fhnw-hgk-iku/mah02448mp4-dance', false );
 
     $( '#apply' ).validate( {
        ignore: '.ignore',
-       rules: {
-          // at least 15€ when bonus material is included
-          "data[rechtesumme]": {
-            required: true,
-            min: {
-              // min needs a parameter passed to it
-              minlength: 2,
-            }
-          },
-          "data[lizenz]": {
-            required: true,
-            min: {
-              // min needs a parameter passed to it
-              minlength: 2,
-            }
-          },
-          /*
-          "data[rechte]": {
-            required: true,
-            min: {
-              // min needs a parameter passed to it
-              minlength: 2,
-            }
-          }
-          */
-        },
        errorPlacement: function(error, element) {
           // error.appendTo( element.parent("td").next("td") );
           // <div class="form-control-feedback">Sorry, that username's taken. Try another?</div>
