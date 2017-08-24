@@ -131,6 +131,21 @@ class zoteroDisplay extends DisplayEntity {
       </h5>
     </span>
 		</div>
+
+
+		<?php
+			$attachments = $this->item->getAttachments();
+			usort( $attachments , function( $a, $b ) {
+				return $a->getTitle() > $b->getTitle();
+			});
+			foreach( $attachments as $att ) { ?>
+
+		<span style="; font-weight: bold;"><?php echo htmlspecialchars( $att->getTitle()); ?></span><br>
+		<div class="facet" style="">
+			<div class="marker" style=""></div>
+			<img style="max-width: 100%;" src="zotero_data.php?id=zotero-<?php echo $img->getLibraryId(); ?>.<?php echo $this->item->getKey(); ?>&key=<?php echo $img->getKey(); ?>" />
+		</div>
+	<?php } ?>
 		<?php foreach( $this->item->getImages() as $img ) { ?>
 		<span style="; font-weight: bold;"><?php echo htmlspecialchars( $img->getTitle()); ?></span><br>
 		<div class="facet" style="">

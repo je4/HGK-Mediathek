@@ -171,9 +171,13 @@ class Item {
     return null;
   }
 
-    public function getContentType() {
-      return array_key_exists( 'contentType', $this->data['data'] ) ? $this->data['data']['contentType'] : null;
-    }
+  public function getContentType() {
+    return array_key_exists( 'contentType', $this->data['data'] ) ? $this->data['data']['contentType'] : null;
+  }
+
+  public function getLinkMode() {
+    return array_key_exists( 'linkMode', $this->data['data'] ) ? $this->data['data']['linkMode'] : null;
+  }
 
     public function getFilename() {
       return array_key_exists( 'filename', $this->data['data'] ) ? $this->data['data']['filename'] : null;
@@ -256,17 +260,18 @@ class Item {
     return $this->getAttachments( array( '/application\/pdf/' ));
   }
   public function getAttachments( $types = array()) {
-    $pdfs = array();
+    $attachments = array();
     foreach( $this->children as $child ) {
       if( $child->getType() == 'attachment' ) {
-        $contentType = $child->getContentType();
-        if( count( $types ) == 0 ) $pdfs[] = $child;
+        $t = $child->getContentType();
+        if( $t == null ) $t = $child->getLinkMode();
+        if( count( $types ) == 0 ) $attachments[] = $child;
         else foreach( $types as $type ) {
-          if( preg_match( $type, $contentType )) $pdfs[] = $child;
+          if( preg_match( $type, $t )) $attachments[] = $child;
         }
       }
     }
-    return $pdfs;
+    return $attachments;
   }
 
 

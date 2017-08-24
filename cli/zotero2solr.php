@@ -40,3 +40,6 @@ foreach( $groups as $group ) {
     $cnt++;
   }
 }
+$update = $solrclient->CreateUpdate();
+$update->addCommit();
+$result = $solrclient->update( $update );

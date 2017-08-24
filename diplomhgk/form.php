@@ -10,6 +10,11 @@ $id = @intval( $_REQUEST['id']);
 $submit = array_key_exists( 'submit', $_REQUEST );
 $save = array_key_exists( 'save', $_REQUEST );
 
+function valof( $arr, $key, $default=null) {
+  if( array_key_exists( $key, $arr )) return $arr[$key];
+  return $default;
+}
+
 if( ($save || $submit) && $id>0 ) {
   $data = $_REQUEST['data'];
 
@@ -262,20 +267,20 @@ else {
   echo '<h2>'.htmlentities( "{$user['Vornamen']} {$user['Nachname']} ({$user['IDPerson']})" ).'</h2>';
   echo '<h3>'.htmlentities( "{$user['Anlassbezeichnung']}" ).'</h3>';
 echo "<p />";
-formString( 'email', 'Email Adresse', 'Emailadresse für die DiplomHGK Seite', false, $vals['email'] );
-formString( 'web1', 'Webseite #1', 'Kontakt Webseite (persönliche Website)', false, $vals['web1'] );
-formString( 'web1', 'Webseite #2', 'Zusätzliche Webseite (Projektseite etc...)', false, $vals['web1'] );
-formString( 'titel', 'Titel (Diplomarbeit)', 'Bsp: Complexity', true, $vals['titel'] );
-formString( 'untertitel', 'Untertitel (Diplomarbeit)', 'Bsp: Der Reichtum der Unterschiede', true, $vals['untertitel'] );
-formString( 'betreuer1', 'Betreuer/in #1', 'Prüfer/in, Betreuer/in', false, $vals['betreuer1'] );
-formString( 'betreuer2', 'Betreuer/in #2', 'Prüfer/in, Betreuer/in', false, $vals['betreuer2'] );
-formText( 'beschreibung', 'Beschreibung', 'Projektbeschrieb (Diplomarbeit)', 6, true, $vals['beschreibung'] );
+formString( 'email', 'Email Adresse', 'Emailadresse für die DiplomHGK Seite', false, valof( $vals, 'email' ) );
+formString( 'web1', 'Webseite #1', 'Kontakt Webseite (persönliche Website)', false, valof( $vals, 'web1' ) );
+formString( 'web1', 'Webseite #2', 'Zusätzliche Webseite (Projektseite etc...)', false, valof( $vals, 'web1' ) );
+formString( 'titel', 'Titel (Diplomarbeit)', 'Bsp: Complexity', true, valof( $vals, 'titel' ) );
+formString( 'untertitel', 'Untertitel (Diplomarbeit)', 'Bsp: Der Reichtum der Unterschiede', true, valof( $vals, 'untertitel' ) );
+formString( 'betreuer1', 'Betreuer/in #1', 'Prüfer/in, Betreuer/in', false, valof( $vals, 'betreuer1' ) );
+formString( 'betreuer2', 'Betreuer/in #2', 'Prüfer/in, Betreuer/in', false, valof( $vals, 'betreuer2' ) );
+formText( 'beschreibung', 'Beschreibung', 'Projektbeschrieb (Diplomarbeit)', 6, true, valof( $vals, 'beschreibung' ) );
 formText( 'webmedia', 'Webadressen', 'Webadressen für Video, Audio und Pdf: Vimeo, YouTube, Issuu, Soundcloud
 Z.B.:
 https://vimeo.com/39825378
 https://youtu.be/Yyl1xxdatn8
 http://issuu.com/interiordesignandscenography/docs/iis_yearbook2013/1
-https://soundcloud.com/fhnw-hgk-iku/mah02448mp4-dance', false, 6, $vals['webmedia'] );
+https://soundcloud.com/fhnw-hgk-iku/mah02448mp4-dance', false, 6, valof( $vals, 'webmedia' ) );
  ?>
 <p>
   <div id="uploader"> </div>
