@@ -134,7 +134,14 @@ class zoteroDisplay extends DisplayEntity {
 			$series = $this->item->get( 'seriesTitle' );
 			if( $series ) echo htmlspecialchars( $series )."<br />\n";
 			$place = $this->item->get( 'place' );
-			if( $place ) echo htmlspecialchars( $place )."<br />\n";
+			if( $place ) {
+?>
+				<a href="javascript:doSearchFull('city:&quot;<?php echo htmlspecialchars( $place ); ?>&quot;', '', [], {'catalog':[<?php echo $this->getCatalogList(); ?>]}, 0, <?php echo $pagesize; ?> );">
+					<?php echo htmlspecialchars( $place ); ?>
+				</a><br />
+<?php
+			}
+
 			if( $this->item->getType() == 'videoRecording') {
 				$cs = array();
 				foreach( $this->item->getCreators() as $c ) {

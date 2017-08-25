@@ -5,22 +5,26 @@ require( 'lib/class.phpmailer.php' );
 require( 'lib/class.smtp.php' );
 
 $md5 = $_GET['form'];
-$sql = "SELECT formid FROM form WHERE link=".$db->qstr( $md5 );
-$formid = intval( $db->GetOne( $sql ));
+$sql = "SELECT formid, status FROM form WHERE link=".$db->qstr( $md5 );
+$row = $db->GetRow( $sql );
+$formid = intval( $row['formid']);
+$status = $row['status'];
 
-$data = $_REQUEST['data'];
+if( $status != 'upload' ) {
+  $data = $_REQUEST['data'];
 
-foreach( $data  as $key=>$val ){
-  $sql = "REPLACE INTO formdata( formid, name, value ) VALUES(
-      {$formid}
-    , ".$db->qstr( $key )."
-    , ".$db->qstr( $val )."
-  )";
+  foreach( $data  as $key=>$val ){
+    $sql = "REPLACE INTO formdata( formid, name, value ) VALUES(
+        {$formid}
+      , ".$db->qstr( $key )."
+      , ".$db->qstr( $val )."
+    )";
+    $db->Execute( $sql );
+  }
+
+  $sql = "UPDATE form set status=".$db->qstr( 'upload' )." WHERE formid={$formid}";
   $db->Execute( $sql );
 }
-
-$sql = "UPDATE form set status=".$db->qstr( 'upload' )." WHERE formid={$formid}";
-$db->Execute( $sql );
 
 $data = array();
 $sql = "SELECT * FROM formdata WHERE formid={$formid}";
@@ -63,6 +67,8 @@ $rs->Close();
     <div class="container">
 <pre>
 <?php
+if( $status != 'upload' ) {
+
 $mail = new \PHPMailer();
 //    $mail->SMTPDebug = 3;
 $mail->isSMTP();                                      // Set mailer to use SMTP
@@ -177,6 +183,7 @@ $mail->Body = utf8_decode( $text );
 $mail->send();
 }
   //print_r( $_REQUEST );
+}
  ?>
  </pre>
     </div>
