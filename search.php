@@ -91,7 +91,7 @@ if( !$qobj ) {
 		$qobj = array();
 		$qobj['facets'] = array();
 		$qobj['filter'] = array();
-		$qobj['area'] = '';
+		$qobj['area'] = 'all';
 		if( is_array( $facets )) $qobj['facets'] = $facets;
 		else $qobj['facets']['catalog'] = $config['defaultcatalog'];
 		$qobj['query'] = $search ? $search : '*';
@@ -111,6 +111,8 @@ if( !$qobj ) {
 	else {
 		$qobj = Helper::readQuery( $q );
 		$session->storeQuery( $q );
+		$sql = "SELECT config FROM web_query_config WHERE area=".$db->qstr( $qobj['area'] );
+		$qconfig = $db->GetOne( $sql );
 	}
 }
 
@@ -123,11 +125,10 @@ if( $qobj['query'] == '' ) $qobj['query'] = '*';
 
 
 
-echo mediathekheader('search', 'mediathek - Suche - '.$qobj['query'], $qobj['area']);
+echo mediathekheader('search', 'mediathek - Suche - '.$qobj['query'], $qobj['area'], array(), $qconfig );
 ?>
 <div class="home-btn"><i class="ion-android-close"></i></div>
 <div class="setting-btn"><i class="<?php echo $session->isLoggedIn() ? 'ion-ios-settings-strong': 'ion-log-in'; ?>"></i></div>
-
 <div id="fullsearch" class="fullsearch-page container-fluid page">
     <div class="row">
             <!--( a ) Profile Page Fixed Image Portion -->

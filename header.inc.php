@@ -92,6 +92,7 @@ foreach( $csss as $css ) {
 	<!-- hidden search form for searchbar -->
 	<form style="visibility: hidden;" id="searchform" action="#" method="post">
 		<input type="hidden" id="searchjson" name="query" value="" />
+    <input type="hidden" name="area" value="<?php echo $area  ; ?>" />
 	</form>
 
 	<!-- general purpos modal dialog box -->

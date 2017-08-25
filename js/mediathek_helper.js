@@ -1,5 +1,6 @@
 
 var searcharea = "all";
+
 function facetSearch( q, facet, value, add ) {
 	if( add )
 	{
@@ -88,7 +89,7 @@ function initSearch( area, pagesize ) {
 
 }
 
-function navbarSearch(page, pagesize) {
+function _DELETE_navbarSearch(page, pagesize) {
 	searchtext = $('#searchtext').val();
 	searcharea = $('input[type=radio][name=bestand]').val();
 
@@ -168,7 +169,8 @@ function doSearch( searchtext, page, pagesize, facets = {} ) {
     }
 	else return;
 //	searchtext = $('#searchtext').val();
-	searcharea = 'all'; // $('input[type=radio][name=bestand]').val();
+searcharea = 'all'; // $('input[type=radio][name=bestand]').val();
+searcharea = $('input[type=hidden][name=area]').val();
 
 //	var facets = {};
 

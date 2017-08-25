@@ -73,7 +73,7 @@ class zoteroDisplay extends DisplayEntity {
 
 			ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
 ?>
-				<h2 class="small-heading">Mediathek</h2>
+				<h2 class="small-heading"><?php echo $this->item->getLibraryName(); ?></h2>
 
 				<div class="container-fluid" style="margin-top: 0px; padding: 0px 20px 20px 20px;">
 <?php
@@ -88,7 +88,8 @@ class zoteroDisplay extends DisplayEntity {
 		$intern = $session->inGroup( 'location/fhnw');
 		$loggedin = $session->isLoggedIn();
 
-		$authors = $this->entity->getAuthors();
+//		$authors = $this->entity->getAuthors();
+		$authors = $this->item->getCreators();
 		$squery = $solrclient->createSelect();
 		$helper = $squery->getHelper();
 		$pdfs = $this->item->getPDFs();
@@ -105,10 +106,10 @@ class zoteroDisplay extends DisplayEntity {
 		<span style="; font-weight: bold;">Aktuelles Objekt</span><br>
 		<div class="facet" style="">
 			<div class="marker" style=""></div>
-      <?php echo $this->item->getType(); ?>
 			<h5><span style="font-weight: normal; font-size: 1.1rem;"><?php
       $first = true;
         foreach( $authors as $author ) {
+					if( $this->item->getType() == 'videoRecording' && $author->getType() == 'castMember' ) continue;
           if( !$first ) echo "; ";
 					?>
 					<a href="javascript:doSearchFull('author:&quot;<?php echo htmlspecialchars( $author ); ?>&quot;', '', [], {'catalog':[<?php echo $this->getCatalogList(); ?>]}, 0, <?php echo $pagesize; ?> );">
@@ -123,12 +124,31 @@ class zoteroDisplay extends DisplayEntity {
         echo '<br />'.htmlentities( $this->item->getTitle() );
 				if( $this->item->getYear() ) {
 						?>
-							<span style="font-size: 80%;">(<?php echo htmlspecialchars( $this->item->getYear() );?>)</span>
+							<span style="font-size: 80%;"><?php echo htmlspecialchars( $this->item->getYear() );?></span>
 						<?php
 				}
 				?>
-
       </h5>
+			<div style="line-height: 110%">
+			<?php
+			$series = $this->item->get( 'seriesTitle' );
+			if( $series ) echo htmlspecialchars( $series )."<br />\n";
+			$place = $this->item->get( 'place' );
+			if( $place ) echo htmlspecialchars( $place )."<br />\n";
+			if( $this->item->getType() == 'videoRecording') {
+				$cs = array();
+				foreach( $this->item->getCreators() as $c ) {
+					if( $c->getType() == 'castMember' ) {
+?>
+						Dokumentation: <a href="javascript:doSearchFull('author:&quot;<?php echo htmlspecialchars( $c ); ?>&quot;', '', [], {'catalog':[<?php echo $this->getCatalogList(); ?>]}, 0, <?php echo $pagesize; ?> );">
+							<?php echo htmlspecialchars( $c ); ?>
+						</a><br />
+<?php
+					}
+				}
+			}
+			?>
+		</div>
     </span>
 		</div>
 
@@ -138,15 +158,7 @@ class zoteroDisplay extends DisplayEntity {
 			usort( $attachments , function( $a, $b ) {
 				return $a->getTitle() > $b->getTitle();
 			});
-			foreach( $attachments as $att ) { ?>
-
-		<span style="; font-weight: bold;"><?php echo htmlspecialchars( $att->getTitle()); ?></span><br>
-		<div class="facet" style="">
-			<div class="marker" style=""></div>
-			<img style="max-width: 100%;" src="zotero_data.php?id=zotero-<?php echo $img->getLibraryId(); ?>.<?php echo $this->item->getKey(); ?>&key=<?php echo $img->getKey(); ?>" />
-		</div>
-	<?php } ?>
-		<?php foreach( $this->item->getImages() as $img ) { ?>
+		foreach( $this->item->getImages() as $img ) { ?>
 		<span style="; font-weight: bold;"><?php echo htmlspecialchars( $img->getTitle()); ?></span><br>
 		<div class="facet" style="">
 			<div class="marker" style=""></div>
@@ -168,6 +180,45 @@ class zoteroDisplay extends DisplayEntity {
 	if( @is_array( $this->doc->acl_content )) {
 		$show = $session->inAnyGroup( $this->doc->acl_content ) || $session->isAdmin();
 	}
+	if( $show ) foreach( $attachments as $att ) { ?>
+		<span style="; font-weight: bold;">
+			<?php
+		$title = trim($att->getTitle());
+		if( is_numeric( $title ) ) $title = '';
+		elseif( preg_match( '/^[0-9]+([^0-9].*)/', $title, $matches )) {
+			$title = $matches[1];
+		}
+			echo htmlspecialchars( $title );
+		?>
+	</span><br>
+		<div class="facet" style="">
+			<div class="marker" style=""></div>
+			<?php
+				if( $att->getLinkMode() == 'linked_url') {
+					$url = $att->getUrl();
+					if( strstr( $url, 'https://ba14ns21403.fhnw.ch/video') !== false ) {
+?>
+						<video id="my-video" class="video-js" controls preload="auto" width="550"
+						data-setup="{}"
+						style="min-width: 99%" >
+						  <source src="<?php echo $url; ?>" type='video/mp4'>
+						  <p class="vjs-no-js">
+							To view this video please enable JavaScript, and consider upgrading to a web browser that
+							<a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+						  </p>
+						</video>
+<?php
+					}
+				}
+			 ?>
+			<!--
+			<pre>
+				<?php print_r( $att->getData()); ?>
+			</pre>
+		  -->
+		</div>
+	<?php }
+
 	if( $show ) foreach( $pdfs as $pdf ) {
 ?>
 	<div style="">
@@ -288,9 +339,9 @@ class zoteroDisplay extends DisplayEntity {
 				<div class="marker" style=""></div>
 				<div>
 					<pre>
-						<?php echo ( $this->entity->cite( 'apa.csl', 'ch', 'bibliography' ) ); ?>
+						<?php echo ( $this->entity->cite( 'apa.csl', 'ch', 'bibliography' ) ); ?> (apa)
 						<hr />
-						<?php echo ( $this->entity->cite( 'chicago-annotated-bibliography.csl', 'ch', 'citation' ) ); ?>
+						<?php echo ( $this->entity->cite( 'chicago-annotated-bibliography.csl', 'ch', 'bibliography' ) ); ?> (chicago)
 						<hr />
 						<?php var_dump(  $this->entity->getCSL()); ?>
 					</pre>
@@ -341,6 +392,7 @@ class zoteroDisplay extends DisplayEntity {
 
 			}
 		</script>
+
 
 <?php
 

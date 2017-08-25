@@ -165,7 +165,7 @@ class Item {
 
   public function getUrl() {
     if( array_key_exists( 'url', $this->data['data'] ) ) {
-//      if( preg_match( '@://[^/]*nebis.ch/@', $this->data['data']['url'] )) return null;
+      if( !preg_match( '/[a-zA-Z0-9]+:/', $this->data['data']['url'] )) return null;
       return $this->data['data']['url'];
     }
     return null;
@@ -173,6 +173,10 @@ class Item {
 
   public function getContentType() {
     return array_key_exists( 'contentType', $this->data['data'] ) ? $this->data['data']['contentType'] : null;
+  }
+
+  public function get($key) {
+    return array_key_exists( $key, $this->data['data'] ) ? $this->data['data'][$key] : null;
   }
 
   public function getLinkMode() {
@@ -282,7 +286,8 @@ class Item {
   	 * and it makes the code cleaner
   	 */
   	private static $zoteroNameMap = array(
-  		"author" => "author",
+      "author" => "author",
+      "director" => "author",
   		"editor" => "editor",
   		"bookAuthor" => "container-author",
   		"composer" => "composer",

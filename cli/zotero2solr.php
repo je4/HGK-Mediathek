@@ -27,6 +27,7 @@ foreach( $groups as $group ) {
     echo $item; if( $item->isTrashed()) echo "  [TRASH]\n";
     $entity->reset();
     $data = $item->getData();
+//    var_dump( $data );
     $entity->loadFromArray( $data );
     $title = $entity->getTitle();
     echo "Title: ".$title."\n";

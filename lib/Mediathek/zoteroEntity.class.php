@@ -266,7 +266,7 @@ class zoteroEntity extends SOLRSource {
 
     public function getOnline() {
       if( $this->item == null ) throw new \Exception( "no entity loaded" );
-      return ($this->item->getUrl() != null) || (count($this->item->getPDFs()) > 0);
+      return ($this->item->getUrl() != null) || (count($this->item->getAttachments()) > 0);
     }
 
    public function getAbstract() {
@@ -359,6 +359,7 @@ class zoteroEntity extends SOLRSource {
         $cats[] = $matches[2];
       }
     }
+    $cats[] = $this->item->getLibraryName();
     return $cats;
   }
 
