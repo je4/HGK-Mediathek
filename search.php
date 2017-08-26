@@ -113,6 +113,7 @@ if( !$qobj ) {
 		$session->storeQuery( $q );
 		$sql = "SELECT config FROM web_query_config WHERE area=".$db->qstr( $qobj['area'] );
 		$qconfig = $db->GetOne( $sql );
+//		var_dump( $qobj );
 	}
 }
 
