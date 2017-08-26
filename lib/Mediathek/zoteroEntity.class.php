@@ -222,7 +222,9 @@ class zoteroEntity extends SOLRSource {
 
     public function getLicenses() {
       if( $this->item == null ) throw new \Exception( "no entity loaded" );
-		  return $this->item->getRights();
+		  $r = $this->item->getRights();
+      if( count( $r ) == 0 ) $r[] = 'unknown';
+      return $r;
     }
 
     public function getURLs() {
@@ -280,18 +282,9 @@ class zoteroEntity extends SOLRSource {
 
     public function getMetaACL() {
       if( $this->item == null ) throw new \Exception( "no entity loaded" );
-      $acls = array();
-      foreach( $this->item->getTags() as $tag ) {
-        if( preg_match( '/^(acl_meta):([^\/]+)\/([^\/]+)$/i', $tag, $matches )) {
-          $acls[] = $matches[2].'/'.$matches[3];
-        }
-      }
+      $acls = $this->item->getVar( 'acl_meta' );
       $lib = $this->item->getLibrary();
-      if( preg_match_all( '/acl_meta:([^\/]+\/[^\/<>]+)/i', $lib->getDescription(), $matches )) {
-        foreach( $matches[1] as $acl ) {
-          $acls[] = $acl;
-        }
-      }
+      $acls = array_merge( $acls, $lib->getVar( 'acl_meta' ));
       if( count( $acls ) == 0 ) $acls[] = 'global/guest';
 
 		  return $acls;
@@ -299,40 +292,19 @@ class zoteroEntity extends SOLRSource {
 
     public function getContentACL() {
       if( $this->item == null ) throw new \Exception( "no entity loaded" );
-      $acls = array();
-      foreach( $this->item->getTags() as $tag ) {
-        if( preg_match( '/^(acl_content):([^\/]+)\/([^\/]+)$/i', $tag, $matches )) {
-          $acls[] = $matches[2].'/'.$matches[3];
-        }
-      }
+      $acls = $this->item->getVar( 'acl_content' );
       $lib = $this->item->getLibrary();
-      $descr = $lib->getDescription();
-//      var_dump( $descr );
-//      exit;
-      if( preg_match_all( '/acl_content:([^\/]+\/[^\/<>]+)/i', $descr, $matches )) {
-        foreach( $matches[1] as $acl ) {
-          $acls[] = $acl;
-        }
-      }
-      if( count( $acls ) == 0 ) $acls[] = 'global/guest';
+      $acls = array_merge( $acls, $lib->getVar( 'acl_content' ));
+      if( count( $acls ) == 0 ) $acls[] = 'location/fhnw';
 
 		  return $acls;
     }
 
     public function getPreviewACL() {
       if( $this->item == null ) throw new \Exception( "no entity loaded" );
-      $acls = array();
-      foreach( $this->item->getTags() as $tag ) {
-        if( preg_match( '/^(acl_preview):([^\/]+)\/([^\/]+)$/i', $tag, $matches )) {
-          $acls[] = $matches[2].'/'.$matches[3];
-        }
-      }
+      $acls = $this->item->getVar( 'acl_preview' );
       $lib = $this->item->getLibrary();
-      if( preg_match_all( '/acl_preview:([^\/]+\/[^\/<>]+)/i', $lib->getDescription(), $matches )) {
-        foreach( $matches[1] as $acl ) {
-          $acls[] = $acl;
-        }
-      }
+      $acls = array_merge( $acls, $lib->getVar( 'acl_preview' ));
       if( count( $acls ) == 0 ) $acls[] = 'global/guest';
 
 		  return $acls;
@@ -353,12 +325,9 @@ class zoteroEntity extends SOLRSource {
 	}
 
 	public function getCatalogs() {
-    $cats = array( $this->getSource());
-    foreach( $this->item->getTags() as $tag ) {
-      if( preg_match( '/^(catalog):(.*)$/i', $tag, $matches )) {
-        $cats[] = $matches[2];
-      }
-    }
+    $cats = $this->item->getLibrary()->getVar( 'catalog' );
+    $cats = array_merge( $cats, $this->item->getVar( 'catalog' ));
+    $cats[] = $this->getSource();
     $cats[] = $this->item->getLibraryName();
     return $cats;
   }

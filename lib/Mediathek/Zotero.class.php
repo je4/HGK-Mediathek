@@ -310,7 +310,7 @@ class Zotero {
   public function loadLibrary($groupid) {
     $sql = "SELECT data FROM zotero.groups WHERE id={$groupid}";
     $json = gzdecode($this->db->GetOne( $sql ));
-    $data = json_decode( $json );
+    $data = json_decode( $json, true );
     return new Library( $data );
   }
 
@@ -339,6 +339,8 @@ class Zotero {
 
   public function loadChildren( $groupid, $itemkey=null ) {
     $collections = $this->loadCollections($groupid);
+    $library = $this->loadLibrary( $groupid );
+
 //    $group = $this->loadGroup($groupid);
 
     $sql = "SELECT data, trash FROM zotero.items WHERE libraryid={$groupid} AND parentKey".($itemkey ? '='.$this->db->qstr( $itemkey ) : ' IS NULL');
@@ -358,7 +360,7 @@ class Zotero {
         }
       }
       $data['data']['pages'] = $pages;
-//      $data['group'] = $group->getData();
+      $data['group'] = $library->getData();
 
       $item = new Item( $data, $trash );
       if( $item->numChildren()) {

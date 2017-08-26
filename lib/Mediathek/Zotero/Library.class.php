@@ -25,6 +25,7 @@
 namespace Mediathek\Zotero;
 
 class Library {
+  var $vars = null;
 
   function __construct( $data ) {
     $this->data = $data;
@@ -32,6 +33,21 @@ class Library {
 
   function __toString() {
     return '#'.$this->getId().' '.$this->getName();
+  }
+
+  public function getVar( $key ) {
+    if( $this->vars == null ) {
+      $this->vars = array();
+      $descr = $this->getDescription();
+      if( preg_match_all('/([a-z0-9_.]+):([a-z0-9_\/\-+.: ]+)/i', $descr, $matches, PREG_SET_ORDER )) {
+        foreach( $matches as $match ) {
+          if( !array_key_exists( $match[1], $this->vars )) $this->vars[$match[1]] = array();
+          $this->vars[$match[1]][] = $match[2];
+        }
+      }
+    }
+//    if( $key == 'title' ) var_dump( $this->vars );
+    return array_key_exists( $key, $this->vars ) ? $this->vars[$key] : array();
   }
 
   public function getData() {

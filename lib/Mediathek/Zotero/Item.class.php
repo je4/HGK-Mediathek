@@ -29,6 +29,7 @@ class Item {
   var $children = array();
   var $collections = array();
   var $library = null;
+  var $vars = null;
 
   function __construct( $data, $trash = false ) {
     $this->data = $data;
@@ -61,6 +62,19 @@ class Item {
     return $str;
   }
 
+  public function getVar( $key ) {
+    if( $this->vars == null ) {
+      $this->vars = array();
+      foreach( $this->getTags() as $tag ) {
+        if( preg_match( '/([a-z0-9_.]+):([a-z0-9_\/\-+.: ]+)/i', $tag, $match )) {
+          if( !array_key_exists( $match[1], $this->vars )) $this->vars[$match[1]] = array();
+          $this->vars[$match[1]][] = $match[2];
+        }
+      }
+    }
+    return array_key_exists( $key, $this->vars ) ? $this->vars[$key] : array();
+  }
+
   public function isTrashed() {
     return $this->trash;
   }
@@ -82,10 +96,14 @@ class Item {
   }
 
   public function getLibraryId() {
+    if( $this->library )
+      return $this->library->getId();
     return $this->data['library']['id'];
   }
 
   public function getLibraryName() {
+    if( $this->library )
+      return $this->library->getName();
     return $this->data['library']['name'];
   }
 

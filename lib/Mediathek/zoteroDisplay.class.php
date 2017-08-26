@@ -72,8 +72,14 @@ class zoteroDisplay extends DisplayEntity {
 	$html = '';
 
 			ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
+			$title = null;
+			$lib = $this->item->getLibrary();
+			$v = array();
+			if( $lib ) $v = $lib->getVar( 'title' );
+			if( count( $v) > 0 ) $title = $v[0];
+			if( $title == null ) $title = $this->item->getLibraryName();
 ?>
-				<h2 class="small-heading"><?php echo $this->item->getLibraryName(); ?></h2>
+				<h2 class="small-heading"><?php echo htmlspecialchars($title); ?></h2>
 
 				<div class="container-fluid" style="margin-top: 0px; padding: 0px 20px 20px 20px;">
 <?php
@@ -109,6 +115,7 @@ class zoteroDisplay extends DisplayEntity {
 			<h5><span style="font-weight: normal; font-size: 1.1rem;"><?php
       $first = true;
         foreach( $authors as $author ) {
+					// no castMember...
 					if( $this->item->getType() == 'videoRecording' && $author->getType() == 'castMember' ) continue;
           if( !$first ) echo "; ";
 					?>
@@ -145,6 +152,7 @@ class zoteroDisplay extends DisplayEntity {
 			if( $this->item->getType() == 'videoRecording') {
 				$cs = array();
 				foreach( $this->item->getCreators() as $c ) {
+					// only castMember
 					if( $c->getType() == 'castMember' ) {
 ?>
 						Dokumentation: <a href="javascript:doSearchFull('author:&quot;<?php echo htmlspecialchars( $c ); ?>&quot;', '', [], {'catalog':[<?php echo $this->getCatalogList(); ?>]}, 0, <?php echo $pagesize; ?> );">
@@ -217,6 +225,13 @@ class zoteroDisplay extends DisplayEntity {
 <?php
 					}
 				}
+				if( preg_match( '/application\/pdf/', $att->getContentType())) {
+?>
+					<div id="pdf_<?php echo $att->getLibraryId(); ?>_<?php echo $att->getKey(); ?>">
+					</div>
+					<div style="text-align: center;"><a href="zotero_data.php?id=zotero-<?php echo $att->getLibraryId(); ?>.<?php echo $this->item->getKey(); ?>&key=<?php echo $att->getKey(); ?>" >Download PDF</a></div>
+<?php
+				}
 			 ?>
 			<!--
 			<pre>
@@ -226,31 +241,7 @@ class zoteroDisplay extends DisplayEntity {
 		</div>
 	<?php }
 
-	if( $show ) foreach( $pdfs as $pdf ) {
 ?>
-	<div style="">
-		<span style="; font-weight: bold;">Preview</span><br />
-	<div class="facet" style="padding-bottom: 5px;">
-		<div class="marker" style=""></div>
-		<div id="pdf_<?php echo $pdf->getLibraryId(); ?>_<?php echo $pdf->getKey(); ?>">
-		</div>
-		<div style="text-align: center;"><a href="zotero_data.php?id=zotero-<?php echo $pdf->getLibraryId(); ?>.<?php echo $this->item->getKey(); ?>&key=<?php echo $pdf->getKey(); ?>" >Download PDF</a></div>
-	</div>
-</div>
-
-<?php } elseif( count( $pdfs ) > 0 ) { ?>
-	<div style="">
-		<span style="; font-weight: bold;">Keine Berechtigung</span><br />
-	<div class="facet" style="padding-bottom: 5px;">
-		<div class="marker" style=""></div>
-		Um die Inhalte zu sehen, müssen Sie Mitglied einer der folgenden Gruppen sein:<br />
-		<ul>
-<?php foreach( $this->doc->acl_content as $grp ) echo "<li>{$grp}</li>\n"; ?>
-		</ul>
-		<?php if( !$session->isLoggedIn() ) echo "<b>Hinweis: Sie sind nicht angemeldet.</b>\n"; ?>
-	</div>
-</div>
-<?php } ?>
     <?php if( strlen( $this->item->getAbstract())) { ?>
 		<div style="">
 			<span style="; font-weight: bold;">Abstract</span><br />
@@ -294,7 +285,6 @@ class zoteroDisplay extends DisplayEntity {
 <div class="row">
 	<div class="col-md-12">
 		<p />
-		<div style="">
 <?php
 			$categories = array();
 			$collections = array();
@@ -306,29 +296,30 @@ class zoteroDisplay extends DisplayEntity {
 				$categories[] = ($parts+3).'!!fhnw!!hgk!!pub!!'.$libname.'!!'.str_replace( ':', '!!', $fname );
 				$collections[] = $fname;
 			}
+			$squery->setRows( 500 );
+			$squery->setStart( 0 );
+			$qstr = '';
+			foreach( $categories as $key=>$cat ) {
+				$qstr .= ($key == 0 ? '' : ' OR ').'category: '.$helper->escapePhrase($cat);
+			}
+			if( strlen( $qstr )) $qstr = "({$qstr})";
+		//	$qstr = "({$qstr}) AND -id:".$helper->escapeTerm( $this->doc->id );
+			//echo "\n<!-- {$qstr} -->\n";
+			$squery->setQuery( $qstr );
+	//		$squery->createFilterQuery('source')->setQuery('source: zotero');
+			$rs = $solrclient->select( $squery );
+			$numResults = $rs->getNumFound();
+			$numPages = floor( $numResults / 500 );
+			if( $numResults % 500 > 0 ) $numPages++;
+
+			echo "<!-- ".$qstr." (Documents: {$numResults} // Page ".(1)." of {$numPages}) -->\n";
+			if( $numResults ) {
 ?>
+		<div style="">
 		<span style="; font-weight: bold;">Weitere Inhalte aus "<?php echo $libname.' - '.implode( '; ', $collections ); ?>"</span><br />
 			<div class="facet" style="">
 				<div class="marker" style=""></div>
 		<?php
-		$squery->setRows( 500 );
-		$squery->setStart( 0 );
-		$qstr = '';
-		foreach( $categories as $key=>$cat ) {
-			$qstr .= ($key == 0 ? '' : ' OR ').'category: '.$helper->escapePhrase($cat);
-		}
-		if( strlen( $qstr )) $qstr = "({$qstr})";
-	//	$qstr = "({$qstr}) AND -id:".$helper->escapeTerm( $this->doc->id );
-		//echo "\n<!-- {$qstr} -->\n";
-		$squery->setQuery( $qstr );
-//		$squery->createFilterQuery('source')->setQuery('source: zotero');
-		$rs = $solrclient->select( $squery );
-		$numResults = $rs->getNumFound();
-		$numPages = floor( $numResults / 500 );
-		if( $numResults % 500 > 0 ) $numPages++;
-
-		echo "<!-- ".$qstr." (Documents: {$numResults} // Page ".(1)." of {$numPages}) -->\n";
-
 		$res = new DesktopResult( $rs, 0, 500, $this->db, $urlparams );
 		echo $res->getResult();
 
@@ -337,7 +328,7 @@ class zoteroDisplay extends DisplayEntity {
 		</div>
 
 	<?php
-
+	}
 	if( DEBUG && $loggedin ) {
 		?>
 		<div style="">
