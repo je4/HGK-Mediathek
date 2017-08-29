@@ -28,6 +28,7 @@
  *    but is now required in all cases if you are making use of this PHP example.
  */
 
+setlocale(LC_CTYPE, "en_US.UTF-8");
 
 // Include the upload handler class
 require_once "handler.php";
@@ -98,12 +99,14 @@ if ($method == "POST") {
       $id = @intval($_GET['id']);
 
       $uuid = $_REQUEST['qquuid'];
-      $name = $uploader->getName();
+      $name = $uploader->getUploadName();
       $tech = null;
       $mime = mime_content_type( "files/{$uuid}/{$name}" );
       if( preg_match( '/^audio\//', $mime )
         || preg_match( '/^video\//', $mime )) {
-        $tech = shell_exec( 'ffprobe -loglevel quiet -show_format -show_streams -print_format json '.escapeshellarg( "files/{$uuid}/{$name}" )." 2>&1");
+        $cmd = 'ffprobe -loglevel quiet -show_format -show_streams -print_format json '.escapeshellarg( "files/{$uuid}/{$name}" )." 2>&1";
+        $tech = shell_exec( $cmd );
+        $tech = $cmd."\n".$tech;
         $tdata = json_decode( $tech, true );
         $isVideo = false;
         foreach( $tdata['streams'] as $stream ) {
@@ -111,7 +114,9 @@ if ($method == "POST") {
         }
         if( $isVideo ) {
           @mkdir( "thumbs/{$uuid}" );
-          shell_exec( 'ffmpeg -i '.escapeshellarg( "files/{$uuid}/{$name}" ).' -ss 00:00:08 -vframes 1 '.escapeshellarg( "thumbs/{$uuid}/{$name}.png" )." 2>&1");
+          $cmd = 'ffmpeg -i '.escapeshellarg( "files/{$uuid}/{$name}" ).' -ss 00:00:08 -vframes 1 '.escapeshellarg( "thumbs/{$uuid}/{$name}.png" )." 2>&1";
+          shell_exec( $cmd );
+          $tech = $cmd."\n".$tech;
           if( file_exists("thumbs/{$uuid}/{$name}.png")) {
             $result['thumbnailUrl'] = "thumbs/{$uuid}/{$name}.png";
           }
@@ -119,7 +124,9 @@ if ($method == "POST") {
         // ffmpeg -i input.flv -ss 00:00:14.435 -vframes 1 out.png
       }
       elseif( preg_match( '/^image\//', $mime ) ) {
-        $tech = shell_exec( 'identify '.escapeshellarg( "files/{$uuid}/{$name}" )." 2>&1");
+        $cmd = 'identify '.escapeshellarg( "files/{$uuid}/{$name}" )." 2>&1";
+        $tech = shell_exec( $cmd );
+        $tech = $cmd."\n".$tech;
         @mkdir( "thumbs/{$uuid}" );
         @mkdir( "web/{$uuid}" );
         shell_exec( 'convert '.escapeshellarg( "files/{$uuid}/{$name}" ).' -resize '.escapeshellarg('640x480>').' '.escapeshellarg( "thumbs/{$uuid}/{$name}.png" ));
@@ -133,7 +140,9 @@ if ($method == "POST") {
 
       }
       elseif( preg_match( '/^application\/pdf/', $mime ) ) {
-        $tech = shell_exec( 'pdfinfo '.escapeshellarg( "files/{$uuid}/{$name}" )." 2>&1");
+        $cmd = 'pdfinfo '.escapeshellarg( "files/{$uuid}/{$name}" )." 2>&1";
+        $tech = shell_exec( $cmd );
+        $tech = $cmd."\n".$tech;
         @mkdir( "thumbs/{$uuid}" );
         @mkdir( "web/{$uuid}" );
         shell_exec( 'convert '.escapeshellarg( "files/{$uuid}/{$name}" ).'[0] -resize '.escapeshellarg('640x480>').' '.escapeshellarg( "thumbs/{$uuid}/{$name}.png" )." 2>&1");
