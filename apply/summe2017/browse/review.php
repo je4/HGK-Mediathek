@@ -39,7 +39,7 @@ include( '../init.inc.php' );
      </div>
      <p />
      <div class="container-fluid">
-       <table class="table table-striped">
+       <table style="width: auto !important;" class="table table-striped">
 <thead>
 <tr>
 <th>ID</th>
