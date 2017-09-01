@@ -26,7 +26,7 @@ foreach( $rs as $row ) {
     <?php } ?>
     </td>
     <td>
-      <h4><?php echo $row['name']; ?></h4>
+      <h4><a href="<?php echo $row['filename']; ?>" target="_blank"><?php echo $row['name']; ?></a></h4>
       <p><?php echo $row['mimetype']; ?></p>
       <p>
         <tt>
