@@ -269,7 +269,7 @@ else {
 echo "<p />";
 formString( 'email', 'Email Adresse', 'Emailadresse für die DiplomHGK Seite', false, valof( $vals, 'email' ) );
 formString( 'web1', 'Webseite #1', 'Kontakt Webseite (persönliche Website)', false, valof( $vals, 'web1' ) );
-formString( 'web1', 'Webseite #2', 'Zusätzliche Webseite (Projektseite etc...)', false, valof( $vals, 'web1' ) );
+formString( 'web2', 'Webseite #2', 'Zusätzliche Webseite (Projektseite etc...)', false, valof( $vals, 'web2' ) );
 formString( 'titel', 'Titel (Diplomarbeit)', 'Bsp: Complexity', true, valof( $vals, 'titel' ) );
 formString( 'untertitel', 'Untertitel (Diplomarbeit)', 'Bsp: Der Reichtum der Unterschiede', true, valof( $vals, 'untertitel' ) );
 formString( 'betreuer1', 'Betreuer/in #1', 'Prüfer/in, Betreuer/in', false, valof( $vals, 'betreuer1' ) );
