@@ -5,11 +5,11 @@ foreach( $param as $p ) $where .= " OR `dn` LIKE ".$db->qstr('%'.str_replace( ',
 
  ?>
 <h2><?php echo htmlspecialchars( implode( '; ', $param )); ?></h2>
-<table>
+<table> 
 <?php
 
   $sql = "SELECT * FROM active_directory.distribution WHERE ".$where." ORDER BY dn";
-  //echo $sql."<br />";
+  echo $sql."<br />";
   $rs2 = $db->Execute( $sql );
   foreach( $rs2 as $row2 ) {
     $dn = $row2['dn'];
