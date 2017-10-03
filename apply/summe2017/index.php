@@ -85,7 +85,8 @@ function formSelect( $id, $label, $descr, $required, $sel ) {
       <section class="jumbotron text-center">
         <div class="container">
           <h1 class="jumbotron-heading">Ausschreibung für Video-Beiträge zur &Sigma; Summe &ndash; VIDEO<br />
-            4. – 19. November 2017</h1>
+            4. – 19. November 2017<br />
+            &ndash; Geschlossen &ndash;</h1>
           <p class="lead text-muted">
               Unter dem Zeichen &Sigma; &ndash; für Summe &ndash; versammeln sich unabhängige Projekträume
               aus dem Raum Basel: Wir laden diesesmal zur Videowerkschau ein! Die verschiedenen Räume kuratieren
