@@ -1,7 +1,7 @@
 <?php
 
 $where = "FALSE";
-foreach( $param as $p ) $where .= " OR `content` LIKE ".$db->qstr($p)." OR `group` LIKE ".$db->qstr($p)." OR `dn` LIKE ".$db->qstr('%'.str_replace( ',', '%', $p).'%');
+foreach( $param as $p ) $where .= " OR `content` LIKE ".$db->qstr('%'.$p.'%')." OR `group` LIKE ".$db->qstr('%'.$p.'%')." OR `dn` LIKE ".$db->qstr('%'.str_replace( ',', '%', $p).'%');
 
 $sql = "SELECT DISTINCT content, `group` FROM active_directory.ad_all WHERE ".$where." ORDER BY content ASC";
 echo $sql."<br />";

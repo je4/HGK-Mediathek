@@ -2,13 +2,16 @@
 
 include( '../init.inc.php' );
 
-$exportdir = '/data2/apply/summe2017/export/';
+$exportdir = '/data2/apply/summe2017/export.new/';
 $basedir = '/data2/apply/summe2017/';
+
+$new = json_decode( file_get_contents( 'new.json'));
 
 $sql = "SELECT * FROM einreichungen WHERE status='upload' ORDER BY nachname, vorname, titel";
 $rs = $db->Execute( $sql );
 foreach( $rs as $row ) {
   $formid = $row['formid'];
+  if( array_search( $formid, $new ) === false ) continue;
   $folder = "{$formid} - {$row['vorname']} {$row['nachname']}";
   $folder = preg_replace(
     array('/[^a-zA-Z0-9 ._-]/'),

@@ -154,6 +154,16 @@ function thesis2zotero(){
             $currNote->parentItem = $keyThesis;
             if(!postNote($currNote)) continue;
         }
+        for ($i = 1; $i < 10; $i++) {
+            if(array_key_exists("Note$i",$rowThesis)){
+                if(!empty($rowThesis->{'Note'.$i}) ){
+                    $currNote = clone $tmplNote;
+                    $currNote->note = "<p>0$i: {$rowThesis->{'Note'.$i}}</p>";
+                    $currNote->parentItem = $keyThesis;
+                    if(!postNote($currNote)) continue;
+                }
+            }
+        }
 
         $stmtSetInserted->execute(array($rowThesis->id));
 
