@@ -21,7 +21,10 @@ foreach( $rs as $row ) {
   }
   $rs2->Close();
   $d[] = array_key_exists( $formid, $d2 );
-  $d[] = $h['nachname'].', '.$h['vorname'];
+  $name = trim( $h['nachname'].', '.$h['vorname'], ' ,');
+  if( array_key_exists( 'nachname2', $h )) $name .= ' / '.$h['nachname2'].', '.$h['vorname2'];
+  if( array_key_exists( 'nachname3', $h )) $name .= ' / '.$h['nachname3'].', '.$h['vorname3'];
+  $d[] = $name;
   $d[] = array_key_exists( 'werkjahr', $h) ? $h['werkjahr'] : null;
   $d[] = array_key_exists( 'titel', $h) ? $h['titel'] : null;
   $d[] = array_key_exists( 'art', $h) ? $h['art'] : null;
