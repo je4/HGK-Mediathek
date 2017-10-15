@@ -219,23 +219,27 @@ function init() {
 	  var modal = $(this)
     modal.find('.modal-title').html(decodeURI(title));
     modal.find('.modal-subtitle').html(decodeURI(subtitle));
-	  body = modal.find('.modal-body');
-	  body.empty();
-    var str = '<center><video id="thevideo" width="640" controls autoplay src="'+videoBase+video[0]+'">'
-      +'</video></center><br /><ul id="playlist">';
+    $("#thevideo").attr({
+        "src": videoBase+video[0],
+        "autoplay": "autoplay"
+    });
+    var playlist = $("#playlist");
+    playlist.empty();
+    var str = '';
     for( i = 0; i < video.length; i++ ) {
       str += '<li movieurl="'+videoBase+video[i]+'">'+decodeURI(video[i])+'</li>';
     }
-    str += '</ul>';
-	  body.append( str );
+	  playlist.append( str );
     initPlaylist();
 		});
 
 	$('#MTModal').on('hidden.bs.modal', function (event) {
 	  var modal = $(this)
 	  var button = $(event.relatedTarget) // Button that triggered the modal
-    body = modal.find('.modal-body');
-    body.empty();
+    $("#thevideo").attr({
+        "src": '',
+        "autoplay": "autoplay"
+    });
 	})
 
 function buildVideoLinks( full ) {
