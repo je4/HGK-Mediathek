@@ -12,7 +12,7 @@ foreach( $done['data'] as $d ) {
   if( !array_key_exists( 'info', $d )) $new[] = $d['formid'];
 }
 
-$sql = "SELECT * FROM form WHERE status='upload' and formid=219 ORDER BY formid ASC";
+$sql = "SELECT * FROM form WHERE status='upload' and formid=6 ORDER BY formid ASC";
 $rs = $db->Execute( $sql );
 foreach( $rs as $row ) {
   $formid = $row['formid'];
