@@ -37,7 +37,7 @@ if( $argc == 1  ) {
   	if( $record->isDeleted() ) {
   		echo "   deleting...\n";
   		$solr->delete( 'doajarticle-'.$record->getIdentifier());
-  		$sql = "DELETE FROM oai_pmg WHERE identifier=".$pg->qstr( $record->getIdentifier() );
+  		$sql = "DELETE FROM oai_pmh WHERE identifier=".$pg->qstr( $record->getIdentifier() );
   		$pg->Execute();
   		continue;
   	}
