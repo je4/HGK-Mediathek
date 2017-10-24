@@ -7,7 +7,7 @@ include '../init.pg.php';
 
 $sourceid=4;
 
-$doabClient = new \Phpoaipmh\Client('http://oai.swissbib.ch:20103/oai/DB=2.1/');
+$doabClient = new \Phpoaipmh\Client('http://oai.swissbib.ch/oai/DB=2.1/');
 $doabEndpoint = new \Phpoaipmh\Endpoint($doabClient, \Phpoaipmh\Granularity::DATE_AND_TIME);
 
 $entity = new swissbibEntity( $db );
@@ -32,31 +32,31 @@ try {
 		$counter++;
 		$interval++;
 		$interval2++;
-		
+
 		try {
-		
+
 		    $xml = str_replace( '<record', '<record xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"', $xmlrec );
-		
+
 			$record = new OAIPMHRecord( $xml );
-			
+
 			$id = $record->getIdentifier();
 			$datestamp = $record->getDatestamp();
 			echo "> {$id} {$datestamp}({$counter})\n";
-		  
+
 			if( $record->isDeleted() ) {
 				echo "   deleting swissbib-{$id}...\n";
 				$solr->delete( 'swissbib-'.$id);
 				//$pg->Execute($sql);
 				//continue;
-			} 
+			}
 			else {
-		
+
 				$metadata = $record->getMetadata();
-				
+
 				$data = array();
 				$data['IDENTIFIER'] = array( $id );
 				$data['DATESTAMP'] = array( $record->getDatestamp() );
-				
+
 				//echo $metadata->ownerDocument->saveXML($metadata)."\n";
 				$marc = null;
 				foreach( $metadata->childNodes as $child ) {
@@ -64,13 +64,13 @@ try {
 						$marc  = $child;
 					}
 				}
-				
+
 				if( $marc == null ) continue;
-				
+
 				//doConnectMySQL();
 				$entity->loadNode( $id, $record, 'swissbib' );
 				echo $entity->getTitle()."\n";
-	
+
 				do {
 					try {
 						$done = true;
@@ -90,16 +90,16 @@ try {
 			}
 			if( $interval2 >= 5000 ) {
 				$interval2 = 0;
-				
+
 				echo "> commit...\n";
 				$update = $solrclient->createUpdate();
-				
+
 				// add commit command to the update query
 				$update->addCommit();
-				
+
 				// this executes the query and returns the result
 				$result = $solrclient->update($update);
-				
+
 				$sql = "SELECT 1 as val";
 				do {
 					try {
@@ -117,7 +117,7 @@ try {
 						}
 					}
 				} while( !$done);
-				
+
 				$sql = "UPDATE oai_pmh_source SET datestamp=".$pg->qstr( $record->getDatestamp() )." WHERE oai_pmh_source_id={$sourceid}";
 				echo "\n------\n{$sql}\n--------\n";
 				do {
@@ -139,15 +139,15 @@ try {
 			}
 			if( $interval > 500000 ) {
 				$interval = 0;
-				
+
 				$update = $solrclient->createUpdate();
-				
+
 				// add commit command to the update query
 				$update->addCommit();
-				
+
 				// this executes the query and returns the result
 				$result = $solrclient->update($update);
-				
+
 				$sql = "UPDATE oai_pmh_source SET datestamp=".$pg->qstr( $record->getDatestamp() )." WHERE oai_pmh_source_id={$sourceid}";
 				echo "\n------\n{$sql}\n--------\n";
 				do {
@@ -166,29 +166,29 @@ try {
 						}
 					}
 				} while( !$done);
-				
+
 				echo "sleeping 5min\n";
-				sleep( 5*60 );				
-				
+				sleep( 5*60 );
+
 			}
-			
+
 		//	if( $counter < 50010 ) continue;
 		//	else exit;
-			
+
 		//	$entity->loadFromArray( $record->getIdentifier(), $data, 'doab' );
 		}
-		
+
 		catch( \Exception $e ) {
 			var_dump($e->getMessage());
 			file_put_contents( "error.dat", print_r( $e->getMessage(), true )."\n".$e->getTraceAsString(), FILE_APPEND );
 			die();
 		}
-	} 
+	}
 }
 catch( \Phpoaipmh\Exception\MalformedResponseException $e) {
 	echo "Outer -------------------\n";
 	echo print_r( $e->getMessage(), true )."\n".$e->getTraceAsString();
-	
+
 }
 
 doConnectMySQL();
