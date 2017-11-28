@@ -1,0 +1,350 @@
+graph D {
+   subgraph AD_Administration {
+      label = "AD_Administration";
+     node [style=filled];
+     color=blue;
+      md5_e7e86586de03b13b9e1b5c1cae663610 [label="Mutieren Eintritt/Austritt Mitarbeitende"];
+      md5_5e537527ac03093cbcd23bb634b29e90 [label="Mutieren Eintritt/Austritt Studierende"];
+      md5_2d917f030012436b8c20aae413468e9b [label="Administration Shares"];
+      md5_9f878ea90da3fddfcbf559a86d83b559 [label="Verlängerung wichtiger Accounts"];
+      md5_97b05c0f2fae8cccbfa36311fbc034b5 [label="Beantragung Shares Institute"];
+      md5_febe1e8d9cc5018f35cfe3fb63d08669 [label="Beantragung Mailboxen Institute"];
+      md5_efa6896b20ee91a2f5115538f7dd7828 [label="AD Gastaccounts"];
+
+   }
+   subgraph Zentale_Dienste {
+      label = "Zentale_Dienste";
+     node [style=filled];
+     color=blue;
+      md5_0391552d17ccda0783c31ba8b57b8fcf [label="Business_Applications (Evento), 2nd Level"];
+      md5_70b2c41e672ead33be1ac37053df8cee [label="Collaboration Tools (iCal, Outlook etc.) -> CIT"];
+      md5_081844f05f525521a9f50a08182905f8 [label="Telefonie 2nd Level, Spezialkonfiguration"];
+
+   }
+   subgraph Administration {
+      label = "Administration";
+     node [style=filled];
+     color=blue;
+      md5_27298f50e18a499a767056ea9b47513a [label="Bestellwesen"];
+      md5_51ce6b2467427dd1f0731bde2eaab387 [label="Swisscom Fleetmanager"];
+      md5_8b2fc98bf6552110f6ca9386e5081979 [label="HW Inventarisieren & Namensvergabe"];
+
+   }
+   subgraph Serverdienste {
+      label = "Serverdienste";
+     node [style=filled];
+     color=blue;
+      md5_788b11716c38769eb489d966ecff0bb7 [label="Farmerswife"];
+      md5_788b11716c38769eb489d966ecff0bb7 [label="Farmerswife"];
+      md5_13dba24862cf9128167a59100e154c8d [label="Print"];
+      md5_a112bfee20b0d63490e93e7c687338df [label="Middleware"];
+      md5_48b3dbabe8d6cad82223b73e72ca5bbe [label="SOLR"];
+      md5_62a004b95946bb97541afa471dcca73a [label="MySQL"];
+      md5_399bd1ee587245ecac6f39beaa99886f [label="PostgreSQL"];
+
+   }
+   subgraph Special {
+      label = "Special";
+     node [style=filled];
+     color=blue;
+      md5_cc98003d04d791fe3cd95214aaef7983 [label="Spezialanfragen"];
+      md5_c77e3bba2b3e98c29e76ada32553e486 [label="Projekte"];
+      md5_c77e3bba2b3e98c29e76ada32553e486 [label="Projekte"];
+      md5_c77e3bba2b3e98c29e76ada32553e486 [label="Projekte"];
+
+   }
+   subgraph Communication {
+      label = "Communication";
+     node [style=filled];
+     color=blue;
+      md5_a5e5efecc9bb8b0fc1cfd716380e3b85 [label="ICT Support Mailbox"];
+      md5_d0bfde40dae35d25772b0a83e2a53406 [label="Postfach IT"];
+
+   }
+   subgraph Mediathek {
+      label = "Mediathek";
+     node [style=filled];
+     color=blue;
+      md5_b7eac63011e041e52a7f94015e293c28 [label="Aleph"];
+      md5_446a6ffccab1019a825c2b0fbb925452 [label="Gates"];
+      md5_61f1cfbaffdcb85867c886469170a10c [label="Buchungsstationen"];
+
+   }
+   subgraph Windows10 {
+      label = "Windows10";
+     node [style=filled];
+     color=blue;
+      md5_33aaf4bf619dc49b9cb6fd87f96c63e4 [label="Feature Upgrades"];
+
+   }
+   subgraph Semesterstart {
+      label = "Semesterstart";
+     node [style=filled];
+     color=blue;
+      md5_4489751a2c33e511746bff1100d5f87a [label="IT Einführung Allgemein"];
+      md5_fbca6019a8f51f6053827ec967c57d61 [label="Installationstag"];
+      md5_6ff5293f37c449aa24c7783256e0b4b2 [label="VMWare (VMAP)"];
+
+   }
+   subgraph Software {
+      label = "Software";
+     node [style=filled];
+     color=blue;
+      md5_c8bae548302eaacf98f91bbe19a4dce3 [label="Adobe CC Apps"];
+      md5_5a9421b0172d3eb532fc484246a2a4f1 [label="Staging macOS Erweitert"];
+      md5_aea23489ce3aa9b6406ebb28e0cda430 [label="Windows"];
+      md5_524e73b277475b4f20e15cb9a487ed7d [label="SCCM"];
+      md5_cc98003d04d791fe3cd95214aaef7983 [label="Spezialanfragen"];
+      md5_f94a46ffda508c6da83a5a55a4700d4f [label="Staging macOS Basis"];
+      md5_2b359501fcd95dbf2089dccc3fc37623 [label="Lizenzen festlegen"];
+      md5_61f726d950afbda21b778a7ec9440ff2 [label="Bedarf abklären"];
+      md5_39f25061d4d1c427851ad9369d83edd4 [label="Paketierungsauftrag"];
+
+   }
+   subgraph Vor_Ort {
+      label = "Vor_Ort";
+     node [style=filled];
+     color=blue;
+      md5_e273d73e39fad3ca69ab01e84c46ce24 [label="Arbeitsplätze"];
+      md5_5deff24e75f426634ab115806f7df186 [label="Fotostudio IID"];
+      md5_84bdae491d8bbecd6297727c2710b8c7 [label="Werkstattgruppe"];
+      md5_0f97b960426bbbc9ac5f7d39e4930e87 [label="Mediathek"];
+
+   }
+   subgraph Dokumentation {
+      label = "Dokumentation";
+     node [style=filled];
+     color=blue;
+      md5_e76bbbbddc2a773cd3ec4b0e0e121b86 [label="Helpdesk User"];
+      md5_ec6242fb25a43eac623e3b59f88368f6 [label="Helpdesk Intern"];
+      md5_289cc260422eb55d5683e24ef73d581d [label="Server Folder"];
+      md5_b9736d49a281e0eb8cf46bdd9fa4ee4c [label="2nd Level Intern"];
+      md5_b06aa260e841c9d55066eaa01050edfb [label="Lab"];
+
+   }
+   subgraph Werkstatt {
+      label = "Werkstatt";
+     node [style=filled];
+     color=blue;
+      md5_743241977f31ab2aaed0d84544ff6c77 [label="Altgeräte (Win7)"];
+      md5_3ec9b8c1d4f2b6c4ce5da1b66a544c9a [label="Rahmenbedingungen Definieren"];
+
+   }
+   subgraph Helpdesk {
+      label = "Helpdesk";
+     node [style=filled];
+     color=blue;
+      md5_4562a637bf3097868991a19ece35890e [label="Koordination installation/Umzüge"];
+      md5_009035cf321149a356a856a44851499f [label="Ausleihe"];
+      md5_52fb333ad385fe2534a048107ac8d94d [label="Troubleshootinng ADM/EDU"];
+      md5_a53956bc86dafc8d9a881c9114c8336d [label="FHCard"];
+      md5_c246552ee9874d461a4b256d59254c57 [label="Mitarbeitendenschulung"];
+      md5_c673ee54c8de97081a682028e0b37fa6 [label="iOS/Android Basissupport"];
+      md5_b41ebeb03226e02495c9e09cbe4018ed [label="AD PW Reset / Prüfung"];
+
+   }
+   subgraph Telefonie {
+      label = "Telefonie";
+     node [style=filled];
+     color=blue;
+      md5_24e15e82a87192213cf4dda2dfa53c2c [label="Telefon Basiskonfiguration"];
+      md5_d181a0d418987e3597c4b16ef12b7dd0 [label="TelefonRollout"];
+      md5_c669715694115676c0bc7837fc4b8641 [label="Telefon Erweiterte Konfiguration"];
+
+   }
+   subgraph Workplace {
+      label = "Workplace";
+     node [style=filled];
+     color=blue;
+      md5_fa3a0d9802a40817c4e7dca0f1259462 [label="Collaboration Tools Basiskonfiguration"];
+      md5_372b3106294901aaabd95f50b06c1d77 [label="Arbeitsplätze Bereitstellen (Installation / Übergabe)"];
+
+   }
+   subgraph Print {
+      label = "Print";
+     node [style=filled];
+     color=blue;
+      md5_a1d6b4fc39057f7442f18a5c165f4831 [label="Persönlice Drucker"];
+      md5_eb7207f417c0bbdff14af9eaa7fe7592 [label="Abeilungsdrucker"];
+      md5_80332d43b0a4a33292a0a4317354e03a [label="Plotter"];
+      md5_1bc76758cf27fd676ba3491295793f9e [label="Spezialgeräte (Zünd etc.)"];
+      md5_1ff25bf330ffe08ae6ca105b70f0a279 [label="ImagePress"];
+      md5_a5e4ac2abb6d1dbb1a5de61315b2d243 [label="ImageRunner"];
+
+   }
+   subgraph Scan {
+      label = "Scan";
+     node [style=filled];
+     color=blue;
+      md5_34f58e93a7756c6ef43ff5b73c736e80 [label="Selection/Bereitstellung"];
+      md5_231cf4c70d866b616c21baddaeed0696 [label="Troubleshooting"];
+
+   }
+   subgraph Web {
+      label = "Web";
+     node [style=filled];
+     color=blue;
+      md5_dcec9b13c1de515016a3bc0f92cfa345 [label="Wordpress"];
+      md5_e62c8679405dd586283328b6fa3ca7c5 [label="fhnw.ch"];
+      md5_fffcfb1a86670160fbc9ccf0a6206c80 [label="Buchung"];
+      md5_a377bf984e816b7da45903df0c39cfea [label="Verleih"];
+      md5_fec441c96bf5e663cc79d56b16437bfd [label="Campus der Künste Frontend"];
+      md5_a961db1bc627fbe292fd32268bb81160 [label="Katalog"];
+
+   }
+   md5_e7e86586de03b13b9e1b5c1cae663610 -- Sean;
+   md5_e7e86586de03b13b9e1b5c1cae663610 -- Juergen;
+   md5_5e537527ac03093cbcd23bb634b29e90 -- Sean;
+   md5_5e537527ac03093cbcd23bb634b29e90 -- Juergen;
+   md5_2d917f030012436b8c20aae413468e9b -- Sean;
+   md5_2d917f030012436b8c20aae413468e9b -- Juergen;
+   md5_9f878ea90da3fddfcbf559a86d83b559 -- Sean;
+   md5_9f878ea90da3fddfcbf559a86d83b559 -- Juergen;
+   md5_97b05c0f2fae8cccbfa36311fbc034b5 -- Sean;
+   md5_97b05c0f2fae8cccbfa36311fbc034b5 -- Juergen;
+   md5_febe1e8d9cc5018f35cfe3fb63d08669 -- Sean;
+   md5_febe1e8d9cc5018f35cfe3fb63d08669 -- Juergen;
+   md5_0391552d17ccda0783c31ba8b57b8fcf -- Sean;
+   md5_0391552d17ccda0783c31ba8b57b8fcf -- Ruedi;
+   md5_70b2c41e672ead33be1ac37053df8cee -- Sean;
+   md5_70b2c41e672ead33be1ac37053df8cee -- Ruedi;
+   md5_27298f50e18a499a767056ea9b47513a -- Sean;
+   md5_27298f50e18a499a767056ea9b47513a -- Jürgen;
+   md5_51ce6b2467427dd1f0731bde2eaab387 -- Sean;
+   md5_51ce6b2467427dd1f0731bde2eaab387 -- Jürgen;
+   md5_788b11716c38769eb489d966ecff0bb7 -- Thiagu;
+   md5_788b11716c38769eb489d966ecff0bb7 -- Graziano;
+   md5_081844f05f525521a9f50a08182905f8 -- Sean;
+   md5_cc98003d04d791fe3cd95214aaef7983 -- Sean;
+   md5_cc98003d04d791fe3cd95214aaef7983 -- Ruedi;
+   md5_a5e5efecc9bb8b0fc1cfd716380e3b85 -- Sean;
+   md5_a5e5efecc9bb8b0fc1cfd716380e3b85 -- Ruedi;
+   md5_d0bfde40dae35d25772b0a83e2a53406 -- Sean;
+   md5_d0bfde40dae35d25772b0a83e2a53406 -- Ruedi;
+   md5_8b2fc98bf6552110f6ca9386e5081979 -- Sean;
+   md5_8b2fc98bf6552110f6ca9386e5081979 -- Juergen;
+   md5_c77e3bba2b3e98c29e76ada32553e486 -- Daniel;
+   md5_c77e3bba2b3e98c29e76ada32553e486 -- Natalie;
+   md5_c77e3bba2b3e98c29e76ada32553e486 -- Ruedi;
+   md5_c77e3bba2b3e98c29e76ada32553e486 -- Sean;
+   md5_c77e3bba2b3e98c29e76ada32553e486 -- Graziano;
+   md5_c77e3bba2b3e98c29e76ada32553e486 -- Thiagu;
+   md5_c77e3bba2b3e98c29e76ada32553e486 -- Juergen;
+   md5_efa6896b20ee91a2f5115538f7dd7828 -- Sean;
+   md5_efa6896b20ee91a2f5115538f7dd7828 -- Juergen;
+   md5_b7eac63011e041e52a7f94015e293c28 -- Ruedi;
+   md5_446a6ffccab1019a825c2b0fbb925452 -- Juergen;
+   md5_446a6ffccab1019a825c2b0fbb925452 -- Graziano;
+   md5_33aaf4bf619dc49b9cb6fd87f96c63e4 -- Ruedi;
+   md5_33aaf4bf619dc49b9cb6fd87f96c63e4 -- Sean;
+   md5_4489751a2c33e511746bff1100d5f87a -- Jürgen;
+   md5_fbca6019a8f51f6053827ec967c57d61 -- Daniel;
+   md5_fbca6019a8f51f6053827ec967c57d61 -- Ruedi;
+   md5_fbca6019a8f51f6053827ec967c57d61 -- Natalie;
+   md5_6ff5293f37c449aa24c7783256e0b4b2 -- Ruedi;
+   md5_6ff5293f37c449aa24c7783256e0b4b2 -- Sean;
+   md5_c8bae548302eaacf98f91bbe19a4dce3 -- Ruedi;
+   md5_c8bae548302eaacf98f91bbe19a4dce3 -- Sean;
+   md5_5a9421b0172d3eb532fc484246a2a4f1 -- Ruedi;
+   md5_5a9421b0172d3eb532fc484246a2a4f1 -- Sean;
+   md5_aea23489ce3aa9b6406ebb28e0cda430 -- Ruedi;
+   md5_aea23489ce3aa9b6406ebb28e0cda430 -- Sean;
+   md5_524e73b277475b4f20e15cb9a487ed7d -- Ruedi;
+   md5_524e73b277475b4f20e15cb9a487ed7d -- Sean;
+   md5_cc98003d04d791fe3cd95214aaef7983 -- Daniel;
+   md5_cc98003d04d791fe3cd95214aaef7983 -- Natalie;
+   md5_e273d73e39fad3ca69ab01e84c46ce24 -- Daniel;
+   md5_e273d73e39fad3ca69ab01e84c46ce24 -- Natalie;
+   md5_5deff24e75f426634ab115806f7df186 -- Daniel;
+   md5_5deff24e75f426634ab115806f7df186 -- Natalie;
+   md5_84bdae491d8bbecd6297727c2710b8c7 -- Daniel;
+   md5_84bdae491d8bbecd6297727c2710b8c7 -- Natalie;
+   md5_0f97b960426bbbc9ac5f7d39e4930e87 -- Daniel;
+   md5_0f97b960426bbbc9ac5f7d39e4930e87 -- Natalie;
+   md5_e76bbbbddc2a773cd3ec4b0e0e121b86 -- Daniel;
+   md5_e76bbbbddc2a773cd3ec4b0e0e121b86 -- Natalie;
+   md5_ec6242fb25a43eac623e3b59f88368f6 -- Daniel;
+   md5_ec6242fb25a43eac623e3b59f88368f6 -- Natalie;
+   md5_289cc260422eb55d5683e24ef73d581d -- Graziano;
+   md5_b9736d49a281e0eb8cf46bdd9fa4ee4c -- Sean;
+   md5_b9736d49a281e0eb8cf46bdd9fa4ee4c -- Ruedi;
+   md5_b06aa260e841c9d55066eaa01050edfb -- Graziano;
+   md5_b06aa260e841c9d55066eaa01050edfb -- Thiagu;
+   md5_b06aa260e841c9d55066eaa01050edfb -- Jürgen;
+   md5_743241977f31ab2aaed0d84544ff6c77 -- Ruedi;
+   md5_3ec9b8c1d4f2b6c4ce5da1b66a544c9a -- Ruedi;
+   md5_4562a637bf3097868991a19ece35890e -- Daniel;
+   md5_4562a637bf3097868991a19ece35890e -- Natalie;
+   md5_009035cf321149a356a856a44851499f -- Daniel;
+   md5_009035cf321149a356a856a44851499f -- Natalie;
+   md5_52fb333ad385fe2534a048107ac8d94d -- Daniel;
+   md5_52fb333ad385fe2534a048107ac8d94d -- Natalie;
+   md5_a53956bc86dafc8d9a881c9114c8336d -- Daniel;
+   md5_a53956bc86dafc8d9a881c9114c8336d -- Natalie;
+   md5_c246552ee9874d461a4b256d59254c57 -- Daniel;
+   md5_c246552ee9874d461a4b256d59254c57 -- Natalie;
+   md5_c673ee54c8de97081a682028e0b37fa6 -- Daniel;
+   md5_c673ee54c8de97081a682028e0b37fa6 -- Natalie;
+   md5_b41ebeb03226e02495c9e09cbe4018ed -- Daniel;
+   md5_b41ebeb03226e02495c9e09cbe4018ed -- Natalie;
+   md5_24e15e82a87192213cf4dda2dfa53c2c -- Daniel;
+   md5_24e15e82a87192213cf4dda2dfa53c2c -- Natalie;
+   md5_d181a0d418987e3597c4b16ef12b7dd0 -- Daniel;
+   md5_d181a0d418987e3597c4b16ef12b7dd0 -- Natalie;
+   md5_c669715694115676c0bc7837fc4b8641 -- Sean;
+   md5_f94a46ffda508c6da83a5a55a4700d4f -- Daniel;
+   md5_f94a46ffda508c6da83a5a55a4700d4f -- Natalie;
+   md5_fa3a0d9802a40817c4e7dca0f1259462 -- Daniel;
+   md5_fa3a0d9802a40817c4e7dca0f1259462 -- Natalie;
+   md5_372b3106294901aaabd95f50b06c1d77 -- Daniel;
+   md5_372b3106294901aaabd95f50b06c1d77 -- Natalie;
+   md5_788b11716c38769eb489d966ecff0bb7 -- Thiagu;
+   md5_788b11716c38769eb489d966ecff0bb7 -- Graziano;
+   md5_13dba24862cf9128167a59100e154c8d -- Ruedi;
+   md5_13dba24862cf9128167a59100e154c8d -- Thiagu;
+   md5_a1d6b4fc39057f7442f18a5c165f4831 -- Daniel;
+   md5_a1d6b4fc39057f7442f18a5c165f4831 -- Natalie;
+   md5_eb7207f417c0bbdff14af9eaa7fe7592 -- Daniel;
+   md5_eb7207f417c0bbdff14af9eaa7fe7592 -- Natalie;
+   md5_80332d43b0a4a33292a0a4317354e03a -- Ruedi;
+   md5_1bc76758cf27fd676ba3491295793f9e -- Ruedi;
+   md5_1ff25bf330ffe08ae6ca105b70f0a279 -- Ruedi;
+   md5_a5e4ac2abb6d1dbb1a5de61315b2d243 -- Daniel;
+   md5_a5e4ac2abb6d1dbb1a5de61315b2d243 -- Natalie;
+   md5_34f58e93a7756c6ef43ff5b73c736e80 -- Ruedi;
+   md5_231cf4c70d866b616c21baddaeed0696 -- Daniel;
+   md5_231cf4c70d866b616c21baddaeed0696 -- Natalie;
+   md5_2b359501fcd95dbf2089dccc3fc37623 -- Ruedi;
+   md5_2b359501fcd95dbf2089dccc3fc37623 -- Sean;
+   md5_61f726d950afbda21b778a7ec9440ff2 -- Ruedi;
+   md5_61f726d950afbda21b778a7ec9440ff2 -- Sean;
+   md5_39f25061d4d1c427851ad9369d83edd4 -- Ruedi;
+   md5_39f25061d4d1c427851ad9369d83edd4 -- Sean;
+   md5_dcec9b13c1de515016a3bc0f92cfa345 -- Graziano;
+   md5_dcec9b13c1de515016a3bc0f92cfa345 -- Thiagu;
+   md5_e62c8679405dd586283328b6fa3ca7c5 -- Natalie;
+   md5_a112bfee20b0d63490e93e7c687338df -- Graziano;
+   md5_a112bfee20b0d63490e93e7c687338df -- Thiagu;
+   md5_a112bfee20b0d63490e93e7c687338df -- Jürgen;
+   md5_48b3dbabe8d6cad82223b73e72ca5bbe -- Graziano;
+   md5_48b3dbabe8d6cad82223b73e72ca5bbe -- Jürgen;
+   md5_48b3dbabe8d6cad82223b73e72ca5bbe -- Thiagu;
+   md5_62a004b95946bb97541afa471dcca73a -- Graziano;
+   md5_62a004b95946bb97541afa471dcca73a -- Jürgen;
+   md5_62a004b95946bb97541afa471dcca73a -- Thiagu;
+   md5_399bd1ee587245ecac6f39beaa99886f -- Graziano;
+   md5_399bd1ee587245ecac6f39beaa99886f -- Jürgen;
+   md5_399bd1ee587245ecac6f39beaa99886f -- Thiagu;
+   md5_fffcfb1a86670160fbc9ccf0a6206c80 -- Thiagu;
+   md5_fffcfb1a86670160fbc9ccf0a6206c80 -- Graziano;
+   md5_fffcfb1a86670160fbc9ccf0a6206c80 -- Jürgen;
+   md5_a377bf984e816b7da45903df0c39cfea -- Thiagu;
+   md5_a377bf984e816b7da45903df0c39cfea -- Graziano;
+   md5_a377bf984e816b7da45903df0c39cfea -- Jürgen;
+   md5_fec441c96bf5e663cc79d56b16437bfd -- Graziano;
+   md5_fec441c96bf5e663cc79d56b16437bfd -- Thiagu;
+   md5_fec441c96bf5e663cc79d56b16437bfd -- Jürgen;
+   md5_a961db1bc627fbe292fd32268bb81160 -- Jürgen;
+   md5_a961db1bc627fbe292fd32268bb81160 -- Graziano;
+   md5_a961db1bc627fbe292fd32268bb81160 -- Thiagu;
+}

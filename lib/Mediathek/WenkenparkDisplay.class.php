@@ -15,7 +15,7 @@
  * @copyright   (C) 2016 Academy of Art and Design FHNW
  * @license     http://www.gnu.org/licenses/gpl-3.0
  * @link        http://mediathek.fhnw.ch
- * 
+ *
  */
 
 /**
@@ -26,27 +26,31 @@ namespace Mediathek;
 
 class WenkenparkDisplay extends DisplayEntity {
 	private $metadata;
-	
+
+	var $entity;
+
     public function __construct( $doc, $urlparams, $db, $highlightedDoc ) {
         parent::__construct( $doc, $urlparams, $db, $highlightedDoc );
-		
-		$this->metadata = (array) json_decode( $this->data );
+
+		$this->entity = new WenkenparkEntity( $db );
+		$this->entity->loadFromDoc( $doc );
+		$this->metadata = $this->entity->getData();
     }
 
     public function getHeading() {
     	$html = '';
-    
+
     	ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
     	?>
     		                    <h2 class="small-heading">Videowochen im Wenkenpark</h2>
-    
+
     					<div class="container-fluid" style="margin-top: 0px; padding: 0px 20px 20px 20px;">
     <?php
             $html .= ob_get_contents();
             ob_end_clean();
     		return $html;
     	}
-    
+
      public function getSchema() {
 		$schema = array();
 		$schema['@context'] = 'http://schema.org';
@@ -59,29 +63,35 @@ class WenkenparkDisplay extends DisplayEntity {
 				$schema['author'][] = array( '@type' => 'Person', 'name' => $author );
 			}
 		}
-		
+
 		if( $this->doc->publisher && count( $this->doc->publisher ))
 			foreach( $this->doc->publisher as $publisher ) {
 				$schema['publisher'][] = array( '@type' => 'Organization', 'legalName' => $publisher );
 			}
-		$schema['url'] = array( 'https://mediathek.hgk.fhnw.ch/detail.php?id='.urlencode( $this->doc->id ));		
+		$schema['url'] = array( 'https://mediathek.hgk.fhnw.ch/detail.php?id='.urlencode( $this->doc->id ));
 		if( $this->doc->cluster_ss )
 			$schema['keywords'] = implode( '; ', $this->doc->cluster_ss );
-		
+
 		$schema['license'] = implode( '; ', $this->doc->license );
-		
+
 		return $schema;
 	}
-    
+
 	public function detailView() {
         global $config, $googleservice, $googleclient, $session, $page, $pagesize;
-		
+
 		$cert = $session->inGroup( 'certificate/mediathek');
 		$intern = $session->inGroup( 'location/fhnw');
 		$loggedin = $session->isLoggedIn();
-		
+
+		$entity = $this->entity;
+
+		$basepicurl = $config['media']['videohybrid'].'/vww/';
+		$basevideourl = $config['media']['videohybrid'].'/vww/';
+		if( $this->metadata['Rechte Internet'] == 'station' ) $basevideourl = $config['media']['videohybridcert'].'/vww/';
+
 		$html = '';
-		
+
         ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
 ?>
 <div class="row full-height">
@@ -89,7 +99,7 @@ class WenkenparkDisplay extends DisplayEntity {
 		<span style="; font-weight: bold;">Aktueller Film</span><br>
 		<div class="facet" style="">
 			<div class="marker" style=""></div>
-			<h5><?php 
+			<h5><?php
 			$authors = array();
             if( strlen(trim( $this->metadata['AutorinVN1'])))
                  $authors[] = trim( $this->metadata['AutorinVN1']).' '.trim( $this->metadata['AutorInN1']);
@@ -98,15 +108,15 @@ class WenkenparkDisplay extends DisplayEntity {
             if( strlen(trim( $this->metadata['AutorinVN3'])))
                  $authors[] = trim( $this->metadata['AutorinVN3']).' '.trim( $this->metadata['AutorInN3']);
 			echo '<span style="font-weight: normal; font-size: 1.1rem;">';
-			
-			
+
+
 			echo htmlentities( implode( ", ", $authors ));
-			
+
 			echo "</span>: ";
 			echo htmlentities( $this->metadata['TITEL'] );
 			?> <span style="font-size: 80%;">(<?php echo htmlspecialchars( $this->metadata['Produktionsjahr'] );?>)</span></h5>
 			<span style="font-size: 80%; line-height: 1em;">
-<?php 
+<?php
 					if( @strlen(trim( $this->metadata['KonzeptDrehbuchVor1'])))
 						echo "Konzept/Drehbuch: ".htmlentities( trim( $this->metadata['KonzeptDrehbuchVor1']).' '.trim( $this->metadata['KonzeptDrehbuchNach1']))."<br />\n";
 					if( @strlen(trim( $this->metadata['KonzeptDrehbuchVor2'])))
@@ -114,11 +124,11 @@ class WenkenparkDisplay extends DisplayEntity {
 					if( @strlen(trim( $this->metadata['KAMERA'])))
 						echo "Kamera: ".htmlentities( trim( $this->metadata['KAMERA']))."<br />\n";
 					if( @strlen(trim( $this->metadata['Schnitt'])))
-						echo "Schnitt: ".htmlentities( trim( $this->metadata['Schnitt']))."<br />\n"; 
+						echo "Schnitt: ".htmlentities( trim( $this->metadata['Schnitt']))."<br />\n";
 					if( @strlen(trim( $this->metadata['MUSIK'])))
-						echo "Musik: ".htmlentities( trim( $this->metadata['MUSIK']))."<br />\n"; 
+						echo "Musik: ".htmlentities( trim( $this->metadata['MUSIK']))."<br />\n";
 					if( @strlen(trim( $this->metadata['Ton'])))
-						echo "Ton: ".htmlentities( trim( $this->metadata['Ton']))."<br />\n"; 
+						echo "Ton: ".htmlentities( trim( $this->metadata['Ton']))."<br />\n";
 					if( isset( $this->metadata['LAENGE'] ))
 						echo "Dauer: ".htmlspecialchars( substr( $this->metadata['LAENGE'], 0, -2 ).':'.substr( $this->metadata['LAENGE'], -2 ) )."<br />\n";;
 					if( isset( $this->metadata['Ursprungsformat'] ))
@@ -131,17 +141,18 @@ class WenkenparkDisplay extends DisplayEntity {
 					if( isset( $this->metadata['Tonart'] ))
 						$sys[] = $this->metadata['Tonart'];
 					if( count( $sys )) echo htmlspecialchars( implode( ' / ', $sys ))."<br />\n";
-					
+
 ?>
 			</span>
 		</div>
 	</div>
 	<div class="col-md-6">
 <?php
-		
+
 		//print_r( $session->getGroups());
 		// Fall 1
-		if( !$loggedin || !$this->doc->embedded/* && !$cert */ ) {
+//		if( !$loggedin || !$this->doc->embedded/* && !$cert */ ) {
+	if( false ) {
 ?>
 <!--
 	<span style="; font-weight: bold;"></span><br>
@@ -152,28 +163,31 @@ class WenkenparkDisplay extends DisplayEntity {
 				<img class="media-left" src="<?php echo $config['media']['picopen'].'/VWW'.intval($this->metadata['Publikationsnummer']).'.00001.thumb.png'; ?>" />
 			</a>
 			<div class="media-body">
-				<p><?php echo htmlspecialchars( $this->metadata['KURZBESCHRIEB'] ); ?></p>
+				<p><?php echo nl2br(htmlspecialchars( $this->metadata['KURZBESCHRIEB'] )); ?></p>
 			</div>
 		</div>
 	</div>
 -->
 <?php
 		}
-		elseif( $session->inAnyGroup( $this->doc->acl_content ) && $this->doc->embedded ) {
+		elseif(( $session->isAdmin() || $session->inAnyGroup( $this->doc->acl_content )) && $this->doc->embedded ) {
+
+
+//		if( $session->isAdmin() ) {
 ?>
 	<span style="; font-weight: bold;">Film abspielen</span><br>
 	<div class="facet" style="min-width: 550px; text-align: center;">
 		<div class="marker" style=""></div>
 		<video id="my-video" class="video-js" controls preload="auto" width="550"
-		poster="<?php echo $config['media']['picintern'].'/VWW'.intval($this->metadata['Publikationsnummer']).'.00001.big.png'; ?>" data-setup="{}">
-		  <source src="<?php echo $config['media']['videointern'].'/VWW'.intval($this->metadata['Publikationsnummer']).'.h264.mp4'; ?>" type='video/mp4'>
+		poster="<?php echo "{$basevideourl}{$this->metadata['media'][0]['mediums'][10]}"; ?>" data-setup="{}">
+		  <source src="<?php echo "{$basevideourl}{$this->metadata['media'][0]['video']}"; ?>" type='video/mp4'>
 		  <p class="vjs-no-js">
 			To view this video please enable JavaScript, and consider upgrading to a web browser that
 			<a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
 		  </p>
 		</video>
 
-	</div>  
+	</div>
 <?php
 		}
 		else
@@ -182,8 +196,18 @@ class WenkenparkDisplay extends DisplayEntity {
 	<span style="font-weight: bold;">Hinweis</span><br>
 	<div class="facet" style="min-width: 740px; text-align: center;">
 		<div class="marker" style=""></div>
-		
-		Abspielen von Videos ist nicht für alle Nutzer freigeschaltet. Bei Fragen wenden Sie sich bitte an die Mediathek.
+		<img src="<?php echo "{$basevideourl}{$this->metadata['media'][0]['mediums'][10]}"; ?>" /><br />
+		Abspielen von Videos ist nicht für alle Nutzer freigeschaltet. <br />
+		<?php
+			switch( $this->metadata['Rechte Internet'] ) {
+				case 'station':
+					echo "Dieses Video kann in der Mediathek HGK auf einer Sichtungsstation angesehen werden.";
+					break;
+				case 'intern':
+				echo "Dieses Video kann im HGK Netzwerk angesehen werden.";
+				break;
+			}
+		?>
 	</div>
 <?php
 		}
@@ -195,17 +219,18 @@ class WenkenparkDisplay extends DisplayEntity {
 		<div class="media-body">
 			<p><?php echo htmlspecialchars( $this->metadata['KURZBESCHRIEB'] ); ?></p>
 		</div>
-	<?php if( $this->doc->embedded ) {	?>
-<img style="margin: 5px;" src="<?php echo $config['media']['picopen'].'/VWW'.intval($this->metadata['Publikationsnummer']).'.00005.thumb.png'; ?>" />
-<img style="margin: 5px;" src="<?php echo $config['media']['picopen'].'/VWW'.intval($this->metadata['Publikationsnummer']).'.00009.thumb.png'; ?>" />
-<img style="margin: 5px;" src="<?php echo $config['media']['picopen'].'/VWW'.intval($this->metadata['Publikationsnummer']).'.00013.thumb.png'; ?>" />
-<img style="margin: 5px;" src="<?php echo $config['media']['picopen'].'/VWW'.intval($this->metadata['Publikationsnummer']).'.00017.thumb.png'; ?>" />
-<img style="margin: 5px;" src="<?php echo $config['media']['picopen'].'/VWW'.intval($this->metadata['Publikationsnummer']).'.00021.thumb.png'; ?>" />
-<?php } ?>
+	<?php if( $this->doc->embedded ) {
+		for( $i = 0; $i < count( $this->metadata['media'][0]['stills'] ); $i++ ) {
+				$img = "{$basepicurl}thumbs/{$this->metadata['Publikationsnummer']}.still.{$i}.thumb.png";
+		?>
+			<img style="margin: 5px;" src="<?php echo $img; ?>" />
+<?php
+		}
+	} ?>
 </div>
 	</div>
 			<div class="col-md-3">
-<?php 	if( is_array( $this->doc->cluster_ss ))  { ?>		
+<?php 	if( is_array( $this->doc->cluster_ss ))  { ?>
 				<div style="">
 				<span style="; font-weight: bold;">Themen</span><br />
 					<div class="facet" style="">
@@ -218,20 +243,55 @@ class WenkenparkDisplay extends DisplayEntity {
 								<label>
 									<a href="javascript:doSearchFull('', '', [], {'catalog':[<?php echo $this->getCatalogList(); ?>], cluster: ['<?php echo htmlspecialchars( $cl ); ?>']}, 0, <?php echo $pagesize; ?> );"><?php echo htmlspecialchars( $cl ); ?></a>
 								</label><br />
-								
+
 							<!-- <div class="checkbox checkbox-green">
 								<input class="facet" type="checkbox" id="cluster" value="<?php echo htmlentities($cl); ?>">
 								<label for="cluster<?php echo $i; ?>">
 									<?php echo htmlspecialchars( $cl ); ?>
 								</label>
 							</div> -->
-<?php							
+<?php
 						}
-?>							
+?>
 					</div>
 				</div>
-						<?php  } ?>
-<!--						
+			</div>
+		</div>
+						<?php  }
+						if( DEBUG ) {
+							?>
+										<div style="">
+										<span style="; font-weight: bold;">Document</span><br />
+											<div class="facet" style="padding: 0px;">
+												<div class="marker" style=""></div>
+												<div>
+													<pre>
+						<?php
+							var_dump( $this->doc->getFields());
+						?>
+													</pre>
+												</div>
+											</div>
+										</div>
+										<div style="">
+										<span style="; font-weight: bold;">Data</span><br />
+											<div class="facet" style="padding: 0px;">
+												<div class="marker" style=""></div>
+												<div>
+													<pre>
+						<?php
+							print_r( $this->entity->getData());
+						?>
+													</pre>
+												</div>
+											</div>
+										</div>
+
+						<?php
+							}
+
+						?>
+<!--
 				<div style="">
 				<span style="; font-weight: bold;">Kontext</span><br />
 					<div class="facet" style="">
@@ -244,12 +304,10 @@ class WenkenparkDisplay extends DisplayEntity {
 						<div class="marker" style=""></div>
 					</div>
 				</div>
--->				
-			</div>	
-</div>
+-->
 		<script>
 			function initWenkenpark() {
-				
+
 			}
 		</script>
 
@@ -260,9 +318,12 @@ class WenkenparkDisplay extends DisplayEntity {
         ob_end_clean();
 		return $html;
 	}
-	    
+
     public function desktopList() {
+			global $config;
 		$html = '';
+		$basepicurl = $config['media']['videohybrid'].'/vww/';
+
         ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
 ?>
         <tr>
@@ -275,7 +336,7 @@ class WenkenparkDisplay extends DisplayEntity {
             <td class="list" style="width: 70%;">
                 <a class="entity" href="#coll_<?php echo $this->doc->id; ?>" data-toggle="collapse" aria-expanded="false" aria-controls="coll_<?php echo $this->doc->id; ?>">
                     <?php echo htmlspecialchars( $this->doc->title ); ?>
-                </a>        
+                </a>
             </td>
         </tr>
         <tr>
@@ -304,6 +365,15 @@ class WenkenparkDisplay extends DisplayEntity {
                     <?php if( strlen( $this->metadata['Produktionsjahr'] )) echo 'Jahr: '.htmlspecialchars( $this->metadata['Produktionsjahr'] )."<br />\n"; ?>
                     <?php if( strlen( $this->metadata['LAENGE'] )) echo 'Dauer: '.htmlspecialchars( $this->metadata['LAENGE'] )."<br />\n"; ?>
                     <?php if( strlen( $this->metadata['Publikationsnummer'] )) echo 'Publikationsnummer: '.htmlspecialchars( $this->metadata['Publikationsnummer'] )."<br />\n"; ?>
+
+					<?php
+					if( count( $this->metadata['media'][0]['stills'] ) > 0 ) {
+						for( $i = 0; $i < min( 2, count( $this->metadata['media'][0]['stills'] )); $i++ ) {
+							echo "<object type=\"image/png\" data=\"{$basepicurl}thumbs/{$this->metadata['Publikationsnummer']}.still.{$i}.thumb.png\"></object>\n";
+						}
+							echo "<br />\n";
+					}
+					?>
 					ID: <?php echo $this->doc->id; ?><br />
 					<a href="detail.php?<?php echo "id=".urlencode( $this->doc->id ); foreach( $this->urlparams as $key=>$val ) echo '&'.$key.'='.urlencode($val); ?>"><i class="fa fa-folder-open" aria-hidden="true"></i> Details</a><br />
 

@@ -12,7 +12,7 @@ function excelEncode(&$value, $key)
 }
 
 $fh = fopen( './summe2017.csv', 'w+' );
-fputcsv( $fh, array( 'formid', 'name', 'werkjahr', 'jahrgang', 'titel', 'art', 'descr', 'web', 'dauer', 'img1', 'img2', 'img3' ), ';' );
+fputcsv( $fh, array( 'formid', 'name', 'werkjahr', 'jahrgang', 'titel', 'art', 'descr', 'web', 'dauer', 'rechte', 'lizenz', 'img1', 'img2', 'img3' ), ';' );
 
 $d2 = json_decode( file_get_contents('data.json'), true);
 
@@ -41,6 +41,8 @@ foreach( $rs as $row ) {
   $d['descr'] = array_key_exists( 'descr', $h) ? trim($h['descr']) : '';
   $d['web'] = array_key_exists( 'web', $h) ? $h['web'] : '';
   $d['dauer'] = array_key_exists( 'dauer', $h) ? $h['dauer'] : '';
+  $d['rechte'] = array_key_exists( 'rechte', $h) ? $h['rechte'] : '';
+  $d['lizenz'] = array_key_exists( 'lizenz', $h) ? $h['lizenz'] : '';
   $pics = $d2[$formid][0]['mediums'];
   $num = count( $pics );
   $step = round( $num/4 );
