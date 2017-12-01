@@ -21,6 +21,7 @@ $page = isset( $_REQUEST['page'] ) ? intval( $_REQUEST['page'] ) : 0;
 $pagesize = isset( $_REQUEST['pagesize'] ) ? intval( $_REQUEST['pagesize'] ) : 25;
 $id = isset( $_REQUEST['id'] ) ? trim( $_REQUEST['id'] ) : null;
 $barcode = isset( $_REQUEST['barcode'] ) ? strtolower( trim( $_REQUEST['barcode'] )) : null;
+$json = isset( $_REQUEST['json'] );
 
 
 $urlparams = array( 'q'=>$q,
@@ -47,8 +48,17 @@ $squery->setQuery( $qstr );
 
 $rs = $solrclient->select( $squery );
 $numResults = $rs->getNumFound();
-echo "<!-- ".$qstr." (Documents: {$numResults}) -->\n";
+//echo "<!-- ".$qstr." (Documents: {$numResults}) -->\n";
 $doc = ( $numResults > 0 ) ? $rs->getDocuments()[0] : null;
+
+if( $json ) {
+	header( 'Content-Type: text/json' );
+
+	$data = (array)$doc->getFields();
+	echo json_encode( $data );
+
+	exit;
+}
 
 echo mediathekheader('search', 'Mediathek - Detail - '.($doc ? $doc->title : '').' ['.$id.']', '');
 ?>

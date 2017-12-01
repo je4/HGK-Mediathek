@@ -28,11 +28,13 @@ $topicmap = array(
 	'index:curriculumobjective'=>'Lehrplanziel',
 );
 
+$debugstr = array();
+
 // get request values
 $search = isset( $_REQUEST['search'] ) ? $_REQUEST['search'] : null;
 $facets = isset( $_REQUEST['facets'] ) ? $_REQUEST['facets'] : null;
 
-
+$json = isset( $_REQUEST['json'] );
 $query = isset( $_REQUEST['query'] ) ? $_REQUEST['query'] : null;
 $q = isset( $_REQUEST['q'] ) ? strtolower( trim( $_REQUEST['q'] )): null;
 $page = isset( $_REQUEST['page'] ) ? intval( $_REQUEST['page'] ) : 0;
@@ -105,7 +107,7 @@ if( !$qobj ) {
 			exit;
 		}
 
-		header("Location: ?q={$q}&page={$page}&pagesize={$pagesize}");
+		header("Location: ?q={$q}&page={$page}&pagesize={$pagesize}".($json?'&json':''));
 		exit;
 	}
 	else {
@@ -126,33 +128,6 @@ if( $qobj['query'] == '' ) $qobj['query'] = '*';
 
 
 
-echo mediathekheader('search', 'mediathek - Suche - '.$qobj['query'], $qobj['area'], array(), $qconfig );
-?>
-<div class="home-btn"><i class="ion-android-close"></i></div>
-<div class="setting-btn"><i class="<?php echo $session->isLoggedIn() ? 'ion-ios-settings-strong': 'ion-log-in'; ?>"></i></div>
-<div id="fullsearch" class="fullsearch-page container-fluid page">
-    <div class="row">
-            <!--( a ) Profile Page Fixed Image Portion -->
-
-            <div class="image-container col-md-1 col-sm-12">
-                <div class="mask" style="background-color: rgba(0, 0, 0, 0.15);">
-                </div>
-                <div style="left: 20%;" class="main-heading">
-                    <h1>Suche</h1>
-                </div>
-            </div>
-
-            <!--( b ) Profile Page Content -->
-
-            <div class="content-container col-md-11 col-sm-12">
-                <div class="clearfix">
-                    <h2 class="small-heading">Mediathek</h2>
-
-	<div class="container-fluid" style="margin-top: 0px; padding: 0px 20px 20px 20px;">
-		<div class="row" style="margin-bottom: 30px;">
-		  <div class="col-md-offset-2 col-md-8">
-<?php
-
 $squery = $solrclient->createSelect();
 $helper = $squery->getHelper();
 $squery->setRows( $pagesize );
@@ -164,7 +139,7 @@ if( $qobj['query'] != '*' ) {
 else
     $qstr = '*:*';
 
-echo "<!-- qstr: {$qstr} -->\n";
+$debugstr[] = "<!-- qstr: {$qstr} -->\n";
 
 $acl_query = '';
 foreach( $session->getGroups() as $grp ) {
@@ -172,10 +147,10 @@ foreach( $session->getGroups() as $grp ) {
 	$acl_query .= ' acl_meta:'.$helper->escapePhrase($grp);
 }
 $squery->createFilterQuery('acl_meta')->setQuery($acl_query);
-echo "<!-- filter acl_meta: {$acl_query} -->\n";
+$debugstr[] = "<!-- filter acl_meta: {$acl_query} -->\n";
 
 $squery->createFilterQuery('nodelete')->setQuery('deleted:false');
-echo "<!-- filter nodelete: deleted:false -->\n";
+$debugstr[] = "<!-- filter nodelete: deleted:false -->\n";
 
 if( @is_array( $qobj['facets']['catalog'] )) {
 	$catalogfilterquery = "";
@@ -184,7 +159,7 @@ if( @is_array( $qobj['facets']['catalog'] )) {
 		$catalogfilterquery .= ' (catalog:'.$helper->escapePhrase( $cat ).')';
 	}
 	$squery->createFilterQuery('catalog')->addTag('catalog')->setQuery( $catalogfilterquery );
-	echo "<!-- filter catalog: {$catalogfilterquery} -->\n";
+	$debugstr[] = "<!-- filter catalog: {$catalogfilterquery} -->\n";
 
 }
 if( DEBUG ) {
@@ -195,21 +170,21 @@ if( DEBUG ) {
 			$categoryfilterquery .= ' (category:'.$helper->escapePhrase( $cat ).')';
 		}
 	    $squery->createFilterQuery('category')->addTag('category')->setQuery( $categoryfilterquery );
-	    echo "<!-- filter category: {$categoryfilterquery} -->\n";
+	    $debugstr[] = "<!-- filter category: {$categoryfilterquery} -->\n";
 
 	}
 }
 if( @is_array( $qobj['facets']['online'] )) {
 	$onlinefilterquery = 'online:('.implode(' ', $qobj['facets']['online']).')';
 	$squery->createFilterQuery('online')->addTag('online')->setQuery($onlinefilterquery);
-	echo "<!-- filter online: {$onlinefilterquery} -->\n";
+	$debugstr[] = "<!-- filter online: {$onlinefilterquery} -->\n";
 
 }
 
 if( @is_array( $qobj['facets']['openaccess'] )) {
 	$openaccessfilterquery = 'openaccess:('.implode(' ', $qobj['facets']['openaccess']).')';
 	$squery->createFilterQuery('openaccess')->addTag('openaccess')->setQuery($openaccessfilterquery);
-	echo "<!-- filter openaccess: {$openaccessfilterquery} -->\n";
+	$debugstr[] = "<!-- filter openaccess: {$openaccessfilterquery} -->\n";
 
 }
 
@@ -217,14 +192,14 @@ if( @is_array( $qobj['facets']['openaccess'] )) {
 	if( @is_array( $qobj['facets']['embedded'] )) {
 		$embeddedfilterquery = 'embedded:('.implode(' ', $qobj['facets']['embedded']).')';
 		$squery->createFilterQuery('embedded')->addTag('embedded')->setQuery($embeddedfilterquery);
-		echo "<!-- filter embedded: {$embeddedfilterquery} -->\n";
+		$debugstr[] = "<!-- filter embedded: {$embeddedfilterquery} -->\n";
 
 	}
 */
 if( @is_array( $qobj['facets']['type'] )) {
 	$typefilterquery = 'type:('.implode(' ', $qobj['facets']['type']).')';
 	$squery->createFilterQuery('type')->addTag('type')->setQuery($typefilterquery);
-	echo "<!-- filter type: {$typefilterquery} -->\n";
+	$debugstr[] = "<!-- filter type: {$typefilterquery} -->\n";
 
 }
 if( @is_array( $qobj['facets']['cluster'] )) {
@@ -235,8 +210,8 @@ if( @is_array( $qobj['facets']['cluster'] )) {
 		$first = false;
 	}
 	$_qstr .= ' )';
-    $squery->createFilterQuery('cluster')->addTag('cluster')->setQuery($_qstr);
-    echo "<!-- filter cluster: {$_qstr} -->\n";
+  $squery->createFilterQuery('cluster')->addTag('cluster')->setQuery($_qstr);
+  $debugstr[] = "<!-- filter cluster: {$_qstr} -->\n";
 
 }
 
@@ -262,7 +237,7 @@ if( @is_array( $qobj['facets']['license'] )) {
 		$licensefilterquery .= ' (license:'.$helper->escapePhrase( $lic ).')';
 	}
 	$squery->createFilterQuery('license')->addTag('license')->setQuery( $licensefilterquery );
-	echo "<!-- filter license: {$licensefilterquery} -->\n";
+	$debugstr[] = "<!-- filter license: {$licensefilterquery} -->\n";
 }
 
 $facetSetLicense = $squery->getFacetSet();
@@ -302,7 +277,52 @@ $numResults = $rs->getNumFound();
 $numPages = floor( $numResults / $pagesize );
 if( $numResults % $pagesize > 0 ) $numPages++;
 
-echo "<!-- ".$qstr." (Documents: {$numResults} // Page ".($page+1)." of {$numPages}) -->\n";
+$debugstr[] = "<!-- ".$qstr." (Documents: {$numResults} // Page ".($page+1)." of {$numPages}) -->\n";
+
+if( $json ) {
+	$data = array( 'pages'=>$numPages, 'numFound'=>$numResults, 'pageSize'=>$pagesize, $result = array() );
+	$data['_self'] = $_SERVER['SCRIPT_URI'].'?q='.$q.'&pagesize='.$pagesize.'&page='.($page);
+	if( $page+1 < $numPages) $data['_next'] = $_SERVER['SCRIPT_URI'].'?q='.$q.'&pagesize='.$pagesize.'&page='.($page+1);
+	if( $page > 0 ) $data['_prev'] = $_SERVER['SCRIPT_URI'].'?q='.$q.'&pagesize='.$pagesize.'&page='.($page-1);
+
+	foreach( $rs as $doc ) {
+		$fields = (array)$doc->getFields();
+		$fields['_self'] = substr( $_SERVER['SCRIPT_URI'], 0, -strlen( 'search.php' )).'detail.php?id='.$doc->id;
+		$data['result'][] = $fields;
+	}
+
+	echo json_encode( $data );
+	exit;
+}
+
+echo mediathekheader('search', 'mediathek - Suche - '.$qobj['query'], $qobj['area'], array(), $qconfig );
+?>
+<div class="home-btn"><i class="ion-android-close"></i></div>
+<div class="setting-btn"><i class="<?php echo $session->isLoggedIn() ? 'ion-ios-settings-strong': 'ion-log-in'; ?>"></i></div>
+<div id="fullsearch" class="fullsearch-page container-fluid page">
+    <div class="row">
+            <!--( a ) Profile Page Fixed Image Portion -->
+
+            <div class="image-container col-md-1 col-sm-12">
+                <div class="mask" style="background-color: rgba(0, 0, 0, 0.15);">
+                </div>
+                <div style="left: 20%;" class="main-heading">
+                    <h1>Suche</h1>
+                </div>
+            </div>
+
+            <!--( b ) Profile Page Content -->
+
+            <div class="content-container col-md-11 col-sm-12">
+                <div class="clearfix">
+                    <h2 class="small-heading">Mediathek</h2>
+
+	<div class="container-fluid" style="margin-top: 0px; padding: 0px 20px 20px 20px;">
+		<div class="row" style="margin-bottom: 30px;">
+		  <div class="col-md-offset-2 col-md-8">
+<?php
+
+foreach( $debugstr as $str ) echo $str."\n";
 
 $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 

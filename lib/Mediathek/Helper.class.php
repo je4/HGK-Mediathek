@@ -317,7 +317,6 @@ class Helper {
             $qstr .= ')';
 
         }
-        if( DEBUG ) echo "<tt>".htmlspecialchars( $qstr )."</tt>";
         return $qstr;
     }
 
