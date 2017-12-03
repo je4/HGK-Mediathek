@@ -184,7 +184,7 @@ class WenkenparkDisplay extends DisplayEntity {
 	<span style="; font-weight: bold;">Film abspielen</span><br>
 	<div class="facet" style="min-width: 550px; text-align: center;">
 		<div class="marker" style=""></div>
-		<video id="my-video" class="video-js" controls preload="auto" width="550"
+		<video id="my-video" class="video-js" controls controlsList="nodownload" preload="auto" width="550"
 		poster="<?php echo "{$basevideourl}{$this->metadata['media'][0]['mediums'][10]}"; ?>" data-setup="{}">
 		  <source src="<?php echo "{$basevideourl}{$this->metadata['media'][0]['video']}"; ?>" type='video/mp4'>
 		  <p class="vjs-no-js">

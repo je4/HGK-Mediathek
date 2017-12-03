@@ -15,7 +15,7 @@
  * @copyright   (C) 2016 Academy of Art and Design FHNW
  * @license     http://www.gnu.org/licenses/gpl-3.0
  * @link        http://mediathek.fhnw.ch
- * 
+ *
  */
 
 /**
@@ -26,24 +26,24 @@ namespace Mediathek;
 
 class IKUVidDisplay extends DisplayEntity {
 	private $metadata;
-	
+
     public function __construct( $doc, $urlparams, $db, $highlightedDoc ) {
         parent::__construct( $doc, $urlparams, $db, $highlightedDoc );
-		
+
 		$this->metadata = (array) json_decode( $this->data );
     }
 
 	public function getSchema() {
 		global $config;
-		
+
 		$schema = array();
 		$schema['@context'] = 'http://schema.org';
 		$schema['@type'] = array('Movie');
 		$schema['@id'] = $this->doc->id;
 		$schema['name'] = $this->doc->title;
-		if( $this->doc->embedded ) {	
+		if( $this->doc->embedded ) {
 			$schema['image'] = $config['media']['picopen'].'/'.intval($this->doc->originalid).'.00005.thumb.png';
-		}		
+		}
 		$schema['author'] = array();
 		if( isset( $this->doc->author_ss ) && count( $this->doc->author_ss )) {
 			$schema['author'] = array();
@@ -51,29 +51,29 @@ class IKUVidDisplay extends DisplayEntity {
 				$schema['author'][] = array( '@type' => 'Person', 'name' => $author );
 			}
 		}
-		
+
 		if( $this->doc->publisher && count( $this->doc->publisher ))
 			foreach( $this->doc->publisher as $publisher ) {
 				$schema['publisher'][] = array( '@type' => 'Organization', 'legalName' => $publisher );
 			}
-		$schema['url'] = array( 'https://mediathek.hgk.fhnw.ch/detail.php?id='.urlencode( $this->doc->id ));		
+		$schema['url'] = array( 'https://mediathek.hgk.fhnw.ch/detail.php?id='.urlencode( $this->doc->id ));
 		if( $this->doc->cluster_ss )
 			$schema['keywords'] = implode( '; ', $this->doc->cluster_ss );
-		
+
 		$schema['license'] = implode( '; ', $this->doc->license );
-		
+
 		return $schema;
 	}
-  
+
 	public function detailView() {
         global $config, $googleservice, $googleclient, $session, $page, $pagesize;
-		
+
 		$cert = $session->inGroup( 'certificate/mediathek');
 		$intern = $session->inGroup( 'location/fhnw');
 		$loggedin = $session->isLoggedIn();
-		
+
 		$html = '';
-		
+
         ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
 		$handle = 'https://hdl.handle.net/20.500.11806/mediathek/'.$this->doc->id;
 ?>
@@ -92,7 +92,7 @@ class IKUVidDisplay extends DisplayEntity {
 	</div>
 	<div class="col-md-6">
 <?php
-		
+
 		//print_r( $session->getGroups());
 		// Fall 1
 		if( !$loggedin || !$this->doc->embedded/* && !$cert */ ) {
@@ -105,7 +105,7 @@ class IKUVidDisplay extends DisplayEntity {
 	<span style="; font-weight: bold;">Film abspielen</span><br>
 	<div class="facet" style="min-width: 550px; text-align: center;">
 		<div class="marker" style=""></div>
-		<video id="my-video" class="video-js" controls preload="auto" width="550"
+		<video id="my-video" class="video-js" controls controlsList="nodownload" preload="auto" width="550"
 		poster="<?php echo $config['media']['picintern'].'/'.intval($this->doc->originalid).'.00001.big.png'; ?>" data-setup="{}">
 		  <source src="<?php echo $config['media']['videointern'].'/'.intval($this->doc->originalid).'.h264-1100k.mp4'; ?>" type='video/mp4'>
 		  <p class="vjs-no-js">
@@ -114,7 +114,7 @@ class IKUVidDisplay extends DisplayEntity {
 		  </p>
 		</video>
 
-	</div>  
+	</div>
 <?php
 		}
 		else
@@ -123,7 +123,7 @@ class IKUVidDisplay extends DisplayEntity {
 	<span style="font-weight: bold;">Hinweis</span><br>
 	<div class="facet" style="min-width: 740px; text-align: center;">
 		<div class="marker" style=""></div>
-		
+
 		Abspielen von Videos ist nicht für alle Nutzer freigeschaltet. Bei Fragen wenden Sie sich bitte an die Mediathek.
 	</div>
 <?php
@@ -146,7 +146,7 @@ class IKUVidDisplay extends DisplayEntity {
 </div>
 	</div>
 			<div class="col-md-3">
-<?php 	if( is_array( $this->doc->cluster_ss ))  { ?>		
+<?php 	if( is_array( $this->doc->cluster_ss ))  { ?>
 				<div style="">
 				<span style="; font-weight: bold;">Themen</span><br />
 					<div class="facet" style="">
@@ -159,20 +159,20 @@ class IKUVidDisplay extends DisplayEntity {
 								<label>
 									<a href="javascript:doSearchFull('', '', [], {'catalog':[<?php echo $this->getCatalogList(); ?>], cluster: ['<?php echo htmlspecialchars( $cl ); ?>']}, 0, <?php echo $pagesize; ?> );"><?php echo htmlspecialchars( $cl ); ?></a>
 								</label><br />
-								
+
 							<!-- <div class="checkbox checkbox-green">
 								<input class="facet" type="checkbox" id="cluster" value="<?php echo htmlentities($cl); ?>">
 								<label for="cluster<?php echo $i; ?>">
 									<?php echo htmlspecialchars( $cl ); ?>
 								</label>
 							</div> -->
-<?php							
+<?php
 						}
-?>							
+?>
 					</div>
 				</div>
 						<?php  } ?>
-<!--						
+<!--
 				<div style="">
 				<span style="; font-weight: bold;">Kontext</span><br />
 					<div class="facet" style="">
@@ -185,12 +185,12 @@ class IKUVidDisplay extends DisplayEntity {
 						<div class="marker" style=""></div>
 					</div>
 				</div>
--->				
-			</div>	
+-->
+			</div>
 </div>
 		<script>
 			function initIKUVid() {
-				
+
 			}
 		</script>
 
@@ -201,13 +201,13 @@ class IKUVidDisplay extends DisplayEntity {
         ob_end_clean();
 		return $html;
 	}
-	    
+
     public function desktopList() {
     	global $config;
 		$html = '';
 		$t = strtolower( $this->doc->type );
 		$icon = array_key_exists( $t, $config['icon'] ) ? $config['icon'][$t] : $config['icon']['default'];
-		
+
         ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
 ?>
         <tr>
@@ -220,7 +220,7 @@ class IKUVidDisplay extends DisplayEntity {
             <td class="list" style="width: 70%;">
                 <a class="entity" href="#coll_<?php echo $this->doc->id; ?>" data-toggle="collapse" aria-expanded="false" aria-controls="coll_<?php echo $this->doc->id; ?>">
                     <?php echo htmlspecialchars( $this->doc->title ); ?>
-                </a>        
+                </a>
             </td>
         </tr>
         <tr>

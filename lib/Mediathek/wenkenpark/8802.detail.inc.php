@@ -1,7 +1,7 @@
 <span style="; font-weight: bold;">Film abspielen</span><br>
 <div class="facet" style="min-width: 550px; text-align: center;">
   <div class="marker" style=""></div>
-  <video id="my-video" class="video-js" controls preload="auto" width="550"
+  <video id="my-video" class="video-js" controls controlsList="nodownload" preload="auto" width="550"
   poster="<?php echo "{$basevideourl}{$this->metadata['media'][1]['mediums'][10]}"; ?>" data-setup="{}">
     <source src="<?php echo "{$basevideourl}{$this->metadata['media'][1]['video']}"; ?>" type='video/mp4'>
     <p class="vjs-no-js">
@@ -9,28 +9,31 @@
     <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
     </p>
   </video><br />
-  <video id="audio1" class="video-js" controls preload="auto" height="0" width="550" data-setup="{}">
+  4 Tonspuren / 4 Lautsprecher <br />
+  Um die Position im Raum nachzustellen, <br />kann die Lautstärke der 4 Tonspuren individuell geregelt werden.<br />
+  Die Wiedergabe wird über den Player des Videos gesteuert.<br />
+  <video id="audio1" class="video-js" controls controlsList="nodownload" preload="auto" height="25" width="550" data-setup="{}">
     <source src="<?php echo "{$basevideourl}"; ?>/open/8802/8802 Audiotracks/1.mp4" type='video/mp4'>
     <p class="vjs-no-js">
     To view this audio please enable JavaScript, and consider upgrading to a web browser that
     <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
     </p>
   </video><br />
-  <video id="audio2" class="video-js" controls preload="auto" height="0" width="550" data-setup="{}">
+  <video id="audio2" class="video-js" controls controlsList="nodownload" preload="auto" height="25" width="550" data-setup="{}">
     <source src="<?php echo "{$basevideourl}"; ?>/open/8802/8802 Audiotracks/2.mp4" type='video/mp4'>
     <p class="vjs-no-js">
     To view this audio please enable JavaScript, and consider upgrading to a web browser that
     <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
     </p>
   </video><br />
-  <video id="audio3" class="video-js" controls preload="auto" height="0" width="550" data-setup="{}">
+  <video id="audio3" class="video-js" controls controlsList="nodownload" preload="auto" height="25" width="550" data-setup="{}">
     <source src="<?php echo "{$basevideourl}"; ?>/open/8802/8802 Audiotracks/3.mp4" type='video/mp4'>
     <p class="vjs-no-js">
     To view this audio please enable JavaScript, and consider upgrading to a web browser that
     <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
     </p>
   </video><br />
-  <video id="audio4" class="video-js" controls preload="auto" height="0" width="550" data-setup="{}">
+  <video id="audio4" class="video-js" controls controlsList="nodownload" preload="auto" height="25" width="550" data-setup="{}">
     <source src="<?php echo "{$basevideourl}"; ?>/open/8802/8802 Audiotracks/4.mp4" type='video/mp4'>
     <p class="vjs-no-js">
     To view this audio please enable JavaScript, and consider upgrading to a web browser that
