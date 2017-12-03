@@ -174,6 +174,12 @@ class WenkenparkDisplay extends DisplayEntity {
 
 
 //		if( $session->isAdmin() ) {
+			$inc = dirname(__FILE__).'/wenkenpark/'.($this->metadata['Publikationsnummer']).'.detail.inc.php';
+			//echo $inc;
+			if( file_exists( $inc )) {
+			 include( $inc );
+			}
+			else {
 ?>
 	<span style="; font-weight: bold;">Film abspielen</span><br>
 	<div class="facet" style="min-width: 550px; text-align: center;">
@@ -189,6 +195,7 @@ class WenkenparkDisplay extends DisplayEntity {
 
 	</div>
 <?php
+			}
 		}
 		else
 		{

@@ -147,8 +147,8 @@ class WenkenparkEntity extends SOLRSource {
 
         $this->tags = array();
         //$this->tags[] = 'index:keyword:wenkenpark/'.md5( trim( 'Wenkenpark' )).'/Wenkenpark';
-        if( strlen(trim( $this->data['Videowoche Jahr'])))
-            $this->tags[] = 'index:keyword:wenkenpark/'.md5( trim( $this->data['Videowoche Jahr']) ).'/Videowoche im Wenkenpark '.trim( $this->data['Videowoche Jahr']);
+        if( strlen(trim( $this->data['THEMA'])))
+            $this->tags[] = 'index:keyword:wenkenpark/'.md5( trim( $this->data['THEMA']) ).'/Videowoche im Wenkenpark '.trim( $this->data['THEMA']);
         if( strlen(trim( $this->data['Ursprungsformat'])))
             $this->tags[] = 'index:medium:wenkenpark/'.md5( trim( $this->data['Ursprungsformat']) ).'/'.trim( $this->data['Ursprungsformat']);
         if( strlen(trim( $this->data['Sprache'])))
@@ -191,25 +191,25 @@ class WenkenparkEntity extends SOLRSource {
         if( $this->authors == null ) {
             $this->authors = array();
             if( strlen(trim( $this->data['AutorinVN1'])))
-                 $this->authors[] = trim( $this->data['AutorInN1']).', '.trim( $this->data['AutorinVN1']);
+                 $this->authors[] = trim( $this->data['AutorInN1'], ' ,').', '.trim( $this->data['AutorinVN1'], ' ,');
             if( strlen(trim( $this->data['AutorinVN2'])))
-                 $this->authors[] = trim( trim( $this->data['AutorInN2']).', '.$this->data['AutorinVN2']);
+                 $this->authors[] = trim( trim( $this->data['AutorInN2'], ' ,').', '.$this->data['AutorinVN2'], ' ,');
             if( strlen(trim( $this->data['AutorinVN3'])))
-                 $this->authors[] = trim( $this->data['AutorInN3']).', '.trim( $this->data['AutorinVN3']);
-            if( strlen(trim( $this->data['KonzeptDrehbuchVor1'])))
-                 $this->authors[] = trim( $this->data['KonzeptDrehbuchNach1']).', '.trim( $this->data['KonzeptDrehbuchVor1']);
+                 $this->authors[] = trim( $this->data['AutorInN3'], ' ,').', '.trim( $this->data['AutorinVN3'], ' ,');
+            if( strlen(trim( $this->data['KonzeptDrehbuchVor1'], ' ,')))
+                 $this->authors[] = trim( $this->data['KonzeptDrehbuchNach1'], ' ,').', '.trim( $this->data['KonzeptDrehbuchVor1'], ' ,');
             if( strlen(trim( $this->data['KonzeptDrehbuchVor2'])))
-                 $this->authors[] = trim( $this->data['KonzeptDrehbuchNach2']).', '.trim( $this->data['KonzeptDrehbuchVor2']);
-/*
-            if( strlen(trim( $this->data['KAMERA'])))
-                 $this->authors[] = trim( $this->data['KAMERA']);
-            if( strlen(trim( $this->data['Schnitt'])))
-                 $this->authors[] = trim( $this->data['Schnitt']);
-            if( strlen(trim( $this->data['MUSIK'])))
-                 $this->authors[] = trim( $this->data['MUSIK']);
-            if( strlen(trim( $this->data['Ton'])))
-                 $this->authors[] = trim( $this->data['Ton']);
-*/
+                 $this->authors[] = trim( $this->data['KonzeptDrehbuchNach2'], ' ,').', '.trim( $this->data['KonzeptDrehbuchVor2'], ' ,');
+
+            if( strlen(trim( $this->data['KAMERA'], ' ,')))
+                 $this->authors[] = trim( $this->data['KAMERA'], ' ,');
+            if( strlen(trim( $this->data['Schnitt'], ' ,')))
+                 $this->authors[] = trim( $this->data['Schnitt'], ' ,');
+            if( strlen(trim( $this->data['MUSIK'], ' ,')))
+                 $this->authors[] = trim( $this->data['MUSIK'], ' ,');
+            if( strlen(trim( $this->data['Ton'], ' ,')))
+                 $this->authors[] = trim( $this->data['Ton'], ' ,');
+
 			$this->authors = array_unique( $this->authors );
         }
         return $this->authors;
