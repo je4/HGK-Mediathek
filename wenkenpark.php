@@ -67,40 +67,64 @@ die Sammlung der Produktionen der Videowochen.
       <td style="width: 33%; vertical-align: top;">
         <h4>1984</h4>
 <?php
-  $sql = "SELECT DISTINCT name, THEMA FROM source_wenkenpark_people WHERE THEMA='1984' ORDER BY name ASC;";
+  $names = array();
+  $thema = '1984';
+  $sql = "SELECT DISTINCT name, THEMA FROM source_wenkenpark_people WHERE THEMA='{$thema}' ORDER BY name ASC;";
   $rs = $db->Execute( $sql );
   foreach( $rs as $row ) {
     $name = $row['name'];
-    $thema = $row['THEMA'];
-    echo "<!-- {$row['name']} --><a href=\"search.php?query=%7B%22area%22%3A%22%22%2C%22filter%22%3A%5B%5D%2C%22facets%22%3A%7B%22catalog%22%3A%5B%22Wenkenpark%22%5D%2C%22cluster%22%3A%5B%22Videowoche%20im%20Wenkenpark%20".urlencode( $thema )."%22%5D%7D%2C%22query%22%3A%22author%3A%5C%22".urlencode( $name )."%5C%22%22%7D\">".htmlspecialchars( $name )."</a><br />\n";
+    foreach( explode( ';', $name ) as $n ) {
+      $names[] = trim(preg_replace( '/\(.+\)/', '', $n ));
+    }
   }
   $rs->Close();
+  sort( $names );
+  $names = array_unique( $names );
+  foreach( $names as $name ) {
+    echo "<!-- {$row['name']} --><a href=\"search.php?query=%7B%22area%22%3A%22%22%2C%22filter%22%3A%5B%5D%2C%22facets%22%3A%7B%22catalog%22%3A%5B%22Wenkenpark%22%5D%2C%22cluster%22%3A%5B%22Videowoche%20im%20Wenkenpark%20".urlencode( $thema )."%22%5D%7D%2C%22query%22%3A%22author%3A%5C%22".urlencode( $name )."%5C%22%22%7D\">".htmlspecialchars( $name )."</a><br />\n";
+  }
 ?>
       </td>
       <td style="width: 33%; vertical-align: top;">
         <h4>1986</h4>
         <?php
-          $sql = "SELECT DISTINCT name, THEMA FROM source_wenkenpark_people WHERE THEMA='1986' ORDER BY name ASC;";
-          $rs = $db->Execute( $sql );
-          foreach( $rs as $row ) {
-            $name = $row['name'];
-            $thema = $row['THEMA'];
-            echo "<!-- {$row['name']} --><a href=\"search.php?query=%7B%22area%22%3A%22%22%2C%22filter%22%3A%5B%5D%2C%22facets%22%3A%7B%22catalog%22%3A%5B%22Wenkenpark%22%5D%2C%22cluster%22%3A%5B%22Videowoche%20im%20Wenkenpark%20".urlencode( $thema )."%22%5D%7D%2C%22query%22%3A%22author%3A%5C%22".urlencode( $name )."%5C%22%22%7D\">".htmlspecialchars( $name )."</a><br />\n";
+        $names = array();
+        $thema = '1986';
+        $sql = "SELECT DISTINCT name, THEMA FROM source_wenkenpark_people WHERE THEMA='{$thema}' ORDER BY name ASC;";
+        $rs = $db->Execute( $sql );
+        foreach( $rs as $row ) {
+          $name = $row['name'];
+          foreach( explode( ';', $name ) as $n ) {
+            $names[] = trim(preg_replace( '/\(.+\)/', '', $n ));
           }
-          $rs->Close();
+        }
+        $rs->Close();
+        sort( $names );
+        $names = array_unique( $names );
+        foreach( $names as $name ) {
+          echo "<!-- {$row['name']} --><a href=\"search.php?query=%7B%22area%22%3A%22%22%2C%22filter%22%3A%5B%5D%2C%22facets%22%3A%7B%22catalog%22%3A%5B%22Wenkenpark%22%5D%2C%22cluster%22%3A%5B%22Videowoche%20im%20Wenkenpark%20".urlencode( $thema )."%22%5D%7D%2C%22query%22%3A%22author%3A%5C%22".urlencode( $name )."%5C%22%22%7D\">".htmlspecialchars( $name )."</a><br />\n";
+        }
         ?>
       </td>
       <td style="width: 33%; vertical-align: top;">
         <h4>1988</h4>
         <?php
-          $sql = "SELECT DISTINCT name, THEMA FROM source_wenkenpark_people WHERE THEMA='1988' ORDER BY name ASC;";
-          $rs = $db->Execute( $sql );
-          foreach( $rs as $row ) {
-            $name = $row['name'];
-            $thema = $row['THEMA'];
-            echo "<!-- {$row['name']} --><a href=\"search.php?query=%7B%22area%22%3A%22%22%2C%22filter%22%3A%5B%5D%2C%22facets%22%3A%7B%22catalog%22%3A%5B%22Wenkenpark%22%5D%2C%22cluster%22%3A%5B%22Videowoche%20im%20Wenkenpark%20".urlencode( $thema )."%22%5D%7D%2C%22query%22%3A%22author%3A%5C%22".urlencode( $name )."%5C%22%22%7D\">".htmlspecialchars( $name )."</a><br />\n";
+        $names = array();
+        $thema = '1988';
+        $sql = "SELECT DISTINCT name, THEMA FROM source_wenkenpark_people WHERE THEMA='{$thema}' ORDER BY name ASC;";
+        $rs = $db->Execute( $sql );
+        foreach( $rs as $row ) {
+          $name = $row['name'];
+          foreach( explode( ';', $name ) as $n ) {
+            $names[] = trim(preg_replace( '/\(.+\)/', '', $n ));
           }
-          $rs->Close();
+        }
+        $rs->Close();
+        sort( $names );
+        $names = array_unique( $names );
+        foreach( $names as $name ) {
+          echo "<!-- {$row['name']} --><a href=\"search.php?query=%7B%22area%22%3A%22%22%2C%22filter%22%3A%5B%5D%2C%22facets%22%3A%7B%22catalog%22%3A%5B%22Wenkenpark%22%5D%2C%22cluster%22%3A%5B%22Videowoche%20im%20Wenkenpark%20".urlencode( $thema )."%22%5D%7D%2C%22query%22%3A%22author%3A%5C%22".urlencode( $name )."%5C%22%22%7D\">".htmlspecialchars( $name )."</a><br />\n";
+        }
         ?>
       </td>
     </tr>

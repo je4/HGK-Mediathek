@@ -153,6 +153,9 @@ class WenkenparkEntity extends SOLRSource {
             $this->tags[] = 'index:medium:wenkenpark/'.md5( trim( $this->data['Ursprungsformat']) ).'/'.trim( $this->data['Ursprungsformat']);
         if( strlen(trim( $this->data['Sprache'])))
             $this->tags[] = 'index:language:wenkenpark/'.md5( trim( $this->data['Sprache']) ).'/'.trim( $this->data['Sprache']);
+            if( strlen(trim( $this->data['Schlagworte'])))
+              foreach( explode( ',', $this->data['Schlagworte'] ) as $t )
+                $this->tags[] = 'index:tag:wenkenpark/'.md5( trim( $t) ).'/'.trim( $t );
 
 		$tech = array();
 		if( strlen(trim( $this->data['TV System']))) $tech[] = trim( $this->data['TV System']);
@@ -164,7 +167,8 @@ class WenkenparkEntity extends SOLRSource {
         $this->cluster = array();
         foreach( $this->tags as $tag ) {
             if( substr( $tag, 0, strlen( 'index:category' )) == 'index:category'
-               || substr( $tag, 0, strlen( 'index:keyword' )) == 'index:keyword' ) {
+            || substr( $tag, 0, strlen( 'index:keyword' )) == 'index:keyword'
+            || substr( $tag, 0, strlen( 'index:tag' )) == 'index:tag' ) {
                 $ts = explode( '/', $tag );
                 $this->cluster[] = $ts[count( $ts )-1];
             }
@@ -190,26 +194,32 @@ class WenkenparkEntity extends SOLRSource {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
         if( $this->authors == null ) {
             $this->authors = array();
+            $tmp = array();
             if( strlen(trim( $this->data['AutorinVN1'])))
-                 $this->authors[] = trim( $this->data['AutorInN1'], ' ,').', '.trim( $this->data['AutorinVN1'], ' ,');
+                 $tmp[] = trim( $this->data['AutorInN1'], ' ,').', '.trim( $this->data['AutorinVN1'], ' ,');
             if( strlen(trim( $this->data['AutorinVN2'])))
-                 $this->authors[] = trim( trim( $this->data['AutorInN2'], ' ,').', '.$this->data['AutorinVN2'], ' ,');
+                 $tmp[] = trim( trim( $this->data['AutorInN2'], ' ,').', '.$this->data['AutorinVN2'], ' ,');
             if( strlen(trim( $this->data['AutorinVN3'])))
-                 $this->authors[] = trim( $this->data['AutorInN3'], ' ,').', '.trim( $this->data['AutorinVN3'], ' ,');
+                 $tmp[] = trim( $this->data['AutorInN3'], ' ,').', '.trim( $this->data['AutorinVN3'], ' ,');
             if( strlen(trim( $this->data['KonzeptDrehbuchVor1'], ' ,')))
-                 $this->authors[] = trim( $this->data['KonzeptDrehbuchNach1'], ' ,').', '.trim( $this->data['KonzeptDrehbuchVor1'], ' ,');
+                 $tmp[] = trim( $this->data['KonzeptDrehbuchNach1'], ' ,').', '.trim( $this->data['KonzeptDrehbuchVor1'], ' ,');
             if( strlen(trim( $this->data['KonzeptDrehbuchVor2'])))
-                 $this->authors[] = trim( $this->data['KonzeptDrehbuchNach2'], ' ,').', '.trim( $this->data['KonzeptDrehbuchVor2'], ' ,');
+                 $tmp[] = trim( $this->data['KonzeptDrehbuchNach2'], ' ,').', '.trim( $this->data['KonzeptDrehbuchVor2'], ' ,');
 
             if( strlen(trim( $this->data['KAMERA'], ' ,')))
-                 $this->authors[] = trim( $this->data['KAMERA'], ' ,');
+                 $tmp = array_merge( $tmp, explode( ';', trim( $this->data['KAMERA'], ' ,')));
             if( strlen(trim( $this->data['Schnitt'], ' ,')))
-                 $this->authors[] = trim( $this->data['Schnitt'], ' ,');
+                 $tmp = array_merge( $tmp, explode( ';', trim( $this->data['Schnitt'], ' ,')));
             if( strlen(trim( $this->data['MUSIK'], ' ,')))
-                 $this->authors[] = trim( $this->data['MUSIK'], ' ,');
-            if( strlen(trim( $this->data['Ton'], ' ,')))
-                 $this->authors[] = trim( $this->data['Ton'], ' ,');
-
+                 $tmp = array_merge( $tmp, explode( ';', trim( $this->data['MUSIK'], ' ,')));
+           if( strlen(trim( $this->data['Ton'], ' ,')))
+                $tmp = array_merge( $tmp, explode( ';', trim( $this->data['Ton'], ' ,')));
+            if( strlen(trim( $this->data['Mitwirkende'], ' ,')))
+                 $tmp = array_merge( $tmp, explode( ';', trim( $this->data['Mitwirkende'], ' ,')));
+            foreach( $tmp as $a ) {
+              $a = trim(preg_replace( '/\(.+\)/', '', $a ));
+              $this->authors[] = $a;
+            }
 			$this->authors = array_unique( $this->authors );
         }
         return $this->authors;

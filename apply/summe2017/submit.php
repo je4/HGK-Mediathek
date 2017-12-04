@@ -1,5 +1,5 @@
 <?php
-
+die();
 include( 'init.inc.php' );
 require( 'lib/class.phpmailer.php' );
 require( 'lib/class.smtp.php' );
