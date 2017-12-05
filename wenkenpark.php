@@ -67,6 +67,20 @@ die Sammlung der Produktionen der Videowochen.
       <td style="width: 33%; vertical-align: top;">
         <h4>1984</h4>
 <?php
+  $query =   array (
+      'area' => '',
+      'filter' => array (),
+      'facets' => array (
+          'catalog' => array (
+            0 => 'Wenkenpark',
+          ),
+          'cluster' => array (
+            0 => 'Videowoche im Wenkenpark 1984',
+          ),
+      ),
+      'query' => 'author:"Bielz,+Gudrun"',
+  );
+
   $names = array();
   $thema = '1984';
   $sql = "SELECT DISTINCT name, THEMA FROM source_wenkenpark_people WHERE THEMA='{$thema}' ORDER BY name ASC;";
@@ -81,7 +95,9 @@ die Sammlung der Produktionen der Videowochen.
   sort( $names );
   $names = array_unique( $names );
   foreach( $names as $name ) {
-    echo "<!-- {$row['name']} --><a href=\"search.php?query=%7B%22area%22%3A%22%22%2C%22filter%22%3A%5B%5D%2C%22facets%22%3A%7B%22catalog%22%3A%5B%22Wenkenpark%22%5D%2C%22cluster%22%3A%5B%22Videowoche%20im%20Wenkenpark%20".urlencode( $thema )."%22%5D%7D%2C%22query%22%3A%22author%3A%5C%22".urlencode( $name )."%5C%22%22%7D\">".htmlspecialchars( $name )."</a><br />\n";
+    $query['query'] = 'author:"'.$name.'"';
+    $query['facets']['cluster'] = array( 'Videowoche im Wenkenpark '.$thema );
+    echo "<!-- {$row['name']} --><a href=\"search.php?query=".urlencode( json_encode( $query ))."\">".htmlspecialchars( $name )."</a><br />\n";
   }
 ?>
       </td>
@@ -102,7 +118,9 @@ die Sammlung der Produktionen der Videowochen.
         sort( $names );
         $names = array_unique( $names );
         foreach( $names as $name ) {
-          echo "<!-- {$row['name']} --><a href=\"search.php?query=%7B%22area%22%3A%22%22%2C%22filter%22%3A%5B%5D%2C%22facets%22%3A%7B%22catalog%22%3A%5B%22Wenkenpark%22%5D%2C%22cluster%22%3A%5B%22Videowoche%20im%20Wenkenpark%20".urlencode( $thema )."%22%5D%7D%2C%22query%22%3A%22author%3A%5C%22".urlencode( $name )."%5C%22%22%7D\">".htmlspecialchars( $name )."</a><br />\n";
+          $query['query'] = 'author:"'.$name.'"';
+          $query['facets']['cluster'] = array( 'Videowoche im Wenkenpark '.$thema );
+          echo "<!-- {$row['name']} --><a href=\"search.php?query=".urlencode( json_encode( $query ))."\">".htmlspecialchars( $name )."</a><br />\n";
         }
         ?>
       </td>
@@ -123,7 +141,9 @@ die Sammlung der Produktionen der Videowochen.
         sort( $names );
         $names = array_unique( $names );
         foreach( $names as $name ) {
-          echo "<!-- {$row['name']} --><a href=\"search.php?query=%7B%22area%22%3A%22%22%2C%22filter%22%3A%5B%5D%2C%22facets%22%3A%7B%22catalog%22%3A%5B%22Wenkenpark%22%5D%2C%22cluster%22%3A%5B%22Videowoche%20im%20Wenkenpark%20".urlencode( $thema )."%22%5D%7D%2C%22query%22%3A%22author%3A%5C%22".urlencode( $name )."%5C%22%22%7D\">".htmlspecialchars( $name )."</a><br />\n";
+          $query['query'] = 'author:"'.$name.'"';
+          $query['facets']['cluster'] = array( 'Videowoche im Wenkenpark '.$thema );
+          echo "<!-- {$row['name']} --><a href=\"search.php?query=".urlencode( json_encode( $query ))."\">".htmlspecialchars( $name )."</a><br />\n";
         }
         ?>
       </td>

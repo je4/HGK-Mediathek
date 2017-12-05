@@ -291,6 +291,15 @@ if( $json ) {
 		$data['result'][] = $fields;
 	}
 
+	$data['facets'] = array();
+	$facetSet = $rs->getFacetSet();
+	foreach( $facetSet->getFacets() as $key=>$facet ) {
+		$data['facets'][$key] = array();
+		foreach( $facet as $range => $count ) {
+			if( $count ) $data['facets'][$key][$range] = $count;
+		}
+	}
+
 	echo json_encode( $data );
 	exit;
 }
