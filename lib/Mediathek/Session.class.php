@@ -15,11 +15,19 @@ class Session implements \SessionHandlerInterface
   private $certEmail = null;
 
   private $subnetsFHNW = array();
-  private $localFHNW = false;
+  private $subnets = array();
+  //private $localFHNW = false;
 
   function __construct( $db, $server )
   {
-	$this->subnetsFHNW[] = new IPv6Net( "10.0.0.0/8" );
+  $this->subnets['fhnw'] = array();
+  $this->subnets['fhnw'][] = new IPv6Net( "10.0.0.0/8" );
+	$this->subnets['fhnw'][] = new IPv6Net( "192.168.0.0/16" );
+	$this->subnets['fhnw'][] = new IPv6Net( "147.86.0.0/16" );
+  $this->subnets['memoriav'] = array();
+  $this->subnets['memoriav'][] = new IPv6Net( "62.2.199.158/32" );
+
+  $this->subnetsFHNW[] = new IPv6Net( "10.0.0.0/8" );
 	$this->subnetsFHNW[] = new IPv6Net( "192.168.0.0/16" );
 	$this->subnetsFHNW[] = new IPv6Net( "147.86.0.0/16" );
 
@@ -233,11 +241,13 @@ class Session implements \SessionHandlerInterface
 
     $this->groups = array( 'global/guest' );
 
-	foreach( $this->subnetsFHNW as $sub ) {
-	  if( $sub->contains( $_SERVER['REMOTE_ADDR'])) {
-		$this->groups[] = "location/fhnw";
-		$this->localFHNW = true;
-		break;
+	foreach( $this->subnets as $loc=>$net ) {
+    foreach( $net as $sub ) {
+  	  if( $sub->contains( $_SERVER['REMOTE_ADDR'])) {
+    		$this->groups[] = "location/{$loc}";
+//    		$this->localFHNW = true;
+    		break;
+      }
 	  }
 	}
 
@@ -263,8 +273,8 @@ class Session implements \SessionHandlerInterface
     $sql = "SELECT grp FROM groups WHERE uniqueID=".$this->db->qstr( $this->shibGetUniqueID())." OR uniqueID=".$this->db->qstr( strtolower( $this->shibGetMail()));
     $rs = $this->db->Execute( $sql );
     foreach( $rs as $row ) {
-		if( preg_match( '/^fhnw\/.*$/', $row['grp'] ) && !$this->localFHNW ) continue;
-        $this->groups[] = strtolower( trim( $row['grp'] ));
+  		if( preg_match( '/^fhnw\/.*$/', $row['grp'] )) continue;
+      $this->groups[] = strtolower( trim( $row['grp'] ));
     }
     $rs->Close();
 

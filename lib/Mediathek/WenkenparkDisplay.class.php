@@ -152,25 +152,7 @@ class WenkenparkDisplay extends DisplayEntity {
 		//print_r( $session->getGroups());
 		// Fall 1
 //		if( !$loggedin || !$this->doc->embedded/* && !$cert */ ) {
-	if( false ) {
-?>
-<!--
-	<span style="; font-weight: bold;"></span><br>
-	<div class="facet" style="">
-		<div class="marker" style=""></div>
-			<div class="media">
-			<a class="media-left" href="#">
-				<img class="media-left" src="<?php echo $config['media']['picopen'].'/VWW'.intval($this->metadata['Publikationsnummer']).'.00001.thumb.png'; ?>" />
-			</a>
-			<div class="media-body">
-				<p><?php echo nl2br(htmlspecialchars( $this->metadata['KURZBESCHRIEB'] )); ?></p>
-			</div>
-		</div>
-	</div>
--->
-<?php
-		}
-		elseif(( $session->isAdmin() || $session->inAnyGroup( $this->doc->acl_content )) && $this->doc->embedded ) {
+if(( $session->isAdmin() || $session->inAnyGroup( $this->doc->acl_content )) && $this->doc->embedded ) {
 
 
 //		if( $session->isAdmin() ) {
@@ -179,7 +161,7 @@ class WenkenparkDisplay extends DisplayEntity {
 			if( file_exists( $inc )) {
 			 include( $inc );
 			}
-			else {
+			elseif( isset( $this->metadata['media'][0]['video'] )) {
 ?>
 	<span style="; font-weight: bold;">Film abspielen</span><br>
 	<div class="facet" style="min-width: 550px; text-align: center;">
@@ -195,6 +177,33 @@ class WenkenparkDisplay extends DisplayEntity {
 
 	</div>
 <?php
+			}
+			elseif( isset( $this->metadata['media'][0]['images'] )) {
+				?>
+				<span style="; font-weight: bold;">Abbildungen</span><br>
+				<div class="facet" style="min-width: 550px; text-align: center;">
+				  <div class="marker" style=""></div>
+				  <table style="width: 100%;">
+				    <tr>
+				      <td colspan="<?php echo count($this->metadata['media'][0]['images']); ?>" style="width: 80%;">
+				        <img style="max-width: 100%; max-height: 100%;" id="mainimg" src="<?php echo $basevideourl.'/'.$this->metadata['media'][0]['images'][0]; ?>" />
+				      </td>
+				    </tr>
+				    <tr>
+							<?php foreach( $this->metadata['media'][0]['images'] as $key=>$val ) {
+								$width = round(100/count($this->metadata['media'][0]['images']));
+								?>
+								<td style="width: <?php echo $width; ?>%; height: 100px; border: 1px solid white; background-image: url(<?php echo $basevideourl.'/'.$val; ?>); background-size: cover;">
+					        <div style="width: 100%; height: 100%;" onclick="$('#mainimg').attr( 'src', '<?php echo $basevideourl.'/'.$val; ?>');">
+					        </div>
+					      </td>
+							<?php } ?>
+				    </tr>
+				  </table>
+				</div>
+<?php
+			}
+			else {
 			}
 		}
 		else
@@ -226,7 +235,7 @@ class WenkenparkDisplay extends DisplayEntity {
 		<div class="media-body">
 			<p><?php echo htmlspecialchars( $this->metadata['KURZBESCHRIEB'] ); ?></p>
 		</div>
-	<?php if( $this->doc->embedded ) {
+	<?php if( $this->doc->embedded && isset( $this->metadata['media'][0]['stills'] )) {
 		for( $i = 0; $i < count( $this->metadata['media'][0]['stills'] ); $i++ ) {
 				$img = "{$basepicurl}thumbs/{$this->metadata['Publikationsnummer']}.still.{$i}.thumb.png";
 		?>

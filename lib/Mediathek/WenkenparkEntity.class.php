@@ -153,9 +153,13 @@ class WenkenparkEntity extends SOLRSource {
             $this->tags[] = 'index:medium:wenkenpark/'.md5( trim( $this->data['Ursprungsformat']) ).'/'.trim( $this->data['Ursprungsformat']);
         if( strlen(trim( $this->data['Sprache'])))
             $this->tags[] = 'index:language:wenkenpark/'.md5( trim( $this->data['Sprache']) ).'/'.trim( $this->data['Sprache']);
-            if( strlen(trim( $this->data['Schlagworte'])))
-              foreach( explode( ',', $this->data['Schlagworte'] ) as $t )
-                $this->tags[] = 'index:tag:wenkenpark/'.md5( trim( $t) ).'/'.trim( $t );
+        if( strlen(trim( $this->data['Schlagworte'])))
+          foreach( explode( ',', $this->data['Schlagworte'] ) as $t )
+            $this->tags[] = 'index:tag:wenkenpark/'.md5( trim( $t) ).'/'.trim( $t );
+        if( strlen(trim( $this->data['Bereich'])))
+            $this->tags[] = 'index:keyword:wenkenpark/'.md5( trim( $this->data['Bereich']) ).'/'.trim( $this->data['Bereich']);
+        if( strlen(trim( $this->data['Art der Produktion'])))
+            $this->tags[] = 'index:keyword:wenkenpark/'.md5( trim( $this->data['Art der Produktion']) ).'/'.trim( $this->data['Art der Produktion']);
 
 		$tech = array();
 		if( strlen(trim( $this->data['TV System']))) $tech[] = trim( $this->data['TV System']);
@@ -273,10 +277,10 @@ class WenkenparkEntity extends SOLRSource {
           return array( 'global/guest' );
           break;
         case 'station':
-          return array( 'certificate/mediathek', 'global/admin' );
+          return array( 'certificate/mediathek', 'global/admin', 'location/memoriav' );
           break;
         case 'intern':
-          return array( 'location/fhnw' );
+          return array( 'location/fhnw', 'location/memoriav' );
           break;
         default:
           return array( 'global/admin' );
