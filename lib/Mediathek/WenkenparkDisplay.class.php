@@ -157,9 +157,9 @@ class WenkenparkDisplay extends DisplayEntity {
 <?php
 
 					if( isset( $this->metadata['LAENGE'] ))
-						echo "Dauer: ".htmlspecialchars( substr( $this->metadata['LAENGE'], 0, -2 ).':'.substr( $this->metadata['LAENGE'], -2 ) )."<br />\n";;
+						echo "<b>Dauer</b>: ".htmlspecialchars( substr( $this->metadata['LAENGE'], 0, -2 ).':'.substr( $this->metadata['LAENGE'], -2 ) )."<br />\n";;
 					if( isset( $this->metadata['Ursprungsformat'] ))
-						echo "Ursprungsformat: ".htmlspecialchars($this->metadata['Ursprungsformat'])."<br />\n";;
+						echo "<b>Ursprungsformat</b>: ".htmlspecialchars($this->metadata['Ursprungsformat'])."<br />\n";;
 					$sys = array();
 					if( isset( $this->metadata['TV System'] ))
 						$sys[] = $this->metadata['TV System'];
@@ -208,7 +208,15 @@ class WenkenparkDisplay extends DisplayEntity {
 		</div>
 		<br />
 <?php  }
-	if( $session->isLoggedIn() ) {
+	if( $loggedin || $session->inAnyGroup( array( 'location/memoriav') )) {
+		$bem = array();
+		if( $this->metadata['Generation'] ) $bem[] = '<b>Generation</b>: '.$this->metadata['Generation'];
+		if( $this->metadata['Kassetten Typ'] ) $bem[] = '<b>Kassetten Typ</b>: '.$this->metadata['Kassetten Typ'];
+		if( $this->metadata['Datum 1. Sichtung'] ) $bem[] = '<b>Datum 1. Sichtung</b>: '.$this->metadata['Datum 1. Sichtung'];
+		if( $this->metadata['Transferdatum'] ) $bem[] = '<b>Transferdatum</b>: '.$this->metadata['Transferdatum'];
+		if( $this->metadata['Zustand'] ) $bem[] = '<b>Zustand</b>: '.$this->metadata['Zustand'];
+		$str = implode( "<br />\n", $bem );
+		if( strlen($str) ) {
  ?>
 			<span style="; font-weight: bold;">Konservatorische Metadaten</span><br>
 			<div class="facet" style="">
@@ -216,19 +224,13 @@ class WenkenparkDisplay extends DisplayEntity {
 				<span style="">
 					<div style="line-height: 1.4;">
 				<?php
-				$bem = array();
-				if( $this->metadata['Generation'] ) $bem[] = '<b>Generation</b>: '.$this->metadata['Generation'];
-				if( $this->metadata['Kassetten Typ'] ) $bem[] = '<b>Kassetten Typ</b>: '.$this->metadata['Kassetten Typ'];
-				if( $this->metadata['Datum 1. Sichtung'] ) $bem[] = '<b>Datum 1. Sichtung</b>: '.$this->metadata['Datum 1. Sichtung'];
-				if( $this->metadata['Transferdatum'] ) $bem[] = '<b>Transferdatum</b>: '.$this->metadata['Transferdatum'];
-				if( $this->metadata['Zustand'] ) $bem[] = '<b>Zustand</b>: '.$this->metadata['Zustand'];
-				echo "<span>".implode( "<br />\n", $bem )."</span>";
-
+				echo "<span>".$str."</span>";
 				 ?>
 			 </div>
 		 </span>
 		</div>
 <?php
+	}
 }
  ?>
 
@@ -470,9 +472,15 @@ if(( $session->isAdmin() || $session->inAnyGroup( $this->doc->acl_content )) && 
                     <?php if( strlen( $this->metadata['Publikationsnummer'] )) echo 'Publikationsnummer: '.htmlspecialchars( $this->metadata['Publikationsnummer'] )."<br />\n"; ?>
 
 					<?php
-					if( count( $this->metadata['media'][0]['stills'] ) > 0 ) {
+					if( @count( $this->metadata['media'][0]['stills'] ) > 0 ) {
 						for( $i = 0; $i < min( 2, count( $this->metadata['media'][0]['stills'] )); $i++ ) {
 							echo "<object type=\"image/png\" data=\"{$basepicurl}thumbs/{$this->metadata['Publikationsnummer']}.still.{$i}.thumb.png\"></object>\n";
+						}
+							echo "<br />\n";
+					}
+					if( @count( $this->metadata['media'][0]['images'] ) > 0 ) {
+						for( $i = 0; $i < min( 2, count( $this->metadata['media'][0]['images'] )); $i++ ) {
+							echo "<object style=\"width: 200px;\" type=\"image/png\" data=\"{$basepicurl}{$this->metadata['media'][0]['images'][$i]}\"></object>\n";
 						}
 							echo "<br />\n";
 					}
