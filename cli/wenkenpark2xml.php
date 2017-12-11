@@ -28,8 +28,6 @@ $data = json_decode( file_get_contents( 'vww.json' ), true );
 
 $xml = new \SimpleXMLElement( '<xml />');
 
-
-
 $sql = "SELECT * FROM source_wenkenpark WHERE `Publikationsnummer` IS NOT NULL";
 $rs = $db->Execute( $sql );
 foreach( $rs as $row ) {

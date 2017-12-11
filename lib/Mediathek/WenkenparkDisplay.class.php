@@ -77,6 +77,45 @@ class WenkenparkDisplay extends DisplayEntity {
 		return $schema;
 	}
 
+	protected function buildPersonLink( $data, $vn = false ) {
+		global $pagesize;
+		?>
+		<!--
+		<a href="javascript:doSearchFull('author:&quot;<?php echo str_replace('\'', '\\\'', trim( $author )); ?>&quot;', '', [], {'catalog':[<?php echo $this->getCatalogList(); ?>]}, 0, <?php echo $pagesize; ?> );">
+		-->
+		<?php
+
+		$ps = explode( ';', $data );
+		$us = array();
+		foreach( $ps as $p ) {
+			if( preg_match( '/(.*) \((.*)\)/', $p, $matches )) {
+				$name = $matches[1];
+				$role = $matches[2];
+			}
+			else {
+				$name = $p;
+				$role = null;
+			}
+			$name = trim( $name, ', ' );
+			if( $vn ) {
+				$ns = explode( ',', $name );
+				if( count( $ns ) > 1 ) $name2 = $ns[1].' '.$ns[0];
+				else $name2 = $name;
+			}
+			else {
+				$name2 = $name;
+			}
+			$name2 = trim( $name2, ', ' );
+
+			$str = "<a href=\"javascript:doSearchFull('author:&quot;".str_replace('\'', '\\\'', trim( $name ))."&quot;', '', [], {'catalog':[".$this->getCatalogList()."]}, 0, {$pagesize} );\">";
+			$str .= htmlspecialchars( $name2 );
+			$str .= "</a>";
+			if( $role ) $str .= " (".htmlspecialchars( $role ).")";
+			$us[] = $str;
+		}
+		return implode( ', ', $us );
+	}
+
 	public function detailView() {
         global $config, $googleservice, $googleclient, $session, $page, $pagesize;
 
@@ -102,33 +141,21 @@ class WenkenparkDisplay extends DisplayEntity {
 			<h5><?php
 			$authors = array();
             if( strlen(trim( $this->metadata['AutorinVN1'])))
-                 $authors[] = trim( $this->metadata['AutorinVN1']).' '.trim( $this->metadata['AutorInN1']);
+                 $authors[] = trim( $this->metadata['AutorInN1']).', '.trim( $this->metadata['AutorinVN1']);
             if( strlen(trim( $this->metadata['AutorinVN2'])))
-                 $authors[] = trim( $this->metadata['AutorinVN2']).' '.trim( $this->metadata['AutorInN2']);
+                 $authors[] = trim( $this->metadata['AutorInN2']).', '.trim( $this->metadata['AutorinVN2']);
             if( strlen(trim( $this->metadata['AutorinVN3'])))
-                 $authors[] = trim( $this->metadata['AutorinVN3']).' '.trim( $this->metadata['AutorInN3']);
+                 $authors[] = trim( $this->metadata['AutorInN3']).', '.trim( $this->metadata['AutorinVN3']);
 			echo '<span style="font-weight: normal; font-size: 1.1rem;">';
+			echo $this->buildPersonLink( implode( '; ', $authors ), true );
 
-
-			echo htmlentities( implode( ", ", $authors ));
-
-			echo "</span>: ";
+			echo "</span><br /> ";
 			echo htmlentities( $this->metadata['TITEL'] );
 			?> <span style="font-size: 80%;">(<?php echo htmlspecialchars( $this->metadata['Produktionsjahr'] );?>)</span></h5>
-			<span style="font-size: 80%; line-height: 1em;">
+			<span style="">
+				<div style="line-height: 1.4;">
 <?php
-					if( @strlen(trim( $this->metadata['KonzeptDrehbuchVor1'])))
-						echo "Konzept/Drehbuch: ".htmlentities( trim( $this->metadata['KonzeptDrehbuchVor1']).' '.trim( $this->metadata['KonzeptDrehbuchNach1']))."<br />\n";
-					if( @strlen(trim( $this->metadata['KonzeptDrehbuchVor2'])))
-						echo "Konzept/Drehbuch: ".htmlentities( trim( $this->metadata['KonzeptDrehbuchVor2']).' '.trim( $this->metadata['KonzeptDrehbuchNach2']))."<br />\n";
-					if( @strlen(trim( $this->metadata['KAMERA'])))
-						echo "Kamera: ".htmlentities( trim( $this->metadata['KAMERA']))."<br />\n";
-					if( @strlen(trim( $this->metadata['Schnitt'])))
-						echo "Schnitt: ".htmlentities( trim( $this->metadata['Schnitt']))."<br />\n";
-					if( @strlen(trim( $this->metadata['MUSIK'])))
-						echo "Musik: ".htmlentities( trim( $this->metadata['MUSIK']))."<br />\n";
-					if( @strlen(trim( $this->metadata['Ton'])))
-						echo "Ton: ".htmlentities( trim( $this->metadata['Ton']))."<br />\n";
+
 					if( isset( $this->metadata['LAENGE'] ))
 						echo "Dauer: ".htmlspecialchars( substr( $this->metadata['LAENGE'], 0, -2 ).':'.substr( $this->metadata['LAENGE'], -2 ) )."<br />\n";;
 					if( isset( $this->metadata['Ursprungsformat'] ))
@@ -143,8 +170,68 @@ class WenkenparkDisplay extends DisplayEntity {
 					if( count( $sys )) echo htmlspecialchars( implode( ' / ', $sys ))."<br />\n";
 
 ?>
+				</div>
 			</span>
 		</div>
+		<br />
+<?php
+	$str = '';
+
+	if( @strlen(trim( $this->metadata['KonzeptDrehbuchVor1'])))
+		$str .= "<b>Konzept/Drehbuch</b>: ".$this->buildPersonLink( trim( $this->metadata['KonzeptDrehbuchVor1']).' '.trim( $this->metadata['KonzeptDrehbuchNach1']), true)."<br />\n";
+	if( @strlen(trim( $this->metadata['KonzeptDrehbuchVor2'])))
+		$str .= "<b>Konzept/Drehbuch</b>: ".$this->buildPersonLink( trim( $this->metadata['KonzeptDrehbuchVor2']).' '.trim( $this->metadata['KonzeptDrehbuchNach2']), true)."<br />\n";
+	if( @strlen(trim( $this->metadata['KAMERA'])))
+		$str .= "<b>Kamera</b>: ".$this->buildPersonLink( trim( $this->metadata['KAMERA']), true)."<br />\n";
+	if( @strlen(trim( $this->metadata['Schnitt'])))
+		$str .= "<b>Schnitt</b>: ".$this->buildPersonLink( trim( $this->metadata['Schnitt']), true)."<br />\n";
+	if( @strlen(trim( $this->metadata['MUSIK'])))
+		$str .= "<b>Musik</b>: ".$this->buildPersonLink( trim( $this->metadata['MUSIK']), true)."<br />\n";
+	if( @strlen(trim( $this->metadata['Ton'])))
+		$str .= "<b>Ton</b>: ".$this->buildPersonLink( trim( $this->metadata['Ton']), true)."<br />\n";
+	if( @strlen(trim( $this->metadata['Quelle'])))
+			$str .= "<b>Quelle</b>: ".trim( $this->metadata['Quelle'])."<br />\n";
+
+		if( strlen( $str )) {
+ ?>
+		<span style="; font-weight: bold;">Weitere Daten</span><br>
+		<div class="facet" style="">
+			<div class="marker" style=""></div>
+			<span style="">
+				<div style="line-height: 1.4;">
+			<?php
+			echo $str;
+			?>
+
+		 </div>
+			</span>
+		</div>
+		<br />
+<?php  }
+	if( $session->isLoggedIn() ) {
+ ?>
+			<span style="; font-weight: bold;">Konservatorische Metadaten</span><br>
+			<div class="facet" style="">
+				<div class="marker" style=""></div>
+				<span style="">
+					<div style="line-height: 1.4;">
+				<?php
+				$bem = array();
+				if( $this->metadata['Generation'] ) $bem[] = '<b>Generation</b>: '.$this->metadata['Generation'];
+				if( $this->metadata['Kassetten Typ'] ) $bem[] = '<b>Kassetten Typ</b>: '.$this->metadata['Kassetten Typ'];
+				if( $this->metadata['Datum 1. Sichtung'] ) $bem[] = '<b>Datum 1. Sichtung</b>: '.$this->metadata['Datum 1. Sichtung'];
+				if( $this->metadata['Transferdatum'] ) $bem[] = '<b>Transferdatum</b>: '.$this->metadata['Transferdatum'];
+				if( $this->metadata['Zustand'] ) $bem[] = '<b>Zustand</b>: '.$this->metadata['Zustand'];
+				echo "<span>".implode( "<br />\n", $bem )."</span>";
+
+				 ?>
+			 </div>
+		 </span>
+		</div>
+<?php
+}
+ ?>
+
 	</div>
 	<div class="col-md-6">
 <?php
