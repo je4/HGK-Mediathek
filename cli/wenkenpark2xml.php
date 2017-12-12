@@ -8,6 +8,9 @@ http://localhost:8983/solr/base/update?stream.body=%3Cdelete%3E%3Cquery%3Ecatalo
 
 namespace Mediathek;
 
+$sqlfile = "wenkenpark_handle.sql";
+
+
 include '../init.inc.php';
 
 function addPersons( $elem, $data, $role=null ) {
@@ -23,6 +26,8 @@ function addPersons( $elem, $data, $role=null ) {
     if( $role ) $pelem->addAttribute( 'Rolle', $role );
   }
 }
+
+
 
 $data = json_decode( file_get_contents( 'vww.json' ), true );
 
@@ -102,16 +107,30 @@ foreach( $rs as $row ) {
     $systeminfo = $werk->addChild( 'Systeminformationen' );
     $url = $systeminfo->addChild( 'URL' );
     $url->addChild( 'Online_Zugang', 'http://hdl.handle.net/20.500.11806/mediathek/vww-'.$sys );
+/*
+    if( isset( $meta[1]['video'])) {
+      file_put_contents( $sqlfile, "INSERT INTO `handles_handle` (`handle`, `idx`, `type`, `data`, `ttl_type`, `ttl`, `timestamp`, `refs`, `admin_read`, `admin_write`, `pub_read`, `pub_write`) VALUES
+('20.500.11806/mediathek/vww-{$sys}/stream', 1, 'URL', ".$db->qstr("{$config['media']['videohybrid']}/vww/{$meta[1]['video']}").", 0, 86400, NULL, NULL, 1, 0, 1, 0);\n", FILE_APPEND);
+    }
+    elseif( isset( $meta[0]['video'])) {
+      file_put_contents( $sqlfile, "INSERT INTO `handles_handle` (`handle`, `idx`, `type`, `data`, `ttl_type`, `ttl`, `timestamp`, `refs`, `admin_read`, `admin_write`, `pub_read`, `pub_write`) VALUES
+('20.500.11806/mediathek/vww-{$sys}/stream', 1, 'URL', ".$db->qstr("{$config['media']['videohybrid']}/vww/{$meta[0]['video']}").", 0, 86400, NULL, NULL, 1, 0, 1, 0);\n", FILE_APPEND);
+    }
+*/
+    if( isset( $meta[0]['video'])) {
+        $url->addChild( 'Stream', 'http://hdl.handle.net/20.500.11806/mediathek/vww-'.$sys.'/stream' );
+    }
+
     $memobase = $systeminfo->addChild( 'Memobase' );
     switch( $row['Rechte Internet'] ) {
       case 'open':
         $zugang = 'Internet';
         break;
       case 'intern':
-        $zugang = 'Memobase; Hochschule für Gestaltun und Kunst Basel / Mediathek';
+        $zugang = 'Memobase; Hochschule für Gestaltung und Kunst Basel / Mediathek';
         break;
       case 'station':
-        $zugang = 'Memobase; Sichtungsstation Hochschule für Gestaltun und Kunst Basel / Mediathek';
+        $zugang = 'Memobase; Sichtungsstation Hochschule für Gestaltung und Kunst Basel / Mediathek';
         break;
       default:
         $zugang = 'kein Zugang';
@@ -138,6 +157,7 @@ foreach( $rs as $row ) {
       $img = $basevideourl.$meta[0]['images'][0];
     }
 
+    //file_put_contents( 'wenkenpark/vww-'.$sys.'.png', file_get_contents( $img ));
     $daten->addChild( 'Vorschaubild', $img );
 
 
