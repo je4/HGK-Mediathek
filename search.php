@@ -77,7 +77,7 @@ if( $query ) {
 
 		// md5-sum not valid for query
 		if( $md5 != $q ) {
-			header("Location: ?q={$md5}&page={$page}&pagesize={$pagesize}");
+			header("Location: ?q={$md5}&page={$page}&pagesize={$pagesize}".($json ? '&json':''));
 			exit;
 		}
 	}

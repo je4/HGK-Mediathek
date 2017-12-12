@@ -742,7 +742,8 @@ class swissbibEntity extends SOLRSource {
     		$this->getType();
     		$carriers = $this->getAll( '338', null, null, 'a' );
     		foreach( $carriers as $carrier ) {
-    			$this->online |= (trim($carrier) == 'online resource' );
+					$this->online |= (trim(strtolower($carrier)) == 'online resource' );
+					$this->online |= (trim(strtolower($carrier)) == 'online-resource' );
     		}
         return $this->online;
     }
