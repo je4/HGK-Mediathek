@@ -26,6 +26,7 @@ namespace Mediathek\Zotero;
 
 class Library {
   var $vars = null;
+  var $acls = null;
 
   function __construct( $data ) {
     $this->data = $data;
@@ -36,17 +37,7 @@ class Library {
   }
 
   public function getVar( $key ) {
-    if( $this->vars == null ) {
-      $this->vars = array();
-      $descr = $this->getDescription();
-      if( preg_match_all('/([a-z0-9_.]+):([a-z0-9_\/\-+.: ]+)/i', $descr, $matches, PREG_SET_ORDER )) {
-        foreach( $matches as $match ) {
-          if( !array_key_exists( $match[1], $this->vars )) $this->vars[$match[1]] = array();
-          $this->vars[$match[1]][] = $match[2];
-        }
-      }
-    }
-//    if( $key == 'title' ) var_dump( $this->vars );
+    if( $this->vars == null ) $this->getDescription();
     return array_key_exists( $key, $this->vars ) ? $this->vars[$key] : array();
   }
 
@@ -62,8 +53,39 @@ class Library {
     return array_key_exists( 'name', $this->data['data'] ) ? $this->data['data']['name'] : '';
   }
 
+  public function hasImage() {
+    return array_key_exists( 'hasImage', $this->data['data'] ) ? intval( $this->data['data']['hasImage'] ) > 0 : false;
+  }
+
   public function getDescription() {
-    return array_key_exists( 'name', $this->data['data'] ) ? $this->data['data']['description'] : '';
+    if( !array_key_exists( 'name', $this->data['data'] )) return '';
+    $descr = strip_tags($this->data['data']['description'], '<br><br/>' );
+    $descr = str_replace( '<br />', "\n", str_replace( '<br>', "\n", $descr ));
+    $lines = explode( "\n", $descr );
+    $this->acls = array();
+    $this->vars = array();
+    $descr = '';
+    foreach( $lines as $line ) {
+      if( preg_match( '/(acl_[a-z]+):([a-z\/]+)/', $line, $matches )) {
+        if( !array_key_exists( $matches[1], $this->acls )) $this->acls[$matches[1]] = array();
+        $this->acls[$matches[1]][] = $matches[2];
+      }
+
+      if( preg_match( '/([a-z0-9_.]+):([a-z0-9_\/\-+.:, ]+)/i', $line, $matches )) {
+        if( !array_key_exists( $matches[1], $this->vars )) $this->vars[$matches[1]] = array();
+        $this->vars[$matches[1]][] = $matches[2];
+      }
+      else {
+        $descr .= $line."\n";
+      }
+    }
+    return trim( $descr );
+  }
+
+  public function getACL( $key = null ) {
+    if( $this->acls == null ) $this->getDescription();
+    if( $key ) return array_key_exists( $key, $this->vars ) ? $this->vars[$key] : array();
+    else return $this->acls;
   }
 
   public function getNumItems() {

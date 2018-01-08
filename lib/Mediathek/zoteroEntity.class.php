@@ -336,6 +336,10 @@ class zoteroEntity extends SOLRSource {
     return $this->item->getCSL();
   }
 
+  public function getLibraryCatalog() {
+
+  }
+
 }
 
 ?>

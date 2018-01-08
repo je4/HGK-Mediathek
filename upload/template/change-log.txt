@@ -1,0 +1,19 @@
+v1.2
+- Added: Invoice Page
+- Added: Dark Skin (with RTL support)
+- Updated: Dropdown html structure in header panel.
+- Updated: Contact list html structure in right sidebar.
+- Updated: Page title and section title html structure in main panel.
+
+v1.1
+- Added: New skin (Oreo)
+- Added: RTL Support for simple-white skin
+- Added: Profile Page.
+- Added: Profile Page RTL.
+- Added: Compose Message in Mailbox.
+- Updated: Adding a separate css files for skins.
+- Updated: Restructuring markup of left sidebar menu using <ul>.
+- Updated: Replace sidebar skins into template skins.
+
+v1.0
+- Initial Release

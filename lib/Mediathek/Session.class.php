@@ -188,6 +188,14 @@ class Session implements \SessionHandlerInterface
     return (isset( $this->server['surname'] ) ? $this->server['surname'] : "");
   }
 
+  public function shibGetLogoSmall() {
+    return (isset( $this->server['Meta-smallLogo'] ) ? $this->server['Meta-smallLogo'] : null);
+  }
+
+  public function shibGetLogoLarge() {
+    return (isset( $this->server['Meta-largeLogo'] ) ? $this->server['Meta-largeLogo'] : null);
+  }
+
   public function shibGetEmployeenumber() {
     return (isset( $this->server['employeeNumber'] ) ? $this->server['employeeNumber'] : "");
   }
@@ -204,10 +212,24 @@ class Session implements \SessionHandlerInterface
     return isset( $this->server['affiliation'] ) ? $this->server['affiliation'] : null;
   }
 
+  public function shibGetInformationURL() {
+    return (isset( $this->server['Meta-informationURL'] ) ? $this->server['Meta-informationURL'] : null);
+  }
+
+  public function shibGetOrganizationURL() {
+    return (isset( $this->server['Meta-organizationURL'] ) ? $this->server['Meta-organizationURL'] : null);
+  }
+
   public function shibDepartement() {
 	  if( isset( $this->server['orgunit-dn'] ))
-		if( preg_match( "/OU=([A-Za-z0-9]+)(,OU=([A-Z]+))?,OU=([0-9]+),[a-zA-Z,=],DC=fhnw,DC=ch/", $this->server['orgunit-dn'], $matches )) {
-			return $matches[1].$matches[2].$matches[4];
+		if( preg_match( "/(OU=([A-Za-z0-9]+),)?(OU=([A-Za-z]+),)?OU=([0-9]+),[a-zA-Z,=]+,DC=(fhnw),DC=ch/", $this->server['orgunit-dn'], $matches )) {
+      $rev = array();
+      foreach( array_reverse( $matches ) as $val ) {
+        if( strpos( $val, '=' )) continue;
+        $rev[] = $val;
+      }
+
+			return implode( '/', $rev );
 		}
 	  return null;
   }

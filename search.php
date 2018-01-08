@@ -274,16 +274,16 @@ catch ( \Exception $e ) {
 	die();
 }
 $numResults = $rs->getNumFound();
-$numPages = floor( $numResults / $pagesize );
+$numPages = min( 20, floor( $numResults / $pagesize ));
 if( $numResults % $pagesize > 0 ) $numPages++;
 
 $debugstr[] = "<!-- ".$qstr." (Documents: {$numResults} // Page ".($page+1)." of {$numPages}) -->\n";
 
 if( $json ) {
-	$data = array( 'pages'=>$numPages, 'numFound'=>$numResults, 'pageSize'=>$pagesize, $result = array() );
-	$data['_self'] = $_SERVER['SCRIPT_URI'].'?q='.$q.'&pagesize='.$pagesize.'&page='.($page);
-	if( $page+1 < $numPages) $data['_next'] = $_SERVER['SCRIPT_URI'].'?q='.$q.'&pagesize='.$pagesize.'&page='.($page+1);
-	if( $page > 0 ) $data['_prev'] = $_SERVER['SCRIPT_URI'].'?q='.$q.'&pagesize='.$pagesize.'&page='.($page-1);
+	$data = array( 'pages'=>$numPages, 'numFound'=>$numResults, 'pageSize'=>$pagesize, 'pageNo'=>$page, $result = array() );
+	$data['_self'] = $_SERVER['SCRIPT_URI'].'?q='.$q.'&pagesize='.$pagesize.'&page='.($page).'&json';
+	if( $page+1 < $numPages) $data['_next'] = $_SERVER['SCRIPT_URI'].'?q='.$q.'&pagesize='.$pagesize.'&page='.($page+1).'&json';
+	if( $page > 0 ) $data['_prev'] = $_SERVER['SCRIPT_URI'].'?q='.$q.'&pagesize='.$pagesize.'&page='.($page-1).'&json';
 
 	foreach( $rs as $doc ) {
 		$fields = (array)$doc->getFields();
@@ -300,6 +300,7 @@ if( $json ) {
 		}
 	}
 
+	header( 'Content-type: text/json' );
 	echo json_encode( $data );
 	exit;
 }

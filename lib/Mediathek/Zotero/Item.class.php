@@ -139,6 +139,15 @@ class Item {
     return array_key_exists( 'pages', $this->data['data'] ) ? $this->data['data']['pages'] : 0;
   }
 
+  public function getLibraryCatalog() {
+    $cat = array_key_exists( 'libraryCatalog', $this->data['data'] ) ? $this->data['data']['libraryCatalog'] : '';
+    if( !strlen( $cat ) && $this->library ) {
+      $ret = $this->library->getVar( 'library' );
+      if( count( $ret )) return $ret[0];
+    }
+    return $cat;
+  }
+
   public function getCreators() {
     if( !array_key_exists( 'creators', $this->data['data'] )) return array();
     $cs = array();

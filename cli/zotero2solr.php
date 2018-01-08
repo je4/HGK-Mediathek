@@ -6,7 +6,7 @@ include '../init.inc.php';
 
 $hdlprefix = '20.500.11806/mediathek/';
 $urlbase = 'https://mediathek.hgk.fhnw.ch/detail.php?id=';
-$groups = array( 1387750, 1510019, 1510009, 1624911, 1803850 );
+$groups = array( 1387750, 1510019, 1510009, 1624911, 1803850, 2061687 );
 
 $solr = new SOLR( $solrclient );
 

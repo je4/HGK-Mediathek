@@ -485,6 +485,7 @@ if(( $session->isAdmin() || $session->inAnyGroup( $this->doc->acl_content )) && 
 							echo "<br />\n";
 					}
 					?>
+					Quelle: Videowochen im Wenkenpark<br />
 					ID: <?php echo $this->doc->id; ?><br />
 					<a href="detail.php?<?php echo "id=".urlencode( $this->doc->id ); foreach( $this->urlparams as $key=>$val ) echo '&'.$key.'='.urlencode($val); ?>"><i class="fa fa-folder-open" aria-hidden="true"></i> Details</a><br />
 

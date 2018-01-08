@@ -404,6 +404,8 @@ class zoteroDisplay extends DisplayEntity {
     	global $config;
 
 
+			$item = $this->entity->getItem();
+
 		$html = '';
 		$t = strtolower( $this->doc->type );
     $authors = array_unique( $this->item->getCreators());
@@ -452,7 +454,10 @@ class zoteroDisplay extends DisplayEntity {
                   ?>
 					<?php if( $this->item->getUrl()) { ?><i class="fa fa-external-link" aria-hidden="true"></i><a href="redir.php?id=<?php echo urlencode( $this->doc->id ).'&url='.urlencode( $this->item->getUrl())."\" target=\"blank\">".htmlspecialchars( $this->item->getUrl() )."</a>"; ?>
 					<br />
-          <?php } ?>
+          <?php }
+						$cat = $item->getLibraryCatalog();
+						if( strlen( $cat )) echo "Quelle: ".htmlspecialchars( $cat )."<br />\n";
+					?>
 
 					ID: <?php echo $this->doc->id; ?><br />
 					<a href="detail.php?<?php echo "id=".urlencode( $this->doc->id ); foreach( $this->urlparams as $key=>$val ) echo '&'.$key.'='.urlencode($val); ?>"><i class="fa fa-folder-open" aria-hidden="true"></i> Details</a><br />
