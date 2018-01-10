@@ -137,6 +137,8 @@ function thesis2zotero(){
             $objZotero->abstractNote = $rowThesis->Abstract;
             $objZotero->seriesTitle = $rowThesis->SeriesTitle;
             $objZotero->place = $rowThesis->Place;
+            $objZotero->runningTime = $rowThesis->RunningTime;
+            $objZotero->libraryCatalog = $rowThesis->LibraryCatalog;
         }
 
 
