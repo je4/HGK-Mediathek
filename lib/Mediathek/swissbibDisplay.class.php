@@ -198,10 +198,10 @@ class swissbibDisplay extends DisplayEntity {
 								}
 							}
 ?>
-							Quelle: <?php  echo $this->doc->source; ?><br />
+							Quelle: <a href="https://www.swissbib.ch/Record/<?php  echo $this->doc->originalid; ?>">swissbib</a></a><br />
 							<div id='RIB'></div>
 					</div>
-				</div>
+				</div> 
 			</div>
 			<div class="col-md-6">
 <?php
@@ -509,7 +509,7 @@ if( DEBUG ) {
 ?>
 
 <?php
-				if( count( $authors ) > 1 ) echo "<br />\n";
+				if( count( $authors ) >= 1 ) echo "<br />\n";
 				if ($this->highlight && count( $this->highlight )) {
 ?>
 				<p style="background-color: #f0f0f0; margin-left: +20px; border-top: 1px solid black; border-bottom: 1px solid black;"><i>
@@ -578,6 +578,9 @@ if( DEBUG ) {
 					}
 				}
 */
+?>			
+				Quelle: <a href="https://www.swissbib.ch/Record/<?php  echo $this->doc->originalid; ?>">swissbib</a></a><br />
+<?php				
 				echo "ID: ".$this->doc->id."<br />\n";
 				$inKiste = false;
 				if( is_array( $this->doc->location )) foreach( $this->doc->location as $loc ) {
