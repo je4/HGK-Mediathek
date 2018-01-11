@@ -26,6 +26,15 @@ function thesis2zotero(){
     }
     $tmplNote = $resGetTemplateNote->body;
 
+    //Get Zotero Attachment Link template
+    $uriGetTemplateLinkAttch = "$APIURL/items/new?itemType=attachment&linkMode=linked_url";
+    $resGetTemplateLinkAttch = Httpful\Request::get($uriGetTemplateLinkAttch)->send();
+    if($resGetTemplateLinkAttch->code!=200){
+        echo "Zotero note template not loaded";
+        die();
+    }
+    $tmplLinkAttch = $resGetTemplateLinkAttch->body;
+
     //Get Zotero blogPost template
     $uriGetTemplateBlogPost = "$APIURL/items/new?itemType=blogPost";
     $resGetTemplateBlogPost = Httpful\Request::get($uriGetTemplateBlogPost)->send();
@@ -99,7 +108,7 @@ function thesis2zotero(){
                 $objZotero = clone $tmplVideo;
                 break;
             default:
-                echo "Unknown Item Type";
+                echo "Unknown Item Type: {$rowThesis->ItemType}";
                 continue;
         }
 
@@ -112,6 +121,7 @@ function thesis2zotero(){
             $objZotero->date = $rowThesis->Date;
             $objZotero->extra = $rowThesis->Extra;
             $objZotero->url = $rowThesis->URL;
+            $objZotero->callNumber = $rowThesis->CallNumber;
             if(!empty($rowThesis->Tag1))$objZotero->tags[] = array('tag'=>$rowThesis->Tag1);
             if(!empty($rowThesis->Tag2))$objZotero->tags[] = array('tag'=>$rowThesis->Tag2);
         }
@@ -120,7 +130,7 @@ function thesis2zotero(){
             foreach ($contributors as $contributor){
                 $objZotero->creators[] = $contributor;
             }
-            $objZotero->callNumber = $rowThesis->CallNumber;
+
 
         }
         if (in_array($rowThesis->ItemType, ['videoRecording'])){
@@ -167,6 +177,15 @@ function thesis2zotero(){
             }
         }
 
+        //Add Link Attachment
+        if(!empty($rowThesis->Attachment) ){
+            $currLinkAttch = clone $tmplLinkAttch;
+            $currLinkAttch->title = "Videolink";
+            $currLinkAttch->url = $rowThesis->Attachment;
+            $currLinkAttch->parentItem = $keyThesis;
+            if(!postNote($currLinkAttch)) continue;
+        }
+
         $stmtSetInserted->execute(array($rowThesis->id));
 
 
@@ -206,7 +225,7 @@ function postNote($note){
     $jsonNote = '['.json_encode($note).']';
     echo "Posting note...";
     $resPostNote = Httpful\Request::post($uriPostNote)->addHeader('Authorization', "Bearer $APIKEY")->body($jsonNote)->sendsJson()->send();
-    //var_dump($resPostThesis);
+    //var_dump($resPostNote);
 
     if($resPostNote->code==200 && count(get_object_vars($resPostNote->body->success)) ==1){
         echo "OK\n";
@@ -229,15 +248,15 @@ function postObject($thesis){
     echo "Posting object {$thesis->title}...";
     $resPostThesis = Httpful\Request::post($uriPostThesis)->addHeader('Authorization', "Bearer $APIKEY")->body($jsonThesis)->sendsJson()->send();
     //var_dump($resPostThesis);
-
+    //exit();
     if($resPostThesis->code==200 && count(get_object_vars($resPostThesis->body->success)) ==1){
         $keyThesis = get_object_vars($resPostThesis->body->success)[0];
         echo "OK, Key $keyThesis\n";
         return $keyThesis;
-
     }
 
-    echo "Error: Code {$resPostThesis->code}\n";
+    echo "Error: {$resPostThesis->body->failed->{"0"}->message}\n";
+    echo "\n";
 
 //    var_dump($resPostThesis->body);
 //    var_dump($thesis);

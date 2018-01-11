@@ -274,7 +274,7 @@ catch ( \Exception $e ) {
 	die();
 }
 $numResults = $rs->getNumFound();
-$numPages = min( 20, floor( $numResults / $pagesize ));
+$numPages = $json ? min( 20, floor( $numResults / $pagesize )) : floor( $numResults / $pagesize );
 if( $numResults % $pagesize > 0 ) $numPages++;
 
 $debugstr[] = "<!-- ".$qstr." (Documents: {$numResults} // Page ".($page+1)." of {$numPages}) -->\n";
