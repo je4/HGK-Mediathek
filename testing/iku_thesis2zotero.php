@@ -180,7 +180,7 @@ function thesis2zotero(){
         //Add Link Attachment
         if(!empty($rowThesis->Attachment) ){
             $currLinkAttch = clone $tmplLinkAttch;
-            $currLinkAttch->title = "Videolink";
+            $currLinkAttch->title = "0";
             $currLinkAttch->url = $rowThesis->Attachment;
             $currLinkAttch->parentItem = $keyThesis;
             if(!postNote($currLinkAttch)) continue;
