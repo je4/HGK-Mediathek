@@ -30,12 +30,12 @@ class swissbibDisplay extends DisplayEntity {
 
     public function __construct( $doc, $urlparams, $db, $highlightedDoc, $bypass = false ) {
         parent::__construct( $doc, $urlparams, $db, $highlightedDoc );
-		if( !$bypass ) {
-	        $this->db = $db;
-			$this->entity = new swissbibEntity( $db );
-			$record = new OAIPMHRecord( $this->data );
-			$this->entity->loadNode( $doc->originalid, $record, 'swissbib' );
-		}
+			if( !$bypass ) {
+		        $this->db = $db;
+				$this->entity = new swissbibEntity( $db );
+				$record = new OAIPMHRecord( $this->data );
+				$this->entity->loadNode( $doc->originalid, $record, 'swissbib' );
+			}
     }
 
     public function getSchema() {
@@ -197,11 +197,16 @@ class swissbibDisplay extends DisplayEntity {
 									}
 								}
 							}
+/*
+							foreach( $this->entity->getBibs() as $bib ) {
+								echo htmlspecialchars( $bib )."<br />\n";
+							}
+*/							
 ?>
 							Quelle: <a href="https://www.swissbib.ch/Record/<?php  echo $this->doc->originalid; ?>">swissbib</a></a><br />
 							<div id='RIB'></div>
 					</div>
-				</div> 
+				</div>
 			</div>
 			<div class="col-md-6">
 <?php
@@ -578,9 +583,9 @@ if( DEBUG ) {
 					}
 				}
 */
-?>			
+?>
 				Quelle: <a href="https://www.swissbib.ch/Record/<?php  echo $this->doc->originalid; ?>">swissbib</a></a><br />
-<?php				
+<?php
 				echo "ID: ".$this->doc->id."<br />\n";
 				$inKiste = false;
 				if( is_array( $this->doc->location )) foreach( $this->doc->location as $loc ) {

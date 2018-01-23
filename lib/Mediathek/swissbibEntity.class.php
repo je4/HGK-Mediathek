@@ -32,6 +32,8 @@ namespace Mediathek;
 class swissbibEntity extends SOLRSource {
 	private $node;
 
+	private static $mapbib = null;
+
 	private $record = null;
     private $xml = null;
     private static $idprefix = 'swissbib';
@@ -159,7 +161,12 @@ class swissbibEntity extends SOLRSource {
 	}
 
 	function __construct( \ADOConnection $db ) {
+		global $config;
+
 		$this->db = $db;
+		if( swissbibEntity::$mapbib == null ) {
+			swissbibEntity::$mapbib = json_decode( file_get_contents( $config['mapbib'] ), true );
+		}
 	}
 
 	public function loadFromDoc( $doc) {
@@ -906,6 +913,28 @@ class swissbibEntity extends SOLRSource {
 			}
 		}
 		return null;
+	}
+
+	function getBibs() {
+		$bibs = array();
+		foreach( $this->getSignatures() as $sig ) {
+			if( preg_match( '/^signature:([^:]+):([^:]+):(.+)$/', $sig, $matches )) {
+				$gcode = $matches[1];
+				$bcode = $matches[2];
+				foreach( swissbibEntity::$mapbib['data'] as $d ) {
+					if( $d['group']['code'] == $gcode ) {
+						foreach( $d['institutions'] as $i ) {
+							if( $i['bib_code'] == $bcode ) {
+								$bibs[] = $i['name']['de'];
+								break;
+							}
+						}
+						break;
+					}
+				}
+			}
+		}
+		return $bibs;
 	}
 }
 ?>
