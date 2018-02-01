@@ -33,6 +33,7 @@ if(true) {
   $s['area'] = '';
   $s['filter'] = array();
   $s['facets'] = array( 'catalog'=>array( 'PCB_Basel' ));
+	$list = array();
 
 	do {
 		$squery = $solrclient->createSelect();
@@ -60,9 +61,10 @@ if(true) {
       }
 
       $data = gzdecode( base64_decode( $doc->metagz ));
-      foreach( $doc->author as $a ) {
+      if( is_array( $doc->author )) foreach( $doc->author as $a ) {
+				$a = trim( $a, ' ,' );
         $s['query'] = "author:\"{$a}\"";
-        echo "<!-- {$a} --><a href=\"search.php?query=".urlencode(json_encode( $s ))."\">".htmlspecialchars( $a )."</a><br />\n";
+        $list[] = "<!-- {$a} --><a href=\"search.php?query=".urlencode(json_encode( $s ))."\">".htmlspecialchars( $a )."</a><br />\n";
       }
 			$counter++;
 		}
@@ -76,6 +78,11 @@ if(true) {
 
 }
 
+sort( $list );
+$list = \array_unique( ( $list ));
+foreach( $list as $l ) {
+	echo $l."\n";
+}
 
 doConnectMySQL();
 ?>

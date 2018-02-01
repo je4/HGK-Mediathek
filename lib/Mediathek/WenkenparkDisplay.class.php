@@ -117,11 +117,14 @@ class WenkenparkDisplay extends DisplayEntity {
 	}
 
 	public function detailView() {
-        global $config, $googleservice, $googleclient, $session, $page, $pagesize;
+        global $config, $session, $page, $pagesize, $solrclient, $urlparams;
 
 		$cert = $session->inGroup( 'certificate/mediathek');
 		$intern = $session->inGroup( 'location/fhnw');
 		$loggedin = $session->isLoggedIn();
+		$squery = $solrclient->createSelect();
+		$helper = $squery->getHelper();
+
 
 		$entity = $this->entity;
 
@@ -133,7 +136,7 @@ class WenkenparkDisplay extends DisplayEntity {
 
         ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
 ?>
-<div class="row full-height">
+<div class="row">
 	<div class="col-md-3">
 		<span style="; font-weight: bold;">Aktueller Film</span><br>
 		<div class="facet" style="">
@@ -157,7 +160,7 @@ class WenkenparkDisplay extends DisplayEntity {
 <?php
 
 					if( isset( $this->metadata['LAENGE'] ))
-						echo "<b>Dauer</b>: ".htmlspecialchars( substr( $this->metadata['LAENGE'], 0, -2 ).':'.substr( $this->metadata['LAENGE'], -2 ) )."<br />\n";;
+						echo "<b>Dauer</b>: ".htmlspecialchars( substr( $this->metadata['LAENGE'], 0, -2 ).':'.substr( $this->metadata['LAENGE'], -2 ) )." min.<br />\n";;
 					if( isset( $this->metadata['Ursprungsformat'] ))
 						echo "<b>Ursprungsformat</b>: ".htmlspecialchars($this->metadata['Ursprungsformat'])."<br />\n";;
 					$sys = array();
@@ -362,8 +365,39 @@ if(( $session->isAdmin() || $session->inAnyGroup( $this->doc->acl_content )) && 
 				</div>
 			</div>
 		</div>
-						<?php  }
-						if( DEBUG ) {
+
+		<?php  }
+
+					$squery->setRows( 500 );
+					$squery->setStart( 0 );
+					$qstr = 'cluster:'.$helper->escapePhrase( 'Videowoche im Wenkenpark '.$this->metadata['THEMA']);
+					if( strlen( $qstr )) $qstr = "({$qstr})";
+				//	$qstr = "({$qstr}) AND -id:".$helper->escapeTerm( $this->doc->id );
+					//echo "\n<!-- {$qstr} -->\n";
+					$squery->setQuery( $qstr );
+			//		$squery->createFilterQuery('source')->setQuery('source: zotero');
+					$rs = $solrclient->select( $squery );
+					$numResults = $rs->getNumFound();
+					$numPages = floor( $numResults / 500 );
+					if( $numResults % 500 > 0 ) $numPages++;
+
+					echo "<!-- ".$qstr." (Documents: {$numResults} // Page ".(1)." of {$numPages}) -->\n";
+					if( $numResults ) {
+		?>
+				<div style="">
+				<span style="; font-weight: bold;">Weitere Inhalte aus "<?php echo 'Videowoche im Wenkenpark '.$this->metadata['THEMA']; ?>"</span><br />
+					<div class="facet" style="">
+						<div class="marker" style=""></div>
+				<?php
+				$res = new DesktopResult( $rs, 0, 500, $this->db, $urlparams );
+				echo $res->getResult();
+
+				?>
+					</div>
+				</div>
+		<?php
+				}
+						if( DEBUG && $loggedin ) {
 							?>
 										<div style="">
 										<span style="; font-weight: bold;">Document</span><br />
@@ -492,7 +526,9 @@ if(( $session->isAdmin() || $session->inAnyGroup( $this->doc->acl_content )) && 
                 </div>
             </td>
         </tr>
+<!--
 		<script src="js/video.js"></script>
+-->
 <?php
         $html .= ob_get_contents();
         ob_end_clean();

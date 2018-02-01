@@ -149,6 +149,10 @@ function thesis2zotero(){
             $objZotero->place = $rowThesis->Place;
             $objZotero->runningTime = $rowThesis->RunningTime;
             $objZotero->libraryCatalog = $rowThesis->LibraryCatalog;
+            $objZotero->archiveLocation = $rowThesis->LocArchive;
+            $objZotero->videoRecordingFormat = $rowThesis->Format;
+            $objZotero->language = $rowThesis->Language;
+            $objZotero->rights = $rowThesis->Rights;
         }
 
 

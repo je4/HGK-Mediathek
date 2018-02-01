@@ -6,9 +6,9 @@ include '../init.inc.php';
 
 $hdlprefix = '20.500.11806/mediathek/';
 $urlbase = 'https://mediathek.hgk.fhnw.ch/detail.php?id=';
-$groups = array( 1387750, 1510019, 1510009, 1624911, 1803850, 2061687 );
+//$groups = array( 1387750, 1510019, 1510009, 1624911, 1803850, 2061687 );
 //$groups = array( 2066935 );  // RIMAB
-
+$groups = array( 1624911 );
 $solr = new SOLR( $solrclient );
 
 $zotero = new Zotero( $db, $config['zotero']['apiurl'], $config['zotero']['apikey'], $config['zotero']['mediapath'], STDOUT );

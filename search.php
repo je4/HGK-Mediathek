@@ -263,6 +263,8 @@ $hl->setFields('abstract, content');
 $hl->setSimplePrefix('<b class="highlight">');
 $hl->setSimplePostfix('</b>');
 
+//if( $qstr == '*:*' ) $squery->addSort('originalid', $query::SORT_DESC);
+
 //$squery->setMethod(\Solarium\Core\Client\Request::METHOD_GET);
 
 try {

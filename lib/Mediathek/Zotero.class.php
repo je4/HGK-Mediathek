@@ -272,7 +272,7 @@ class Zotero {
     $limit = 100;
     $sql = "SELECT MAX(version) FROM zotero.items WHERE trash=false AND libraryid={$id}";
     $lastversion = intval($this->db->GetOne( $sql ));
-
+    //$lastversion = 0;
     do {
       $uri = "{$this->apiurl}/groups/{$id}/items?limit={$limit}&start={$start}&since={$lastversion}";
       $response = Request::get( $uri )

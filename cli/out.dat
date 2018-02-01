@@ -1,3179 +1,782 @@
-Title: 2 Minuten für 2 Minuten
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/1b36ea1c9b7a1c3ad668b8bb5df7963f/Videowoche im Wenkenpark 1984
-    [1] => index:tech:wenkenpark/6e11a2bc314b70b513ac241870cb641d/PAL
-Farbe
-stereo
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1984
-)
-Authors: Array
-(
-    [0] => Scheffknecht, Romana
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008401 executed
-Title: Kreuzweise
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/1b36ea1c9b7a1c3ad668b8bb5df7963f/Videowoche im Wenkenpark 1984
-    [1] => index:tech:wenkenpark/6e11a2bc314b70b513ac241870cb641d/PAL
-Farbe
-stereo
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1984
-)
-Authors: Array
-(
-    [0] => Belz, Gerd
-    [1] => Scheffknecht, Romana
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008402 executed
-Title: Das grüne Band
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/1b36ea1c9b7a1c3ad668b8bb5df7963f/Videowoche im Wenkenpark 1984
-    [1] => index:tech:wenkenpark/6e11a2bc314b70b513ac241870cb641d/PAL
-Farbe
-stereo
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1984
-)
-Authors: Array
-(
-    [0] => Vogel, Hannes
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008403 executed
-Title: Grau - Rosa
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/1b36ea1c9b7a1c3ad668b8bb5df7963f/Videowoche im Wenkenpark 1984
-    [1] => index:tech:wenkenpark/6e11a2bc314b70b513ac241870cb641d/PAL
-Farbe
-stereo
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1984
-)
-Authors: Array
-(
-    [0] => Bielz, Gudrun
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008404 executed
-Title: Das Steckenpferd
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/1b36ea1c9b7a1c3ad668b8bb5df7963f/Videowoche im Wenkenpark 1984
-    [1] => index:tech:wenkenpark/6e11a2bc314b70b513ac241870cb641d/PAL
-Farbe
-stereo
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1984
-)
-Authors: Array
-(
-    [0] => Silber, Alex
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008405 executed
-Title: Alles bestens
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/1b36ea1c9b7a1c3ad668b8bb5df7963f/Videowoche im Wenkenpark 1984
-    [1] => index:tech:wenkenpark/6e11a2bc314b70b513ac241870cb641d/PAL
-Farbe
-stereo
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1984
-)
-Authors: Array
-(
-    [0] => Wentscher, Herbert
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008406 executed
-Title: Die Tödliche Doris im Wenkenpark mit einem Koffer aus Berlin
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/1b36ea1c9b7a1c3ad668b8bb5df7963f/Videowoche im Wenkenpark 1984
-    [1] => index:tech:wenkenpark/6e11a2bc314b70b513ac241870cb641d/PAL
-Farbe
-stereo
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1984
-)
-Authors: Array
-(
-    [0] => Utermöhlen, Nikolaus
-    [1] => Kruse, Käthe (Elke)
-    [2] => Müller, Wolfgang
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008407 executed
-Title: HBB Haut, Brot, Blut - Installationsansicht
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/1b36ea1c9b7a1c3ad668b8bb5df7963f/Videowoche im Wenkenpark 1984
-    [1] => index:language:wenkenpark/8f0ca2185f684aa4edeae4b25a65239b/Deutsch
-    [2] => index:tech:wenkenpark/6e11a2bc314b70b513ac241870cb641d/PAL
-Farbe
-stereo
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1984
-)
-Authors: Array
-(
-    [0] => Bielz, Gudrun
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008408 executed
-Title: HBB Haut, Brot, Blut
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/1b36ea1c9b7a1c3ad668b8bb5df7963f/Videowoche im Wenkenpark 1984
-    [1] => index:tech:wenkenpark/bedde64b92e058310d1a42ea5f78f531/PAL
-Farbe
-mono CH2
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1984
-)
-Authors: Array
-(
-    [0] => Bielz, Gudrun
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008409 executed
-Title: HBB Haut, Brot, Blut
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/1b36ea1c9b7a1c3ad668b8bb5df7963f/Videowoche im Wenkenpark 1984
-    [1] => index:tech:wenkenpark/912a2e28b5ac7fd525ac61c28d235cfb/PAL
-Farbe
-mono CH1
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1984
-)
-Authors: Array
-(
-    [0] => Bielz, Gudrun
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008410 executed
-Title: HBB Haut, Brot, Blut
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/1b36ea1c9b7a1c3ad668b8bb5df7963f/Videowoche im Wenkenpark 1984
-    [1] => index:tech:wenkenpark/6e11a2bc314b70b513ac241870cb641d/PAL
-Farbe
-stereo
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1984
-)
-Authors: Array
-(
-    [0] => Bielz, Gudrun
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008411 executed
-Title: Interiors
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/1b36ea1c9b7a1c3ad668b8bb5df7963f/Videowoche im Wenkenpark 1984
-    [1] => index:tech:wenkenpark/6e11a2bc314b70b513ac241870cb641d/PAL
-Farbe
-stereo
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1984
-)
-Authors: Array
-(
-    [0] => Hoover, Nan
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008412 executed
-Title: Bild - Ton - Montage
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/1b36ea1c9b7a1c3ad668b8bb5df7963f/Videowoche im Wenkenpark 1984
-    [1] => index:tech:wenkenpark/6e11a2bc314b70b513ac241870cb641d/PAL
-Farbe
-stereo
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1984
-)
-Authors: Array
-(
-    [0] => Odenbach,, Marcel
-    [1] => , Workshopleiter
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008413 executed
-Title: Kavaliere - Die Tödliche Doris
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/1b36ea1c9b7a1c3ad668b8bb5df7963f/Videowoche im Wenkenpark 1984
-    [1] => index:tech:wenkenpark/c2e4e64ecace211cde0a1a6098002c35/PAL
-Farbe
-mono ch1 + ch2
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1984
-)
-Authors: Array
-(
-    [0] => Utermöhlen, Nikolaus
-    [1] => Kruse, Käthe (Elke)
-    [2] => Müller, Wolfgang
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008414 executed
-Title: Steckenpferd CH 1
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/1b36ea1c9b7a1c3ad668b8bb5df7963f/Videowoche im Wenkenpark 1984
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1984
-)
-Authors: Array
-(
-    [0] => Silber, Alex
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008415 executed
-Title: Steckenpferd CH 2
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/1b36ea1c9b7a1c3ad668b8bb5df7963f/Videowoche im Wenkenpark 1984
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1984
-)
-Authors: Array
-(
-    [0] => Silber, Alex
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008416 executed
-Title: Steckenpferd CH 3
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/1b36ea1c9b7a1c3ad668b8bb5df7963f/Videowoche im Wenkenpark 1984
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1984
-)
-Authors: Array
-(
-    [0] => Silber, Alex
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008417 executed
-Title: Tagesschau, Schweizer Fernsehen, 6. Juli 1984
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/1b36ea1c9b7a1c3ad668b8bb5df7963f/Videowoche im Wenkenpark 1984
-    [1] => index:language:wenkenpark/09c438e63455e3e1b3deabe65fdbc087/deutsch
-    [2] => index:tech:wenkenpark/42ad275e7300acd26aa6c1c157fb3abc/PAL
-Farbe
-mono
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1984
-)
-Authors: Array
-(
-    [0] => Clerc, Charles
-    [1] => Kriesche, Richard
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008419 executed
-Title: Raum - Bewegung - Licht
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/1b36ea1c9b7a1c3ad668b8bb5df7963f/Videowoche im Wenkenpark 1984
-    [1] => index:tech:wenkenpark/6e11a2bc314b70b513ac241870cb641d/PAL
-Farbe
-stereo
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1984
-)
-Authors: Array
-(
-    [0] => Hoover,, Nan
-    [1] => , Workshopleiterin
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008420 executed
-Title: Interview in the "fumoir" of the Wenkenpark
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/8c249675aea6c3cbd91661bbae767ff1/Videowoche im Wenkenpark 1986
-    [1] => index:tech:wenkenpark/1065cb4b86dd897da8d6173502bfdedf/PAL
-Farbe
-Mehrkanalton
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1986
-)
-Authors: Array
-(
-    [0] => Birnbaum, Dara
-    [1] => Dercon, Chris
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008601 executed
-Title: Interview
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/8c249675aea6c3cbd91661bbae767ff1/Videowoche im Wenkenpark 1986
-    [1] => index:language:wenkenpark/e3e64deb07c5945e1bbf4e9f2f006697/englisch
-    [2] => index:tech:wenkenpark/1065cb4b86dd897da8d6173502bfdedf/PAL
-Farbe
-Mehrkanalton
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1986
-)
-Authors: Array
-(
-    [0] => Fox, Terry
-    [1] => Dercon, Chris
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008602 executed
-Title: Interview
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/8c249675aea6c3cbd91661bbae767ff1/Videowoche im Wenkenpark 1986
-    [1] => index:tech:wenkenpark/1065cb4b86dd897da8d6173502bfdedf/PAL
-Farbe
-Mehrkanalton
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1986
-)
-Authors: Array
-(
-    [0] => Smith, Michael
-    [1] => Dercon, Chris
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008603 executed
-Title: Interview
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/8c249675aea6c3cbd91661bbae767ff1/Videowoche im Wenkenpark 1986
-    [1] => index:tech:wenkenpark/1065cb4b86dd897da8d6173502bfdedf/PAL
-Farbe
-Mehrkanalton
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1986
-)
-Authors: Array
-(
-    [0] => Naumann, Bruce
-    [1] => Dercon, Chris
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008604 executed
-Title: Interview
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/8c249675aea6c3cbd91661bbae767ff1/Videowoche im Wenkenpark 1986
-    [1] => index:tech:wenkenpark/1065cb4b86dd897da8d6173502bfdedf/PAL
-Farbe
-Mehrkanalton
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1986
-)
-Authors: Array
-(
-    [0] => Graham, Dan
-    [1] => Dercon, Chris
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008605 executed
-Title: Mike: An American Abroad
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/8c249675aea6c3cbd91661bbae767ff1/Videowoche im Wenkenpark 1986
-    [1] => index:tech:wenkenpark/6e11a2bc314b70b513ac241870cb641d/PAL
-Farbe
-stereo
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1986
-)
-Authors: Array
-(
-    [0] => Smith, Michael
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008606 executed
-Title: Auftritt 13. Juni 1986 Kas_2
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/8c249675aea6c3cbd91661bbae767ff1/Videowoche im Wenkenpark 1986
-    [1] => index:tech:wenkenpark/6e11a2bc314b70b513ac241870cb641d/PAL
-Farbe
-stereo
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1986
-)
-Authors: Array
-(
-    [0] => Smith, Michael
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008607 executed
-Title: Einspielungen für Auftritt
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/8c249675aea6c3cbd91661bbae767ff1/Videowoche im Wenkenpark 1986
-    [1] => index:tech:wenkenpark/72a922c36902cca143edbf90ea80e176/NTSC
-Farbe
-stereo
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1986
-)
-Authors: Array
-(
-    [0] => Smith, Michael
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008608 executed
-Title: Forma Lucis III
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/8c249675aea6c3cbd91661bbae767ff1/Videowoche im Wenkenpark 1986
-    [1] => index:tech:wenkenpark/0fd52aa9a33d689955db82684654b515/PAL
-Farbe
-ohne Ton
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1986
-)
-Authors: Array
-(
-    [0] => Theuws, Roos
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008609 executed
-Title: Wandinstallation
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/8c249675aea6c3cbd91661bbae767ff1/Videowoche im Wenkenpark 1986
-    [1] => index:tech:wenkenpark/0fd52aa9a33d689955db82684654b515/PAL
-Farbe
-ohne Ton
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1986
-)
-Authors: Array
-(
-    [0] => Mark, Helmut
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008610 executed
-Title: Amsel, Drossel, Fink und Star
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/8c249675aea6c3cbd91661bbae767ff1/Videowoche im Wenkenpark 1986
-    [1] => index:tech:wenkenpark/6e11a2bc314b70b513ac241870cb641d/PAL
-Farbe
-stereo
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1986
-)
-Authors: Array
-(
-    [0] => Lamunière, Simone
-    [1] => Lanz, Eric
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008613 executed
-Title: The Intervention of video and sound in an artificial landscape
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/8c249675aea6c3cbd91661bbae767ff1/Videowoche im Wenkenpark 1986
-    [1] => index:tech:wenkenpark/6e11a2bc314b70b513ac241870cb641d/PAL
-Farbe
-stereo
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1986
-)
-Authors: Array
-(
-    [0] => Fox, Terry
-    [1] => , Workshopleiter
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008614 executed
-Title: Invisible
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/8c249675aea6c3cbd91661bbae767ff1/Videowoche im Wenkenpark 1986
-    [1] => index:tech:wenkenpark/654db8a14a5f633b9ba85ec92dc51f7c/mono
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1986
-)
-Authors: Array
-(
-    [0] => Birnbaum, Dara
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008615 executed
-Title: Video - Performance - Humor
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/8c249675aea6c3cbd91661bbae767ff1/Videowoche im Wenkenpark 1986
-    [1] => index:tech:wenkenpark/6e11a2bc314b70b513ac241870cb641d/PAL
-Farbe
-stereo
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1986
-)
-Authors: Array
-(
-    [0] => Smith, Michael
-    [1] => , Workshopleiter
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008616 executed
-Title: Interview mit Dan Graham
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/8c249675aea6c3cbd91661bbae767ff1/Videowoche im Wenkenpark 1986
-    [1] => index:tech:wenkenpark/6e11a2bc314b70b513ac241870cb641d/PAL
-Farbe
-stereo
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1986
-)
-Authors: Array
-(
-    [0] => Graham, Dan
-    [1] => Dercon, Chris
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008617 executed
-Title: Interview Teil 2
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/8c249675aea6c3cbd91661bbae767ff1/Videowoche im Wenkenpark 1986
-    [1] => index:tech:wenkenpark/1065cb4b86dd897da8d6173502bfdedf/PAL
-Farbe
-Mehrkanalton
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1986
-)
-Authors: Array
-(
-    [0] => Graham, Dan
-    [1] => Dercon, Chris
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008618 executed
-Title: Interview mit Dara Birnbaum
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/8c249675aea6c3cbd91661bbae767ff1/Videowoche im Wenkenpark 1986
-    [1] => index:tech:wenkenpark/6e11a2bc314b70b513ac241870cb641d/PAL
-Farbe
-stereo
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1986
-)
-Authors: Array
-(
-    [0] => Birnbaum, Dara
-    [1] => Dercon, Chris
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008619 executed
-Title: Interview Teil 2
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/8c249675aea6c3cbd91661bbae767ff1/Videowoche im Wenkenpark 1986
-    [1] => index:tech:wenkenpark/1065cb4b86dd897da8d6173502bfdedf/PAL
-Farbe
-Mehrkanalton
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1986
-)
-Authors: Array
-(
-    [0] => Birnbaum, Dara
-    [1] => Dercon, Chris
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008620 executed
-Title: Interview mit Bruce Nauman
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/8c249675aea6c3cbd91661bbae767ff1/Videowoche im Wenkenpark 1986
-    [1] => index:language:wenkenpark/e3e64deb07c5945e1bbf4e9f2f006697/englisch
-    [2] => index:tech:wenkenpark/6e11a2bc314b70b513ac241870cb641d/PAL
-Farbe
-stereo
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1986
-)
-Authors: Array
-(
-    [0] => Nauman, Bruce
-    [1] => Dercon, Chris
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008621 executed
-Title: Interview mit Bruce Naumann Teil 2
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/8c249675aea6c3cbd91661bbae767ff1/Videowoche im Wenkenpark 1986
-    [1] => index:tech:wenkenpark/1065cb4b86dd897da8d6173502bfdedf/PAL
-Farbe
-Mehrkanalton
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1986
-)
-Authors: Array
-(
-    [0] => Naumann, Bruce
-    [1] => Dercon, Chris
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008622 executed
-Title: Interview mit Bruce Naumann Teil 3
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/8c249675aea6c3cbd91661bbae767ff1/Videowoche im Wenkenpark 1986
-    [1] => index:tech:wenkenpark/1065cb4b86dd897da8d6173502bfdedf/PAL
-Farbe
-Mehrkanalton
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1986
-)
-Authors: Array
-(
-    [0] => Naumann, Bruce
-    [1] => Dercon, Chris
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008623 executed
-Title: Interview mit Terry Fox
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/8c249675aea6c3cbd91661bbae767ff1/Videowoche im Wenkenpark 1986
-    [1] => index:tech:wenkenpark/6e11a2bc314b70b513ac241870cb641d/PAL
-Farbe
-stereo
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1986
-)
-Authors: Array
-(
-    [0] => Fox, Terry
-    [1] => Dercon, Chris
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008624 executed
-Title: Interview mit Terry Fox Teil 2
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/8c249675aea6c3cbd91661bbae767ff1/Videowoche im Wenkenpark 1986
-    [1] => index:tech:wenkenpark/1065cb4b86dd897da8d6173502bfdedf/PAL
-Farbe
-Mehrkanalton
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1986
-)
-Authors: Array
-(
-    [0] => Fox, Terry
-    [1] => Dercon, Chris
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008625 executed
-Title: Interview mit Michael Smith
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/8c249675aea6c3cbd91661bbae767ff1/Videowoche im Wenkenpark 1986
-    [1] => index:tech:wenkenpark/6e11a2bc314b70b513ac241870cb641d/PAL
-Farbe
-stereo
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1986
-)
-Authors: Array
-(
-    [0] => Smith, Michael
-    [1] => Dercon, Chris
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008626 executed
-Title: Interview mit Michael Smith Teil 2
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/8c249675aea6c3cbd91661bbae767ff1/Videowoche im Wenkenpark 1986
-    [1] => index:tech:wenkenpark/1065cb4b86dd897da8d6173502bfdedf/PAL
-Farbe
-Mehrkanalton
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1986
-)
-Authors: Array
-(
-    [0] => Smith, Michael
-    [1] => Dercon, Chris
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008627 executed
-Title: Forma Lucis III
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/8c249675aea6c3cbd91661bbae767ff1/Videowoche im Wenkenpark 1986
-    [1] => index:tech:wenkenpark/0fd52aa9a33d689955db82684654b515/PAL
-Farbe
-ohne Ton
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1986
-)
-Authors: Array
-(
-    [0] => Theuws, Roos
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008628 executed
-Title: Tempo da Serpente
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/8c249675aea6c3cbd91661bbae767ff1/Videowoche im Wenkenpark 1986
-    [1] => index:tech:wenkenpark/6e11a2bc314b70b513ac241870cb641d/PAL
-Farbe
-stereo
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1986
-)
-Authors: Array
-(
-    [0] => Ammann, Hanspeter
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008630 executed
-Title: Achilles Widerspiel
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/8c249675aea6c3cbd91661bbae767ff1/Videowoche im Wenkenpark 1986
-    [1] => index:language:wenkenpark/319be822a88df6a7585360f99e2b62f8/Englisch
-    [2] => index:tech:wenkenpark/6e11a2bc314b70b513ac241870cb641d/PAL
-Farbe
-stereo
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1986
-)
-Authors: Array
-(
-    [0] => Winteler, Anna
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008631 executed
-Title: TV's newly cultured Landscape
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/8c249675aea6c3cbd91661bbae767ff1/Videowoche im Wenkenpark 1986
-    [1] => index:tech:wenkenpark/6e11a2bc314b70b513ac241870cb641d/PAL
-Farbe
-stereo
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1986
-)
-Authors: Array
-(
-    [0] => Birnbaum, Dara
-    [1] => , Workshopleiterin
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008632 executed
-Title: The Intervention of video and sound in an artificial landscape - For Fanny
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:tech:wenkenpark/6e11a2bc314b70b513ac241870cb641d/PAL
-Farbe
-stereo
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Cluster: Array
-(
-)
-Authors: Array
-(
-    [0] => Fox, Terry
-    [1] => , Workshopleiter
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008633 executed
-Title: "Kultur Aktuell", Schweizer Fernsehen, 10. Juli 1988
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/9d7311ba459f9e45ed746755a32dcd11/Videowoche im Wenkenpark 1988
-    [1] => index:tech:wenkenpark/6e11a2bc314b70b513ac241870cb641d/PAL
-Farbe
-stereo
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1988
-)
-Authors: Array
-(
-    [0] => Spirk, Arthur
-    [1] => Kasic, Kaspar
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008801 executed
-Title: "Arthur" Excerpts from the 5 Channel Installation
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/9d7311ba459f9e45ed746755a32dcd11/Videowoche im Wenkenpark 1988
-    [1] => index:tech:wenkenpark/72a922c36902cca143edbf90ea80e176/NTSC
-Farbe
-stereo
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1988
-)
-Authors: Array
-(
-    [0] => Hahn, Alexander
-    [1] => , Alexander Hahn
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008802 executed
-Title: William Wegman Vortrag 10. Juni 1988
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/9d7311ba459f9e45ed746755a32dcd11/Videowoche im Wenkenpark 1988
-    [1] => index:tech:wenkenpark/42ad275e7300acd26aa6c1c157fb3abc/PAL
-Farbe
-mono
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1988
-)
-Authors: Array
-(
-    [0] => Wegman, William
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008803 executed
-Title: Stimmen, Handeln, Sand
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/9d7311ba459f9e45ed746755a32dcd11/Videowoche im Wenkenpark 1988
-    [1] => index:language:wenkenpark/e3e64deb07c5945e1bbf4e9f2f006697/englisch
-    [2] => index:tech:wenkenpark/6e11a2bc314b70b513ac241870cb641d/PAL
-Farbe
-stereo
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1988
-)
-Authors: Array
-(
-    [0] => Hill, Gary
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008804 executed
-Title: Support-Surface
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/9d7311ba459f9e45ed746755a32dcd11/Videowoche im Wenkenpark 1988
-    [1] => index:tech:wenkenpark/ee64b9bbb3dfc4730429609a3fa110d3/PAL
-s/w
-mono
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1988
-)
-Authors: Array
-(
-    [0] => Bauermeister, René
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008805 executed
-Title: Support-Surface / Transvideo / High Fidelity / Bougies Venit.
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/9d7311ba459f9e45ed746755a32dcd11/Videowoche im Wenkenpark 1988
-    [1] => index:tech:wenkenpark/ee64b9bbb3dfc4730429609a3fa110d3/PAL
-s/w
-mono
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1988
-)
-Authors: Array
-(
-    [0] => Bauermeister, René
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008806 executed
-Title: Aléatoire I&II, Hommage à Duchamp, V comme Vélo
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/9d7311ba459f9e45ed746755a32dcd11/Videowoche im Wenkenpark 1988
-    [1] => index:tech:wenkenpark/b3a96cf5353160d33f6a5e31f2f0dda7/PAL
-s/w
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1988
-)
-Authors: Array
-(
-    [0] => Bauermeister, René
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008807 executed
-Title: Aléatoire, Ego, A Elvis
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/9d7311ba459f9e45ed746755a32dcd11/Videowoche im Wenkenpark 1988
-    [1] => index:tech:wenkenpark/ee64b9bbb3dfc4730429609a3fa110d3/PAL
-s/w
-mono
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1988
-)
-Authors: Array
-(
-    [0] => Bauermeister, René
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008808 executed
-Title: Hear-Say / Not a model for big brother's spy-cycle
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/9d7311ba459f9e45ed746755a32dcd11/Videowoche im Wenkenpark 1988
-    [1] => index:tech:wenkenpark/2676d0d47242fa735fb0692dba86d7be/NTSC
-Farbe
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1988
-)
-Authors: Array
-(
-    [0] => Froese, Dieter
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008809 executed
-Title: 4 Perzeptive Skizzen
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/9d7311ba459f9e45ed746755a32dcd11/Videowoche im Wenkenpark 1988
-    [1] => index:tech:wenkenpark/ac3e3471e5ca3c1fc004dc1f05bd83fa/PAL
-Mehrkanalton
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1988
-)
-Authors: Array
-(
-    [0] => Zaugg, Rémy
-    [1] => Pulfer, René
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008810 executed
-Title: 33/45 - slow x 0.5 _ 45/33 - fast x 2
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/9d7311ba459f9e45ed746755a32dcd11/Videowoche im Wenkenpark 1988
-    [1] => index:tech:wenkenpark/0fd52aa9a33d689955db82684654b515/PAL
-Farbe
-ohne Ton
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1988
-)
-Authors: Array
-(
-    [0] => Graf, Franz
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008811 executed
-Title: Celtic+~~~ Vorspann
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/9d7311ba459f9e45ed746755a32dcd11/Videowoche im Wenkenpark 1988
-    [1] => index:tech:wenkenpark/ee64b9bbb3dfc4730429609a3fa110d3/PAL
-s/w
-mono
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1988
-)
-Authors: Array
-(
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008812 executed
-Title: Celtic+~~~ Kassette 2A
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/9d7311ba459f9e45ed746755a32dcd11/Videowoche im Wenkenpark 1988
-    [1] => index:tech:wenkenpark/ee64b9bbb3dfc4730429609a3fa110d3/PAL
-s/w
-mono
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1988
-)
-Authors: Array
-(
-    [0] => Beuys, Joseph
-    [1] => Christiansen, Henning
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008813 executed
-Title: Celtic+~~~ Kassette 2B
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/9d7311ba459f9e45ed746755a32dcd11/Videowoche im Wenkenpark 1988
-    [1] => index:tech:wenkenpark/ee64b9bbb3dfc4730429609a3fa110d3/PAL
-s/w
-mono
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1988
-)
-Authors: Array
-(
-    [0] => Beuys, Joseph
-    [1] => Christiansen, Henning
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008814 executed
-Title: Celtic+~~~ Kassette 3A
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/9d7311ba459f9e45ed746755a32dcd11/Videowoche im Wenkenpark 1988
-    [1] => index:tech:wenkenpark/ee64b9bbb3dfc4730429609a3fa110d3/PAL
-s/w
-mono
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1988
-)
-Authors: Array
-(
-    [0] => Beuys, Joseph
-    [1] => Christiansen, Henning
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008815 executed
-Title: Celtic+~~~ Kassette 3B
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/9d7311ba459f9e45ed746755a32dcd11/Videowoche im Wenkenpark 1988
-    [1] => index:tech:wenkenpark/ee64b9bbb3dfc4730429609a3fa110d3/PAL
-s/w
-mono
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1988
-)
-Authors: Array
-(
-    [0] => Beuys, Joseph
-    [1] => Christiansen, Henning
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008816 executed
-Title: Celtic+~~~ Kassette 4A
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/9d7311ba459f9e45ed746755a32dcd11/Videowoche im Wenkenpark 1988
-    [1] => index:tech:wenkenpark/ee64b9bbb3dfc4730429609a3fa110d3/PAL
-s/w
-mono
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1988
-)
-Authors: Array
-(
-    [0] => Beuys, Joseph
-    [1] => Christiansen, Henning
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008817 executed
-Title: Celtic+~~~ Kassette 4B
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/9d7311ba459f9e45ed746755a32dcd11/Videowoche im Wenkenpark 1988
-    [1] => index:tech:wenkenpark/ee64b9bbb3dfc4730429609a3fa110d3/PAL
-s/w
-mono
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1988
-)
-Authors: Array
-(
-    [0] => Beuys, Joseph
-    [1] => Christiansen, Henning
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008818 executed
-Title: Celtic+~~~ Kassette 5A
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/9d7311ba459f9e45ed746755a32dcd11/Videowoche im Wenkenpark 1988
-    [1] => index:tech:wenkenpark/ee64b9bbb3dfc4730429609a3fa110d3/PAL
-s/w
-mono
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1988
-)
-Authors: Array
-(
-    [0] => Beuys, Joseph
-    [1] => Christiansen, Henning
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008819 executed
-Title: Video - Sound - Installation
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/9d7311ba459f9e45ed746755a32dcd11/Videowoche im Wenkenpark 1988
-    [1] => index:tech:wenkenpark/6e11a2bc314b70b513ac241870cb641d/PAL
-Farbe
-stereo
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1988
-)
-Authors: Array
-(
-    [0] => Bruszewski, Wojciech
-    [1] => , Workshopleiter
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008820 executed
-Title: Sprache - Bild - Montage
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/9d7311ba459f9e45ed746755a32dcd11/Videowoche im Wenkenpark 1988
-    [1] => index:tech:wenkenpark/42ad275e7300acd26aa6c1c157fb3abc/PAL
-Farbe
-mono
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1988
-)
-Authors: Array
-(
-    [0] => Hill, Gary
-    [1] => , Workshopleiter
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008823 executed
-Title: Video - Observation - Installation
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/9d7311ba459f9e45ed746755a32dcd11/Videowoche im Wenkenpark 1988
-    [1] => index:tech:wenkenpark/6e11a2bc314b70b513ac241870cb641d/PAL
-Farbe
-stereo
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1988
-)
-Authors: Array
-(
-    [0] => Froese, Dieter
-    [1] => , Workshopleiter
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008824 executed
-Title: Hear-say
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:keyword:wenkenpark/8c249675aea6c3cbd91661bbae767ff1/Videowoche im Wenkenpark 1986
-    [1] => index:tech:wenkenpark/b15da61a9ae2c71a3b34cfa7bec91d85/NTSC
-Farbe
-mono
-)
-Cluster: Array
-(
-    [0] => Videowoche im Wenkenpark 1986
-)
-Authors: Array
-(
-    [0] => Froese, Dieter
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008825 executed
-Title: Celtic+~~~ Restaurierung
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Tags: Array
-(
-    [0] => index:tech:wenkenpark/42ad275e7300acd26aa6c1c157fb3abc/PAL
-Farbe
-mono
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-Cluster: Array
-(
-)
-Authors: Array
-(
-)
-Loans: Array
-(
-)
-Licenses: Array
-(
-    [0] => restricted
-)
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Signatures: Array
-(
-    [0] => 
-)
-URLs: Array
-(
-)
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-
-Notice: Undefined index: Ursprungsformat in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 144
-PHP Notice:  Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-
-Notice: Undefined index: Publikationsnummer in /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/WenkenparkEntity.class.php on line 178
-Insert query for vww-000008826 executed
+Syncing group: 1624911
+   PCB_Basel
+Syncing collections of group: 1624911
+Syncing items of group: 1624911
+   1624911:27CDTZ4B videoRecording - VIA Songs (1)
+   1624911:WA97MD34 videoRecording - Tabu (2)
+   1624911:DFV72ARH videoRecording - Tabu (1)
+object(ADODB_Exception)#3 (14) {
+  ["dbms"]=>
+  string(6) "mysqli"
+  ["fn"]=>
+  string(7) "EXECUTE"
+  ["sql"]=>
+  string(167) "INSERT INTO zotero.creators2items( itemKey, libraryId, role, creatorsId ) VALUES(
+        'DFV72ARH'
+        , 1624911
+        , 'director'
+        , 954
+      );"
+  ["params"]=>
+  bool(false)
+  ["host"]=>
+  string(26) "ba14ns21402.adm.ds.fhnw.ch"
+  ["database"]=>
+  string(4) "rfid"
+  ["message":protected]=>
+  string(270) "mysqli error: [1062: Duplicate entry 'DFV72ARH-1624911-director-954' for key 'PRIMARY'] in EXECUTE("INSERT INTO zotero.creators2items( itemKey, libraryId, role, creatorsId ) VALUES(
+        'DFV72ARH'
+        , 1624911
+        , 'director'
+        , 954
+      );")
+"
+  ["string":"Exception":private]=>
+  string(0) ""
+  ["code":protected]=>
+  int(1062)
+  ["file":protected]=>
+  string(79) "/data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/adodb5/adodb-exceptions.inc.php"
+  ["line":protected]=>
+  int(80)
+  ["trace":"Exception":private]=>
+  array(6) {
+    [0]=>
+    array(4) {
+      ["file"]=>
+      string(68) "/data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/adodb5/adodb.inc.php"
+      ["line"]=>
+      int(1235)
+      ["function"]=>
+      string(11) "adodb_throw"
+      ["args"]=>
+      array(7) {
+        [0]=>
+        string(6) "mysqli"
+        [1]=>
+        string(7) "EXECUTE"
+        [2]=>
+        int(1062)
+        [3]=>
+        string(65) "Duplicate entry 'DFV72ARH-1624911-director-954' for key 'PRIMARY'"
+        [4]=>
+        string(167) "INSERT INTO zotero.creators2items( itemKey, libraryId, role, creatorsId ) VALUES(
+        'DFV72ARH'
+        , 1624911
+        , 'director'
+        , 954
+      );"
+        [5]=>
+        bool(false)
+        [6]=>
+        object(ADODB_mysqli2)#2 (97) {
+          ["argHostname"]=>
+          string(26) "ba14ns21402.adm.ds.fhnw.ch"
+          ["argUsername"]=>
+          string(4) "rfid"
+          ["argPassword"]=>
+          string(23) "NuKodYchx63eTxBNx34kQPF"
+          ["argDatabasename"]=>
+          string(4) "rfid"
+          ["persist"]=>
+          bool(true)
+          ["databaseType"]=>
+          string(6) "mysqli"
+          ["dataProvider"]=>
+          string(5) "mysql"
+          ["hasInsertID"]=>
+          bool(true)
+          ["hasAffectedRows"]=>
+          bool(true)
+          ["metaTablesSQL"]=>
+          string(131) "SELECT
+			TABLE_NAME,
+			CASE WHEN TABLE_TYPE = 'VIEW' THEN 'V' ELSE 'T' END
+		FROM INFORMATION_SCHEMA.TABLES
+		WHERE TABLE_SCHEMA="
+          ["metaColumnsSQL"]=>
+          string(22) "SHOW COLUMNS FROM `%s`"
+          ["fmtTimeStamp"]=>
+          string(13) "'Y-m-d H:i:s'"
+          ["hasLimit"]=>
+          bool(true)
+          ["hasMoveFirst"]=>
+          bool(true)
+          ["hasGenID"]=>
+          bool(true)
+          ["isoDates"]=>
+          bool(true)
+          ["sysDate"]=>
+          string(9) "CURDATE()"
+          ["sysTimeStamp"]=>
+          string(5) "NOW()"
+          ["hasTransactions"]=>
+          bool(true)
+          ["forceNewConnect"]=>
+          bool(false)
+          ["poorAffectedRows"]=>
+          bool(true)
+          ["clientFlags"]=>
+          int(0)
+          ["substr"]=>
+          string(9) "substring"
+          ["port"]=>
+          int(3306)
+          ["socket"]=>
+          string(0) ""
+          ["_bindInputArray"]=>
+          bool(false)
+          ["nameQuote"]=>
+          string(1) "`"
+          ["optionFlags"]=>
+          array(1) {
+            [0]=>
+            array(2) {
+              [0]=>
+              int(5)
+              [1]=>
+              int(0)
+            }
+          }
+          ["arrayClass"]=>
+          string(25) "ADORecordSet_array_mysqli"
+          ["multiQuery"]=>
+          bool(false)
+          ["_genIDSQL"]=>
+          string(38) "update %s set id=LAST_INSERT_ID(id+1);"
+          ["_genSeqSQL"]=>
+          string(47) "create table if not exists %s (id int not null)"
+          ["_genSeqCountSQL"]=>
+          string(23) "select count(*) from %s"
+          ["_genSeq2SQL"]=>
+          string(26) "insert into %s values (%s)"
+          ["_dropSeqSQL"]=>
+          string(23) "drop table if exists %s"
+          ["database"]=>
+          string(4) "rfid"
+          ["host"]=>
+          string(26) "ba14ns21402.adm.ds.fhnw.ch"
+          ["user"]=>
+          string(4) "rfid"
+          ["password"]=>
+          string(10) "not stored"
+          ["debug"]=>
+          bool(false)
+          ["maxblobsize"]=>
+          int(262144)
+          ["concat_operator"]=>
+          string(1) "+"
+          ["length"]=>
+          string(6) "length"
+          ["random"]=>
+          string(6) "rand()"
+          ["upperCase"]=>
+          string(5) "upper"
+          ["fmtDate"]=>
+          string(7) "'Y-m-d'"
+          ["true"]=>
+          string(1) "1"
+          ["false"]=>
+          string(1) "0"
+          ["replaceQuote"]=>
+          string(2) "\'"
+          ["charSet"]=>
+          string(4) "utf8"
+          ["metaDatabasesSQL"]=>
+          string(0) ""
+          ["uniqueOrderBy"]=>
+          bool(false)
+          ["emptyDate"]=>
+          string(6) "&nbsp;"
+          ["emptyTimeStamp"]=>
+          string(6) "&nbsp;"
+          ["lastInsID"]=>
+          bool(false)
+          ["hasTop"]=>
+          bool(false)
+          ["readOnly"]=>
+          bool(false)
+          ["genID"]=>
+          int(0)
+          ["raiseErrorFn"]=>
+          string(11) "adodb_throw"
+          ["cacheSecs"]=>
+          int(3600)
+          ["memCache"]=>
+          bool(false)
+          ["memCacheHost"]=>
+          NULL
+          ["memCachePort"]=>
+          int(11211)
+          ["memCacheCompress"]=>
+          bool(false)
+          ["sysUTimeStamp"]=>
+          bool(false)
+          ["noNullStrings"]=>
+          bool(false)
+          ["numCacheHits"]=>
+          int(0)
+          ["numCacheMisses"]=>
+          int(0)
+          ["pageExecuteCountRows"]=>
+          bool(true)
+          ["uniqueSort"]=>
+          bool(false)
+          ["leftOuter"]=>
+          bool(false)
+          ["rightOuter"]=>
+          bool(false)
+          ["ansiOuter"]=>
+          bool(false)
+          ["autoRollback"]=>
+          bool(false)
+          ["fnExecute"]=>
+          bool(false)
+          ["fnCacheExecute"]=>
+          bool(false)
+          ["blobEncodeType"]=>
+          bool(false)
+          ["rsPrefix"]=>
+          string(13) "ADORecordSet_"
+          ["autoCommit"]=>
+          bool(true)
+          ["transOff"]=>
+          int(0)
+          ["transCnt"]=>
+          int(0)
+          ["fetchMode"]=>
+          bool(false)
+          ["null2null"]=>
+          string(4) "null"
+          ["bulkBind"]=>
+          bool(false)
+          ["_oldRaiseFn"]=>
+          bool(false)
+          ["_transOK"]=>
+          NULL
+          ["_connectionID"]=>
+          object(mysqli)#44 (19) {
+            ["affected_rows"]=>
+            int(-1)
+            ["client_info"]=>
+            string(79) "mysqlnd 5.0.12-dev - 20150407 - $Id: b5c5906d452ec590732a93b051f3827e02749b83 $"
+            ["client_version"]=>
+            int(50012)
+            ["connect_errno"]=>
+            int(0)
+            ["connect_error"]=>
+            NULL
+            ["errno"]=>
+            int(1062)
+            ["error"]=>
+            string(65) "Duplicate entry 'DFV72ARH-1624911-director-954' for key 'PRIMARY'"
+            ["error_list"]=>
+            array(1) {
+              [0]=>
+              array(3) {
+                ["errno"]=>
+                int(1062)
+                ["sqlstate"]=>
+                string(5) "23000"
+                ["error"]=>
+                string(65) "Duplicate entry 'DFV72ARH-1624911-director-954' for key 'PRIMARY'"
+              }
+            }
+            ["field_count"]=>
+            int(1)
+            ["host_info"]=>
+            string(37) "ba14ns21402.adm.ds.fhnw.ch via TCP/IP"
+            ["info"]=>
+            NULL
+            ["insert_id"]=>
+            int(0)
+            ["server_info"]=>
+            string(38) "5.5.5-10.0.33-MariaDB-0ubuntu0.16.04.1"
+            ["server_version"]=>
+            int(50505)
+            ["stat"]=>
+            string(150) "Uptime: 1352233  Threads: 10  Questions: 34182876  Slow queries: 1495  Opens: 31192  Flush tables: 1  Open tables: 400  Queries per second avg: 25.278"
+            ["sqlstate"]=>
+            string(5) "00000"
+            ["protocol_version"]=>
+            int(10)
+            ["thread_id"]=>
+            int(278001)
+            ["warning_count"]=>
+            int(0)
+          }
+          ["_errorMsg"]=>
+          string(65) "Duplicate entry 'DFV72ARH-1624911-director-954' for key 'PRIMARY'"
+          ["_errorCode"]=>
+          bool(false)
+          ["_queryID"]=>
+          bool(false)
+          ["_isPersistentConnection"]=>
+          bool(true)
+          ["_evalAll"]=>
+          bool(false)
+          ["_affected"]=>
+          bool(false)
+          ["_logsql"]=>
+          bool(false)
+          ["_transmode"]=>
+          string(0) ""
+          ["connectionParameters":protected]=>
+          array(0) {
+          }
+          ["databaseName"]=>
+          string(4) "rfid"
+        }
+      }
+    }
+    [1]=>
+    array(6) {
+      ["file"]=>
+      string(84) "/data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/adodb5/drivers/adodb-mysqli2.inc.php"
+      ["line"]=>
+      int(63)
+      ["function"]=>
+      string(8) "_Execute"
+      ["class"]=>
+      string(13) "ADOConnection"
+      ["type"]=>
+      string(2) "->"
+      ["args"]=>
+      array(2) {
+        [0]=>
+        string(167) "INSERT INTO zotero.creators2items( itemKey, libraryId, role, creatorsId ) VALUES(
+        'DFV72ARH'
+        , 1624911
+        , 'director'
+        , 954
+      );"
+        [1]=>
+        bool(false)
+      }
+    }
+    [2]=>
+    array(6) {
+      ["file"]=>
+      string(68) "/data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/adodb5/adodb.inc.php"
+      ["line"]=>
+      int(1199)
+      ["function"]=>
+      string(8) "_Execute"
+      ["class"]=>
+      string(13) "ADODB_mysqli2"
+      ["type"]=>
+      string(2) "->"
+      ["args"]=>
+      array(2) {
+        [0]=>
+        string(167) "INSERT INTO zotero.creators2items( itemKey, libraryId, role, creatorsId ) VALUES(
+        'DFV72ARH'
+        , 1624911
+        , 'director'
+        , 954
+      );"
+        [1]=>
+        bool(false)
+      }
+    }
+    [3]=>
+    array(6) {
+      ["file"]=>
+      string(74) "/data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/Zotero.class.php"
+      ["line"]=>
+      int(148)
+      ["function"]=>
+      string(7) "Execute"
+      ["class"]=>
+      string(13) "ADOConnection"
+      ["type"]=>
+      string(2) "->"
+      ["args"]=>
+      array(1) {
+        [0]=>
+        string(167) "INSERT INTO zotero.creators2items( itemKey, libraryId, role, creatorsId ) VALUES(
+        'DFV72ARH'
+        , 1624911
+        , 'director'
+        , 954
+      );"
+      }
+    }
+    [4]=>
+    array(6) {
+      ["file"]=>
+      string(74) "/data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/Zotero.class.php"
+      ["line"]=>
+      int(285)
+      ["function"]=>
+      string(8) "syncItem"
+      ["class"]=>
+      string(16) "Mediathek\Zotero"
+      ["type"]=>
+      string(2) "->"
+      ["args"]=>
+      array(3) {
+        [0]=>
+        int(1624911)
+        [1]=>
+        array(7) {
+          ["key"]=>
+          string(8) "DFV72ARH"
+          ["version"]=>
+          int(552)
+          ["library"]=>
+          array(4) {
+            ["type"]=>
+            string(5) "group"
+            ["id"]=>
+            int(1624911)
+            ["name"]=>
+            string(9) "PCB_Basel"
+            ["links"]=>
+            array(1) {
+              ["alternate"]=>
+              array(2) {
+                ["href"]=>
+                string(37) "https://www.zotero.org/groups/1624911"
+                ["type"]=>
+                string(9) "text/html"
+              }
+            }
+          }
+          ["links"]=>
+          array(2) {
+            ["self"]=>
+            array(2) {
+              ["href"]=>
+              string(52) "https://api.zotero.org/groups/1624911/items/DFV72ARH"
+              ["type"]=>
+              string(16) "application/json"
+            }
+            ["alternate"]=>
+            array(2) {
+              ["href"]=>
+              string(52) "https://www.zotero.org/groups/1624911/items/DFV72ARH"
+              ["type"]=>
+              string(9) "text/html"
+            }
+          }
+          ["meta"]=>
+          array(4) {
+            ["createdByUser"]=>
+            array(4) {
+              ["id"]=>
+              int(4207082)
+              ["username"]=>
+              string(18) "Tabea Lurk InfoAge"
+              ["name"]=>
+              string(0) ""
+              ["links"]=>
+              array(1) {
+                ["alternate"]=>
+                array(2) {
+                  ["href"]=>
+                  string(41) "https://www.zotero.org/tabea_lurk_infoage"
+                  ["type"]=>
+                  string(9) "text/html"
+                }
+              }
+            }
+            ["creatorSummary"]=>
+            string(11) "GABI et al."
+            ["parsedDate"]=>
+            string(4) "2002"
+            ["numChildren"]=>
+            int(1)
+          }
+          ["data"]=>
+          array(30) {
+            ["key"]=>
+            string(8) "DFV72ARH"
+            ["version"]=>
+            int(552)
+            ["itemType"]=>
+            string(14) "videoRecording"
+            ["title"]=>
+            string(8) "Tabu (1)"
+            ["creators"]=>
+            array(11) {
+              [0]=>
+              array(3) {
+                ["creatorType"]=>
+                string(8) "director"
+                ["firstName"]=>
+                string(0) ""
+                ["lastName"]=>
+                string(4) "GABI"
+              }
+              [1]=>
+              array(3) {
+                ["creatorType"]=>
+                string(8) "director"
+                ["firstName"]=>
+                string(5) "Irene"
+                ["lastName"]=>
+                string(4) "Maag"
+              }
+              [2]=>
+              array(3) {
+                ["creatorType"]=>
+                string(8) "director"
+                ["firstName"]=>
+                string(5) "Haimo"
+                ["lastName"]=>
+                string(4) "Ganz"
+              }
+              [3]=>
+              array(3) {
+                ["creatorType"]=>
+                string(8) "director"
+                ["firstName"]=>
+                string(7) "Martina"
+                ["lastName"]=>
+                string(5) "Gmür"
+              }
+              [4]=>
+              array(3) {
+                ["creatorType"]=>
+                string(8) "director"
+                ["firstName"]=>
+                string(8) "Gabriele"
+                ["lastName"]=>
+                string(5) "Rerat"
+              }
+              [5]=>
+              array(3) {
+                ["creatorType"]=>
+                string(8) "director"
+                ["firstName"]=>
+                string(4) "Lena"
+                ["lastName"]=>
+                string(8) "Eriksson"
+              }
+              [6]=>
+              array(3) {
+                ["creatorType"]=>
+                string(8) "director"
+                ["firstName"]=>
+                string(5) "Sämi"
+                ["lastName"]=>
+                string(6) "Kramer"
+              }
+              [7]=>
+              array(3) {
+                ["creatorType"]=>
+                string(8) "director"
+                ["firstName"]=>
+                string(7) "Barbara"
+                ["lastName"]=>
+                string(8) "Naegelin"
+              }
+              [8]=>
+              array(3) {
+                ["creatorType"]=>
+                string(8) "director"
+                ["firstName"]=>
+                string(6) "Martin"
+                ["lastName"]=>
+                string(4) "Blum"
+              }
+              [9]=>
+              array(3) {
+                ["creatorType"]=>
+                string(8) "director"
+                ["firstName"]=>
+                string(9) "Franziska"
+                ["lastName"]=>
+                string(7) "Wüsten"
+              }
+              [10]=>
+              array(3) {
+                ["creatorType"]=>
+                string(8) "director"
+                ["firstName"]=>
+                string(6) "Martin"
+                ["lastName"]=>
+                string(4) "Blum"
+              }
+            }
+            ["abstractNote"]=>
+            string(0) ""
+            ["videoRecordingFormat"]=>
+            string(0) ""
+            ["seriesTitle"]=>
+            string(0) ""
+            ["volume"]=>
+            string(0) ""
+            ["numberOfVolumes"]=>
+            string(0) ""
+            ["place"]=>
+            string(28) "Kunsthaus Baselland, Muttenz"
+            ["studio"]=>
+            string(0) ""
+            ["date"]=>
+            string(4) "2002"
+            ["runningTime"]=>
+            string(0) ""
+            ["language"]=>
+            string(0) ""
+            ["ISBN"]=>
+            string(0) ""
+            ["shortTitle"]=>
+            string(0) ""
+            ["url"]=>
+            string(0) ""
+            ["accessDate"]=>
+            string(0) ""
+            ["archive"]=>
+            string(0) ""
+            ["archiveLocation"]=>
+            string(0) ""
+            ["libraryCatalog"]=>
+            string(0) ""
+            ["callNumber"]=>
+            string(0) ""
+            ["rights"]=>
+            string(0) ""
+            ["extra"]=>
+            string(0) ""
+            ["tags"]=>
+            array(1) {
+              [0]=>
+              array(1) {
+                ["tag"]=>
+                string(8) "Festival"
+              }
+            }
+            ["collections"]=>
+            array(0) {
+            }
+            ["relations"]=>
+            array(1) {
+              ["owl:sameAs"]=>
+              string(47) "http://zotero.org/groups/1512203/items/XD9XBBVV"
+            }
+            ["dateAdded"]=>
+            string(20) "2017-08-15T17:58:27Z"
+            ["dateModified"]=>
+            string(20) "2018-01-31T16:54:32Z"
+          }
+          ["group"]=>
+          array(5) {
+            ["id"]=>
+            int(1624911)
+            ["version"]=>
+            int(23)
+            ["links"]=>
+            array(2) {
+              ["self"]=>
+              array(2) {
+                ["href"]=>
+                string(37) "https://api.zotero.org/groups/1624911"
+                ["type"]=>
+                string(16) "application/json"
+              }
+              ["alternate"]=>
+              array(2) {
+                ["href"]=>
+                string(37) "https://www.zotero.org/groups/1624911"
+                ["type"]=>
+                string(9) "text/html"
+              }
+            }
+            ["meta"]=>
+            array(3) {
+              ["created"]=>
+              string(20) "2017-08-14T09:13:25Z"
+              ["lastModified"]=>
+              string(20) "2018-01-19T16:45:56Z"
+              ["numItems"]=>
+              int(440)
+            }
+            ["data"]=>
+            array(11) {
+              ["id"]=>
+              int(1624911)
+              ["version"]=>
+              int(23)
+              ["name"]=>
+              string(9) "PCB_Basel"
+              ["owner"]=>
+              int(3358154)
+              ["type"]=>
+              string(7) "Private"
+              ["description"]=>
+              string(283) "<p>acl_meta:global/guest<br />acl_content:global/guest<br />acl_preview:global/guest<br />catalog:HGK</p>
+<p>catalog:PCB_Basel</p>
+<p>catalog:DigitaleSee<br />title:Onlinezugang zur Performance Chronik Basel<br />library:Performance Chronik Basel</p>
+<p>Performance Chronik Basel</p>"
+              ["url"]=>
+              string(0) ""
+              ["libraryEditing"]=>
+              string(6) "admins"
+              ["libraryReading"]=>
+              string(7) "members"
+              ["fileEditing"]=>
+              string(6) "admins"
+              ["admins"]=>
+              array(3) {
+                [0]=>
+                int(3354739)
+                [1]=>
+                int(4207082)
+                [2]=>
+                int(4373839)
+              }
+            }
+          }
+        }
+        [2]=>
+        bool(false)
+      }
+    }
+    [5]=>
+    array(6) {
+      ["file"]=>
+      string(63) "/data/www/vhosts/mediathek.fhnw.ch/html/dev/cli/zotero2solr.php"
+      ["line"]=>
+      int(17)
+      ["function"]=>
+      string(9) "syncItems"
+      ["class"]=>
+      string(16) "Mediathek\Zotero"
+      ["type"]=>
+      string(2) "->"
+      ["args"]=>
+      array(1) {
+        [0]=>
+        int(1624911)
+      }
+    }
+  }
+  ["previous":"Exception":private]=>
+  NULL
+  ["msg"]=>
+  string(65) "Duplicate entry 'DFV72ARH-1624911-director-954' for key 'PRIMARY'"
+}
+		ADODB_mysqli2._Execute(INSERT INTO zotero.creators2items( itemKey, libraryId, role, creatorsId ) VALUES(          'DFV72ARH'          , 1624911        ..., false)% line 1199, file: /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/adodb5/adodb.inc.php
+	ADOConnection.Execute(INSERT INTO zotero.creators2items( itemKey, libraryId, role, creatorsId ) VALUES(          'DFV72ARH'          , 1624911        ...)% line  148, file: /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/Zotero.class.php
+Mediathek\Zotero.syncItem(1624911, Array[7], false)% line  285, file: /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/Zotero.class.php
+Mediathek\Zotero.syncItems(1624911)% line   17, file: /data/www/vhosts/mediathek.fhnw.ch/html/dev/cli/zotero2solr.php
+1624911:27CDTZ4B [videoRecording] - VIA Songs (1)
+Title: VIA Songs (1)
+Insert query for zotero-1624911.27CDTZ4B executed
+0
+1624911:6GGS4KKN [videoRecording] - Treten Sie ein Herr Sommer
+  [TRASH]
+Title: Treten Sie ein Herr Sommer
+Trying to delete zotero-1624911.6GGS4KKN
+    not found...
+1
+1624911:DFV72ARH [videoRecording] - Tabu (1)
+Title: Tabu (1)
+Insert query for zotero-1624911.DFV72ARH executed
+2
+1624911:WA97MD34 [videoRecording] - Tabu (2)
+Title: Tabu (2)
+Insert query for zotero-1624911.WA97MD34 executed
+3
