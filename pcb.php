@@ -120,10 +120,6 @@ echo mediathekheader('gatekeeper', 'Performance Chronik Basel', '', array( '../c
 
     <!-- GABI --><a href="search.php?query=%7B%22area%22%3A%22%22%2C%22filter%22%3A%5B%5D%2C%22facets%22%3A%7B%22catalog%22%3A%5B%22PCB_Basel%22%5D%7D%2C%22query%22%3A%22author%3A%5C%22GABI%5C%22%22%7D">GABI</a><br />
 
-    <!-- GABI Studierende HGK Bildhauerklasse --><a href="search.php?query=%7B%22area%22%3A%22%22%2C%22filter%22%3A%5B%5D%2C%22facets%22%3A%7B%22catalog%22%3A%5B%22PCB_Basel%22%5D%7D%2C%22query%22%3A%22author%3A%5C%22GABI+Studierende+HGK+Bildhauerklasse%5C%22%22%7D">GABI Studierende HGK Bildhauerklasse</a><br />
-
-    <!-- GABI Studierende HGK Bildhauerklasse, Studierende --><a href="search.php?query=%7B%22area%22%3A%22%22%2C%22filter%22%3A%5B%5D%2C%22facets%22%3A%7B%22catalog%22%3A%5B%22PCB_Basel%22%5D%7D%2C%22query%22%3A%22author%3A%5C%22GABI+Studierende+HGK+Bildhauerklasse%2C+Studierende%5C%22%22%7D">GABI Studierende HGK Bildhauerklasse, Studierende</a><br />
-
     <!-- Ganz, Haimo --><a href="search.php?query=%7B%22area%22%3A%22%22%2C%22filter%22%3A%5B%5D%2C%22facets%22%3A%7B%22catalog%22%3A%5B%22PCB_Basel%22%5D%7D%2C%22query%22%3A%22author%3A%5C%22Ganz%2C+Haimo%5C%22%22%7D">Ganz, Haimo</a><br />
 
     <!-- Ganz, Iris --><a href="search.php?query=%7B%22area%22%3A%22%22%2C%22filter%22%3A%5B%5D%2C%22facets%22%3A%7B%22catalog%22%3A%5B%22PCB_Basel%22%5D%7D%2C%22query%22%3A%22author%3A%5C%22Ganz%2C+Iris%5C%22%22%7D">Ganz, Iris</a><br />
@@ -216,8 +212,6 @@ echo mediathekheader('gatekeeper', 'Performance Chronik Basel', '', array( '../c
 
     <!-- Maly, Valerina --><a href="search.php?query=%7B%22area%22%3A%22%22%2C%22filter%22%3A%5B%5D%2C%22facets%22%3A%7B%22catalog%22%3A%5B%22PCB_Basel%22%5D%7D%2C%22query%22%3A%22author%3A%5C%22Maly%2C+Valerina%5C%22%22%7D">Maly, Valerina</a><br />
 
-    <!-- Marcel Forrer --><a href="search.php?query=%7B%22area%22%3A%22%22%2C%22filter%22%3A%5B%5D%2C%22facets%22%3A%7B%22catalog%22%3A%5B%22PCB_Basel%22%5D%7D%2C%22query%22%3A%22author%3A%5C%22Marcel+Forrer%5C%22%22%7D">Marcel Forrer</a><br />
-
     <!-- Marti, Hansjörg --><a href="search.php?query=%7B%22area%22%3A%22%22%2C%22filter%22%3A%5B%5D%2C%22facets%22%3A%7B%22catalog%22%3A%5B%22PCB_Basel%22%5D%7D%2C%22query%22%3A%22author%3A%5C%22Marti%2C+Hansj%5Cu00f6rg%5C%22%22%7D">Marti, Hansjörg</a><br />
 
     <!-- Mathis, Muda --><a href="search.php?query=%7B%22area%22%3A%22%22%2C%22filter%22%3A%5B%5D%2C%22facets%22%3A%7B%22catalog%22%3A%5B%22PCB_Basel%22%5D%7D%2C%22query%22%3A%22author%3A%5C%22Mathis%2C+Muda%5C%22%22%7D">Mathis, Muda</a><br />
@@ -225,8 +219,6 @@ echo mediathekheader('gatekeeper', 'Performance Chronik Basel', '', array( '../c
     <!-- Moebius, Matthias --><a href="search.php?query=%7B%22area%22%3A%22%22%2C%22filter%22%3A%5B%5D%2C%22facets%22%3A%7B%22catalog%22%3A%5B%22PCB_Basel%22%5D%7D%2C%22query%22%3A%22author%3A%5C%22Moebius%2C+Matthias%5C%22%22%7D">Moebius, Matthias</a><br />
 
     <!-- Morgen, Tony --><a href="search.php?query=%7B%22area%22%3A%22%22%2C%22filter%22%3A%5B%5D%2C%22facets%22%3A%7B%22catalog%22%3A%5B%22PCB_Basel%22%5D%7D%2C%22query%22%3A%22author%3A%5C%22Morgen%2C+Tony%5C%22%22%7D">Morgen, Tony</a><br />
-
-    <!-- Muda, Mathis --><a href="search.php?query=%7B%22area%22%3A%22%22%2C%22filter%22%3A%5B%5D%2C%22facets%22%3A%7B%22catalog%22%3A%5B%22PCB_Basel%22%5D%7D%2C%22query%22%3A%22author%3A%5C%22Muda%2C+Mathis%5C%22%22%7D">Muda, Mathis</a><br />
 
     <!-- Müller, Christian --><a href="search.php?query=%7B%22area%22%3A%22%22%2C%22filter%22%3A%5B%5D%2C%22facets%22%3A%7B%22catalog%22%3A%5B%22PCB_Basel%22%5D%7D%2C%22query%22%3A%22author%3A%5C%22M%5Cu00fcller%2C+Christian%5C%22%22%7D">Müller, Christian</a><br />
 
@@ -237,8 +229,6 @@ echo mediathekheader('gatekeeper', 'Performance Chronik Basel', '', array( '../c
     <!-- Nieslony, Borys --><a href="search.php?query=%7B%22area%22%3A%22%22%2C%22filter%22%3A%5B%5D%2C%22facets%22%3A%7B%22catalog%22%3A%5B%22PCB_Basel%22%5D%7D%2C%22query%22%3A%22author%3A%5C%22Nieslony%2C+Borys%5C%22%22%7D">Nieslony, Borys</a><br />
 
     <!-- Oechslin, Reto --><a href="search.php?query=%7B%22area%22%3A%22%22%2C%22filter%22%3A%5B%5D%2C%22facets%22%3A%7B%22catalog%22%3A%5B%22PCB_Basel%22%5D%7D%2C%22query%22%3A%22author%3A%5C%22Oechslin%2C+Reto%5C%22%22%7D">Oechslin, Reto</a><br />
-
-    <!-- Oertli, Christiph --><a href="search.php?query=%7B%22area%22%3A%22%22%2C%22filter%22%3A%5B%5D%2C%22facets%22%3A%7B%22catalog%22%3A%5B%22PCB_Basel%22%5D%7D%2C%22query%22%3A%22author%3A%5C%22Oertli%2C+Christiph%5C%22%22%7D">Oertli, Christiph</a><br />
 
     <!-- Oertli, Christoph --><a href="search.php?query=%7B%22area%22%3A%22%22%2C%22filter%22%3A%5B%5D%2C%22facets%22%3A%7B%22catalog%22%3A%5B%22PCB_Basel%22%5D%7D%2C%22query%22%3A%22author%3A%5C%22Oertli%2C+Christoph%5C%22%22%7D">Oertli, Christoph</a><br />
 
@@ -253,8 +243,6 @@ echo mediathekheader('gatekeeper', 'Performance Chronik Basel', '', array( '../c
     <!-- Reichmuth, Daniel --><a href="search.php?query=%7B%22area%22%3A%22%22%2C%22filter%22%3A%5B%5D%2C%22facets%22%3A%7B%22catalog%22%3A%5B%22PCB_Basel%22%5D%7D%2C%22query%22%3A%22author%3A%5C%22Reichmuth%2C+Daniel%5C%22%22%7D">Reichmuth, Daniel</a><br />
 
     <!-- Rerat, Gabriele --><a href="search.php?query=%7B%22area%22%3A%22%22%2C%22filter%22%3A%5B%5D%2C%22facets%22%3A%7B%22catalog%22%3A%5B%22PCB_Basel%22%5D%7D%2C%22query%22%3A%22author%3A%5C%22Rerat%2C+Gabriele%5C%22%22%7D">Rerat, Gabriele</a><br />
-
-    <!-- Rerat, Gabrielle --><a href="search.php?query=%7B%22area%22%3A%22%22%2C%22filter%22%3A%5B%5D%2C%22facets%22%3A%7B%22catalog%22%3A%5B%22PCB_Basel%22%5D%7D%2C%22query%22%3A%22author%3A%5C%22Rerat%2C+Gabrielle%5C%22%22%7D">Rerat, Gabrielle</a><br />
 
     <!-- Rickert, Kai --><a href="search.php?query=%7B%22area%22%3A%22%22%2C%22filter%22%3A%5B%5D%2C%22facets%22%3A%7B%22catalog%22%3A%5B%22PCB_Basel%22%5D%7D%2C%22query%22%3A%22author%3A%5C%22Rickert%2C+Kai%5C%22%22%7D">Rickert, Kai</a><br />
 
@@ -332,13 +320,12 @@ echo mediathekheader('gatekeeper', 'Performance Chronik Basel', '', array( '../c
 
     <!-- Z'Rotz, Tina --><a href="search.php?query=%7B%22area%22%3A%22%22%2C%22filter%22%3A%5B%5D%2C%22facets%22%3A%7B%22catalog%22%3A%5B%22PCB_Basel%22%5D%7D%2C%22query%22%3A%22author%3A%5C%22Z%27Rotz%2C+Tina%5C%22%22%7D">Z'Rotz, Tina</a><br />
 
-    <!-- Zrotz, Tina --><a href="search.php?query=%7B%22area%22%3A%22%22%2C%22filter%22%3A%5B%5D%2C%22facets%22%3A%7B%22catalog%22%3A%5B%22PCB_Basel%22%5D%7D%2C%22query%22%3A%22author%3A%5C%22Zrotz%2C+Tina%5C%22%22%7D">Zrotz, Tina</a><br />
-
     <!-- Zwick, Sus --><a href="search.php?query=%7B%22area%22%3A%22%22%2C%22filter%22%3A%5B%5D%2C%22facets%22%3A%7B%22catalog%22%3A%5B%22PCB_Basel%22%5D%7D%2C%22query%22%3A%22author%3A%5C%22Zwick%2C+Sus%5C%22%22%7D">Zwick, Sus</a><br />
 
     <!-- della Guestina, Christina --><a href="search.php?query=%7B%22area%22%3A%22%22%2C%22filter%22%3A%5B%5D%2C%22facets%22%3A%7B%22catalog%22%3A%5B%22PCB_Basel%22%5D%7D%2C%22query%22%3A%22author%3A%5C%22della+Guestina%2C+Christina%5C%22%22%7D">della Guestina, Christina</a><br />
 
     <!-- v. Krosigh, Marita --><a href="search.php?query=%7B%22area%22%3A%22%22%2C%22filter%22%3A%5B%5D%2C%22facets%22%3A%7B%22catalog%22%3A%5B%22PCB_Basel%22%5D%7D%2C%22query%22%3A%22author%3A%5C%22v.+Krosigh%2C+Marita%5C%22%22%7D">v. Krosigh, Marita</a><br />
+
 
   </section>
 </p>
