@@ -160,7 +160,7 @@ class WenkenparkDisplay extends DisplayEntity {
 <?php
 
 					if( isset( $this->metadata['LAENGE'] ))
-						echo "<b>Dauer</b>: ".htmlspecialchars( substr( $this->metadata['LAENGE'], 0, -2 ).':'.substr( $this->metadata['LAENGE'], -2 ) )." min.<br />\n";;
+						echo (strpos( 'loop', strtolower($this->metadata['LAENGE'])) === false ? "<b>Dauer</b>: ":"").htmlspecialchars( $this->metadata['LAENGE'] )."<br />\n";;
 					if( isset( $this->metadata['Ursprungsformat'] ))
 						echo "<b>Ursprungsformat</b>: ".htmlspecialchars($this->metadata['Ursprungsformat'])."<br />\n";;
 					$sys = array();
@@ -503,7 +503,6 @@ if(( $session->isAdmin() || $session->inAnyGroup( $this->doc->acl_content )) && 
 -->
                     <?php if( strlen( $this->metadata['Produktionsjahr'] )) echo 'Jahr: '.htmlspecialchars( $this->metadata['Produktionsjahr'] )."<br />\n"; ?>
                     <?php if( strlen( $this->metadata['LAENGE'] )) echo 'Dauer: '.htmlspecialchars( $this->metadata['LAENGE'] )."<br />\n"; ?>
-                    <?php if( strlen( $this->metadata['Publikationsnummer'] )) echo 'Publikationsnummer: '.htmlspecialchars( $this->metadata['Publikationsnummer'] )."<br />\n"; ?>
 
 					<?php
 					if( @count( $this->metadata['media'][0]['stills'] ) > 0 ) {
@@ -519,6 +518,7 @@ if(( $session->isAdmin() || $session->inAnyGroup( $this->doc->acl_content )) && 
 							echo "<br />\n";
 					}
 					?>
+					<?php if( strlen( $this->metadata['Publikationsnummer'] )) echo 'Publikationsnummer: '.htmlspecialchars( $this->metadata['Publikationsnummer'] )."<br />\n"; ?>
 					Quelle: Videowochen im Wenkenpark<br />
 					ID: <?php echo $this->doc->id; ?><br />
 					<a href="detail.php?<?php echo "id=".urlencode( $this->doc->id ); foreach( $this->urlparams as $key=>$val ) echo '&'.$key.'='.urlencode($val); ?>"><i class="fa fa-folder-open" aria-hidden="true"></i> Details</a><br />
