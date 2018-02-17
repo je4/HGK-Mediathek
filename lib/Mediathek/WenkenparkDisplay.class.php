@@ -160,7 +160,7 @@ class WenkenparkDisplay extends DisplayEntity {
 <?php
 
 					if( isset( $this->metadata['LAENGE'] ))
-						echo (strpos( 'loop', strtolower($this->metadata['LAENGE'])) === false ? "<b>Dauer</b>: ":"").htmlspecialchars( $this->metadata['LAENGE'] )."<br />\n";;
+						echo (strpos( strtolower($this->metadata['LAENGE']), 'loop') === false ? "<b>Dauer</b>: ":"").htmlspecialchars( $this->metadata['LAENGE'] )."<br />\n";;
 					if( isset( $this->metadata['Ursprungsformat'] ))
 						echo "<b>Ursprungsformat</b>: ".htmlspecialchars($this->metadata['Ursprungsformat'])."<br />\n";;
 					$sys = array();
@@ -502,7 +502,7 @@ if(( $session->isAdmin() || $session->inAnyGroup( $this->doc->acl_content )) && 
 						echo "Ton: ".trim( $this->metadata['Ton'])."<br />\n"; ?>
 -->
                     <?php if( strlen( $this->metadata['Produktionsjahr'] )) echo 'Jahr: '.htmlspecialchars( $this->metadata['Produktionsjahr'] )."<br />\n"; ?>
-                    <?php if( strlen( $this->metadata['LAENGE'] )) echo 'Dauer: '.htmlspecialchars( $this->metadata['LAENGE'] )."<br />\n"; ?>
+                    <?php if( strlen( $this->metadata['LAENGE'] )) echo (strpos( strtolower($this->metadata['LAENGE']), 'loop') === false ? "Dauer: ":"").htmlspecialchars( $this->metadata['LAENGE'] )."<br />\n"; ?>
 
 					<?php
 					if( @count( $this->metadata['media'][0]['stills'] ) > 0 ) {
