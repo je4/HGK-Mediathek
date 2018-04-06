@@ -47,7 +47,7 @@ $uploader->sizeLimit = null;
 $uploader->inputName = "qqfile"; // matches Fine Uploader's default inputName value by default
 
 // If you want to use the chunking/resume feature, specify the folder to temporarily save parts.
-$uploader->chunksFolder = "chunks";
+$uploader->chunksFolder = '/data2/mab-basel/chunks';
 
 $method = get_request_method();
 

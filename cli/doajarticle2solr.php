@@ -1,5 +1,4 @@
 <?php
-
 namespace Mediathek;
 
 include '../init.inc.php';
@@ -93,9 +92,9 @@ if( $argc == 1 ) {
 			$counter++;
 		}
 
-		$date->add( new \DateInterval($interval) );
+		$date2->add( new \DateInterval($interval) );
 		$month++;
-	} while( $date < $now );
+	} while( $date2 < $now );
 }
 else {
 	$sql = "SELECT * FROM oai_pmh WHERE oai_pmh_source_id={$sourceid}";

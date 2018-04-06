@@ -131,10 +131,14 @@ class Helper {
 			// Add icon image
 			$icon = new Image($pass['icon'], 'icon');
 			$p->addImage($icon);
+			$icon2 = new Image($pass['icon2'], 'icon@2x');
+			$p->addImage($icon2);
 
 			// Add logo image
 			$logo = new Image($pass['logo'], 'logo');
 			$p->addImage($logo);
+			$logo2 = new Image($pass['logo2'], 'logo@2x');
+			$p->addImage($logo2);
 
 			// Add strip image
 			$strip = new Image(/* $pass['strip'] */ $stripfile, 'strip');

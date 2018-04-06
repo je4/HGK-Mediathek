@@ -21,6 +21,12 @@
         <span class="menu-item-label">PDF Upload MAB Basel</span>
       </a><!-- br-menu-link -->
     </li><!-- br-menu-item -->
+      <li class="br-menu-item">
+          <a href="inventorynumber.php" class="br-menu-link">
+              <i class="menu-item-icon icon ion-ios-pricetags-outline tx-24"></i>
+              <span class="menu-item-label">Inventarnummern Archiv</span>
+          </a><!-- br-menu-link -->
+      </li><!-- br-menu-item -->
   </ul><!-- br-sideleft-menu -->
 
 </div><!-- br-sideleft -->

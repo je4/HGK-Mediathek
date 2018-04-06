@@ -62,6 +62,33 @@ function thesis2zotero(){
     }
     $tmplThesis = $resGetTemplateThesis->body;
 
+    //Get Zotero map template
+    $uriGetTemplateMap = "$APIURL/items/new?itemType=map";
+    $resGetTemplateMap = Httpful\Request::get($uriGetTemplateMap)->send();
+    if($resGetTemplateMap->code!=200){
+        echo "Zotero template not loaded";
+        die();
+    }
+    $tmplMap = $resGetTemplateMap->body;
+
+    //Get Zotero artwork template
+    $uriGetTemplateArtwork = "$APIURL/items/new?itemType=artwork";
+    $resGetTemplateArtwork = Httpful\Request::get($uriGetTemplateArtwork)->send();
+    if($resGetTemplateArtwork->code!=200){
+        echo "Zotero template not loaded";
+        die();
+    }
+    $tmplArtwork = $resGetTemplateArtwork->body;
+
+    //Get Zotero document template
+    $uriGetTemplateDocument = "$APIURL/items/new?itemType=document";
+    $resGetTemplateDocument = Httpful\Request::get($uriGetTemplateDocument)->send();
+    if($resGetTemplateDocument->code!=200){
+        echo "Zotero template not loaded";
+        die();
+    }
+    $tmplDocument = $resGetTemplateDocument->body;
+
     //Get Zotero video recording template
     $uriGetTemplateVideo = "$APIURL/items/new?itemType=videoRecording";
     $resGetTemplateVideo = Httpful\Request::get($uriGetTemplateVideo)->send();
@@ -70,6 +97,15 @@ function thesis2zotero(){
         die();
     }
     $tmplVideo = $resGetTemplateVideo->body;
+
+    //Get Zotero audio recording template
+    $uriGetTemplateAudio = "$APIURL/items/new?itemType=audioRecording";
+    $resGetTemplateAudio = Httpful\Request::get($uriGetTemplateAudio)->send();
+    if($resGetTemplateAudio->code!=200){
+        echo "Zotero template not loaded";
+        die();
+    }
+    $tmplAudio = $resGetTemplateAudio->body;
 
     //Set template standard values
     $tmplThesis->university = 'HGK FHNW';
@@ -80,6 +116,10 @@ function thesis2zotero(){
     $tmplBlogPost->creators = array();
     $tmplWebpage->creators = array();
     $tmplVideo->creators = array();
+    $tmplAudio->creators = array();
+    $tmplArtwork->creators = array();
+    $tmplMap->creators = array();
+    $tmplDocument->creators = array();
 
     try {
         $db = new PDO("mysql:host=$DBHOST;dbname=$DBNAME;charset=utf8", $DBUSER, $DBUPWD);
@@ -89,10 +129,10 @@ function thesis2zotero(){
         die();
     }
 
-    $stmtSetInserted = $db->prepare("Update source_ikuthesis set inserted = 1 where id = ?");
+    $stmtSetInserted = $db->prepare("Update source_zotero_import set inserted = 1 where id = ?");
 
     //Clone thesis from template, fill the appropriate values and POST to Zotero
-    foreach ($db->query('select * from source_ikuthesis where Strichcode is NULL and inserted = 0', PDO::FETCH_OBJ) as $rowThesis){
+    foreach ($db->query('select * from source_zotero_import where Strichcode is NULL and inserted = 0', PDO::FETCH_OBJ) as $rowThesis){
 
         switch ($rowThesis->ItemType){
             case "thesis":
@@ -107,12 +147,24 @@ function thesis2zotero(){
             case "videoRecording":
                 $objZotero = clone $tmplVideo;
                 break;
+            case "audioRecording":
+                $objZotero = clone $tmplAudio;
+                break;
+            case "map":
+                $objZotero = clone $tmplMap;
+                break;
+            case "document":
+                $objZotero = clone $tmplDocument;
+                break;
+            case "artwork":
+                $objZotero = clone $tmplArtwork;
+                break;
             default:
                 echo "Unknown Item Type: {$rowThesis->ItemType}";
                 continue;
         }
 
-        if (in_array($rowThesis->ItemType, ['thesis','blogPost','webpage','videoRecording'])){
+        if (in_array($rowThesis->ItemType, ['thesis','blogPost','webpage','videoRecording','audioRecording','map','document','artwork'])){
             $objZotero->title = $rowThesis->Title;
             $authors = getCreators('author', $rowThesis->Autor);
             foreach ($authors as $author) {
@@ -122,17 +174,23 @@ function thesis2zotero(){
             $objZotero->extra = $rowThesis->Extra;
             $objZotero->url = $rowThesis->URL;
             $objZotero->callNumber = $rowThesis->CallNumber;
+            $objZotero->libraryCatalog = $rowThesis->LibraryCatalog;
+            $objZotero->archiveLocation = $rowThesis->LocArchive;
+            $objZotero->abstractNote = $rowThesis->Abstract;
             if(!empty($rowThesis->Tag1))$objZotero->tags[] = array('tag'=>$rowThesis->Tag1);
             if(!empty($rowThesis->Tag2))$objZotero->tags[] = array('tag'=>$rowThesis->Tag2);
+            if(!empty($rowThesis->Tag3))$objZotero->tags[] = array('tag'=>$rowThesis->Tag3);
+            if(!empty($rowThesis->Tag4))$objZotero->tags[] = array('tag'=>$rowThesis->Tag4);
+            if(!empty($rowThesis->Tag5))$objZotero->tags[] = array('tag'=>$rowThesis->Tag5);
         }
+
         if (in_array($rowThesis->ItemType, ['thesis'])){
             $contributors = getCreators('contributor', $rowThesis->Contributor);
             foreach ($contributors as $contributor){
                 $objZotero->creators[] = $contributor;
             }
-
-
         }
+
         if (in_array($rowThesis->ItemType, ['videoRecording'])){
             $objZotero->creators = array();
             $authors = getCreators('director', $rowThesis->Autor);
@@ -144,22 +202,17 @@ function thesis2zotero(){
                 $objZotero->creators[] = $contributor;
             }
             $objZotero->url = $rowThesis->Filename;
-            $objZotero->abstractNote = $rowThesis->Abstract;
             $objZotero->seriesTitle = $rowThesis->SeriesTitle;
             $objZotero->place = $rowThesis->Place;
             $objZotero->runningTime = $rowThesis->RunningTime;
-            $objZotero->libraryCatalog = $rowThesis->LibraryCatalog;
-            $objZotero->archiveLocation = $rowThesis->LocArchive;
             $objZotero->videoRecordingFormat = $rowThesis->Format;
             $objZotero->language = $rowThesis->Language;
             $objZotero->rights = $rowThesis->Rights;
         }
 
 
-
-
-        //var_dump($objZotero);
-        //exit();
+        /*var_dump($objZotero);
+        exit();*/
         $keyThesis = postObject($objZotero);
         if(is_null($keyThesis)) continue;
 
@@ -174,7 +227,11 @@ function thesis2zotero(){
             if(array_key_exists("Note$i",$rowThesis)){
                 if(!empty($rowThesis->{'Note'.$i}) ){
                     $currNote = clone $tmplNote;
-                    $currNote->note = "<p>0$i: {$rowThesis->{'Note'.$i}}</p>";
+                    if($i == 1){
+                        $currNote->note = "<p>Beteiligt: {$rowThesis->{'Note'.$i}}</p>";
+                    }else{
+                        $currNote->note = "<p>0$i: {$rowThesis->{'Note'.$i}}</p>";
+                    }
                     $currNote->parentItem = $keyThesis;
                     if(!postNote($currNote)) continue;
                 }
@@ -188,6 +245,14 @@ function thesis2zotero(){
             $currLinkAttch->url = $rowThesis->Attachment;
             $currLinkAttch->parentItem = $keyThesis;
             if(!postNote($currLinkAttch)) continue;
+        }
+
+        if(!empty($rowThesis->Attachment1) ){
+            $currLinkAttch1 = clone $tmplLinkAttch;
+            $currLinkAttch1->title = "Parent: {$rowThesis->Attachment1}";
+            $currLinkAttch1->url = $rowThesis->Attachment1;
+            $currLinkAttch1->parentItem = $keyThesis;
+            if(!postNote($currLinkAttch1)) continue;
         }
 
         $stmtSetInserted->execute(array($rowThesis->id));
