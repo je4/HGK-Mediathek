@@ -30,7 +30,7 @@ echo mediathekheader('search', 'Mediathek - Ausweis', '');
 	<input type="hidden" id="action" name="action" />
 	<input type="hidden" id="library" name="library" />
 	<input type="hidden" id="serial" name="serial" />
-</form>	
+</form>
 
 <div class="back-btn"><i class="ion-ios-search"></i></div>
 
@@ -60,20 +60,20 @@ if( $session->isLoggedIn()) {
 	foreach( $rs as $row ) {
 		if( !strlen( $row['uniqueID'] )) {
 			$sql = "UPDATE wallet.card SET uniqueID=".$db->qstr( $session->shibGetUniqueID())."
-						, name=".$db->qstr( $session->shibGetGivenName().' '.$session->shibGetSurname())." 
+						, name=".$db->qstr( $session->shibGetGivenName().' '.$session->shibGetSurname())."
 					WHERE pass=".$row['pass']." AND serial=".$row['serial'];
 			$db->Execute( $sql );
 		}
-		
+
 	}
-	
+
 	$id = @intval( $_REQUEST['library']);
 	$barcode = @trim( $_REQUEST['barcode']);
 	$email2 = @trim( $_REQUEST['email2']);
 	$serial = @intval( $_REQUEST['serial']);
-	
-	
-	
+
+
+
 	if( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'delete' ) {
 		$error = false;
 		$sql = "SELECT COUNT(*) FROM wallet.card WHERE uniqueID=".$db->qstr( $session->shibGetUniqueID())." AND pass=".$id." AND serial=".$serial;
@@ -85,7 +85,7 @@ if( $session->isLoggedIn()) {
 <?php
 			$error = true;
 		}
-		
+
 		if( !$error ) {
 			$sql = "UPDATE wallet.card SET deleted=1 WHERE uniqueID=".$db->qstr( $session->shibGetUniqueID())." AND pass=".$id." AND serial=".$serial;
 			$db->Execute( $sql );
@@ -102,7 +102,7 @@ if( $session->isLoggedIn()) {
 <?php
 			$error = true;
 		}
-		
+
 		if( !$error ) {
 			$sql = "SELECT * FROM wallet.pass WHERE id=".$id;
 			$pass = $db->getRow( $sql );
@@ -110,7 +110,7 @@ if( $session->isLoggedIn()) {
 			if( $passFile !== false ) {
 				$sql = "SELECT * FROM wallet.card WHERE pass=".$id." AND serial=".$serial;
 				$card = $db->getRow( $sql );
-			
+
 				$text = "Ihr digitaler Bibliotheksausweis ist fertig!
 Your electronic library card is ready!
 Stammbibliothek/Home Library: {$pass['logotext']}
@@ -132,7 +132,7 @@ Mit freundlichen Grüssen / kind regards,
 
 ";
 
-			
+
 				$mail = new \PHPMailer();
 			//    $mail->SMTPDebug = 3;
 				$mail->isSMTP();                                      // Set mailer to use SMTP
@@ -143,7 +143,7 @@ Mit freundlichen Grüssen / kind regards,
 				$mail->SMTPAutoTLS = false;
 				$mail->SMTPSecure = ''; // 'tls';                            // Enable TLS encryption, `ssl` also accepted
 				$mail->Port = 25; // 587;                                    // TCP port to connect to
-				//$mail -> charSet = "UTF-8"; 
+				//$mail -> charSet = "UTF-8";
 				$mail->setFrom('noreply@fhnw.ch', "=?UTF-8?B?".base64_encode("{$pass['logotext']} (no reply)")."?=");
 				$mail->addAddress($card['email'], $card['name']);
 				if( strlen( $card['email2'])) $mail->addAddress($card['email2'], utf8_decode( $card['name']));
@@ -151,23 +151,23 @@ Mit freundlichen Grüssen / kind regards,
 				$mail->Subject = utf8_decode( "Digitaler Ausweis: ".$pass['logotext'] );
 				$mail->Body    = utf8_decode( $text );
 				$mail->addAttachment( $passFile );
-				
+
 				if(!$mail->send()) {
 ?>
 <div class="alert alert-danger" role="alert">
 	<h4>Email konnte nicht gesendet werden</h4>
 	Fehler: <?php echo htmlspecialchars( $mail->ErrorInfo ); ?>
 </div>
-<?php					
+<?php
 				} else {
 ?>
 <div class="alert alert-success" role="alert">
 	<h4>Der Ausweis "<?php echo htmlspecialchars($pass['logotext']); ?>" wurde an ihre Emailadresse(n) gesendet.</h4>
-</div><?php					
+</div><?php
 				}
 			}
 		}
-		
+
 	}
 	elseif( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'add' ) {
 		$error = false;
@@ -195,7 +195,7 @@ Mit freundlichen Grüssen / kind regards,
 						, barcode=".$db->qstr( $barcode )."
 						, email2=".$db->qstr( $email2 )."
 						, deleted=0
-					WHERE uniqueID=".$db->qstr( $session->shibGetUniqueID())." AND pass=".$id." AND barcode=".$db->qstr( $barcode )." AND uniqueID=".$db->qstr( $session->shibGetUniqueID());			
+					WHERE uniqueID=".$db->qstr( $session->shibGetUniqueID())." AND pass=".$id." AND barcode=".$db->qstr( $barcode )." AND uniqueID=".$db->qstr( $session->shibGetUniqueID());
 			}
 			else {
 				$sql = "INSERT INTO wallet.card( pass, barcode, uniqueID, email, email2, name )
@@ -207,9 +207,39 @@ Mit freundlichen Grüssen / kind regards,
 						.")";
 			}
 			$db->Execute( $sql );
+			$serial = $db->insert_ID();
 		}
+		$sql = "SELECT * FROM wallet.pass WHERE id={$id}";
+		$pass = $db->getRow( $sql );
+
+		$mail = new \PHPMailer();
+	//    $mail->SMTPDebug = 3;
+		$mail->isSMTP();                                      // Set mailer to use SMTP
+		$mail->Host = 'lmailer.ict.fhnw.ch';                    // Specify main and backup SMTP servers
+		$mail->SMTPAuth = false; // true;                               // Enable SMTP authentication
+	//    $mail->Username = 'user@example.com';                 // SMTP username
+	//    $mail->Password = 'secret';                           // SMTP password
+		$mail->SMTPAutoTLS = false;
+		$mail->SMTPSecure = ''; // 'tls';                            // Enable TLS encryption, `ssl` also accepted
+		$mail->Port = 25; // 587;                                    // TCP port to connect to
+		//$mail -> charSet = "UTF-8";
+		$mail->setFrom('noreply@fhnw.ch', "=?UTF-8?B?".base64_encode("{$pass['logotext']} (no reply)")."?=");
+		$mail->addAddress( $pass['email'], $pass['library'] );
+		$mail->isHTML(false);
+		$mail->Subject = utf8_decode( "[info] Neuer Digitaler Ausweis für ".$session->shibGetGivenName().' '.$session->shibGetSurname() );
+		$text = "Anfrage neuer digitaler Ausweis
+Name:    ".$session->shibGetGivenName().' '.$session->shibGetSurname()."
+Email 1: ".$session->shibGetMail()."
+Email 2: {$email2}
+Barcode: {$barcode}
+Seriennummer: {$serial}
+
+https://mediathek.hgk.fhnw.ch/ausweis.php
+";
+		$mail->Body    = utf8_decode( $text );
+		$mail->send();
 	}
-	
+
 ?>
 <div style="background-color: #f4f4f4; padding: 25px; margin: 15px 0px;">
 <h3>Digitalen Bibliotheksausweis erstellen</h3>
@@ -228,7 +258,7 @@ Mit freundlichen Grüssen / kind regards,
 	foreach( $rs as $row ) {
 		echo '    <option value="'.$row['id'].'"'.($row['id'] == $id ? ' selected':'').'>'.htmlspecialchars( $row['displayname'] ).'</option>'."\n";
 	}
-	$rs->Close();	
+	$rs->Close();
 ?>
 		</select>
   </div>
@@ -297,7 +327,7 @@ if( $num ) {
 <?php  } else { ?>
 Bitte <a href="auth/?target=<?php echo urlencode( $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']); ?>">anmelden</a>, um einen digitalen NEBIS-Ausweis zu erstellen oder die persönlichen Einstellungen anzupassen.
 <?php } ?>
-					
+
 					</div>
 <?php
 	$grps = array();
@@ -309,7 +339,7 @@ Bitte <a href="auth/?target=<?php echo urlencode( $_SERVER['REQUEST_SCHEME'].':/
 	if( $num ) {
 		$passids = array();
 		foreach( $passes as $pass ) $passids[] = $pass['id'];
-		
+
 ?>
 <div style="background-color: white; padding: 25px; margin: 15px 0px;">
 	<h3>Ausweise bearbeiten</h3>
@@ -359,12 +389,12 @@ foreach( $passes as $pass )
 			</tr>
 		</tbody>
 	</table>
-</form>	
+</form>
 </div>
 <?php
 	}
 ?>
-					
+
 				</div>
 			</div>
 	<div class="footer clearfix">
@@ -388,7 +418,7 @@ foreach( $passes as $pass )
 	</div>
 </div>
 </div>
-	
+
 <?php
 //include( 'bgimage.inc.php' );
 ?>
@@ -403,10 +433,10 @@ function reloadAusweis( action, _library, _serial ) {
 	email = form.find("#email").val();
 	barcode = form.find("#barcode").val();
 	valid = form.find("#valid option:selected").val();
-	
+
 	console.log( serial+"/"+passid+"/"+name+"/"+email+"/"+barcode+"/"+valid );
-	
-	
+
+
 	$.get( 'ausweis.load.php?serial='+encodeURIComponent(serial)
 		  +'&serial='+encodeURIComponent(serial)
 		  +'&passid='+encodeURIComponent(passid)
@@ -427,7 +457,7 @@ function reloadAusweis( action, _library, _serial ) {
 
 function searchid() {
 	reloadAusweis( 'search', null, null );
-}	
+}
 
 function validateSendAusweis( library, serial ) {
 	reloadAusweis( 'validate_send', library, serial );
@@ -454,12 +484,12 @@ function carddelete(library, serial ) {
 }
 
 function init() {
-	
+
 	$(".dropdown-menu a").click(function(){
 		var selText = $(this).text();
 		$(this).parents('.dropdown').find('.dropdown-toggle').html(selText);
 	  });
-	
+
 	$('.carousel-shot').carousel({
 	  interval: 2000
 	});
@@ -467,21 +497,19 @@ function init() {
 	$('body').on('click', '.back-btn', function () {
 		window.location="search.php";
 	});
-	
+
 	searchid();
 }
-</script>   
+</script>
 
 <script src="js/threejs/build/three.js"></script>
 <script src="js/threejs/build/TrackballControls.js"></script>
 <script src="js/threejs/build/OrbitControls.js"></script>
-<script src="js/threejs/build/CombinedCamera.js"></script>   
-<!-- script src="mediathek2.js"></script -->   
-<script src="js/mediathek.js"></script>   
+<script src="js/threejs/build/CombinedCamera.js"></script>
+<!-- script src="mediathek2.js"></script -->
+<script src="js/mediathek.js"></script>
 <script src="js/mediathek3d.js"></script>
 
 <?php
 echo mediathekfooter();
 ?>
-
-  
