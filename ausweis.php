@@ -253,12 +253,25 @@ https://mediathek.hgk.fhnw.ch/ausweis.php
 		<label for="library" style="text-align: left;">Stammbibliothek</label>
 		<select class="form-control" id="library" name="library">
 <?php
-	$sql = "SELECT id,displayname FROM wallet.pass WHERE active=1 ORDER BY sort, displayname ASC";
+	$ugroups = $session->getGroups();
+	$sql = "SELECT id, displayname, groups, sort FROM wallet.pass WHERE active=1 ORDER BY sort, displayname ASC";
 	$rs = $db->Execute( $sql );
+	$rows = array();
+	$top = null;
 	foreach( $rs as $row ) {
+		$grps = explode( ';', $row['groups'] );
+		$h = array_intersect( $grps, $ugroups );
+		if( count( $h )) $top = $row;
+		else $rows[] = $row;
+	}
+
+	$rs->Close();
+	if( $top != null )
+		echo '    <option value="'.$top['id'].'"'.($top['id'] == $id ? ' selected':'').'>'.htmlspecialchars( $top['displayname'] ).'</option>'."\n";
+
+	foreach( $rows as $row ) {
 		echo '    <option value="'.$row['id'].'"'.($row['id'] == $id ? ' selected':'').'>'.htmlspecialchars( $row['displayname'] ).'</option>'."\n";
 	}
-	$rs->Close();
 ?>
 		</select>
   </div>
@@ -339,7 +352,6 @@ Bitte <a href="auth/?target=<?php echo urlencode( $_SERVER['REQUEST_SCHEME'].':/
 	if( $num ) {
 		$passids = array();
 		foreach( $passes as $pass ) $passids[] = $pass['id'];
-
 ?>
 <div style="background-color: white; padding: 25px; margin: 15px 0px;">
 	<h3>Ausweise bearbeiten</h3>
