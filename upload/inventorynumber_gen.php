@@ -26,6 +26,7 @@ include( '../init.inc.php' );
     if($stmtInsert->execute()){
         $insertId = $db->lastInsertId();
         echo $typecode.str_pad($insertId, 10, "0", STR_PAD_LEFT);
+        $db->exec("update inventoryno set inventoryno = concat(type,lpad(id,10,'0')) where inventoryno is null");
     }else{
         http_response_code(500);
         echo "DB Insert Error";

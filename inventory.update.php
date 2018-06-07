@@ -32,6 +32,7 @@ try {
 }
 catch( Exception $ex ) {
 	header( "HTTP/1.1 500 Internal Server Error" );
-	echo "{status: 'error', msg: 'database error!'}";
+	$err = array( 'status' => 'error', 'msg' => "database error! - {$sql}" );
+	echo json_encode( $err );
 }
 ?>

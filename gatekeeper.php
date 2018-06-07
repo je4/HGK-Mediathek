@@ -69,11 +69,18 @@ if( $session->inGroup( 'global/admin' )) {
 	    </div>
 	  </div>
 
+
+		<?php
+		//include( 'bgimage.inc.php' );
+		$day = isset( $_REQUEST['day'] ) ? $_REQUEST['day'] : date( 'Y-m-d' );
+		?>
+
+
 <div class="card">
   <div class="card-header" role="tab" id="hourGateH">
     <h5 class="card-title">
       <a data-toggle="collapse" data-parent="#faq" href="#hourGate" aria-expanded="true" aria-controls="hourGate">
-      Counter Stundenansicht <?php echo date( 'd.m.Y' ); ?>
+      Counter Stundenansicht <?php echo $day; ?>
       </a>
     </h5>
   </div>
@@ -140,14 +147,11 @@ Bitte <a href="auth/?target=<?php echo urlencode( $_SERVER['REQUEST_SCHEME'].':/
 </div>
 </div>
 
-<?php
-//include( 'bgimage.inc.php' );
-?>
 <script>
 
 function drawHourChart() {
 
-  $.getJSON( "gatekeeper_data.php?type=hour&day=<?php echo date( 'Y-m-d' ); ?>",
+  $.getJSON( "gatekeeper_data.php?type=hour&day=<?php echo $day; ?>",
     function ( json ) {
     // Create our data table out of JSON data loaded from server.
     var data = new google.visualization.arrayToDataTable(json);
@@ -167,7 +171,7 @@ function drawHourChart() {
 
 function drawHourChart_n() {
 
-  $.getJSON( "gatekeeper_data.php?gate=north&type=hour&day=<?php echo date( 'Y-m-d' ); ?>",
+  $.getJSON( "gatekeeper_data.php?gate=north&type=hour&day=<?php echo $day; ?>",
     function ( json ) {
     // Create our data table out of JSON data loaded from server.
     var data = new google.visualization.arrayToDataTable(json);
@@ -187,7 +191,7 @@ function drawHourChart_n() {
 
 function drawHourChart_s() {
 
-  $.getJSON( "gatekeeper_data.php?gate=south&type=hour&day=<?php echo date( 'Y-m-d' ); ?>",
+  $.getJSON( "gatekeeper_data.php?gate=south&type=hour&day=<?php echo $day; ?>",
     function ( json ) {
     // Create our data table out of JSON data loaded from server.
     var data = new google.visualization.arrayToDataTable(json);
