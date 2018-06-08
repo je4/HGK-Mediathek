@@ -6,7 +6,7 @@ include '../init.pg.php';
 
 
 $sourceid = 2;
-$interval = "P1W";
+$interval = "P1M";
 
 $doajClient = new \Phpoaipmh\Client('http://www.doaj.org/oai.article');
 $doajEndpoint = new \Phpoaipmh\Endpoint($doajClient, \Phpoaipmh\Granularity::DATE_AND_TIME);
@@ -42,12 +42,10 @@ if( $argc == 1 ) {
 	$counter = 0;
 	$month = 1;
 
-	do {
-		$date2 = clone $date;
-		$date2->add( new \DateInterval( $interval ));
-		echo "Current date: ".$date->format('Y-m-d H:i:s')." until ".$date2->format('Y-m-d H:i:s')."\n";
+	echo "Current date: ".$date->format('Y-m-d H:i:s')."\n";
 
-		$recs = $doajEndpoint->listRecords( 'oai_dc', $date, $date2 );
+//		$recs = $doajEndpoint->listRecords( 'oai_dc', $date, $date2 );
+		$recs = $doajEndpoint->listRecords( 'oai_dc', $date );
 		$counter = 0;
 		foreach( $recs as $xmlrec ) {
 			$xml = str_replace( '<record', '<record xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"', $xmlrec );
@@ -91,10 +89,6 @@ if( $argc == 1 ) {
 			$solr->import( $entity );
 			$counter++;
 		}
-
-		$date2->add( new \DateInterval($interval) );
-		$month++;
-	} while( $date2 < $now );
 }
 else {
 	$sql = "SELECT * FROM oai_pmh WHERE oai_pmh_source_id={$sourceid}";
