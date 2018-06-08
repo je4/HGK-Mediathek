@@ -187,7 +187,8 @@ class swissbibDisplay extends DisplayEntity {
 								foreach( $config['swissbibsig'] as $prefix ) {
 									if( strncmp( $sig, $prefix, strlen( $prefix) ) == 0 ) {
 										$signature = substr( $sig, strlen( $prefix ));
-										echo 'Signatur: <a href="redir.php?id='.urlencode( $this->doc->id ).'&url='.urlencode( 'http://recherche.nebis.ch/primo_library/libweb/action/search.do?fn=search&ct=search&vl(freeText0)='.urlencode( $nebisid ).'&vid=NEBIS&fn=change_lang&prefLang=de_DE&prefBackUrl=http://recherche.nebis.ch/nebis/action/search.do?fn=search&ct=search&vl(freeText0)='.urlencode( $nebisid ).'&search=&backFromPreferences=true.' )
+										echo 'Signatur: <a href="redir.php?id='.urlencode( $this->doc->id ).'&url='
+										.urlencode( 'https://recherche.nebis.ch/primo-explore/fulldisplay?docid=ebi01_prod'.urlencode( $nebisid ).'&context=L&vid=NEBIS&lang=de_DE&search_scope=default_scope&adaptor=Local%20Search%20Engine&tab=default_tab' )
 										.'" target="_blank">'.htmlspecialchars( $signature )."</a><br />\n";
 										$item = $rib ? $rib->getAvailability( $signature ) : null;
 										if( $item ) {
@@ -201,7 +202,7 @@ class swissbibDisplay extends DisplayEntity {
 							foreach( $this->entity->getBibs() as $bib ) {
 								echo htmlspecialchars( $bib )."<br />\n";
 							}
-*/							
+*/
 ?>
 							Quelle: <a href="https://www.swissbib.ch/Record/<?php  echo $this->doc->originalid; ?>">swissbib</a></a><br />
 							<div id='RIB'></div>
