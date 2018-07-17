@@ -59,7 +59,7 @@ if( $json ) {
 
 	exit;
 }
-
+//header("Access-Control-Allow-Origin: https://media.campusderkuenste.ch");
 echo mediathekheader('search', 'Mediathek - Detail - '.($doc ? $doc->title : '').' ['.$id.']', '');
 ?>
 <div class="back-btn"><i class="ion-ios-search"></i></div>

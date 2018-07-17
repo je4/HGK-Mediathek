@@ -57,7 +57,7 @@ Mit freundlichen Grüssen / kind regards,
 {$pass['logotext']}
 ";
 
-	
+
 		$mail = new \PHPMailer();
 	//    $mail->SMTPDebug = 3;
 		$mail->isSMTP();                                      // Set mailer to use SMTP
@@ -68,7 +68,7 @@ Mit freundlichen Grüssen / kind regards,
 		$mail->SMTPAutoTLS = false;
 		$mail->SMTPSecure = ''; // 'tls';                            // Enable TLS encryption, `ssl` also accepted
 		$mail->Port = 25; // 587;                                    // TCP port to connect to
-		//$mail -> charSet = "UTF-8"; 
+		//$mail -> charSet = "UTF-8";
 		$mail->setFrom('noreply@fhnw.ch', "=?UTF-8?B?".base64_encode("{$pass['logotext']} (no reply)")."?=");
 		$mail->addAddress($card['email'], $card['name']);
 		if( strlen( $card['email2'])) $mail->addAddress($card['email2'], utf8_decode( $card['name']));
@@ -76,26 +76,26 @@ Mit freundlichen Grüssen / kind regards,
 		$mail->Subject = utf8_decode( "Digitaler Ausweis: ".$pass['logotext'] );
 		$mail->Body    = utf8_decode( $text );
 		$mail->addAttachment( $passFile );
-		
+
 ?>
 	<tr class="iddata"><td colspan="8">
-<?php		
+<?php
 		if(!$mail->send()) {
 ?>
 <div class="alert alert-danger" role="alert">
 	<h4>Email konnte nicht gesendet werden</h4>
 	Fehler: <?php echo htmlspecialchars( $mail->ErrorInfo ); ?>
 </div>
-<?php					
+<?php
 		} else {
 ?>
 <div class="alert alert-success" role="alert">
 	<h4>Der Ausweis "<?php echo htmlspecialchars($pass['logotext']."[{$_serial}]"); ?>" wurde versendet.</h4>
-</div><?php					
+</div><?php
 		}
 ?>
 	</td></tr>
-<?php		
+<?php
 	break;
 }
 
@@ -124,8 +124,13 @@ foreach( $rs as $row ) {
 				<?php if( $row['valid'] ) { ?>
 				<td><button onclick="sendAusweis(<?php echo $row['pass']; ?>, '<?php echo trim( $row['serial']); ?>'); return false;" class="btn btn-primary" style="padding: 7px 14px; margin: 3px;">Versenden</button></td>
 				<?php } else { ?>
-				<td><button onclick="validateSendAusweis(<?php echo $row['pass']; ?>, '<?php echo trim( $row['serial']); ?>'); return false;" class="btn btn-primary" style="padding: 7px 14px; margin: 3px;">Validieren und Versenden</button></td>
+					<td>
+					<button onclick="validateSendAusweis(<?php echo $row['pass']; ?>, '<?php echo trim( $row['serial']); ?>'); return false;" class="btn btn-primary" style="padding: 7px 14px; margin: 3px;">Validieren und Versenden</button>
+				</td>
 				<?php } ?>
+				<td>
+					<button onclick="deleteAusweis(<?php echo $row['pass']; ?>, '<?php echo trim( $row['serial']); ?>'); return false;" class="btn btn-primary" style="padding: 7px 14px; margin: 3px;">Löschen</button>
+				</td>
 			</tr>
 <?php
 }

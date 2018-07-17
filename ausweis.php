@@ -366,6 +366,7 @@ Bitte <a href="auth/?target=<?php echo urlencode( $_SERVER['REQUEST_SCHEME'].':/
 				<th>Barcode</th>
 				<th>Geprüft</th>
 				<th>&nbsp;</th>
+				<th>&nbsp;</th>
 			</tr>
 		</thead>
 		<tfoot>
@@ -376,6 +377,7 @@ Bitte <a href="auth/?target=<?php echo urlencode( $_SERVER['REQUEST_SCHEME'].':/
 				<th>Email</th>
 				<th>Barcode</th>
 				<th>Geprüft</th>
+				<th>&nbsp;</th>
 				<th>&nbsp;</th>
 			</tr>
 		</tfoot>
@@ -398,6 +400,7 @@ foreach( $passes as $pass )
 					<option value="0" selected>nein</option>
 				</select></td>
 				<td><!-- <button onclick="searchid();" class="btn btn-primary" style="padding: 7px 14px;">Suchen</button> --></td>
+				<td></td>
 			</tr>
 		</tbody>
 	</table>
@@ -473,6 +476,10 @@ function searchid() {
 
 function validateSendAusweis( library, serial ) {
 	reloadAusweis( 'validate_send', library, serial );
+}
+
+function deleteAusweis( library, serial ) {
+	carddelete( library, serial );
 }
 
 function sendAusweis( library, serial ) {

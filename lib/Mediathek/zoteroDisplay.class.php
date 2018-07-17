@@ -99,6 +99,8 @@ class zoteroDisplay extends DisplayEntity {
 		$squery = $solrclient->createSelect();
 		$helper = $squery->getHelper();
 		$pdfs = $this->item->getPDFs();
+		$refPdfs = array();
+		$refMaps = array();
 
 		$html = '';
 
@@ -195,14 +197,17 @@ class zoteroDisplay extends DisplayEntity {
 	if( @is_array( $this->doc->acl_content )) {
 		$show = $session->inAnyGroup( $this->doc->acl_content ) || $session->isAdmin();
 	}
-	if( $show ) foreach( $attachments as $att ) { ?>
+	if( $show ) foreach( $attachments as $att ) {
+		if( !DEBUG && $att->getLinkMode() == 'linked_url' && $att->getUrlMimetype() == null ) continue;
+?>
 		<span style="; font-weight: bold;">
 			<?php
-		$title = trim($att->getTitle());
+		$title = $att->getTitle();
 		if( is_numeric( $title ) ) $title = '';
 		elseif( preg_match( '/^[0-9]+([^0-9].*)/', $title, $matches )) {
 			$title = $matches[1];
 		}
+		$title = trim($title, ' -.;');
 			echo htmlspecialchars( $title );
 		?>
 	</span><br>
@@ -211,7 +216,43 @@ class zoteroDisplay extends DisplayEntity {
 			<?php
 				if( $att->getLinkMode() == 'linked_url') {
 					$url = $att->getUrl();
-					if( strstr( $url, 'https://ba14ns21403.fhnw.ch/video') !== false ) {
+					if( $att->getUrlMimetype() == null) {
+						?>
+							Invalid URL: <a href="<?php echo $url; ?>"><?php echo $url; ?></a>
+						<?php
+					}
+					elseif( preg_match( '/^image\//', $att->getUrlMimetype())) {
+?>
+						<center>
+						<img src="<?php echo $config['imageserver'].$att->getNameImageserver().'/640x480/fit'; ?>" />
+					</center>
+<?php
+					}
+					elseif( preg_match( '/^application\/pdf/', $att->getUrlMimetype())) {
+						$refPdfs[] = $att;
+?>
+											<div id="pdf_<?php echo $att->getLibraryId(); ?>_<?php echo $att->getKey(); ?>">
+											</div>
+											<div style="text-align: center;">
+												<a href="<?php echo $config['imageserver'].$att->getNameImageserver(); ?>" >Download PDF</a></div>
+<?php
+					}
+					elseif( preg_match( '/^text\/html/', $att->getUrlMimetype()) && preg_match( '/\.gpx$/', $url )) {
+							$refMaps[] = $att->getLibraryId().'_'.$att->getKey();
+?>
+										<link rel="stylesheet" href="https://openlayers.org/en/v4.0.1/css/ol.css" type="text/css">
+										<div style="width:99%; height:600px" id="map_<?php echo $att->getLibraryId(); ?>_<?php echo $att->getKey(); ?>" class="map"></div>
+										<select id="layer-select_<?php echo $att->getLibraryId(); ?>_<?php echo $att->getKey(); ?>">
+											<option value="Aerial">Luftbild</option>
+											<option value="AerialWithLabels" selected>Luftbild mit Beschriftung</option>
+											<option value="Road">Strasse</option>
+										</select>
+										<div id="info_<?php echo $att->getLibraryId(); ?>_<?php echo $att->getKey(); ?>"> </div>
+										<p><hr /></p>
+										<a href="<?php echo $config['imageserver'].$att->getNameImageserver(); ?>" target="_blank">Download File</a>
+<?php
+					}
+					elseif( strstr( $url, 'https://ba14ns21403.fhnw.ch/video') !== false ) {
 ?>
 						<video id="my-video" class="video-js" controls preload="auto" width="550"
 						data-setup="{}"
@@ -224,8 +265,8 @@ class zoteroDisplay extends DisplayEntity {
 						</video>
 <?php
 					}
-				}
-				if( preg_match( '/application\/pdf/', $att->getContentType())) {
+				} // linkMode == linkedURL
+				elseif( preg_match( '/application\/pdf/', $att->getContentType())) {
 ?>
 					<div id="pdf_<?php echo $att->getLibraryId(); ?>_<?php echo $att->getKey(); ?>">
 					</div>
@@ -374,19 +415,30 @@ class zoteroDisplay extends DisplayEntity {
 </div>
 		<script>
 			function initzotero() {
-<?php foreach( $pdfs as $pdf )	{
-		$pages = $pdf->getPages();
-?>
-			var pages = <?php echo $pages; ?>;
-			var container = $("#pdf_<?php echo $pdf->getLibraryId(); ?>_<?php echo $pdf->getKey(); ?>");
+		<?php foreach( $pdfs as $pdf )	{
+				$pages = $pdf->getPages();
+		?>
+					var pages = <?php echo $pages; ?>;
+					var container = $("#pdf_<?php echo $pdf->getLibraryId(); ?>_<?php echo $pdf->getKey(); ?>");
 
-			var pdf = 'zotero_data.php?id=zotero-<?php echo $pdf->getLibraryId(); ?>.<?php echo $this->item->getKey(); ?>&key=<?php echo $pdf->getKey(); ?>';
+					var pdf = 'zotero_data.php?id=zotero-<?php echo $pdf->getLibraryId(); ?>.<?php echo $this->item->getKey(); ?>&key=<?php echo $pdf->getKey(); ?>';
 
-    var options = {height: 700, duration: 800};
+		    var options = {height: 700, duration: 800};
 
-    var flipBook = container.flipBook(pdf, options);
+		    var flipBook = container.flipBook(pdf, options);
 
-<?php } ?>
+		<?php } ?>
+		<?php foreach( $refPdfs as $pdf )	{
+		?>
+					var container = $("#pdf_<?php echo $pdf->getLibraryId(); ?>_<?php echo $pdf->getKey(); ?>");
+
+					var pdf = '<?php echo $config['imageserver'].$pdf->getNameImageserver(); ?>';
+
+		    var options = {height: 700, duration: 800};
+
+		    var flipBook = container.flipBook(pdf, options);
+
+		<?php } ?>
 
 			}
 		</script>

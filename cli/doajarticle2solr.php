@@ -6,7 +6,7 @@ include '../init.pg.php';
 
 
 $sourceid = 2;
-$interval = "P1M";
+$interval = "P1W";
 
 $doajClient = new \Phpoaipmh\Client('http://www.doaj.org/oai.article');
 $doajEndpoint = new \Phpoaipmh\Endpoint($doajClient, \Phpoaipmh\Granularity::DATE_AND_TIME);

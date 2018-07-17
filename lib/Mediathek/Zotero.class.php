@@ -49,6 +49,26 @@ class Zotero {
     fwrite( $this->out, $str."\n" );
   }
 
+  static function mimeFromURL( $url ) {
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, trim($url, "'") );
+    curl_setopt($ch, CURLOPT_HEADER, 1);
+    curl_setopt($ch, CURLOPT_NOBODY, 1);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    //curl_setopt($ch, CURLOPT_VERBOSE, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+    $ret = curl_exec($ch);
+    $code = intval( curl_getinfo( $ch, CURLINFO_RESPONSE_CODE ));
+    $mimetype = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
+    curl_close($ch);
+    if( $code == 404 || $code == 500 ) {
+      throw( new \Exception( "Response Error {$code}" ));
+    }
+    echo "mimetype: {$mimetype} - {$url}\n";
+    return $mimetype;
+  }
+
   function syncGroup( $id ) {
     $this->log( "Syncing group: {$id}" );
     $uri = $this->apiurl.'/groups/'.$id;
@@ -110,6 +130,25 @@ class Zotero {
 
   function syncItem( $id, $item, $trash ) {
     @$this->log( "   {$id}:{$item['key']} ".($trash?"[TRASH] ":"")."{$item['data']['itemType']} - {$item['data']['title']}" );
+
+    if( array_key_exists( 'linkMode', $item['data'] )) {
+      $linkMode = $item['data']['linkMode'];
+      if( $linkMode == 'linked_url' ) {
+        try {
+          $mimetype = $this->mimeFromURL( $this->db->qstr($item['data']['url'] ));
+          $item['data']['urlMimetype'] = $mimetype;
+          $item['data']['nameImageserver'] = "zotero-$id-{$item['key']}";
+          $sql = "REPLACE INTO dirty_image_server.image( name, mimetype, sourcetype, source )
+            VALUES( ".$this->db->qstr( "zotero-$id-{$item['key']}" ).", ".$this->db->qstr( $mimetype ).", 'remote', ".$this->db->qstr($item['data']['url'])." )";
+          $this->db->Execute( $sql );
+        }
+        catch( \Exception $e ) {
+          echo "{$e}\n";
+        }
+      }
+    }
+
+
     $replace = array(
       '`key`'=>$item['key'],
       'libraryid'=>$id,
@@ -157,7 +196,6 @@ class Zotero {
       );";
       $this->db->Execute( $sql );
     }
-
     if( array_key_exists( 'enclosure', $item['links'])) {
       $enc = $item['links']['enclosure'];
       if( !is_dir( "{$this->contentpath}/enclosure/{$id}" )) mkdir( "{$this->contentpath}/enclosure/{$id}" );

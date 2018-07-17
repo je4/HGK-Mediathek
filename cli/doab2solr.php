@@ -6,6 +6,7 @@ include '../init.inc.php';
 include '../init.pg.php';
 
 $sourceid=3;
+$interval = "P1W";
 
 $doabClient = new \Phpoaipmh\Client('http://www.doabooks.org/oai');
 $doabEndpoint = new \Phpoaipmh\Endpoint($doabClient, \Phpoaipmh\Granularity::DATE_AND_TIME);
@@ -25,7 +26,12 @@ if( $argc == 1 ) {
 
 	echo "Starting with: ".$datestamp."\n";
 
-	$recs = $doabEndpoint->listRecords( 'oai_dc', new \DateTime( $datestamp ));
+	$date = new \DateTime( $datestamp );
+	$dint = new \DateInterval( $interval );
+	$dint->invert = 1;
+	$date->add( $dint );
+
+	$recs = $doabEndpoint->listRecords( 'oai_dc', $date );
 	$counter = 0;
 	foreach( $recs as $xmlrec ) {
 	    $xml = str_replace( '<record', '<record xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"', $xmlrec );

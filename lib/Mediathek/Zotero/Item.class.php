@@ -202,6 +202,14 @@ class Item {
     return array_key_exists( 'contentType', $this->data['data'] ) ? $this->data['data']['contentType'] : null;
   }
 
+  public function getUrlMimetype() {
+    return array_key_exists( 'urlMimetype', $this->data['data'] ) ? $this->data['data']['urlMimetype'] : null;
+  }
+
+  public function getNameImageserver() {
+    return array_key_exists( 'nameImageserver', $this->data['data'] ) ? $this->data['data']['nameImageserver'] : null;
+  }
+
   public function get($key) {
     return array_key_exists( $key, $this->data['data'] ) ? $this->data['data'][$key] : null;
   }
