@@ -28,9 +28,12 @@ switch( $action ) {
 		if( !intval( $db->GetOne( $sql ))) {
 			echo "<!-- {$sql} -->\n";
 			echo "<!-- Fehler: ungenügende Rechte -->\n";
+			break;
 		}
-		$sql = "UPDATE wallet.card SET valid=1 WHERE pass={$_library} AND serial={$_serial}";
-		$db->Execute( $sql );
+		else {
+			$sql = "UPDATE wallet.card SET valid=1 WHERE pass={$_library} AND serial={$_serial}";
+			$db->Execute( $sql );
+		}
 	case 'send':
 		$passFile = Helper::createPass( $_library, $_serial );
 		$sql = "SELECT * FROM wallet.pass WHERE id=".$_library;
@@ -97,6 +100,17 @@ Mit freundlichen Grüssen / kind regards,
 	</td></tr>
 <?php
 	break;
+	case 'delete':
+		$sql = "SELECT COUNT(*) FROM wallet.card c, wallet.pass p WHERE c.pass=p.id AND deleted=0 AND p.group IN (".implode( ', ', $grps ).") AND c.serial={$_serial} and c.pass={$_library}";
+		if( !intval( $db->GetOne( $sql ))) {
+			echo "<!-- {$sql} -->\n";
+			echo "<!-- Fehler: ungenügende Rechte -->\n";
+		}
+		else {
+			$sql = "UPDATE wallet.card SET deleted=1 WHERE pass={$_library} AND serial={$_serial}";
+			$db->Execute( $sql );
+		}
+		break;
 }
 
 $grps = array();

@@ -81,6 +81,7 @@ if( $session->isLoggedIn()) {
 ?>
 <div style="background-color: red; color: white; padding: 25px; margin: 15px 0px;">
 	<h3>Fehler: Ungültiger Ausweis nicht vorhanden</h3>
+	<h4><?php echo htmlspecialchars( $sql ); ?></h4>
 </div>
 <?php
 			$error = true;
@@ -90,6 +91,11 @@ if( $session->isLoggedIn()) {
 			$sql = "UPDATE wallet.card SET deleted=1 WHERE uniqueID=".$db->qstr( $session->shibGetUniqueID())." AND pass=".$id." AND serial=".$serial;
 			$db->Execute( $sql );
 		}
+	}
+	elseif( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'delete2' ) {
+
+		$sql = "UPDATE wallet.card SET deleted=1 WHERE uniqueID=".$db->qstr( $session->shibGetUniqueID())." AND pass=".$id." AND serial=".$serial;
+		$db->Execute( $sql );
 	}
 	elseif( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'send' ) {
 		$error = false;
@@ -479,7 +485,9 @@ function validateSendAusweis( library, serial ) {
 }
 
 function deleteAusweis( library, serial ) {
-	carddelete( library, serial );
+	if ( confirm( "Ausweis Nr. " + serial + " löschen?" )) {
+		reloadAusweis( 'delete', library, serial );
+	}
 }
 
 function sendAusweis( library, serial ) {
