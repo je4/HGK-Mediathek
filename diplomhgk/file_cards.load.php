@@ -6,7 +6,7 @@
 include( '../init.inc.php' );
 $id = @intval($_GET['id']);
 
-$sql = "SELECT * FROM source_diplom2017_files WHERE idperson=".$id;
+$sql = "SELECT * FROM source_diplomhgk_files WHERE year={$year} AND idperson=".$id;
 $rs = $db->Execute( $sql );
 foreach( $rs as $row ) {
   $bg = '';

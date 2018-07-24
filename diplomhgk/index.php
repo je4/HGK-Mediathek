@@ -4,8 +4,6 @@ namespace Mediathek;
 
 include( '../init.inc.php' );
 
-
-
 function personRow( $row ) {
 static $badge = array(
   -1=>array('type'=>'default', 'title'=>'gespeichert'),
@@ -19,7 +17,7 @@ static $badge = array(
 <tr>
 <td><a href="form.php?id=<?php echo $id; ?>"><?php echo htmlspecialchars( $row['Anlassbezeichnung']); ?></a></td>
 <td><a href="form.php?id=<?php echo $id; ?>"><?php echo htmlspecialchars( $row['Nachname']); ?></a></td>
-<td><a href="form.php?id=<?php echo $id; ?>"><?php echo htmlspecialchars( $row['Vornamen']); ?></a></td>
+<td><a href=0"form.php?id=<?php echo $id; ?>"><?php echo htmlspecialchars( $row['Vornamen']); ?></a></td>
 <td><span class="badge badge-<?php echo $badge[$row['done']]['type']; ?>"><?php echo $badge[$row['done']]['title']; ?></span></td>
 </tr>
 <?php
@@ -40,7 +38,7 @@ static $badge = array(
 
 
 $mail = $session->shibGetMail();
-$sql = "SELECT IDPerson FROM source_diplom2017_map WHERE sam=".$db->qstr( $session->shibGetUID());
+$sql = "SELECT IDPerson FROM source_diplomhgk_map WHERE `Partition`=".$db->qstr( 'edu' )." AND sam=".$db->qstr( $session->shibGetUID());
 $number = intval($db->GetOne( $sql ));
 //$number = $session->shibGetEmployeenumber();
 $username = $session->shibGetUsername();
@@ -74,7 +72,7 @@ $username = $session->shibGetUsername();
   </div>
       <div class="navbar navbar-inverse bg-inverse">
         <div class="container d-flex justify-content-between">
-          <a href="#" class="navbar-brand">Diplom HGK 2017 - Upload</a>
+          <a href="#" class="navbar-brand">Diplom HGK <?php echo $year; ?> - Upload</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -110,7 +108,7 @@ $username = $session->shibGetUsername();
 
 if( array_key_exists( $mail, $auth )) {
   foreach( $auth[$mail] as $anlass ) {
-    $sql = "SELECT * FROM source_diplom2017 WHERE Anlassnummer=".$db->qstr( $anlass )." ORDER BY Nachname, Vornamen";
+    $sql = "SELECT * FROM source_diplomhgk WHERE year={$year} AND Anlassnummer=".$db->qstr( $anlass )." ORDER BY Nachname, Vornamen";
     $rs = $db->Execute( $sql );
     $num = $rs->RecordCount();
     foreach( $rs as $row ) {
@@ -120,7 +118,7 @@ if( array_key_exists( $mail, $auth )) {
   } // foreach
 } // if auth
 else {
-    $sql = "SELECT * FROM source_diplom2017 WHERE IDPerson=".$db->qstr($number);
+    $sql = "SELECT * FROM source_diplomhgk WHERE year={$year} AND IDPerson=".$db->qstr($number);
     $rs = $db->Execute( $sql );
     $num = $rs->RecordCount();
     foreach( $rs as $row ) {

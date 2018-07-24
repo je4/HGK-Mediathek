@@ -155,7 +155,9 @@ if ($method == "POST") {
         }
       }
 
-      $sql = "INSERT INTO source_diplom2017_files( idperson, name, filename, thumbname, webname, mimetype, size, tech, uploadtime ) VALUES ({$id}
+      $sql = "INSERT INTO source_diplomhgk_files( year, idperson, name, filename, thumbname, webname, mimetype, size, tech, uploadtime ) VALUES (
+          {$year}
+        , {$id}
         , ".$db->qstr( $name )."
         , ".$db->qstr( "files/{$uuid}/{$name}" )."
         , ".(file_exists("thumbs/{$uuid}/{$name}.png") ? $db->qstr( "thumbs/{$uuid}/{$name}.png" ) : "NULL" )."

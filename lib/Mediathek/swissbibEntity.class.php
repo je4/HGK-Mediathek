@@ -518,6 +518,13 @@ class swissbibEntity extends SOLRSource {
         return $this->signatures;
     }
 
+		public function getLibSigCodes() {
+			if( $this->libsigcode == null ) {
+				$this->getSignatures();
+			}
+			return $this->libsigcode;
+		}
+
 		public function getSigCode( $verbund, $lib ) {
 			if( $this->libsigcode == null ) {
 				$this->getSignatures();

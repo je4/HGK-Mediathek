@@ -19,27 +19,28 @@ if( ($save || $submit) && $id>0 ) {
   $data = $_REQUEST['data'];
 
   foreach( $data  as $key=>$val ){
-    $sql = "REPLACE INTO source_diplom2017_data( idperson, name, value ) VALUES(
-        {$id}
+    $sql = "REPLACE INTO source_diplomhgk_data( year, idperson, name, value ) VALUES(
+        {$year}
+      , {$id}
       , ".$db->qstr( $key )."
       , ".$db->qstr( $val )."
     )";
     $db->Execute( $sql );
   }
 
-  $sql = "UPDATE source_diplom2017 SET done=".($submit?1:-1)." WHERE idperson=".$id;
+  $sql = "UPDATE source_diplomhgk SET done=".($submit?1:-1)." WHERE year={$year} AND idperson=".$id;
   $db->Execute( $sql );
 }
 
 $vals = array();
-$sql = "SELECT * FROM source_diplom2017_data WHERE idperson=".$id;
+$sql = "SELECT * FROM source_diplomhgk_data WHERE year={$year} AND idperson=".$id;
 $rs = $db->Execute( $sql );
 foreach( $rs as $row ) {
   $vals[$row['name']] = $row['value'];
 }
 $rs->Close();
 
-$sql = "SELECT * FROM source_diplom2017 WHERE idperson=".$id;
+$sql = "SELECT * FROM source_diplomhgk WHERE year={$year} AND idperson=".$id;
 $user = $db->GetRow( $sql );
 
 function formString( $id, $label, $descr, $required, $value ) {
@@ -73,6 +74,20 @@ function formText( $id, $label, $descr, $required, $lines, $value ) {
   <div class="col-sm-10">
     <textarea rows=6 name="data[<?php echo $id; ?>]" type="text" class="form-control" id="<?php echo $id; ?>" aria-describedby="<?php echo $id; ?>Help" placeholder="" <?php echo $required ? 'required' : ''; ?>><?php echo htmlspecialchars( $value ); ?></textarea>
     <small id="<?php echo $id; ?>Help" class="form-text text-muted"><?php echo nl2br( htmlspecialchars( $descr )); ?></small>
+  </div>
+</div>
+<?php
+}
+
+function formCheck( $id, $label, $descr, $required, $value ) {
+?>
+<div class="form-group row">
+  <label for="<?php echo $id; ?>" class="col-sm-2 col-form-label">&nbsp;</label>
+  <div class="col-sm-10">
+    <label class="form-check-label">
+      <input name="data[<?php echo $id; ?>]" type="checkbox" class="form-check-input" id="<?php echo $id; ?>" aria-describedby="<?php echo $id; ?>Help" placeholder="" <?php echo $required ? 'required' : ''; ?>>
+      <?php echo htmlspecialchars( $label ); if( $required ) echo '<a class="required" href="#" data-toggle="tooltip" title="Pflichtfeld">*</a>'; ?>
+    </label>
   </div>
 </div>
 <?php
@@ -254,7 +269,7 @@ elseif( $user['done'] == 1 ) {
 ?>
 <div class="alert alert-info" role="alert">Upload abgeschlossen</div>
 <?php
-$sql = "SELECT * FROM source_diplom2017_data WHERE idperson=".$id;
+$sql = "SELECT * FROM source_diplomhgk_data WHERE year={$year} AND idperson=".$id;
 $rs = $db->Execute( $sql );
 foreach( $rs as $row ) {
   echo nl2br(htmlentities( "{$row['name']}: {$row['value']}" ))."<br />";
@@ -281,6 +296,7 @@ https://vimeo.com/39825378
 https://youtu.be/Yyl1xxdatn8
 http://issuu.com/interiordesignandscenography/docs/iis_yearbook2013/1
 https://soundcloud.com/fhnw-hgk-iku/mah02448mp4-dance', false, 6, valof( $vals, 'webmedia' ) );
+formCheck( 'rights', 'Hiermit erlaube ich der HGK sämtliche hochgeladenen Medien in allen Veröffentlichungskanälen zu nutzen', 'Rights', true, valof( $vals, 'rights' ) );
  ?>
 <p>
   <div id="uploader"> </div>
@@ -288,7 +304,7 @@ https://soundcloud.com/fhnw-hgk-iku/mah02448mp4-dance', false, 6, valof( $vals, 
 <p>
             <div class="form-group row">
               <button type="submit" name="save" value="" class="btn btn-secondary btn-block" style="height: 100px; font-size: 36px;">Speichern</button>
-              <button type="submit" name="submit" value="Validate!" class="btn btn-primary btn-block" style="height: 100px; font-size: 36px;">Fertig</button>
+              <button type="submit" name="submit" value="Validate!" class="btn btn-primary btn-block" style="height: 100px; font-size: 36px;">Eintragung final abschliessen</button>
             </div>
           </p>
     </form>
