@@ -81,7 +81,7 @@ $username = $session->shibGetUsername();
 
       <section class="jumbotron text-center">
         <div class="container">
-          <h1 class="jumbotron-heading">Diplom 2017 - Upload</h1>
+          <h1 class="jumbotron-heading">Diplom  <?php echo $year; ?> - Upload</h1>
           <p class="lead text-muted">
             Select student(s) for upload
           </p>

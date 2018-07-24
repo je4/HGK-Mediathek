@@ -222,7 +222,7 @@ function formSelect( $id, $label, $descr, $required, $sel ) {
   </div>
       <div class="navbar navbar-inverse bg-inverse">
         <div class="container d-flex justify-content-between">
-          <a href="index.php" class="navbar-brand">Diplom HGK 2017 - Upload</a>
+          <a href="index.php" class="navbar-brand">Diplom HGK <?php echo $year; ?> - Upload</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -231,9 +231,9 @@ function formSelect( $id, $label, $descr, $required, $sel ) {
 
       <section class="jumbotron text-center">
         <div class="container">
-          <h1 class="jumbotron-heading">Diplom 2017 - Upload</h1>
+          <h1 class="jumbotron-heading">Diplom  <?php echo $year; ?> - Upload</h1>
           <p class="lead text-muted">
-            Please fill out the following form to upload your text and images describing your DIPLOM work 2017.
+            Please fill out the following form to upload your text and images describing your DIPLOM work  <?php echo $year; ?>.
             </p>
             <noscript>
               <h2>
