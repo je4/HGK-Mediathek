@@ -81,10 +81,10 @@ class diplomhgkDisplay extends DisplayEntity {
 <div class="row">
   <div class="col-md-3">
     <div style="">
-    <span style="; font-weight: bold;">Aktuelles Diplom</span><br />
+    <span style="; font-weight: bold;">Diplom</span><br />
       <div class="facet" style="">
         <div class="marker" style=""></div>
-          <b><?php echo htmlspecialchars( str_replace( '>>', '', str_replace( '<<', '', strip_tags( $entity->getTitle())))); ?></b><br />
+        <b><?php echo htmlspecialchars( str_replace( '>>', '', str_replace( '<<', '', strip_tags( $entity->getTitle())))); ?></b><br />
           <?php
           $i = 0;
           foreach( $authors as $author ) {
@@ -98,6 +98,7 @@ class diplomhgkDisplay extends DisplayEntity {
           ?>
 
           <br />
+          <?php echo htmlspecialchars( str_replace( '>>', '', str_replace( '<<', '', strip_tags( $meta['Anlassbezeichnung'])))); ?><br />
 <?php
           $publishers = $entity->getPublisher();
           $city = $entity->getCity();
@@ -134,10 +135,23 @@ class diplomhgkDisplay extends DisplayEntity {
     <span style="; font-weight: bold;">Abstract</span><br />
       <div class="facet" style="">
         <div class="marker" style=""></div>
-        <?php echo $abstract."<p />&nbsp;<br />\n";
+        <?php echo $abstract."<p />&nbsp;<br />\n"; ?>
+
+        <div style="text-align: center;">
+        <?php
+        foreach( $meta['files'] as $file ) {
+          if( preg_match( '/^image\//', $file['mimetype'] )) {
+            if( strlen( trim( $file['webname'] )))
+              echo "<img style=\"text-align: center; max-width: 80%;\" src=\"/diplomhgk/{$file['webname']}\" /><br />";
+          }
+        }
+        ?>
+      </div>
+      <?php
+
           if( is_array( $this->doc->url ))
-            foreach( $this->doc->url as $url ) {
-              echo "<b>Referenzen</b><br />\n";
+          echo "<b>Referenzen</b><br />\n";
+            if( is_array( $this->doc->url )) foreach( $this->doc->url as $url ) {
               if( preg_match( '/^([a-z]+):(.*)$/', $url, $matches )) {
                 echo "{$matches[1]}:<a href=\"redir.php?id=".urlencode( $this->doc->id ).'&url='.urlencode( $matches[2] )."\" target=\"_blank\">{$matches[2]}</a><br />";
               }
@@ -220,7 +234,7 @@ if( DEBUG ) {
         <div>
           <pre>
 <?php
-echo print_r( $this->metadata, true);
+echo print_r( $meta, true);
 ?>
           </pre>
         </div>
