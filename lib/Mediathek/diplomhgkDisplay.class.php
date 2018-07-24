@@ -66,10 +66,201 @@ class diplomhgkDisplay extends DisplayEntity {
 	}
 
 	public function detailView() {
+    global $config, $pagesize, $solrclient, $db, $urlparams;
+    $html = '';
 
-        global $config, $solrclient, $db, $urlparams, $pagesize;
-		return '';
-	}
+    $entity = new diplomhgkEntity($this->db);
+    $meta = json_decode( $this->data, true );
+    $entity->loadFromArray( $meta );
+
+
+    $authors = $entity->getAuthors();
+    ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
+
+?>
+<div class="row">
+  <div class="col-md-3">
+    <div style="">
+    <span style="; font-weight: bold;">Aktuelles Diplom</span><br />
+      <div class="facet" style="">
+        <div class="marker" style=""></div>
+          <b><?php echo htmlspecialchars( str_replace( '>>', '', str_replace( '<<', '', strip_tags( $entity->getTitle())))); ?></b><br />
+          <?php
+          $i = 0;
+          foreach( $authors as $author ) {
+            if( $i > 0) echo "; "; ?>
+              <a href="javascript:doSearchFull('author:&quot;<?php echo trim( $author ); ?>&quot;', '', [], {'catalog':[<?php echo $this->getCatalogList(); ?>]}, 0, <?php echo $pagesize; ?> );">
+                <?php echo htmlspecialchars( $author ); ?>
+              </a>
+            <?php
+            $i++;
+          }
+          ?>
+
+          <br />
+<?php
+          $publishers = $entity->getPublisher();
+          $city = $entity->getCity();
+          $year = $entity->getYear();
+          if( $city ) echo htmlspecialchars( $city ).': ';
+          if( $publishers ) {
+            foreach( $publishers as $publisher ) { ?>
+              <a href="javascript:doSearchFull('publisher:&quot;<?php echo trim( $publisher ); ?>&quot;', '', [], {'catalog':[<?php echo $this->getCatalogList(); ?>]}, 0, <?php echo $pagesize; ?> );">
+                <?php echo htmlspecialchars( $publisher ); ?>
+              </a>
+          <?php
+            }
+          }
+
+          if( $year ) echo htmlspecialchars( $year ).'.';
+          if( $city || $year || $publisher ) echo "<br />\n";
+
+          $codes = $entity->getCodes();
+          if( is_array( $codes )) foreach( $codes as $code )
+            echo htmlspecialchars( str_replace( ':', ': ', $code ))."<br />\n";
+
+?>
+      </div>
+    </div>
+
+
+  </div>
+  <div class="col-md-6">
+<?php
+    $abstract = $entity->getAbstract();
+    if( strlen( $abstract ) || true 	) {
+?>
+    <div style="">
+    <span style="; font-weight: bold;">Abstract</span><br />
+      <div class="facet" style="">
+        <div class="marker" style=""></div>
+        <?php echo $abstract."<p />&nbsp;<br />\n";
+          if( is_array( $this->doc->url ))
+            foreach( $this->doc->url as $url ) {
+              echo "<b>Referenzen</b><br />\n";
+              if( preg_match( '/^([a-z]+):(.*)$/', $url, $matches )) {
+                echo "{$matches[1]}:<a href=\"redir.php?id=".urlencode( $this->doc->id ).'&url='.urlencode( $matches[2] )."\" target=\"_blank\">{$matches[2]}</a><br />";
+              }
+          }
+
+        ?>
+      </div>
+    </div>
+<?php
+    }
+?>
+  </div>
+  <div class="col-md-3">
+<?php 	if( is_array( $this->doc->cluster_ss ))  { ?>
+    <div style="">
+    <span style="; font-weight: bold;">Themen</span><br />
+      <div class="facet" style="">
+        <div class="marker" style=""></div>
+<?php
+        foreach( $this->doc->cluster_ss as $cl ) {
+?>
+            <label>
+              <a href="javascript:doSearchFull('', '', [], {'catalog':[<?php echo $this->getCatalogList(); ?>], cluster: ['<?php echo htmlspecialchars( $cl ); ?>']}, 0, <?php echo $pagesize; ?> );"><?php echo htmlspecialchars( $cl ); ?></a>
+            </label><br />
+<?php
+        }
+?>
+      </div>
+    </div>
+        <?php  } ?>
+</div>
+<div class="row">
+  <div class="col-md-9">
+    <div style="">
+<?php
+$issues = array();
+foreach( $entity->getIssues() as $issue ) {
+if( preg_match( '/^(.*,) [^,]+$/', $issue, $matches ))
+{
+  $issues[] = $matches[1];
+}
+}
+?>
+    <span style="; font-weight: bold;"><?php echo htmlspecialchars( "{$meta['Anlassbezeichnung']} (Diplom {$meta['year']})"); ?></span><br />
+      <div class="facet" style="">
+        <div class="marker" style=""></div>
+<?php
+
+$squery = $solrclient->createSelect();
+$helper = $squery->getHelper();
+$squery->setRows( 500 );
+$squery->setStart( 0 );
+$phrase = 'source:'.$helper->escapePhrase( 'diplomhgk' )
+  .' AND year:'.$helper->escapePhrase( $meta['year'] )
+  .' AND cluster:'.$helper->escapePhrase( $meta['Anlassbezeichnung'] );
+
+// Issue: 452º F : Revista de Teoría de la Literatura y Literatura Comparada, Iss 2, Pp 127-136 (2010)
+$qstr = $phrase . ' AND -id:'.$helper->escapeTerm( $this->doc->id );
+$squery->setQuery( $qstr );
+$rs = $solrclient->select( $squery );
+$numResults = $rs->getNumFound();
+$numPages = floor( $numResults / 500 );
+if( $numResults % 500 > 0 ) $numPages++;
+
+echo "<!-- ".$qstr." (Documents: {$numResults} // Page ".(1)." of {$numPages}) -->\n";
+
+$res = new DesktopResult( $rs, 0, 500, $db, $urlparams );
+echo $res->getResult();
+
+?>
+      </div>
+    </div>
+<?php
+if( DEBUG ) {
+?>
+    <div style="">
+    <span style="; font-weight: bold;">RAW</span><br />
+      <div class="facet" style="padding: 0px;">
+        <div class="marker" style=""></div>
+        <div>
+          <pre>
+<?php
+echo print_r( $this->metadata, true);
+?>
+          </pre>
+        </div>
+      </div>
+    </div>
+    <div style="">
+    <span style="; font-weight: bold;">Document</span><br />
+      <div class="facet" style="padding: 0px;">
+        <div class="marker" style=""></div>
+        <div>
+          <pre>
+<?php
+var_dump( $this->doc->getFields());
+?>
+          </pre>
+        </div>
+      </div>
+    </div>
+
+<?php
+}
+?>
+
+  </div>
+
+  <div class="col-md-3">
+  </div>
+</div>
+
+
+</div>
+<script>
+  function initdiplomhgk() {
+
+
+  }
+</script><?php
+    $html .= ob_get_contents();
+    ob_end_clean();
+    return $html;	}
 
     public function desktopList() {
         global $config, $googleservice, $googleclient;
@@ -116,7 +307,8 @@ class diplomhgkDisplay extends DisplayEntity {
 				}
 
 				echo "ID: ".$this->doc->id."<br />\n";
-?>
+        ?>
+        <a href="detail.php?<?php echo "id=".urlencode( $this->doc->id ); foreach( $this->urlparams as $key=>$val ) echo '&'.$key.'='.urlencode($val); ?>"><i class="fa fa-folder-open" aria-hidden="true"></i> Details</a><br />
                 </div>
             </td>
         </tr>

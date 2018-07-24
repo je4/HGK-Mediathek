@@ -188,7 +188,7 @@ class diplomhgkEntity extends SOLRSource {
           $_urls = array();
           foreach( $_lines as $_l ) {
             $_l = trim( $_l );
-            if( !preg_match( '/$http(s)?:\/\//', $_l )) $_l = 'http://'.$_l;
+            if( !preg_match( '/^http(s)?:\/\//', $_l )) $_l = 'http://'.$_l;
             $_urls[] = $_l;
           }
           return $_urls;

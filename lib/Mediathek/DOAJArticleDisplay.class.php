@@ -15,7 +15,7 @@
  * @copyright   (C) 2016 Academy of Art and Design FHNW
  * @license     http://www.gnu.org/licenses/gpl-3.0
  * @link        http://mediathek.fhnw.ch
- * 
+ *
  */
 
 /**
@@ -27,11 +27,11 @@ namespace Mediathek;
 class DOAJArticleDisplay extends DisplayEntity {
     private $metadata;
 	private $entity;
-	
+
     public function __construct( $doc, $urlparams, $db, $highlightedDoc ) {
         parent::__construct( $doc, $urlparams, $db, $highlightedDoc );
-        
-        $this->metadata = (array) json_decode( $this->data );
+
+        $this->metadata = json_decode( $this->data, true );
 		$this->entity = new DOAJArticleEntity( $db );
 		$this->entity->loadFromArray( $this->doc->originalid, $this->metadata, 'doajarticle');
     }
@@ -47,9 +47,9 @@ class DOAJArticleDisplay extends DisplayEntity {
 		foreach( $entity->getAuthors() as $author ) {
 			$schema['author'][] = array( '@type' => 'Person', 'name' => $author );
 		}
-		$schema['url'] = array( 'https://mediathek.hgk.fhnw.ch/detail.php?id='.urlencode( $this->doc->id ));		
-		foreach( $this->doc->url as $url ) 
-			if( substr( $url, 0, 11 ) == 'identifier:' ) { 
+		$schema['url'] = array( 'https://mediathek.hgk.fhnw.ch/detail.php?id='.urlencode( $this->doc->id ));
+		foreach( $this->doc->url as $url )
+			if( substr( $url, 0, 11 ) == 'identifier:' ) {
 				$doajident = substr( $url, 11 );
 				if( $doajident ) {
 					$schema['url'][] = $doajident;
@@ -59,7 +59,7 @@ class DOAJArticleDisplay extends DisplayEntity {
 			$schema['keywords'] = implode( '; ', $this->doc->cluster_ss );
 		$schema['license'] = implode( '; ', $this->doc->license );
 
-//		$schema['isPartOf'] = array();		
+//		$schema['isPartOf'] = array();
 		$issn = array();
 		$doi = array();
 		foreach( $entity->getCodes() as $c )
@@ -87,7 +87,7 @@ class DOAJArticleDisplay extends DisplayEntity {
 							'publisher'=>$publishers,
 						)
 					)
-				);		
+				);
 			}
 			elseif( preg_match( '/^(.*), ([^,]+), ([^,]+)$/', $issue, $matches ))
 			{
@@ -101,27 +101,27 @@ class DOAJArticleDisplay extends DisplayEntity {
 							'publisher'=>$publishers,
 						)
 					)
-				);		
+				);
 			}
-		}		
+		}
 		return $schema;
 	}
-    
-	
+
+
 	public function detailView() {
         global $config, $pagesize, $solrclient, $db, $urlparams;
 		$html = '';
 		$entity = $this->entity;
 
-		if( DEBUG ) {
+		if( DEBUG && false ) {
 			$solr = new SOLR( $solrclient );
 			$solr->import( $entity, true );
 		}
-		
-		
+
+
 		$authors = $entity->getAuthors();
         ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
-		
+
 ?>
 		<div class="row">
 			<div class="col-md-3">
@@ -130,47 +130,47 @@ class DOAJArticleDisplay extends DisplayEntity {
 					<div class="facet" style="">
 						<div class="marker" style=""></div>
 							<b><?php echo htmlspecialchars( str_replace( '>>', '', str_replace( '<<', '', strip_tags( $entity->getTitle())))); ?></b><br />
-							<?php 
+							<?php
 							$i = 0;
-							foreach( $authors as $author ) { 
+							foreach( $authors as $author ) {
 								if( $i > 0) echo "; "; ?>
 									<a href="javascript:doSearchFull('author:&quot;<?php echo trim( $author ); ?>&quot;', '', [], {'catalog':[<?php echo $this->getCatalogList(); ?>]}, 0, <?php echo $pagesize; ?> );">
 										<?php echo htmlspecialchars( $author ); ?>
 									</a>
-								<?php				
+								<?php
 								$i++;
 							}
-							//echo htmlspecialchars( implode( '; ', $authors )); 
+							//echo htmlspecialchars( implode( '; ', $authors ));
 							?>
-							
+
 							<br />
 <?php
 							$publishers = $entity->getPublisher();
 							$city = $entity->getCity();
 							$year = $entity->getYear();
-							if( $city ) echo htmlspecialchars( $city ).': '; 
-							if( $publishers ) { 
+							if( $city ) echo htmlspecialchars( $city ).': ';
+							if( $publishers ) {
 								foreach( $publishers as $publisher ) { ?>
 									<a href="javascript:doSearchFull('publisher:&quot;<?php echo trim( $publisher ); ?>&quot;', '', [], {'catalog':[<?php echo $this->getCatalogList(); ?>]}, 0, <?php echo $pagesize; ?> );">
 										<?php echo htmlspecialchars( $publisher ); ?>
 									</a>
-							<?php 
+							<?php
 								}
 							}
-								
+
 							if( $year ) echo htmlspecialchars( $year ).'.';
 							if( $city || $year || $publisher ) echo "<br />\n";
 
 							$codes = $entity->getCodes();
-							if( is_array( $codes )) foreach( $codes as $code ) 
+							if( is_array( $codes )) foreach( $codes as $code )
 								echo htmlspecialchars( str_replace( ':', ': ', $code ))."<br />\n";
-							
+
 							$signatures = $this->doc->signature;
-							if( is_array( $signatures )) foreach( $signatures as $sig ) 
+							if( is_array( $signatures )) foreach( $signatures as $sig )
 								if( substr( $sig, 0, 10 ) == 'nebis:E75:' ) echo 'Signatur: <a href="redir.php?id='.urlencode( $this->doc->id ).'&url='.urlencode( 'http://recherche.nebis.ch/primo_library/libweb/action/search.do?fn=search&ct=search&vl(freeText0)='.urlencode( $this->doc->originalid ).'&vid=NEBIS&fn=change_lang&prefLang=de_DE&prefBackUrl=http://recherche.nebis.ch/nebis/action/search.do?fn=search&ct=search&vl(freeText0)='.urlencode( $this->doc->originalid ).'&search=&backFromPreferences=true.' ).'"
 										target="_blank">'.htmlspecialchars( substr( $sig, 10 ))."</a><br />\n";
-										
-										
+
+
 							echo implode( '<br />', $this->doc->issue ).'<br />';
 							$doajident = null;
 							foreach( $this->doc->url as $url ) if( substr( $url, 0, 11 ) == 'identifier:' ) $doajident = substr( $url, 11 );
@@ -178,11 +178,11 @@ class DOAJArticleDisplay extends DisplayEntity {
 								echo "<a href=\"redir.php?id=".urlencode( $this->doc->id ).'&url='.urlencode( $doajident )."\" target=\"_blank\">DOAJ Link</a><br />\n";
 							}
 
-?>							
+?>
 					</div>
 				</div>
-				
-				
+
+
 			</div>
 			<div class="col-md-6">
 <?php
@@ -207,7 +207,7 @@ class DOAJArticleDisplay extends DisplayEntity {
 ?>
 			</div>
 			<div class="col-md-3">
-<?php 	if( is_array( $this->doc->cluster_ss ))  { ?>		
+<?php 	if( is_array( $this->doc->cluster_ss ))  { ?>
 				<div style="">
 				<span style="; font-weight: bold;">Themen</span><br />
 					<div class="facet" style="">
@@ -218,12 +218,12 @@ class DOAJArticleDisplay extends DisplayEntity {
 								<label>
 									<a href="javascript:doSearchFull('', '', [], {'catalog':[<?php echo $this->getCatalogList(); ?>], cluster: ['<?php echo htmlspecialchars( $cl ); ?>']}, 0, <?php echo $pagesize; ?> );"><?php echo htmlspecialchars( $cl ); ?></a>
 								</label><br />
-<?php							
+<?php
 						}
-?>							
+?>
 					</div>
 				</div>
-						<?php  } ?>				
+						<?php  } ?>
 		</div>
 		<div class="row">
 			<div class="col-md-9">
@@ -261,16 +261,16 @@ class DOAJArticleDisplay extends DisplayEntity {
 		$numResults = $rs->getNumFound();
 		$numPages = floor( $numResults / 500 );
 		if( $numResults % 500 > 0 ) $numPages++;
-	
+
 		echo "<!-- ".$qstr." (Documents: {$numResults} // Page ".(1)." of {$numPages}) -->\n";
-	
+
 		$res = new DesktopResult( $rs, 0, 500, $db, $urlparams );
 		echo $res->getResult();
 
-?>					
+?>
 					</div>
 				</div>
-<?php 				
+<?php
 if( DEBUG ) {
 	?>
 				<div style="">
@@ -279,7 +279,7 @@ if( DEBUG ) {
 						<div class="marker" style=""></div>
 						<div>
 							<pre>
-<?php 
+<?php
 echo print_r( $this->metadata, true);
 ?>
 							</pre>
@@ -298,19 +298,19 @@ echo print_r( $this->metadata, true);
 							</pre>
 						</div>
 					</div>
-				</div>				
+				</div>
 
-<?php 
+<?php
 	}
-?>				
-				
+?>
+
 			</div>
-			
+
 			<div class="col-md-3">
 			</div>
 		</div>
 
-			
+
 		</div>
 		<script>
 			function initDOAJArticle() {
@@ -322,15 +322,15 @@ echo print_r( $this->metadata, true);
         ob_end_clean();
         return $html;
 	}
-	
+
     public function desktopList() {
     	global $config;
-    	
+
 		$html = '';
-		
+
 		$t = strtolower( $this->doc->type );
 		$icon = array_key_exists( $t, $config['icon'] ) ? $config['icon'][$t] : $config['icon']['default'];
-		
+
         ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
 ?>
         <tr>
@@ -343,7 +343,7 @@ echo print_r( $this->metadata, true);
             <td class="list" style="width: 70%;">
                 <a class="entity" href="#coll_<?php echo $this->doc->id; ?>" data-toggle="collapse" aria-expanded="false" aria-controls="coll_<?php echo $this->doc->id; ?>">
                     <?php echo htmlspecialchars( strip_tags( $this->doc->title )); ?>
-                </a>        
+                </a>
             </td>
         </tr>
         <tr>
@@ -354,13 +354,13 @@ echo print_r( $this->metadata, true);
 					<?php $authors = $this->entity->getAuthors(); if( count( $authors ) > 1 ) for( $i = 1; $i < count( $authors ); $i++ ) echo htmlspecialchars( $authors[$i] ).($i < count( $authors )-1 ? " / " : ""); ?><br />
 					<?php if ($this->highlight && count( $this->highlight )) { ?>
 					<p style="background-color: #f0f0f0; margin-left: +20px; border-top: 1px solid black; border-bottom: 1px solid black;"><i>
-					
+
 <?php
 						foreach ($this->highlight as $field => $highlight) {
 							echo '(...) '.strip_tags( implode(' (...) ', $highlight), '<b></b>') . ' (...)' . '<br/>';
 						}
 ?>
-					</i></p>					
+					</i></p>
 <?php
 					}
 ?>
@@ -368,7 +368,7 @@ echo print_r( $this->metadata, true);
 					<?php if( count( $this->entity->getLanguages() )) echo "Language(s): ".htmlentities( implode( '; ', $this->entity->getLanguages()))."<br />\n"; ?>
 					<?php if( count( $this->entity->getLanguages() )) echo "Publisher: ".htmlentities( implode( '; ', $this->entity->getPublisher()))."<br />\n"; ?>
 
-<?php 
+<?php
 					if( is_array( $this->doc->url )) foreach( $this->doc->url as $u ) {
 						$us = explode( ':', $u );
 						if( substr( $us[1], 0, 4 ) == 'http' ) {
@@ -377,13 +377,13 @@ echo print_r( $this->metadata, true);
 						}
 					}
 ?>
-					
+
 					ID: <?php echo $this->doc->id; ?><br />
 					<a href="detail.php?<?php echo "id=".urlencode( $this->doc->id ); foreach( $this->urlparams as $key=>$val ) echo '&'.$key.'='.urlencode($val); ?>"><i class="fa fa-folder-open" aria-hidden="true"></i> Details</a><br />
 					<p>
 					<!-- <a href="detail.php?<?php echo "id=".urlencode( $this->doc->id ); foreach( $this->urlparams as $key=>$val ) echo '&'.$key.'='.urlencode($val); ?>">Detail</a><br />
 					-->
-                    
+
                 </div>
             </td>
         </tr>
