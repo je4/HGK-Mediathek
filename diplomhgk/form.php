@@ -296,12 +296,18 @@ https://vimeo.com/39825378
 https://youtu.be/Yyl1xxdatn8
 http://issuu.com/interiordesignandscenography/docs/iis_yearbook2013/1
 https://soundcloud.com/fhnw-hgk-iku/mah02448mp4-dance', false, 6, valof( $vals, 'webmedia' ) );
-formCheck( 'rights', 'Hiermit erlaube ich der HGK sämtliche hochgeladenen Medien in allen Veröffentlichungskanälen zu nutzen', 'Rights', true, valof( $vals, 'rights' ) );
+//formCheck( 'rights', 'Hiermit erlaube ich der HGK sämtliche hochgeladenen Medien in allen Veröffentlichungskanälen zu nutzen', 'Rights', true, valof( $vals, 'rights' ) );
  ?>
 <p>
   <div id="uploader"> </div>
 </p>
 <p>
+  Mit der Einreichung erwirbt die Hochschule für Gestaltung und Kunst FHNW unentgeltlich das unbeschränkte Recht, die hochgeladenen Bilder sowie die erfassten Metadaten (Titel, Name der Absolvierenden, eMail-Adresse sowie die weiteren Formulardaten) zu publizieren (insb. Online-Publikationen), zu vervielfältigen und zu verbreiten.
+</p>
+<p>
+  <?php
+  formCheck( 'rights', 'Hiermit erkläre ich, dass die obengenannte Übertragung der Rechte an den nachfolgend aufgeführten Bildern keine Rechte (Urheberrecht, Persönlichkeitsrecht, Markenrecht usw.) verletzt.', 'Rights', true, valof( $vals, 'rights' ) );
+  ?>
             <div class="form-group row">
               <button type="submit" name="save" value="" class="btn btn-secondary btn-block" style="height: 100px; font-size: 36px;">Speichern</button>
               <button type="submit" name="submit" value="Validate!" class="btn btn-primary btn-block" style="height: 100px; font-size: 36px;">Eintragung final abschliessen</button>
