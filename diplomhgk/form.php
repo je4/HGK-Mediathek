@@ -72,7 +72,7 @@ function formText( $id, $label, $descr, $required, $lines, $value ) {
 <div class="form-group row">
   <label for="<?php echo $id; ?>" class="col-sm-2 col-form-label"><?php echo htmlspecialchars( $label ); if( $required ) echo '<a class="required" href="#" data-toggle="tooltip" title="Pflichtfeld">*</a>'; ?></label>
   <div class="col-sm-10">
-    <textarea rows=6 name="data[<?php echo $id; ?>]" type="text" class="form-control" id="<?php echo $id; ?>" aria-describedby="<?php echo $id; ?>Help" placeholder="" <?php echo $required ? 'required' : ''; ?>><?php echo htmlspecialchars( $value ); ?></textarea>
+    <textarea rows=<?php echo $lines; ?> name="data[<?php echo $id; ?>]" type="text" class="form-control" id="<?php echo $id; ?>" aria-describedby="<?php echo $id; ?>Help" placeholder="" <?php echo $required ? 'required' : ''; ?>><?php echo htmlspecialchars( $value ); ?></textarea>
     <small id="<?php echo $id; ?>Help" class="form-text text-muted"><?php echo nl2br( htmlspecialchars( $descr )); ?></small>
   </div>
 </div>
@@ -289,7 +289,8 @@ formString( 'titel', 'Titel (Diplomarbeit)', 'Bsp: Complexity', true, valof( $va
 formString( 'untertitel', 'Untertitel (Diplomarbeit)', 'Bsp: Der Reichtum der Unterschiede', false, valof( $vals, 'untertitel' ) );
 formString( 'betreuer1', 'Betreuer/in #1', 'Prüfer/in, Betreuer/in', false, valof( $vals, 'betreuer1' ) );
 formString( 'betreuer2', 'Betreuer/in #2', 'Prüfer/in, Betreuer/in', false, valof( $vals, 'betreuer2' ) );
-formText( 'beschreibung', 'Beschreibung', 'Projektbeschrieb (Diplomarbeit)', 6, true, valof( $vals, 'beschreibung' ) );
+formText( 'beschreibung', 'Beschreibung', 'Projektbeschrieb (Diplomarbeit) #hashtags sind hier möglich', true, 6, valof( $vals, 'beschreibung' ) );
+formText( 'tags', 'Tags', 'nur #hashtags, die nicht in der Beschreibung auftauchen', false, 2, valof( $vals, 'tags' ) );
 formText( 'webmedia', 'Webadressen', 'Webadressen für Video, Audio und Pdf: Vimeo, YouTube, Issuu, Soundcloud
 Z.B.:
 https://vimeo.com/39825378
