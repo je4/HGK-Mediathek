@@ -95,12 +95,12 @@ class swissbibDisplay extends DisplayEntity {
 
         $entity = $this->entity;
 
-/*
-        if( DEBUG ) {
+
+        if( DEBUG && true ) {
         	$solr = new SOLR( $solrclient );
         	$solr->import( $entity, true );
         }
-*/
+
         ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
 
 		$authors = array_unique( $entity->getAuthors());
@@ -111,7 +111,8 @@ class swissbibDisplay extends DisplayEntity {
 		$kisten = array();
 		if( @is_array( $this->doc->location )) foreach( $this->doc->location as $loc ) {
 			if( strncmp( 'NEBIS:E75:', $loc, 10) == 0 ) {
-				$kisten[] = substr( $loc, 10 );
+				$k = substr( $loc, 10 );
+				if( preg_match( '/^[A-Za-z]_[0-9]{3}_[ab]$/', $k )) $kisten[] = $k;
 			}
 		}
 		$abstract = trim( $this->entity->getAbstract());
@@ -550,20 +551,20 @@ if( DEBUG ) {
 				$locations = $entity->getLocations();
 				foreach( $locations as $loc ) {
 					if( strncmp( 'NEBIS:E75:', $loc, 10 ) == 0 ) {
-						$box = urlencode(str_replace( '_', '', substr( $loc, 10 )));
-						$boxjson = null;
-						if( file_exists( $config['3djsondir']."/{$box}.json" )) {
-							$boxjson = file_get_contents( $config['3djsondir']."/{$box}.json" );
-						}
-
-							if( substr( $loc, 10 ) == 'Archiv') {
-								echo 'Standort: <b>Archiv</b><br />'."\n";
-							}
-							else {
+						$k = substr( $loc, 10 );
+						if( preg_match( '/^[A-Za-z]_[0-9]{3}_[ab]$/', $k )) {
+								$box = urlencode(str_replace( '_', '', $k ));
+								$boxjson = null;
+								if( file_exists( $config['3djsondir']."/{$box}.json" )) {
+									$boxjson = file_get_contents( $config['3djsondir']."/{$box}.json" );
+								}
 								echo 'Standort: Regal <b>'.$loc{10}.'</b> Kiste <b>'.htmlspecialchars( str_replace( '_', '', substr( $loc, 12 )))
 									.' <a style="padding: 0px;" href="#" class="btn btn-default" data-toggle="modal" data-target="#MTModal" data-kiste="'.$box.'" data-json="'.htmlspecialchars( $boxjson, ENT_QUOTES ).'" ><i class="fa fa-street-view" aria-hidden="true"></i></a></b><br />'."\n";
 							}
-					}
+							elseif( substr( $loc, 10 ) == 'Archiv') {
+								echo 'Standort: <b>Archiv</b><br />'."\n";
+							}
+						}
     			}
 				$notes = $entity->getGeneralNote();
 				foreach( $notes as $note )

@@ -32,7 +32,7 @@ foreach( $rs as $row ) {
   $rs2->Close();
 
   if( $data['Anlassnummer'] == 'test' ) {
-    continue;
+    //continue;
   }
 
   if( $data['done'] != 1 ) {

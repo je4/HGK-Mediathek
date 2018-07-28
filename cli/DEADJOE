@@ -1,0 +1,46 @@
+
+*** These modified files were found in JOE when it aborted on Thu Jul 26 16:37:19 2018
+*** JOE was aborted because the terminal closed
+
+*** File '(Unnamed)'
+20.500.11806
+buchung
+buchung
+whitesmoke
+first.icthgk.ch
+apps
+/imd/apps
+/apps
+/apps
+e-medien.mab-bs
+
+*** File '(Unnamed)'
+mediathek
+http_port
+upload
+p12
+p12
+/collectiveaccess
+collectiveaccess
+bjvxts6M1CDtThEW
+ed
+curl
+
+*** File '(Unnamed)'
+config.toml
+.git/info/exclude
+.git/info/exclude
+.gitignore
+.gitignore
+.git/info/exclude
+/root/diplomhgk/.git/COMMIT_EDITMSG
+/root/diplomhgk/.git/COMMIT_EDITMSG
+/root/diplomhgk/.git/COMMIT_EDITMSG
+/data/www/vhosts/mediathek.fhnw.ch/html/dev/.git/COMMIT_EDITMSG
+diplomhgk2solr.php
+
+*** File '* Startup Log *'
+Processing '/etc/joe/joerc'...
+Processing '/etc/joe/ftyperc'...
+Finished processing /etc/joe/ftyperc
+Finished processing /etc/joe/joerc

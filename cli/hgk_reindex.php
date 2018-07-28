@@ -36,7 +36,10 @@ if(true) {
 		//$squery->setFields( array( 'id' ));
 		$squery->createFilterQuery('source')->setQuery( 'source:"swissbib"' );
 
-		$squery->createFilterQuery( 'category' )->setQuery( "category:2!!signature!!NEBIS!!E75" );
+		//		$squery->createFilterQuery( 'category' )->setQuery( "category:2!!signature!!NEBIS!!E75" );
+		//	$squery->createFilterQuery( 'category' )->setQuery( "category:2!!signature!!NEBIS!!E44" );
+		$squery->createFilterQuery( 'catalog' )->setQuery( "catalog:FHNWeMedien" );
+		//$squery->createFilterQuery( 'catalog' )->setQuery( "catalog:FHNW-Bib" );
 
 		$squery->addSort('id', $squery::SORT_DESC);
 		$customizer->createCustomization( 'cursorMark' )
@@ -54,19 +57,33 @@ if(true) {
         echo "    ERROR!!!\n";
         continue;
       }
-      $data = gzdecode( base64_decode( $doc->metagz ));
+      //$data = gzdecode( base64_decode( $doc->metagz ));
       echo "   loading...";
       $entity->loadFromDoc( $doc );
+			echo 'ok';
+			$entity->getID();
+			echo '.';
+			$entity->getSignatures();
+			echo '.';
       $codes = $entity->getSigCode( 'NEBIS', 'E75' );
-      //print_r( $codes );
+			echo '.';
       foreach( $codes as $code=>$sig ) {
         $sql = "REPLACE INTO ARC( Strichcode, Signatur ) VALUES( ".$db->qstr( $code ).", ".$db->qstr( $sig )." )";
         echo "{$code}:{$sig}\n";
         $db->Execute( $sql );
       }
+			$solr->import($entity);
 			$counter++;
 		}
 		$data = $rs->getData();
+
+		$update = $solrclient->CreateUpdate();
+		$update->addCommit();
+		$result = $solrclient->update( $update );
+		echo "Commit query executed\n";
+		echo 'Query status: ' . $result->getStatus()."\n";
+		echo 'Query time: ' . $result->getQueryTime()."\n";
+
 		if( $cursormark == $data["nextCursorMark"] )
 			break;
 

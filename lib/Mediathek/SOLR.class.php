@@ -98,9 +98,12 @@ class SOLR {
 
 
     public function import( SOLRSource $src, $commit = false ) {
-        $id = $src->getID();
-		//$this->delete( $id );
 
+        echo 'import...';
+
+        $id = $src->getID();
+
+		//$this->delete( $id );
         $update = $this->solr->createUpdate();
         $helper = $update->getHelper();
         $doc = $update->createDocument();
@@ -109,10 +112,15 @@ class SOLR {
         $doc->setField( 'originalid', $src->getOriginalID());
         $doc->setField( 'source', $src->getSource());
 		$doc->setField( 'type', strtolower( $src->getType()));
+
+//    if( $id == 'swissbib-367224763') echo "getType() ok\n";
+
         $doc->setField( 'openaccess', $src->getOpenAccess());
 		foreach( $src->getLocations() as $loc ) {
 			$doc->addField( 'location', $loc );
 		}
+
+
         $doc->setField( 'title', /* utf8_encode */( $src->getTitle()));
 
 		$publisher = $src->getPublisher();
@@ -152,7 +160,7 @@ class SOLR {
                 $doc->addField( 'tag', /* utf8_encode */( $tag ));
         foreach( SOLR::buildTag($src->getCategories(), '!!' ) as $category )
                 $doc->addField( 'category', /* utf8_encode */( $category ));
-        foreach( $src->getCluster() as $cluster )
+        foreach( Helper::clearCluster( $src->getCluster()) as $cluster )
             $doc->addField( 'cluster', $cluster );
         foreach( $src->getLoans() as $loan )
             $doc->addField( 'loan', $loan );
@@ -163,10 +171,15 @@ class SOLR {
         foreach( $src->getURLs() as $url )
             $doc->addField( 'url', $url);
         foreach( $src->getCodes() as $code ) {
-        	if( preg_match( '/(ISBN|ISSN):(.*)$/', $code, $matches )) {
-        		$code = $matches[1].':'.preg_replace( '/[^0-9]/', '', $matches[2] );
+        	if( preg_match( '/(EISBN|ISBN|ISSN):(.*)$/', $code, $matches )) {
+            $nr = preg_replace( '/[^0-9X]/', '', $matches[2] );
+            if( $matches[1] == 'ISBN' || $matches[1] == 'EISBN' ) $nr = Helper::isbn13( $nr );
+
+        		if( $nr ) $doc->addField( 'code', $matches[1].':'.$nr );
         	}
+          else {
            	$doc->addField( 'code', $code);
+          }
         }
         foreach( $src->getCatalogs() as $cat )
             $doc->addField( 'catalog', $cat);

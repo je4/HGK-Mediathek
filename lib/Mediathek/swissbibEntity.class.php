@@ -35,6 +35,7 @@ class swissbibEntity extends SOLRSource {
 	private static $mapbib = null;
 
 	private $record = null;
+	private $infunction = false;
     private $xml = null;
     private static $idprefix = 'swissbib';
     private $barcode = null;
@@ -80,8 +81,7 @@ class swissbibEntity extends SOLRSource {
 	);
 
 	private static $bibs = array(
-			'A334'=>array('FHNW-Bib'),
-			'E40'=>array('FHNW-Bib'),
+			'E44'=>array('FHNW-Bib'),
 			'E50'=>array('FHNW-Bib'),
 			'E60'=>array('FHNW-Bib'),
 			'E48'=>array('FHNW-Bib'),
@@ -91,7 +91,6 @@ class swissbibEntity extends SOLRSource {
 			'N03'=>array('FHNW-Bib'),
 			'E39'=>array('FHNW-Bib'),
 			'N10'=>array('FHNW-Bib'),
-			'A334'=>array('FHNW-Bib'),
 			'A332'=>array('FHNW-Bib', 'Kunsthochschul-Bibs'),
 			'A298'=>array('Kunst-Bib Region Basel/Aargau'),
 			'A214'=>array('Kunst-Bib Region Basel/Aargau'),
@@ -120,7 +119,7 @@ class swissbibEntity extends SOLRSource {
 	}
 
 	static function find2( $data, $ind1, $ind2 ) {
-//		echo "find2( ".print_r( $data, true ).", $ind1, $ind2 )\n";
+//		echo "find2( data, $ind1, $ind2 )\n";
 		if( $ind1 == null ) {
 			$ret = array();
 			foreach( $data as $d ) {
@@ -136,7 +135,6 @@ class swissbibEntity extends SOLRSource {
 	}
 
 	function findField( $tag, $ind1=null, $ind2=null ) {
-//		echo "findField( $tag, $ind1, $ind2 )\n";
 		if( !array_key_exists( $tag, $this->data )) return array();
 		return self::find2( $this->data[$tag], $ind1, $ind2 );
 	}
@@ -170,6 +168,7 @@ class swissbibEntity extends SOLRSource {
 	}
 
 	public function loadFromDoc( $doc) {
+		$this->reset();
 		$xml = \Normalizer::normalize(( string )gzdecode( base64_decode( $doc->metagz )));
 		$this->loadNode( $doc->originalid, new OAIPMHRecord( $xml ), null );
 	}
@@ -177,6 +176,7 @@ class swissbibEntity extends SOLRSource {
 
     public function reset() {
 		parent::reset();
+		$this->infunction = false;
 		$this->record = null;
 		$this->xml = null;
 		$this->node = null;
@@ -260,22 +260,34 @@ class swissbibEntity extends SOLRSource {
     }
 
     public function getType() {
+/*
+			foreach( $this->getCatalogs() as $cat ) {
+				if( $cat == 'FHNWeMedien' ) return 'emedia';
+			}
+*/
 		$code = $this->getOne( '898', null, null, 'a' );
 		$primary = substr( $code, 0, 4 );
 		$tertiary = substr( $code, 6, 2 );
-		$this->online = ( $tertiary == '53' );
+		if( $tertiary == '53' ) {
+				$this->online = true;
+			}
 		if( array_key_exists( $primary, swissbibEntity::$typeList )) {
-			return swissbibEntity::$typeList[$primary];
+			$type = swissbibEntity::$typeList[$primary];
+			switch( strtolower( $type )) {
+				case 'book':
+					return 'eMedia';
+				break;
+			}
 		}
 		foreach( $this->getCodes() as $code ) {
 			$x = explode( ':', $code );
 			switch( strtolower( $x[0] )) {
 				case 'issn':
 					return 'journal';
-					break;
+				break;
 				case 'isbn':
 					return 'book';
-					break;
+				break;
 			}
 		}
 		return 'unknown';
@@ -450,7 +462,12 @@ class swissbibEntity extends SOLRSource {
     }
 
     public function getSignatures() {
-        if( $this->signatures == null ) {
+        if( $this->signatures !== null ) return $this->signatures;
+					if( $this->infunction ) {
+						debug_print_backtrace();
+						die();
+					}
+					$this->infunction = true;
         	$this->signatures = array();
         	$this->locations = array();
         	$this->libCodes = array();
@@ -465,6 +482,7 @@ class swissbibEntity extends SOLRSource {
 		        		$verbund = null;
 		        		$bar = null;
 		        		$full = null;
+								$loc = null;
 								foreach( $r as $code=>$val ) {
 									//continue;
 									switch( $code ) {
@@ -482,23 +500,26 @@ class swissbibEntity extends SOLRSource {
 											break;
 										case 'p':
 											$bar = trim( implode( '/', $val ));
-											break;
+										break;
+										case 'c':
+											$loc = trim( implode( '/', $val ));
+										break;
 										default:
 											break;
 									}
 								}
-								//echo "verbund: $verbund // lib: $lib // sig: $sig // bar: $bar <br />\n";
 								if( $verbund != null && $lib != null ) {
+									if( $loc ) $this->locations[] = "{$verbund}:{$lib}:{$loc}";
 									if( $sig != null ) $this->signatures[] = "signature:{$verbund}:{$lib}:{$sig}";
-									if( $this->getOnline()) $this->signatures[] = "signature:{$verbund}:{$lib}:online";
+									//if( $this->getOnline()) $this->signatures[] = "signature:{$verbund}:{$lib}:online";
 									if( $bar != null ) {
 										$this->signatures[] = "barcode:{$verbund}:{$lib}:{$bar}";
 										$sql = "SELECT marker FROM location WHERE verbund=".$this->db->qstr( $verbund ).
 											" AND library=".$this->db->qstr( $lib ).
 											" AND itemid=".$this->db->qstr( $bar );
-										$loc = $this->db->GetOne( $sql );
-										if( $loc ) {
-											$this->locations[] = "{$verbund}:{$lib}:{$loc}";
+										$kiste = $this->db->GetOne( $sql );
+										if( $kiste ) {
+											$this->locations[] = "{$verbund}:{$lib}:{$kiste}";
 										}
 
 									}
@@ -513,7 +534,6 @@ class swissbibEntity extends SOLRSource {
 								if( $lib != null && $full != null ) $this->libs[$lib] = $full;
 							}
         	}
-        }
         $this->libCodes = array_unique( $this->libCodes );
         return $this->signatures;
     }
@@ -529,8 +549,6 @@ class swissbibEntity extends SOLRSource {
 			if( $this->libsigcode == null ) {
 				$this->getSignatures();
 			}
-//			print_r( $this->libsigcode );
-//			print_r( $this->getCategories());
 			$result = array();
 			foreach( $this->libsigcode as $lsc ) {
 				if( $lsc['verbund'] == $verbund && $lsc['lib'] == $lib ) {
@@ -753,12 +771,30 @@ class swissbibEntity extends SOLRSource {
     }
 
     public function getOnline() {
-    		$this->getType();
+    		//$this->getType();
+//				var_dump( $this->online );
+				if( $this->online !== null ) return $this->online;
+
     		$carriers = $this->getAll( '338', null, null, 'a' );
     		foreach( $carriers as $carrier ) {
-					$this->online |= (trim(strtolower($carrier)) == 'online resource' );
-					$this->online |= (trim(strtolower($carrier)) == 'online-resource' );
+					$this->online |= preg_match( '/online(-| )ress?ource/i', $carrier );
     		}
+				$extents = $this->getAll( '300', null, null, 'a' );
+				foreach( $extents as $extent ) {
+					$this->online |= preg_match( '/online(-| )ress?ource/i', $extent );
+    		}
+				foreach( $this->getLocations() as $location ) {
+					list( $verbund, $lib, $loc ) = explode( ':', $location );
+					if( array_key_exists( $lib, swissbibEntity::$bibs )) {
+						foreach( swissbibEntity::$bibs[$lib] as $cat ) {
+							if( $cat == 'FHNW-Bib'
+								&& (in_array( $loc, array( 'E39OF', 'E39OS', 'E44OF', 'E44OS', 'E50OF', 'E50OS', 'E60EL', 'E60OF',  'E60OS', 'E60OP', 'E75OF' ))
+							)) {
+								$this->online = true;
+							}
+						}
+					}
+				}
         return $this->online;
     }
 
@@ -772,26 +808,30 @@ class swissbibEntity extends SOLRSource {
 	        $val = null;
 	        $type = null;
 	        foreach( $flds as $fld ) {
-	        	   foreach( $fld as $code=>$v ) {
-		        	// var_dump( $v );
+	        	  foreach( $fld as $code=>$v ) {
 		        	switch( $code ) {
-		        		case 'a':
+								case 'a':
+								case 'z':
 		        			$val = implode( ';', $v );
 		        			break;
-		        		case '2':
+									case '2':
+									case 'q':
 		        			$type = implode( ';', $v );
 		        			break;
 			       	}
         	   }
-	        }
 	        if( $val === null ) continue;
-	         if( preg_match( '/$([^\(\)]+)\((.*)\)/', $val, $matches )) {
+	         if( preg_match( '/^([^\(\)]+)\((.*)\)/', $val, $matches )) {
 	        	$val = trim( $matches[1] );
 	        	$type = trim( $matches[2] );
 	        }
+					if( preg_match( '/(ebook|online|pdf)/i', $type )) $type = 'EISBN';
+					elseif( preg_match( '/(print)/i', $type )) $type = 'ISBN';
+
 	        if( $type == null ) $type = ($tag == '020' ? 'ISBN': 'ISSN' );
 	        if( $type != null ) $type = strtoupper( $type );
 	        $this->codes[] = "{$type}:{$val}";
+				}
 	   }
 	   $this->codes = array_unique( $this->codes );
 	   return $this->codes;
@@ -905,6 +945,19 @@ class swissbibEntity extends SOLRSource {
 					$catalogs[] = 'eperiodica';
 			}
 
+		}
+
+		foreach( $this->getLocations() as $location ) {
+			list( $verbund, $lib, $loc ) = explode( ':', $location );
+			if( $verbund == 'NEBIS'
+					&& array_search( 'FHNW-Bib', $catalogs ) !== false
+					&& (in_array( $loc, array( 'E39OF', 'E39OS', 'E44OF', 'E44OS', 'E50OF', 'E50OS', 'E60EL', 'E60OF',  'E60OS', 'E60OP', 'E75OF' ))
+							   || $this->getOnline()
+							)
+				) {
+					$catalogs[] = 'FHNWeMedien';
+					$catalogs[] = 'HGK';
+			}
 		}
 
 		return array_unique( $catalogs );
