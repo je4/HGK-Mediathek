@@ -38,8 +38,9 @@ if(true) {
 
 		//		$squery->createFilterQuery( 'category' )->setQuery( "category:2!!signature!!NEBIS!!E75" );
 		//	$squery->createFilterQuery( 'category' )->setQuery( "category:2!!signature!!NEBIS!!E44" );
-		$squery->createFilterQuery( 'catalog' )->setQuery( "catalog:FHNWeMedien" );
+		//$squery->createFilterQuery( 'catalog' )->setQuery( "catalog:FHNWeMedien" );
 		//$squery->createFilterQuery( 'catalog' )->setQuery( "catalog:FHNW-Bib" );
+		$squery->createFilterQuery( 'catalog' )->setQuery( "source:swissbib" );
 
 		$squery->addSort('id', $squery::SORT_DESC);
 		$customizer->createCustomization( 'cursorMark' )

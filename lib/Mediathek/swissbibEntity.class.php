@@ -275,7 +275,12 @@ class swissbibEntity extends SOLRSource {
 			$type = swissbibEntity::$typeList[$primary];
 			switch( strtolower( $type )) {
 				case 'book':
-					return 'eMedia';
+					if( $this->getOnline()) return $this->getOpenAccess() ? 'OABook':'eMedia';
+					return 'book';
+				break;
+				case 'journal':
+					if( $this->getOnline()) return $this->getOpenAccess() ? 'OAJournal':'eJournal';
+					return 'journal';
 				break;
 			}
 		}
@@ -286,6 +291,7 @@ class swissbibEntity extends SOLRSource {
 					return 'journal';
 				break;
 				case 'isbn':
+					if( $this->getOnline() ) return $this->getOpenAccess() ? 'eOpenAccess':'eMedia';
 					return 'book';
 				break;
 			}
@@ -658,26 +664,32 @@ class swissbibEntity extends SOLRSource {
     }
 
     public function getLicenses() {
-        if( $this->licenses == null ) {
-        	$this->licenses = array();
-        	foreach( $this->getAll( '506', '0', null, 'a' ) as $lic )
-        		$this->licenses[] = trim( $lic, '/:-., ' );
-        		foreach( $this->getAll( '540', null, null, 'a' ) as $lic ) {
-        			if( preg_match( '/Open Access/i', $lic )) {
-        				$this->openaccess = true;
-        				if( preg_match( '/(http?:\/\/[^ \)]+)/i', $lic, $matches )) {
-        					$this->licenses[] = trim( $matches[1], '/:-., ' );
-        				}
-        				else $this->licenses[] = 'open access';
-        			}
+        if( $this->licenses !== null ) return array_unique( $this->licenses );
 
+        	$this->licenses = array();
+        	foreach( $this->getAll( '506', '0', null, 'a' ) as $lic ){
+        		$this->licenses[] = trim( $lic, '/:-., ' );
+					 }
+	      		foreach( $this->getAll( '540', null, null, 'a' ) as $lic ) {
+	      			if( preg_match( '/Open Access/i', $lic )) {
+	      				$this->openaccess = true;
+	      				if( preg_match( '/(http?:\/\/[^ \)]+)/i', $lic, $matches )) {
+	      					$this->licenses[] = trim( $matches[1], '/:-., ' );
+	      				}
+	      				else $this->licenses[] = 'open access';
+	      			}
         		}
-        		foreach( $this->getAll( '856', null, null, 'z' ) as $lic ) {
+						foreach( $this->getAll( '856', null, null, 'z' ) as $lic ) {
         			if( preg_match( '/Online via e-rara\.ch/i', $lic )) {
         				$this->openaccess = true;
 								$this->licenses[] = 'https://creativecommons.org/licenses/by-sa/4.0/';
         			}
-
+        		}
+						foreach( $this->getAll( '909', null, 4, 'f' ) as $dgoa ) {
+        			if( preg_match( '/Open ?Access/i', $dgoa )) {
+        				$this->openaccess = true;
+								$this->licenses[] = $dgoa;
+        			}
         		}
 
         		foreach( $this->getURLs() as $url ) {
@@ -688,7 +700,7 @@ class swissbibEntity extends SOLRSource {
         		}
 
         		if( count( $this->licenses ) == 0 ) $this->licenses = array( 'restricted' );
-        }
+
         return array_unique( $this->licenses );
     }
 
@@ -803,11 +815,12 @@ class swissbibEntity extends SOLRSource {
     	$this->codes = array();
 //    	var_dump( $this->data );
 
-        foreach( array( '020', '022', '024' ) as $tag ) {
+        foreach( array( '020', '022' ) as $tag ) {
 	        $flds = $this->findField( $tag, null, ' ' );
+					// print_r( $flds );
 	        $val = null;
 	        $type = null;
-	        foreach( $flds as $fld ) {
+	        foreach( $flds as $l=>$fld ) {
 	        	  foreach( $fld as $code=>$v ) {
 		        	switch( $code ) {
 								case 'a':
@@ -828,11 +841,21 @@ class swissbibEntity extends SOLRSource {
 					if( preg_match( '/(ebook|online|pdf)/i', $type )) $type = 'EISBN';
 					elseif( preg_match( '/(print)/i', $type )) $type = 'ISBN';
 
-	        if( $type == null ) $type = ($tag == '020' ? 'ISBN': 'ISSN' );
+	        if( $type == null ) {
+						$type = 'ISBN';
+						if( preg_match( '/^[0-9]{4}-?[0-9]{4}$/', $val )) $type = 'ISSN';
+					}
 	        if( $type != null ) $type = strtoupper( $type );
 	        $this->codes[] = "{$type}:{$val}";
 				}
 	   }
+/*
+		// 0248 Nicht spezifizierte Art der Standardnummer oder des -codes
+		 $flds = $this->getAll( '024', '8', ' ', 'a' );
+		 foreach( $flds as $fld ) {
+			 $this->codes[] = 'unkown:'.$fld;
+		 }
+*/
 	   $this->codes = array_unique( $this->codes );
 	   return $this->codes;
     }
@@ -923,14 +946,22 @@ class swissbibEntity extends SOLRSource {
 			$catalogs[] = 'HGK';
 		}
 
+		switch( $this->getType()) {
+			case 'OABook':
+				$catalogs[] = 'OABook';
+			break;
+			case 'OAJournal':
+				$catalogs[] = 'OAJournal';
+			break;
+		}
+
 		foreach( $this->getLicenses() as $lic ) {
 			switch( strtolower( $lic )) {
 				case 'open access':
 					if( $this->getType() == 'book') $catalogs[] = 'openaccess_books';
 					elseif( $this->getType() == 'journal') $catalogs[] = 'openaccess_journals';
 					else $catalogs[] = 'openaccess';
-						break;
-
+				break;
 			}
 		}
 
