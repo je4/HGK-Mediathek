@@ -818,27 +818,29 @@ class swissbibEntity extends SOLRSource {
         foreach( array( '020', '022' ) as $tag ) {
 	        $flds = $this->findField( $tag, null, ' ' );
 					// print_r( $flds );
-	        $val = null;
-	        $type = null;
 	        foreach( $flds as $l=>$fld ) {
+						$val = null;
+						$type = null;
 	        	  foreach( $fld as $code=>$v ) {
 		        	switch( $code ) {
 								case 'a':
-								case 'z':
 		        			$val = implode( ';', $v );
-		        			break;
-									case '2':
-									case 'q':
-		        			$type = implode( ';', $v );
-		        			break;
+		        		break;
+								case 'z':
+								case '2':
+								case 'q':
+	        				$type = implode( ';', $v );
+	        			break;
 			       	}
         	   }
 	        if( $val === null ) continue;
-	         if( preg_match( '/^([^\(\)]+)\((.*)\)/', $val, $matches )) {
-	        	$val = trim( $matches[1] );
-	        	$type = trim( $matches[2] );
-	        }
-					if( preg_match( '/(ebook|online|pdf)/i', $type )) $type = 'EISBN';
+	         if( $type == null ) {
+						 if( preg_match( '/^([^\(\)]+)\(([^()]*)\)/', $val, $matches )) {
+			        	$val = trim( $matches[1] );
+			        	$type = trim( $matches[2] );
+		        }
+					}
+					if( preg_match( '/(ebook|online|pdf|epub|e-?isbn)/i', $type )) $type = 'EISBN';
 					elseif( preg_match( '/(print)/i', $type )) $type = 'ISBN';
 
 	        if( $type == null ) {
@@ -856,6 +858,7 @@ class swissbibEntity extends SOLRSource {
 			 $this->codes[] = 'unkown:'.$fld;
 		 }
 */
+
 	   $this->codes = array_unique( $this->codes );
 	   return $this->codes;
     }

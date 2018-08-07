@@ -171,17 +171,39 @@ class SOLR {
             $doc->addField( 'signature', $sig );
         foreach( $src->getURLs() as $url )
             $doc->addField( 'url', $url);
+        $codes = array();
         foreach( $src->getCodes() as $code ) {
         	if( preg_match( '/(EISBN|ISBN|ISSN):(.*)$/', $code, $matches )) {
             $nr = preg_replace( '/[^0-9X]/', '', $matches[2] );
             if( $matches[1] == 'ISBN' || $matches[1] == 'EISBN' ) $nr = Helper::isbn13( $nr );
-
-        		if( $nr ) $doc->addField( 'code', $matches[1].':'.$nr );
+            $codes[] = $matches[1].':'.$nr;
         	}
           else {
-           	$doc->addField( 'code', $code);
+            $codes[] = $code;
           }
         }
+
+        $codes = array_unique( $codes );
+        $codeDB = count($codes) > 1;
+        global $db;
+        foreach( $codes as $code ) {
+          $doc->addField( 'code', $code);
+          list( $type, $val ) = explode( ':', $code );
+          if( $codeDB ) if( preg_match( '/e?isbn/i', $type )) {
+            $sql = "INSERT INTO enrich_isbn( id, type, code )
+              VALUES(
+                ".$db->qstr( $src->getID())."
+                ,".$db->qstr( $type )."
+                ,".$db->qstr( $val )."
+              )";
+              try{
+                $db->Execute( $sql );
+              }
+              catch( \Exception $ex ) {
+                //echo $ex->getMessage()."\n";
+              }
+            }
+          }
         foreach( $src->getCatalogs() as $cat )
             $doc->addField( 'catalog', $cat);
         foreach( $src->getIssues() as $issue ) {

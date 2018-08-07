@@ -14,6 +14,27 @@ $solr = new SOLR( $solrclient );
 $entities = array();
 
 
+do {
+	$sql = "SELECT id FROM `enrich_isbn` WHERE 1 GROUP BY id HAVING COUNT(*) = 1 LIMIT 0, 1000";
+	$rows = $db->GetAll( $sql );
+	foreach( $rows as $row ) {
+		$sql = "DELETE FROM enrich_isbn WHERE id=".$db->qstr( $row['id'] );
+		echo "{$sql}\n";
+		$db->Execute( $sql );
+	}
+} while ( count( $rows ) >= 1000 );
+do {
+	$sql = "select id, code from enrich_isbn GROUP BY id,code having count(*) > 1 LIMIT 0, 1000";
+	$rows = $db->GetAll( $sql );
+	foreach( $rows as $row ) {
+		$sql = "DELETE FROM enrich_isbn WHERE type='ISBN' AND id=".$db->qstr( $row['id'] )." AND code=".$db->qstr( $row['code']);
+		echo "{$sql}\n";
+		$db->Execute( $sql );
+	}
+} while ( count( $rows ) >= 1000 );
+
+//exit;
+
 if(true) {
 
 	$customizer = $solrclient->getPlugin('customizerequest');
@@ -34,13 +55,15 @@ if(true) {
 		//$squery->createFilterQuery('notdone')->setQuery("-catalog:*");
 		$squery->createFilterQuery('nodelete')->setQuery("deleted:false");
 		//$squery->setFields( array( 'id' ));
+
 		$squery->createFilterQuery('source')->setQuery( 'source:"swissbib"' );
 
 		//		$squery->createFilterQuery( 'category' )->setQuery( "category:2!!signature!!NEBIS!!E75" );
 		//	$squery->createFilterQuery( 'category' )->setQuery( "category:2!!signature!!NEBIS!!E44" );
 		//$squery->createFilterQuery( 'catalog' )->setQuery( "catalog:FHNWeMedien" );
 		//$squery->createFilterQuery( 'catalog' )->setQuery( "catalog:FHNW-Bib" );
-		$squery->createFilterQuery( 'catalog' )->setQuery( "source:swissbib" );
+		$squery->createFilterQuery( 'online' )->setQuery( "online:true" );
+		$squery->createFilterQuery( 'code' )->setQuery( "code:EISBN* OR code:ISBN*" );
 
 		$squery->addSort('id', $squery::SORT_DESC);
 		$customizer->createCustomization( 'cursorMark' )

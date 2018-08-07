@@ -37,18 +37,21 @@ use \Passbook\Type\StoreCard;
 class Helper {
 
 	static function isbn13( $code ) {
-		if( strlen( $code ) == 13 ) return $code;
+		$code = str_replace( '-', '', $code );
+		if( preg_match( '/^[0-9]{13}$/', $code )) return $code;
 		if( strlen( $code ) == 10 ) {
 			$i13 = '978'.substr( $code, 0, 9 );
-			$sum = 0;
-			for( $i = 0; $i < 12; $i++ ) {
-				$sum += intval( $i13{$i} )*($i%2==1 ? 3 : 1);
-			}
-			$p = (10 - ($sum%10))%10;
-			$i13 .= $p;
-			return $i13;
 		}
-		return null;
+		else {
+			$i13 = substr( $code, 0, 12 );
+		}
+		$sum = 0;
+		for( $i = 0; $i < 12; $i++ ) {
+			$sum += intval( $i13{$i} )*($i%2==1 ? 3 : 1);
+		}
+		$p = (10 - ($sum%10))%10;
+		$i13 .= $p;
+		return $i13;
 	}
 
 	static function clearCluster( $cluster ) {
