@@ -13,7 +13,7 @@ $entity = new swissbibEntity( $db );
 $solr = new SOLR( $solrclient );
 $entities = array();
 
-
+if( false ) {
 do {
 	$sql = "SELECT id FROM `enrich_isbn` WHERE 1 GROUP BY id HAVING COUNT(*) = 1 LIMIT 0, 1000";
 	$rows = $db->GetAll( $sql );
@@ -34,7 +34,7 @@ do {
 } while ( count( $rows ) >= 1000 );
 
 //exit;
-
+}
 if(true) {
 
 	$customizer = $solrclient->getPlugin('customizerequest');
@@ -58,12 +58,12 @@ if(true) {
 
 		$squery->createFilterQuery('source')->setQuery( 'source:"swissbib"' );
 
-		//		$squery->createFilterQuery( 'category' )->setQuery( "category:2!!signature!!NEBIS!!E75" );
+		$squery->createFilterQuery( 'category' )->setQuery( "category:2!!signature!!NEBIS!!E75" );
 		//	$squery->createFilterQuery( 'category' )->setQuery( "category:2!!signature!!NEBIS!!E44" );
 		//$squery->createFilterQuery( 'catalog' )->setQuery( "catalog:FHNWeMedien" );
 		//$squery->createFilterQuery( 'catalog' )->setQuery( "catalog:FHNW-Bib" );
-		$squery->createFilterQuery( 'online' )->setQuery( "online:true" );
-		$squery->createFilterQuery( 'code' )->setQuery( "code:EISBN* OR code:ISBN*" );
+		//$squery->createFilterQuery( 'online' )->setQuery( "online:true" );
+		//$squery->createFilterQuery( 'code' )->setQuery( "code:EISBN* OR code:ISBN*" );
 
 		$squery->addSort('id', $squery::SORT_DESC);
 		$customizer->createCustomization( 'cursorMark' )

@@ -137,16 +137,17 @@ class Zotero {
         try {
           $mimetype = $this->mimeFromURL( $this->db->qstr($item['data']['url'] ));
           $item['data']['urlMimetype'] = $mimetype;
-          $item['data']['nameImageserver'] = "zotero-$id-{$item['key']}";
+          $item['data']['nameImageserver'] = "zotero/zotero-{$id}-{$item['key']}";
           $sql = "REPLACE INTO dirty_image_server.image( name, mimetype, sourcetype, source )
-            VALUES( ".$this->db->qstr( "zotero-$id-{$item['key']}" ).", ".$this->db->qstr( $mimetype ).", 'remote', ".$this->db->qstr($item['data']['url'])." )";
-          $this->db->Execute( $sql );
+            VALUES( ".$this->db->qstr( "zotero-{$id}-{$item['key']}" ).", ".$this->db->qstr( $mimetype ).", 'remote', ".$this->db->qstr($item['data']['url'])." )";
+          //$this->db->Execute( $sql );
         }
         catch( \Exception $e ) {
           echo "{$e}\n";
         }
       }
     }
+//    print_r( $item['data'] );
 
 
     $replace = array(

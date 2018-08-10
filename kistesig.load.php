@@ -17,7 +17,7 @@ $sql = "SELECT DISTINCT a.`Signatur` AS signatur, i.itemid, i.marker
 			WHERE (a.`Signatur` LIKE ".$db->qstr("%{$signatur}%")."
 			OR i.itemid LIKE ".$db->qstr("{$signatur}%")."
 			OR i.marker LIKE ".$db->qstr("{$signatur}%").")
-			ORDER BY a.`Signatur` ASC LIMIT 0, 50";
+			ORDER BY a.`Signatur` ASC LIMIT 0, 600";
 //echo "<--\n {$sql}\n -->\n";
 $rs = $db->Execute( $sql );
 ?>

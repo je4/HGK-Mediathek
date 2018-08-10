@@ -63,7 +63,7 @@ if( $json ) {
 echo mediathekheader('search', 'Mediathek - Detail - '.($doc ? $doc->title : '').' ['.$id.']', '');
 ?>
 <div class="back-btn"><i class="ion-ios-search"></i></div>
-<div class="setting-btn"><i class="<?php echo $session->isLoggedIn() ? 'ion-ios-settings-strong': 'ion-log-in'; ?>"></i></div>
+<div class="setting-btn"><i class="<?php echo $session->isLoggedIn() ? 'ion-ios-settings': 'ion-ios-log-in'; ?>"></i></div>
 
 <div id="fullsearch" class="fullsearch-page container-fluid page">
     <div class="row">

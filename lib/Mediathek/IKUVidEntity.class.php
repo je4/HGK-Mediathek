@@ -15,7 +15,7 @@
  * @copyright   (C) 2016 Academy of Art and Design FHNW
  * @license     http://www.gnu.org/licenses/gpl-3.0
  * @link        http://mediathek.fhnw.ch
- * 
+ *
  */
 
 /**
@@ -44,7 +44,7 @@ class IKUVidEntity extends SOLRSource {
     private $urls = null;
     private $signatures = null;
     private $online = false;
-    
+
     static $done = array(
 "323",
 "336",
@@ -690,7 +690,7 @@ class IKUVidEntity extends SOLRSource {
     	$this->data = ( array )json_decode( gzdecode( base64_decode( $doc->metagz )));
     	$this->id = $doc->originalid;
     }
-    
+
     public function reset() {
     	parent::reset();
         $this->json = null;
@@ -703,37 +703,37 @@ class IKUVidEntity extends SOLRSource {
         $this->urls = null;
         $this->signatures = null;
         $this->online = false;
-        
+
     }
-    
+
     function loadFromDatabase( string $id, string $idprefix ) {
         $this->reset();
-        
+
         $this->id = $id;
         //$this->idprefix = $idprefix;
-        
+
         $sql = "SELECT * FROM `".self::$videotable."` WHERE `Archiv-Nr` = ".$this->db->qstr( $id );
         $this->data = $this->db->GetRow( $sql );
-        
+
     }
-    
+
     public function getID() {
-        return $this->idprefix.str_pad($this->id, 9, '0', STR_PAD_LEFT ); 
+        return $this->idprefix.str_pad($this->id, 9, '0', STR_PAD_LEFT );
     }
-	
+
 	public function getOriginalID() {
 		return $this->id;
 	}
-    
+
     public function getSource() {
         return 'IKUVid';
     }
-	
+
     public function getType() {
 		return "MovingImage";
 	}
 
-	
+
 	public function getEmbedded() {
 		return array_search($this->id, IKUVidEntity::$done ) !== false;
 	}
@@ -745,7 +745,7 @@ class IKUVidEntity extends SOLRSource {
 	public function getLocations() {
 		return array( 'E75:Mediathek' );
 	}
-    
+
     public function getTitle() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
         $title = trim( $this->data['Titel1'] );
@@ -754,25 +754,25 @@ class IKUVidEntity extends SOLRSource {
 
         return $title;
     }
-    
+
     public function getPublisher() {
         return null;
     }
-    
+
     public function getYear() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
         $year = intval( substr( $this->data['Produktionsjahr'], 0, 4 ));
         return $year ? $year : null;
     }
-    
+
     public function getCity() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
         return null;
     }
-    
+
 	public function getTags() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
-        
+
         $this->tags = array();
         if( strlen(trim( $this->data['Medium'])))
             $this->tags[] = 'index:medium:ikuvid/'.md5( trim( $this->data['Medium']) ).'/'.trim( $this->data['Medium']);
@@ -782,7 +782,7 @@ class IKUVidEntity extends SOLRSource {
             $this->tags[] = 'index:category:ikuvid/'.md5( trim( $this->data['Kategorie']) ).'/'.trim( $this->data['Kategorie']);
         if( strlen(trim( $this->data['Stichwort'])))
             $this->tags[] = 'index:keyword:ikuvid/'.md5( trim( $this->data['Stichwort']) ).'/'.trim( $this->data['Stichwort']);
-        
+
         $this->tags = array_unique( $this->tags );
         $this->cluster = array();
         foreach( $this->tags as $tag ) {
@@ -793,22 +793,22 @@ class IKUVidEntity extends SOLRSource {
             }
         }
         $this->cluster = array_unique( $this->cluster );
-            
-        return $this->tags;        
+
+        return $this->tags;
 	}
-	
-    
+
+
     public function getCluster() {
         if( $this->cluster == null) $this->getTags();
         return $this->cluster;
     }
-    
+
     public function getSignatures() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
-        
+
         return array();
     }
-    
+
     public function getAuthors() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
         if( $this->authors == null ) {
@@ -816,40 +816,40 @@ class IKUVidEntity extends SOLRSource {
             if( strlen(trim( $this->data['Autor Regie'])))
                  $this->authors[] = trim( $this->data['Autor Regie']);
         }
-        return $this->authors;        
+        return $this->authors;
     }
-    
+
     public function getLoans() {
         return array();
     }
-    
+
     public function getBarcode() {
         return null;
     }
-    
+
     public function getSignature() {
         return null;
     }
-    
+
     public function getLicenses() {
         if( $this->licenses == null ) {
             $this->licenses = array( 'restricted' );
         }
         return $this->licenses;
     }
-    
+
     public function getURLs() {
         return array();
     }
-    
+
     public function getSys() {
         return $this->id;
     }
-    
+
     public function getMeta() {
         return json_encode( $this->data );
     }
-    
+
     public function getOnline() {
 		return array_search("{$this->id}", IKUVidEntity::$done ) !== false;
     }
@@ -857,9 +857,9 @@ class IKUVidEntity extends SOLRSource {
    public function getAbstract() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
         $bem = trim( $this->data['Bemerkungen']);
-        return strlen( $bem ) ? $bem : null;    
+        return strlen( $bem ) ? $bem : null;
     }
-   public function getContent() { return null; }    
+   public function getContent() { return null; }
    public function getCodes() { return array(); }
    public function getIssues() { return array(); }
    public function getLanguages() {
@@ -868,12 +868,12 @@ class IKUVidEntity extends SOLRSource {
        if( $this->data['Sprachen 2-Kanal']) $l[] = $this->data['Sprachen 2-Kanal'];
        return $l;
    }
-   
+
     public function getMetaACL() { return array( 'global/guest' ); }
-    public function getContentACL() { return array( 'certificate/mediathek', 'fhnw/video' ); }
+    public function getContentACL() { return array( 'fhnw.ch_14/user' ); }
     public function getPreviewACL() { return array( 'location/fhnw' ); }
     public function getCatalogs() { return array( $this->getSource() ); }
-    
+
 }
 
 ?>

@@ -123,7 +123,7 @@ class IKUVidDisplay extends DisplayEntity {
 	<span style="font-weight: bold;">Hinweis</span><br>
 	<div class="facet" style="min-width: 740px; text-align: center;">
 		<div class="marker" style=""></div>
-
+		<?php print_r( $session->getGroups()); ?>
 		Abspielen von Videos ist nicht für alle Nutzer freigeschaltet. Bei Fragen wenden Sie sich bitte an die Mediathek.
 	</div>
 <?php
@@ -188,6 +188,37 @@ class IKUVidDisplay extends DisplayEntity {
 -->
 			</div>
 </div>
+<?php
+if( DEBUG && $loggedin ) {
+	?>
+<div class="row">
+	<div class="col-md-12">
+	<div style="">
+	<span style="; font-weight: bold;">RAW Data</span><br />
+		<div class="facet" style="padding: 0px;">
+			<div class="marker" style=""></div>
+			<div>
+				<pre>
+					<?php print_r( $this->metadata ); ?>
+				</pre>
+			</div>
+		</div>
+	</div>
+	<div style="">
+	<span style="; font-weight: bold;">Document</span><br />
+		<div class="facet" style="padding: 0px;">
+			<div class="marker" style=""></div>
+			<div>
+				<pre>
+					<?php print_r( $this->doc ); ?>
+				</pre>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+<?php } ?>
+
 		<script>
 			function initIKUVid() {
 
