@@ -108,6 +108,58 @@ if(false) {
 else {
 
   $pattern = array(
+
+		'BIRK ABI'=>'Architektur Bibliothek ',
+		'BIRK ABI'=>'Architektur',
+		'BIRK ADBL'=>'Advanced Texts Basler Lehrbücher',
+		'BIRK AGU'=>'Architectural Guide',
+		'BIRK AGU'=>'Arcitekturführer',
+		'BIRK AGU'=>'Le Corbusier Guides',
+		'BIRK AGU oder INDE'=>'Birkhäsuer Architektur und Design',
+		'BIRK AIID'=>'Advances in Infectious Diseases',
+		'BIRK BASI'=>'Basics',
+		'BIRK BFU'=>'Bauwelt Fundamente',
+		'BIRK BK'=>'Klassiker',
+		'BIRK BKU'=>'Kunst',
+		'BIRK BR'=>'Ratgeber',
+		'BIRK CR'=>'Congress Reports',
+		'BIRK DA'=>'Birkhäuser-Dünndruck-Ausgaben',
+		'BIRK DETA'=>'Im Detail (alle Sprachen)',
+		'BIRK GTA'=>'Geschichte und Theorie der Architektur',
+		'BIRK In Kategorie'=>'Advanced Texts',
+		'BIRK INDE'=>'Industrie Design ',
+		'BIRK INDE'=>'Design ',
+		'BIRK INGE'=>'Integrative Gestaltung',
+		'BIRK INNA'=>'Innenarchitektur',
+		'BIRK ITRA'=>'The Information Technology Revolution in Architecture',
+		'BIRK LAND'=>'Landschaftsarchitektur',
+		'BIRK LEX'=>'Lexika',
+		'BIRK MODE'=>'Mode',
+		'BIRK MAS'=>'Mathematics Series',
+		'BIRK PRDE'=>'Process Design',
+		'BIRK SAPS'=>'Series in Applied Probability and Statistics ',
+		'BIRK SBS'=>'Series in BioSciences',
+		'BIRK SCS'=>'Series in Computer Sciences',
+		'BIRK SEN'=>'Series in Engineering',
+		'BIRK PREIS'=>'Preise / Awards etc.',
+		'BIRK SGE'=>'Series in Geoscience',
+		'BIRK SHS'=>'Series in History of Science',
+		'BIRK SKRI'=>'Skripte',
+		'BIRK SMS'=>'Specialized Mathematical Book Series',
+		'BIRK SPH'=>'Series in Physics',
+		'BIRK SUST'=>'Sustainability',
+		'BIRK SVB'=>'Schweizer Volksbibliothek',
+		'BIRK SZE'=>'Szenografie',
+		'BIRK THEO'=>'Theorie',
+		'BIRK URDE'=>'Urban Design',
+		'BIRK URDE'=>'Birkhäsuer Landschaftsarchitektur',
+		'BIRK VIKO'=>'Visuelle Kommunikation',
+		'BIRK WIGE'=>'Wissenschaftsgeschichte',
+
+'P 700'=>'Zeitschriften',
+'HGK '=>'HGK Publikationen',
+'741.5'=>'Zeichnung und Zeichnungen',
+
     '100.ÄST'=>'Ästhetik',
 '200.KUN'=>'Kunstgeschichte/-theorie',
 '100.BIL'=>'Bildtheorie',
@@ -647,7 +699,6 @@ else {
 '697'=>'Heizung, Lüftung und Klimatechnik (Haustechnik)',
 '698.1'=>'Malerarbeiten + Dekorateurarbeiten + Tapezierarbeiten',
 '698.4'=>'Holzbauarbeiten + Zimmerarbeiten + Schreinerarbeiten (Bauhandwerk)',
-'7   GESTALTUNG:                                                                                      KUNST + DESIGN + ARCHITEKTUR + FILM'=>'',
 '700'=>'Kunst',
 '700:681.3'=>'Computerkunst',
 '700(058)'=>'Kunst: Jahrbücher',
@@ -1040,10 +1091,62 @@ else {
 'V 791.1'=>'Filmtheorie + Filmästhetik',
 'V 830-051'=>'Deutschsprachige SchriftstellerInnen',
 
+'KT-AKA'=>'Akademie',
+'KG-AKT'=>'Aktionskunst, Performance',
+'KT-ANA'=>'Anatomie',
+'KG-ARC'=>'Architektur',
+'KT-AUS'=>'Ausstellungen',
+'KT-AES'=>'Ästhetik',
+'KT-AUS-BIE'=>'Biennale',
+'KG-DES'=>'Design',
+'KT-DOK'=>'Dokumentation',
+'KT-FIL'=>'Film',
+'KG-FOT'=>'Foto',
+'KT-GES'=>'Geschichte',
+'KG-GRA'=>'Grafik',
+'KT-INT'=>'Interview',
+'ZS-KB'=>'Kritische Berichte',
+'KT-KUL'=>'Kultur',
+'KT-KUN'=>'Kunst',
+'ZS-KUN'=>'Kunstform',
+'KP-A'=>'Kunstpraxis',
+'KT-AUS'=>'Kunsttheorie Ausstellung',
+'KT-LIT'=>'Literatur',
+'KG-MAL'=>'Malerei',
+'KG-MED'=>'Medienkunst',
+'KT-MED'=>'Medientheorie',
+'KT-NW'=>'Nachschlagewerke',
+'KG-ÖFF'=>'Öffentlicher Raum',
+'ZS'=>'Zeitschrift',
+'KT-PHIL'=>'Philosophie',
+'KT-SAM'=>'Sammlung',
+'KT-SCH'=>'Schriften',
+'KT-SEM'=>'Semiotik',
+'KG-SKU'=>'Skulptur',
+'KT-SOZ'=>'Soziologie',
+'KT-TECH'=>'Technik',
+'TA'=>'Textarbeiten',
+'KG-THE'=>'Theater',
+'KG-TV'=>'TV',
+'KG-VID'=>'Video',
+'KT-WAH'=>'Wahrnehmung',
+'KT-WIS'=>'Wissenschaft',
+'KG-ZEI'=>'Zeichnung',
+
   );
+
+ksort( $pattern );
+
+
 
   foreach( $pattern as $sig=>$a ) {
     if( !strlen( trim( $a ))) continue;
+
+/*
+		$sql = "INSERT INTO curate_signature2category VAlUES (".$db->qstr( $sig ).", ".$db->qstr( 'area!!'.$a ).", ".$db->qstr( 'area!!'.$a )." )";
+		echo "{$sql}\n";
+    $db->Execute( $sql );
+*/
     $sql = "UPDATE temp_signatures SET area=".$db->qstr( $a )." WHERE signature LIKE ".$db->qstr( "{$sig}%");
     echo "{$sql}\n";
     $db->Execute( $sql );
