@@ -15,7 +15,7 @@
  * @copyright   (C) 2016 Academy of Art and Design FHNW
  * @license     http://www.gnu.org/licenses/gpl-3.0
  * @link        http://mediathek.fhnw.ch
- * 
+ *
  */
 
 /**
@@ -29,12 +29,12 @@ class CategoryTree {
 	protected $children = array();
 	protected $label;
 	protected $open = false;
-	
+
 	static function buildTree( $categories, $selected ) {
-		//var_dump( $selected );
-		while( ($key = array_search( 0, $categories )) !== false )
+		//var_dump( $categories );
+		while( ($key = array_search( 0, $categories, true )) !== false )
 			unset( $categories[$key] );
-			
+
 		foreach( $selected as $sel ) {
 			if( !array_key_exists( $sel, $categories )) {
 				$kl = explode( '!!', $sel );
@@ -50,13 +50,14 @@ class CategoryTree {
 		}
 		$cats = array_keys( $categories );
 		sort( $cats );
+		//var_dump( $cats );
 		$root = new CategoryTree( 0, null, 'root', 'root', 0, false );
 		foreach( $cats as $cat ) {
 			$root->addChild( explode( '!!', $cat ), $categories[$cat], in_array( $cat, $selected ));
 		}
 		return $root;
 	}
-	
+
     public function __construct( $level, $parent, $name, $label, $count, $selected ) {
 		$this->level = $level;
 		$this->parent = $parent;
@@ -75,13 +76,13 @@ class CategoryTree {
 		}
 		return $str;
 	}
-	
+
 	public function open() {
 		$this->open = true;
 		if( $this->parent != null )
 			$this->parent->open();
 	}
-	
+
 	public function treeJS() {
 		$str = '';
 		if( $this->parent != null ) {
@@ -99,7 +100,7 @@ class CategoryTree {
 			$str .= '</li>'."\n";
 		return $str;
 	}
-	
+
 	public function addChild( $cat, $count, $selected ) {
 		//echo "{$this->name}[{$this->level}]--addChild( ".implode( '-', $cat ).", {$count}, {$selected} );\n";
 		$level = intval( $cat[0] );
@@ -119,5 +120,5 @@ class CategoryTree {
 			}
 		}
 	}
- 
+
 }

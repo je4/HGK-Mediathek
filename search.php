@@ -160,8 +160,18 @@ if( @is_array( $qobj['facets']['catalog'] )) {
 	}
 	$squery->createFilterQuery('catalog')->addTag('catalog')->setQuery( $catalogfilterquery );
 	$debugstr[] = "<!-- filter catalog: {$catalogfilterquery} -->\n";
-
 }
+
+if( @is_array( $qobj['facets']['area'] )) {
+	$areafilterquery = "";
+	foreach( $qobj['facets']['area'] as $area ) {
+		if( $areafilterquery != '' ) $areafilterquery .= ' OR ';
+		$areafilterquery .= ' (category:'.$helper->escapePhrase( $area ).')';
+	}
+	$squery->createFilterQuery('area')->addTag('area')->setQuery( $areafilterquery );
+	$debugstr[] = "<!-- filter $area: {$areafilterquery} -->\n";
+}
+
 if( DEBUG ) {
 	if( @is_array( $qobj['facets']['category'] )) {
 		$categoryfilterquery = "";
@@ -247,6 +257,13 @@ if( DEBUG ) {
 	$facetSetCategory = $squery->getFacetSet();
 	$facetSetCategory->createFacetField('category')->setField('category')->setLimit( $config['categorylimit'] )->addExclude('category');
 }
+
+// http://localhost/solr/base/select?facet.field={!key=area+facet.prefix=1!!area!!}category&facet.field={!key=field+facet.prefix=1!!field!!}category&facet=on&q=*:*&rows=0
+$facetSetArea = $squery->getFacetSet();
+$facetSetArea->createFacetField('area')->setField('category')->setPrefix( '1!!area' )->setLimit( 12 )->addExclude('area');
+//$facetSetArea->createFacetQuery('area')->setQuery( 'category:1!!area!!*' )->addExclude('area');
+//$facetSetArea->createFacetField("{!key=area+facet.prefix=1!!area!!}category");
+
 $facetSetOnline = $squery->getFacetSet();
 $facetSetOnline->createFacetField('online')->setField('online')->addExclude('online');
 $facetSetOpenAccess = $squery->getFacetSet();
@@ -268,7 +285,21 @@ $hl->setSimplePostfix('</b>');
 //$squery->setMethod(\Solarium\Core\Client\Request::METHOD_GET);
 
 try {
-	$rs = $solrclient->select( $squery );
+	if( DEBUG ) {
+		$squery->getDebug();
+		$request = $solrclient->createRequest($squery);
+		$debugstr[] = '<!-- Uri: ' . $request->getUri() . ' -->';
+		$response = $solrclient->executeRequest($request);
+		$rs = $solrclient->createResult($squery, $response);
+		$debugResult = $rs->getDebug();
+		$debugstr[] = '<!-- Querystring: ' . $debugResult->getQueryString() . ' -->';
+		$debugstr[] = '<!-- Parsed query: ' . $debugResult->getParsedQuery() . ' -->';
+		$debugstr[] = '<!-- Query parser: ' . $debugResult->getQueryParser() . ' -->';
+		$debugstr[] = '<!-- Other query: ' . $debugResult->getOtherQuery() . ' -->';
+	}
+	else {
+		$rs = $solrclient->select( $squery );
+	}
 }
 catch ( \Exception $e ) {
 	echo "Error: {$e}\n";
@@ -484,6 +515,37 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 			</div>
 			</div>
 
+			<div style="">
+			<span style="; font-weight: bold;">Bereich</span><br />
+			<div class="facet" style="">
+				<div class="marker"></div>
+<?php
+				$facetArea = $rs->getFacetSet()->getFacet('area');
+				$i = 0;
+				foreach ($facetArea as $value => $count) {
+					//if( $value == 'false' ) continue;
+/*
+					if(!( @is_array( $qobj['facets']['area'] )
+									&& array_search($value, $qobj['facets']['area'] ) !== false )
+						&& $count == 0 ) continue;
+*/
+							list( $a, $b, $label ) = explode( '!!', $value );
+?>
+							<div class="checkbox checkbox-green">
+								<input class="facet" type="checkbox" id="area" value="<?php echo htmlentities($value); ?>" <?php if( @is_array( $qobj['facets']['area'] ) && array_search($value, $qobj['facets']['area']) !== false ) { echo " checked"; } ?>>
+								<label for="area<?php echo $i; ?>">
+									<?php echo ( $label ).' ('.number_format( $count, 0, '.', "'" ).')'; ?>
+								</label>
+							</div>
+<?php
+					$i++;
+					//if( $i == 10 ) break;
+				}
+
+				?>
+			</div>
+			</div>
+
 
 			<div style="">
 			<span style="; font-weight: bold;">Themen</span><br />
@@ -567,35 +629,9 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 					if( preg_match( '/^[0-9]+(!!.*)$/', $value, $matches )) {
 						$categories[$matches[1]] = $count;
 					}
-					if( (@is_array( $qobj['facets']['category'] )
-							&& array_search($value, $qobj['facets']['category']) !== false ) === false
-							&& $count == 0 )
-						continue;
-?>
-					<div class="checkbox checkbox-green">
-						<input class="facet" type="checkbox" id="category" value="<?php echo htmlentities($value); ?>" <?php if( @is_array( $qobj['facets']['category'] ) && array_search($value, $qobj['facets']['category']) !== false ) { echo " checked"; } ?>>
-						<label for="category<?php echo $i; ?>">
-							<?php echo htmlspecialchars( str_replace( '!!', ':', $value )).' ('.number_format( $count, 0, '.', "'" ).')'; ?>
-						</label>
-					</div>
-<?php
 					$i++;
 				}
-				if( isset( $qobj['facets']['category'] ))
-					foreach( $qobj['facets']['category'] as $value ) {
-//						echo "check: ".$value;
-						if( array_key_exists( $value, $facetCategory->getValues() )) {
-							continue;
-						}
-?>
-					<div class="checkbox checkbox-green">
-						<input class="facet" type="checkbox" id="category" value="<?php echo htmlentities($value); ?>" checked >
-						<label for="category<?php echo $i; ?>">
-							<?php echo htmlspecialchars( $value ); ?>
-						</label>
-					</div>
-<?php
-					}
+
 ?>
 -->
 <?php

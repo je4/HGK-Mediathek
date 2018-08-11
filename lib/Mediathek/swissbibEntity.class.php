@@ -800,7 +800,7 @@ class swissbibEntity extends SOLRSource {
 					if( array_key_exists( $lib, swissbibEntity::$bibs )) {
 						foreach( swissbibEntity::$bibs[$lib] as $cat ) {
 							if( $cat == 'FHNW-Bib'
-								&& (in_array( $loc, array( 'E39OF', 'E39OS', 'E44OF', 'E44OS', 'E50OF', 'E50OS', 'E60EL', 'E60OF',  'E60OS', 'E60OP', 'E75OF' ))
+								&& (in_array( $loc, array( 'E39OF', 'E44OF', 'E50OF', 'E60OF', 'E75OF' ))
 							)) {
 								$this->online = true;
 							}
@@ -864,12 +864,40 @@ class swissbibEntity extends SOLRSource {
     }
 
 	public function getCategories() {
+		static $pattern = null;
+		if( $pattern == null ) {
+			$pattern = array();
+			$sql = "SELECT signature, category1, category2 FROM curate_signature2category ORDER BY signature, category2";
+			$rs = $this->db->Execute( $sql );
+			foreach( $rs as $row ) {
+				$pattern[$row['signature']] = array( $row['category1'], $row['category2'] );
+			}
+			$rs->Close();
+		}
 		$categories = parent::getCategories();
+		$regal = array();
+		foreach( $this->getLocations() as $loc ) {
+			if( preg_match( '/NEBIS:E75:([A-Z])_[0-9]{3}_[ab]/i', $loc, $matches )) {
+				$regal[] = $matches[1];
+			}
+		}
 		foreach( $this->getSignatures() as $sig ) {
 			$s = explode( ':', $sig );
 			if( count( $s ) >= 4 ) {
 				if( $s[0] == 'barcode' ) continue;
 				$categories[] = $s[0].'!!'.$s[1].'!!'.$s[2];
+				foreach( $pattern as $sig=>$cats ) {
+					$reg = "/^".preg_quote( $sig, '/' )."/i";
+//					echo "[{$reg}]\n";
+					if( preg_match( $reg, $s[3] )) {
+						foreach( $cats as $cat ) {
+							$categories[] = $cat;
+							foreach( $regal as $r ) {
+								$categories[] = $cat .'!!Regal '.trim( $r );
+							}
+						}
+					}
+				}
 			}
 		}
 		return $categories;
