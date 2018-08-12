@@ -58,10 +58,11 @@ if(true) {
 
 		$squery->createFilterQuery('source')->setQuery( 'source:"swissbib"' );
 
-		$squery->createFilterQuery( 'category' )->setQuery( "category:2!!signature!!NEBIS!!E75" );
+		//$squery->createFilterQuery( 'category' )->setQuery( "category:2!!signature!!NEBIS!!E75" );
+		//$squery->createFilterQuery( 'category' )->setQuery( "category:0!!area AND -category:1!!area!!unknown" );
 		//$squery->createFilterQuery( 'category' )->setQuery( "category:2!!signature!!NEBIS!!E44" );
 		//$squery->createFilterQuery( 'catalog' )->setQuery( "catalog:FHNWeMedien" );
-		//$squery->createFilterQuery( 'catalog' )->setQuery( "catalog:FHNW-Bib" );
+		$squery->createFilterQuery( 'catalog' )->setQuery( "catalog:FHNW-Bib" );
 		//$squery->createFilterQuery( 'online' )->setQuery( "online:true" );
 		//$squery->createFilterQuery( 'code' )->setQuery( "code:EISBN* OR code:ISBN*" );
 

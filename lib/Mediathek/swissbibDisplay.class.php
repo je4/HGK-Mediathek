@@ -483,6 +483,15 @@ if( count( $kisten )) {
 		}
 	}
 	if( count( $cats )) $qstr = "({$qstr}) OR (".implode( ' OR ', $cats ).")";
+
+	$isbns = array();
+	if( is_array( $this->doc->code )) foreach( $this->doc->code as $code ) {
+		echo "<!-- code: {$code} -->\n";
+		if( preg_match( '/^E?ISBN:(.+)/i', $code, $matches )) {
+			$isbns[] = 'code:'.$helper->escapeTerm($code);
+		}
+	}
+	if( count( $isbns )) $qstr = "({$qstr}) OR (".implode( ' OR ', $isbns ).")";
 	$qstr = "({$qstr}) AND -id:".$helper->escapeTerm( $this->doc->id );
 	echo "\n<!-- {$qstr} -->\n";
 	$squery->setQuery( $qstr );
