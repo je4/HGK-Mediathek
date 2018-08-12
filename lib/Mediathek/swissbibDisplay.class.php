@@ -474,8 +474,17 @@ if( count( $kisten )) {
 		if( strlen( $qstr )) $qstr .= ' OR ';
 		$qstr .= 'location:'.$helper->escapePhrase( 'NEBIS:E75:'.$k );
 	}
+	$cats = array();
+	foreach( $this->doc->category as $cat ) {
+		echo "<!-- cat: {$cat} -->\n";
+		if( preg_match( '/^1!!area!!([^!]+)/i', $cat, $matches )) {
+			if( $matches[1] == 'unknown' ) continue;
+			$cats[] = 'category:'.$helper->escapePhrase( '2!!'.substr( $cat, 3 ).'!!Online');
+		}
+	}
+	if( count( $cats )) $qstr = "({$qstr}) OR (".implode( ' OR ', $cats ).")";
 	$qstr = "({$qstr}) AND -id:".$helper->escapeTerm( $this->doc->id );
-	//echo "\n<!-- {$qstr} -->\n";
+	echo "\n<!-- {$qstr} -->\n";
 	$squery->setQuery( $qstr );
 	$rs = $solrclient->select( $squery );
 	$numResults = $rs->getNumFound();
