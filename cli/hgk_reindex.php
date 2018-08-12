@@ -10,7 +10,7 @@ $cntfile = $config['tmpprefix']."counter_hgk.dat";
 $cursorfile = $config['tmpprefix']."cursor_hgk.dat";
 
 $entity = new swissbibEntity( $db );
-$solr = new SOLR( $solrclient );
+$solr = new SOLR( $solrclient, $db );
 $entities = array();
 
 if( false ) {
@@ -59,7 +59,7 @@ if(true) {
 		$squery->createFilterQuery('source')->setQuery( 'source:"swissbib"' );
 
 		$squery->createFilterQuery( 'category' )->setQuery( "category:2!!signature!!NEBIS!!E75" );
-		//	$squery->createFilterQuery( 'category' )->setQuery( "category:2!!signature!!NEBIS!!E44" );
+		//$squery->createFilterQuery( 'category' )->setQuery( "category:2!!signature!!NEBIS!!E44" );
 		//$squery->createFilterQuery( 'catalog' )->setQuery( "catalog:FHNWeMedien" );
 		//$squery->createFilterQuery( 'catalog' )->setQuery( "catalog:FHNW-Bib" );
 		//$squery->createFilterQuery( 'online' )->setQuery( "online:true" );

@@ -96,8 +96,8 @@ class swissbibDisplay extends DisplayEntity {
         $entity = $this->entity;
 
 
-        if( DEBUG && true ) {
-        	$solr = new SOLR( $solrclient );
+        if( DEBUG  ) {
+        	$solr = new SOLR( $solrclient, $this->db );
         	$solr->import( $entity, true );
         }
 
@@ -225,6 +225,140 @@ class swissbibDisplay extends DisplayEntity {
 	}
 ?>
 <?php
+// BEGIN Bereich kurz
+if( true ) {
+
+	$cquery = $solrclient->createSelect();
+	$chelper = $cquery->getHelper();
+	$cquery->setRows( 500 );
+	$filter = '';
+
+	$cats = array();
+	foreach( $this->doc->category as $key=>$cat ) {
+		if( preg_match( '/^1!!area!!([^!]+)$/i', $cat, $matches )) {
+			$filter .= (strlen( $filter ) == 0 ? '' : ' OR ').'category: '.$helper->escapePhrase($cat);
+		}
+	}
+	if( strlen( $filter )) {
+		echo "<!-- filter: {$filter} -->\n";
+		$facetSetArea = $cquery->getFacetSet();
+		$facetSetArea->createFacetField('area')->setField('category')->setPrefix( '1!!area' )->setLimit( 10 );
+
+		$cquery->createFilterQuery('area')->addTag('area')->setQuery( $filter );
+		$cquery->setQuery( '*:*' );
+		$rs = $solrclient->select( $cquery );
+?>
+				<div style="">
+				<span style="; font-weight: bold;">Verwandte Bereiche</span><br />
+					<div class="facet" style="">
+						<div class="marker" style=""></div>
+<?php
+								$facetArea = $rs->getFacetSet()->getFacet('area');
+								$bereich = array();
+								foreach ($facetArea as $value => $count) {
+									if( $count > 0 && preg_match( '/^2!!area!!(.*)!!(.*)/i', $value, $matches )) {
+										if( !@is_array( $bereich[$matches[1]])) $bereich[$matches[1]] = array( 'name'=>$matches[1]
+																								, 'count'=>0
+																								, 'category'=>"1!!area!!{$matches[1]}"
+																								, 'location'=>array());
+										$bereich[$matches[1]]['location'][] = array( 'name'=>$matches[2], 'category'=>$value, 'count'=>$count );
+										$bereich[$matches[1]]['count'] += $count;
+									}
+								}
+?>
+								<label>
+<?php
+								foreach ($facetArea as $value => $count) {
+									if( $count > 0 && preg_match( '/^1!!area!!(.*)/i', $value, $matches )) {
+?>
+									<span style="white-space: nowrap;"><a href="javascript:doSearchFull('', '', [], {'catalog':[<?php echo $this->getCatalogList(); ?>], 'area':[<?php echo htmlspecialchars( $chelper->escapePhrase( $value )); ?>]}, 0, <?php echo $pagesize; ?> );">
+										<?php echo htmlspecialchars( trim( "{$matches[1]}" )); ?>
+									</a>
+								 //</span>
+<?php
+								}
+							}
+?>
+							</label>
+					</div>
+				</div>
+<?php
+	}
+}
+// END Bereich kurz
+?>
+
+<?php
+// BEGIN Bereich
+if( DEBUG ) {
+
+	$cquery = $solrclient->createSelect();
+	$chelper = $cquery->getHelper();
+	$cquery->setRows( 500 );
+	$filter = '';
+
+	$cats = array();
+	foreach( $this->entity->getCategories() as $key=>$cat ) {
+		echo "<!-- cat: {$cat} -->\n";
+		if( preg_match( '/^area!!([^!]+)$/i', $cat, $matches )) {
+			$filter .= (strlen( $filter ) == 0 ? '' : ' OR ').'category: '.$helper->escapePhrase('1!!'.$cat);
+		}
+	}
+	if( strlen( $filter )) {
+		echo "<!-- filter: {$filter} -->\n";
+		$facetSetArea = $cquery->getFacetSet();
+		$facetSetArea->createFacetField('area')->setField('category')->setPrefix( '2!!area' );
+
+		$cquery->createFilterQuery('area')->addTag('area')->setQuery( $filter );
+		$cquery->setQuery( '*:*' );
+		$rs = $solrclient->select( $cquery );
+?>
+				<div style="">
+				<span style="; font-weight: bold;">Bereich</span><br />
+					<div class="facet" style="">
+						<div class="marker" style=""></div>
+<?php
+								$facetArea = $rs->getFacetSet()->getFacet('area');
+								$bereich = array();
+								foreach ($facetArea as $value => $count) {
+									if( $count > 0 && preg_match( '/^2!!area!!(.*)!!(.*)/i', $value, $matches )) {
+										if( !@is_array( $bereich[$matches[1]])) $bereich[$matches[1]] = array( 'name'=>$matches[1]
+																								, 'count'=>0
+																								, 'category'=>"1!!area!!{$matches[1]}"
+																								, 'location'=>array());
+										$bereich[$matches[1]]['location'][] = array( 'name'=>$matches[2], 'category'=>$value, 'count'=>$count );
+										$bereich[$matches[1]]['count'] += $count;
+									}
+								}
+								foreach( $bereich as $b ) {
+									if( $b['count'] > 0 ) {
+?>
+								<label style="text-indent: -40px; margin-left: 40px;">
+									<a href="javascript:doSearchFull('', '', [], {'catalog':[<?php echo $this->getCatalogList(); ?>], 'area':[<?php echo htmlspecialchars( $chelper->escapePhrase( $b['category'] )); ?>]}, 0, <?php echo $pagesize; ?> );">
+										<span style="color: black;"><?php echo htmlspecialchars( "{$b['name']} ({$b['count']})" ); ?></span>
+									</a>
+<?php
+											foreach( $b['location'] as $l ) {
+?>
+												- <a href="javascript:doSearchFull('category:<?php echo htmlspecialchars( $chelper->escapePhrase( $l['category'] )); ?>', '', [], {'catalog':[<?php echo $this->getCatalogList(); ?>]}, 0, <?php echo $pagesize; ?> );">
+													<span style="white-space: nowrap;"><?php echo htmlspecialchars( "{$l['name']} ({$l['count']})" ); ?></span>
+												</a>
+<?php
+											}
+?>
+								</label><br />
+<?php
+								}
+						}
+?>
+					</div>
+				</div>
+<?php
+	}
+}
+// END Bereich
+?>
+<?php
 	if( strlen( $abstract ) > 1 || count( $urls ) ) {
 ?>
 				<div style="">
@@ -271,7 +405,57 @@ if( @is_array( $urls_notes )) foreach( $urls_notes as $url ) {
 					</div>
 				</div>
 						<?php  } ?>
-		</div>
+
+		<?php
+		// BEGIN Places
+		if( true ) {
+
+			$theCats = array_unique( $this->doc->category );
+			foreach( $theCats as $cat ) {
+				if( preg_match( '/^1!!area!!([^!]*)$/i', $cat, $matches )) {
+					echo "<!-- Places: $cat -->\n";
+				$cquery = $solrclient->createSelect();
+				$chelper = $cquery->getHelper();
+				$cquery->setRows( 0 );
+				$filter = 'category:'.$chelper->escapePhrase( $cat );
+
+				echo "<!-- filter: {$filter} -->\n";
+				$facetSetArea = $cquery->getFacetSet();
+				$facetSetArea->createFacetField('area')->setField('category')->setPrefix( $chelper->escapePhrase( '2!!'.substr( $cat, 3 )));
+
+				$cquery->createFilterQuery('area')->addTag('area')->setQuery( $filter );
+				$cquery->setQuery( '*:*' );
+				$rs = $solrclient->select( $cquery );
+		?>
+						<div style="">
+						<span style="; font-weight: bold;">Bereich <?php echo htmlspecialchars( $matches[1] ); ?></span><br />
+							<div class="facet" style="">
+								<div class="marker" style=""></div>
+		<?php
+										$facetArea = $rs->getFacetSet()->getFacet('area');
+										foreach ($facetArea as $value => $count) {
+											echo "<!-- facet: {$value} ({$count}) -->\n";
+											if( $count > 0 && preg_match( '/^2!!'.preg_quote( substr( $cat, 3 )).'!!(.*)/i', $value, $matches2 )) {
+		?>
+										<label>
+											<a href="javascript:doSearchFull('category:<?php echo htmlspecialchars( $chelper->escapePhrase( $value )); ?>', '', [], {'catalog':[<?php echo $this->getCatalogList(); ?>]}, 0, <?php echo $pagesize; ?> );">
+												<?php echo htmlspecialchars( "{$matches[1]} - {$matches2[1]} ({$count})" ); ?>
+											</a>
+										</label><br />
+		<?php
+											}
+										}
+		?>
+							</div>
+						</div>
+		<?php
+						}
+					}
+		}
+		// END Places
+		?>
+	</div>
+
 	</div>
 	<div class="row">
 		<div class="col-md-12">

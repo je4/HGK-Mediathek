@@ -33,18 +33,18 @@ class degruyterEntity extends swissbibEntity {
 	private $node;
 
     private static $idprefix = 'degruyter';
-    
+
     public function loadFromArray( $id, $data ) {
     	$this->reset();
     	$this->id = $id;
     	$this->data = $data;
     }
-    
+
     public function loadFromDoc( $doc) {
     	$this->id = $doc->originalid;
     	$this->data = json_decode(( string )gzdecode( base64_decode( $doc->metagz )), true );
     }
-    
+
 	function loadNode( $id, $doc, $idprefix ) {
 		$this->reset();
 		$this->data = array();
@@ -66,7 +66,7 @@ class degruyterEntity extends swissbibEntity {
         		$elem[$code][] = $child->textContent;
         	}
         	$this->data[$tag][$ind1][$ind2][] = $elem;
-        
+
         	// now you can use $node without going insane about parsing
         }
         if( $this->id == null ) {
@@ -85,21 +85,77 @@ class degruyterEntity extends swissbibEntity {
         }
 	}
 
+	public function getCatalogs() {
+		$catalogs = parent::getCatalogs();
+		$catalogs[] = 'openaccess_books';
+		return $catalogs;
+	}
+
+	public function getCategories() {
+		static $pattern = null;
+		if( $pattern == null ) {
+			$pattern = array();
+			$sql = "SELECT signature, category1, category2 FROM curate_signature2category ORDER BY signature, category2";
+			$rs = $this->db->Execute( $sql );
+			foreach( $rs as $row ) {
+				$pattern[] = array( 'signature'=>$row['signature'], 'field'=>$row['category1'], 'area'=>$row['category2'] );
+			}
+			$rs->Close();
+		}
+		$categories = parent::getCategories();
+		$regal = array();
+		foreach( $this->getLocations() as $loc ) {
+			if( preg_match( '/NEBIS:E75:([A-Z])_[0-9]{3}_[ab]/i', $loc, $matches )) {
+				$regal[] = $matches[1];
+			}
+		}
+
+		$found = false;
+		foreach( $this->getSignatures() as $sig ) {
+			$s = explode( ':', $sig );
+			if( count( $s ) >= 4 ) {
+				if( $s[0] == 'barcode' ) continue;
+				$categories[] = $s[0].'!!'.$s[1].'!!'.$s[2];
+
+				if( preg_match( '/^signature:NEBIS:E75:/i', $sig )) {
+					// create automated categories based on signatures
+					foreach( $pattern as $cat ) {
+						$reg = "/^".preg_quote( $cat['signature'], '/' )."/i";
+	//					echo "[{$reg}]\n";
+						if( preg_match( $reg, $s[3] )) {
+							$categories[] = $cat['field'];
+							$categories[] = $cat['area'];
+							foreach( $regal as $r ) {
+								$categories[] = $cat['field'] .'!!Regal '.trim( $r );
+								$categories[] = $cat['area'] .'!!Regal '.trim( $r );
+								$found = true;
+							}
+						}
+					}
+				}
+			}
+		}
+		if( !$found ) $categories[] = 'area!!unknown';
+
+		return $categories;
+	}
+
+
 	public function getID() {
 		return self::$idprefix.'-'.$this->id;
 	}
-	
+
 	public function getSource() {
 		return 'degruyter';
 	}
-	
+
 	public function getMeta() {
 		return json_encode( $this->data );
 	}
-	
+
 	public function getXML() {
 		return "";
 	}
-	
+
 }
 ?>

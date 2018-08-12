@@ -30,6 +30,7 @@ namespace Mediathek;
  */
 
 /*
+http://localhost:8983/solr/base/update?stream.body=%3Cdelete%3E%3Cquery%3Esource%3Adegruyter%3C%2Fquery%3E%3C%2Fdelete%3E
 http://localhost:8983/solr/base/update?stream.body=%3Cdelete%3E%3Cquery%3Esource%3ADOAB%3C%2Fquery%3E%3C%2Fdelete%3E
 http://localhost:8983/solr/base/update?stream.body=%3Cdelete%3E%3Cquery%3Edeleted%3Atrue%3C%2Fquery%3E%3C%2Fdelete%3E
 http://localhost:8983/solr/base/update?stream.body=%3Cdelete%3E%3Cquery%3Ecatalog%3AKaskoArchiv%3C%2Fquery%3E%3C%2Fdelete%3E
@@ -39,9 +40,11 @@ http://localhost:8983/solr/base/update?stream.body=%3Ccommit/%3E
 
 class SOLR {
     private $solr = null;
+    private $db = null;
 
-    function __construct( \Solarium\Client $solr ) {
+    function __construct( \Solarium\Client $solr, $db ) {
         $this->solr = $solr;
+        $this->db = $db;
     }
 
     static public function buildTag( $tags, $divider = '/' ) {
@@ -56,7 +59,7 @@ class SOLR {
                     $result[] = $r;
             }
         }
-        return $result;
+        return array_unique( $result );
     }
 
 	public function delete( $id, $commit = false ) {
@@ -159,7 +162,34 @@ class SOLR {
            $doc->addField( 'author', /* utf8_encode */($author ));
         foreach( /* SOLR::buildTag */($src->getTags()) as $tag )
                 $doc->addField( 'tag', /* utf8_encode */( $tag ));
-        foreach( SOLR::buildTag($src->getCategories(), '!!' ) as $category )
+
+
+        $categories = $src->getCategories();
+        // add curated categories
+        $found = false;
+        $sql = "SELECT category FROM curate_category WHERE id=".$this->db->qstr( $id );
+        $rs = $this->db->Execute( $sql );
+        foreach($rs as $row ) {
+            $categories[] = $row['category'];
+            if( $src->getOnline()) {
+              $categories[] = $row['category'].'!!Online';
+              $found = true;
+            }
+            foreach( $src->getLocations() as $loc ) {
+              if( preg_match( '^/NEBIS:E75:([A-Z])_[0-9]{3}_[ab]/i', $loc, $matches )) {
+                $categories[] = $row['category'].'!!Regal '.$matches[1];
+                $found = true;
+              }
+        		}
+        }
+        $rs->Close();
+        $categories = array_unique( $categories );
+        if( $found ) {
+          $key = array_search( 'area!!unknown', $categories );
+          if( $key !== false ) unset( $categories[$key] );
+        }
+
+        foreach( SOLR::buildTag($categories, '!!' ) as $category )
                 $doc->addField( 'category', /* utf8_encode */( $category ));
         foreach( Helper::clearCluster( $src->getCluster()) as $cluster )
             $doc->addField( 'cluster', $cluster );

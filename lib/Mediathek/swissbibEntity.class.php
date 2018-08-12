@@ -54,7 +54,7 @@ class swissbibEntity extends SOLRSource {
     private $online = null;
     private $openaccess = null;
 	private $codes = null;
-	private $db = null;
+	protected $db = null;
 	private $sourceids = null;
 	private static $typeList = array(
 			'BK01'=>'Article',
@@ -870,7 +870,7 @@ class swissbibEntity extends SOLRSource {
 			$sql = "SELECT signature, category1, category2 FROM curate_signature2category ORDER BY signature, category2";
 			$rs = $this->db->Execute( $sql );
 			foreach( $rs as $row ) {
-				$pattern[$row['signature']] = array( $row['category1'], $row['category2'] );
+				$pattern[] = array( 'signature'=>$row['signature'], 'field'=>$row['category1'], 'area'=>$row['category2'] );
 			}
 			$rs->Close();
 		}
@@ -881,25 +881,34 @@ class swissbibEntity extends SOLRSource {
 				$regal[] = $matches[1];
 			}
 		}
+
+		$found = false;
 		foreach( $this->getSignatures() as $sig ) {
 			$s = explode( ':', $sig );
 			if( count( $s ) >= 4 ) {
 				if( $s[0] == 'barcode' ) continue;
 				$categories[] = $s[0].'!!'.$s[1].'!!'.$s[2];
-				foreach( $pattern as $sig=>$cats ) {
-					$reg = "/^".preg_quote( $sig, '/' )."/i";
-//					echo "[{$reg}]\n";
-					if( preg_match( $reg, $s[3] )) {
-						foreach( $cats as $cat ) {
-							$categories[] = $cat;
+
+				if( preg_match( '/^signature:NEBIS:E75:/i', $sig )) {
+					// create automated categories based on signatures
+					foreach( $pattern as $cat ) {
+						$reg = "/^".preg_quote( $cat['signature'], '/' )."/i";
+	//					echo "[{$reg}]\n";
+						if( preg_match( $reg, $s[3] )) {
+							$categories[] = $cat['field'];
+							$categories[] = $cat['area'];
 							foreach( $regal as $r ) {
-								$categories[] = $cat .'!!Regal '.trim( $r );
+								$categories[] = $cat['field'] .'!!Regal '.trim( $r );
+								$categories[] = $cat['area'] .'!!Regal '.trim( $r );
+								$found = true;
 							}
 						}
 					}
 				}
 			}
 		}
+		if( !$found ) $categories[] = 'area!!unknown';
+
 		return $categories;
 	}
 

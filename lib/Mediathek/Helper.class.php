@@ -42,12 +42,15 @@ class Helper {
 		if( strlen( $code ) == 10 ) {
 			$i13 = '978'.substr( $code, 0, 9 );
 		}
-		else {
+		elseif( strlen( $code ) == 13 ) {
 			$i13 = substr( $code, 0, 12 );
+		}
+		else {
+			return $code;
 		}
 		$sum = 0;
 		for( $i = 0; $i < 12; $i++ ) {
-			$sum += intval( $i13{$i} )*($i%2==1 ? 3 : 1);
+				$sum += intval( $i13{$i} )*($i%2==1 ? 3 : 1);
 		}
 		$p = (10 - ($sum%10))%10;
 		$i13 .= $p;
@@ -242,7 +245,8 @@ class Helper {
                 case 'title':
                 case 'source':
                 case 'location':
-                case 'signature':
+								case 'signature':
+								case 'category':
 								case 'issue':
 								case 'city':
                     $fields[] = $key;
