@@ -523,6 +523,8 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 				$facetArea = $rs->getFacetSet()->getFacet('area');
 				$i = 0;
 				foreach ($facetArea as $value => $count) {
+					if( $count == 0 ) continue;
+					if( $value == '1!!area!!unknown' ) continue; 
 					//if( $value == 'false' ) continue;
 /*
 					if(!( @is_array( $qobj['facets']['area'] )

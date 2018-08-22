@@ -216,9 +216,14 @@ class Helper {
 		return false;
 	}
 
+		static function addField( &$fields, $field, $word ) {
+			if( !@is_array( $fields[$field] )) $fields[$field] = [];
+			$fields[$field][] = $word;
+		}
+
     static function buildSOLRQuery( $qstr ) {
         global $helper;
-
+				//echo "{$qstr}\n";
         $qstr = preg_replace( '/([a-zA-Z]+):"/', '"\1:', $qstr );
         if( !preg_match_all('/"(?:\\\\.|[^\\\\"])*"|\S+/', $qstr, $matches)) return array( $qstr );
         //print_r( $matches );
@@ -227,49 +232,66 @@ class Helper {
         foreach( $matches[0] as $m ) {
             $word = trim($m, " \"\t\n\r\0\x0B");
             if( preg_match( '/([^:]+):(.*)$/', $word, $matches2 )) {
-              $specific[ $matches2[1] ] = trim( $matches2[2] );
+							if( !@is_array( $specific[$matches2[1]])) $specific[ $matches2[1] ] = [];
+              $specific[ $matches2[1] ][] = trim( $matches2[2] );
             }
             else {
                 $global[] = $word;
             }
         }
         $qstr = '';
-        foreach( $specific as $key=>$word ) {
-            $fields = array();
-            switch( strtolower( $key )) {
-				        case 'publisher':
-                case 'author':
-                    $fields[] = 'author';
-                    $fields[] = 'publisher';
-                    break;
-                case 'title':
-                case 'source':
-                case 'location':
-								case 'signature':
-								case 'category':
-								case 'issue':
-								case 'city':
-                    $fields[] = $key;
-                break;
-								case 'isbn':
-								case 'eisbn':
-									$key = strtoupper( $key );
-									$word = $key.':'.Helper::isbn13( preg_replace( '/[^0-9Xx]/', '', $word ));
-									$fields[] = 'code';
-								break;
-				        case 'kiste':
-					           $word = 'NEBIS:E75:Kiste:'.$word;
-                     $fields[] = 'location';
-					      break;
-            }
+        foreach( $specific as $key=>$words ) {
+					$fields = array();
+					foreach( $words as $word ) {
+							//echo "{$key} -> {$word}\n";
+	            switch( strtolower( $key )) {
+					        case 'publisher':
+	                case 'author':
+											self::addField($fields, 'author', $word );
+											self::addField($fields, 'publisher', $word );
+//	                    $fields[] = 'author';
+//	                    $fields[] = 'publisher';
+	                    break;
+	                case 'title':
+	                case 'source':
+	                case 'location':
+									case 'signature':
+									case 'issue':
+									case 'city':
+									case 'category':
+										self::addField($fields, $key, $word );
+										//$fields[] = $key;
+									break;
+									case 'isbn':
+									case 'eisbn':
+										$key = strtoupper( $key );
+										$word = $key.':'.Helper::isbn13( preg_replace( '/[^0-9Xx]/', '', $word ));
+										//$fields[] = 'code';
+										self::addField($fields, 'code', $word );
+									break;
+					        case 'kiste':
+						           $word = 'NEBIS:E75:Kiste:'.$word;
+	                     //$fields[] = 'location';
+											 self::addField($fields, 'location', $word );
+						      break;
+	            }
+						}
             if( count($fields) == 0 ) continue;
+						//print_r( $fields );
             $first = true;
             $qstr .= '(';
-            foreach( $fields as $field ) {
+            foreach( $fields as $field=>$words ) {
                 if( !$first )
                     $qstr .= ' OR ';
                 $first = false;
-                $qstr .= '('.$field.':'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapePhrase( $word ))).')';
+                $qstr .= '(';
+								$first2 = true;
+								foreach( $words as $word ) {
+										if( !$first2 ) $qstr .= ' AND ';
+										$first2 = false;
+										$qstr .= $field.':'.str_replace( '\*', '*', str_replace( '\?', '?', $helper->escapePhrase( $word )));
+								}
+								$qstr .=')';
             }
             $qstr .= ')';
         }

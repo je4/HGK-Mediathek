@@ -452,7 +452,7 @@ class swissbibEntity extends SOLRSource {
 			$this->cluster = array();
 			foreach( $this->tags as $tag ) {
 				//echo $tag."---\n";
-				if( preg_match( '/^(subject|index)[^\/]+\/[^\/]+\/(.*)$/', $tag, $matches )) {
+				if( preg_match( '/^(subject:topicalterm|subject:localsubjectaccess:gnd|index:genreform)[^\/]+\/[^\/]+\/(.*)$/', $tag, $matches )) {
 					$this->cluster[] = $matches[2];
 				}
 			}
@@ -867,10 +867,10 @@ class swissbibEntity extends SOLRSource {
 		static $pattern = null;
 		if( $pattern == null ) {
 			$pattern = array();
-			$sql = "SELECT signature, category1, category2 FROM curate_signature2category ORDER BY signature, category2";
+			$sql = "SELECT signature, original, institute, field1, field2, field3, area FROM curate_signature2category ORDER BY LENGTH(signature) DESC, signature, area";
 			$rs = $this->db->Execute( $sql );
 			foreach( $rs as $row ) {
-				$pattern[] = array( 'signature'=>$row['signature'], 'field'=>$row['category1'], 'area'=>$row['category2'] );
+				$pattern[] = array( 'signature'=>$row['signature'], 'institute'=>$row['institute'], 'field1'=>$row['field1'], 'field2'=>$row['field2'], 'field3'=>$row['field3'], 'area'=>$row['area'], 'institute'=>$row['institute'] );
 			}
 			$rs->Close();
 		}
@@ -893,16 +893,25 @@ class swissbibEntity extends SOLRSource {
 					// create automated categories based on signatures
 					foreach( $pattern as $cat ) {
 						$reg = "/^".preg_quote( $cat['signature'], '/' )."/i";
-	//					echo "[{$reg}]\n";
+//					echo "[{$reg}]\n";
 						if( preg_match( $reg, $s[3] )) {
-							$categories[] = $cat['field'];
-							$categories[] = $cat['area'];
+//							echo "{$reg} \n";
+							if( strlen( $cat['field1'] )) $categories[] = $cat['field1'];
+							if( strlen( $cat['field2'] )) $categories[] = $cat['field2'];
+							if( strlen( $cat['field3'] )) $categories[] = $cat['field3'];
+							if( strlen( $cat['institute'] )) $categories[] = $cat['institute'];
+							if( strlen( $cat['area'] )) $categories[] = $cat['area'];
+							$categories[] = 'siggroup!!'.$cat['signature'];
+							if( @strlen( $cat['institute'] )) $categories[] = $cat['institute'];
+							$found = true;
 							foreach( $regal as $r ) {
-								$categories[] = $cat['field'] .'!!Regal '.trim( $r );
-								$categories[] = $cat['area'] .'!!Regal '.trim( $r );
-								$found = true;
+								if( strlen( $cat['field1'] )) $categories[] = $cat['field1'] .'!!Regal '.trim( $r );
+								if( strlen( $cat['field2'] )) $categories[] = $cat['field2'] .'!!Regal '.trim( $r );
+								if( strlen( $cat['field3'] )) $categories[] = $cat['field3'] .'!!Regal '.trim( $r );
+								//$categories[] = $cat['area'] .'!!Regal '.trim( $r );
 							}
 						}
+						if( $found ) break;
 					}
 				}
 			}

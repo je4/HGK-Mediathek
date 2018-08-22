@@ -90,13 +90,13 @@ class swissbibDisplay extends DisplayEntity {
 	}
 
 	public function detailView() {
-        global $config, $googleservice, $googleclient, $solrclient, $db, $urlparams, $pagesize;
+        global $config, $googleservice, $googleclient, $solrclient, $db, $urlparams, $pagesize, $session;
         $html = '';
 
         $entity = $this->entity;
 
 
-        if( DEBUG  ) {
+        if( DEBUG && $session->isLoggedIn()) {
         	$solr = new SOLR( $solrclient, $this->db );
         	$solr->import( $entity, true );
         }
@@ -205,7 +205,8 @@ class swissbibDisplay extends DisplayEntity {
 							}
 */
 ?>
-							Quelle: <a href="https://www.swissbib.ch/Record/<?php  echo $this->doc->originalid; ?>">swissbib</a></a><br />
+								Quelle: <a href="https://www.swissbib.ch/Record/<?php  echo $this->doc->originalid; ?>">swissbib</a></a><br />
+								ID: <?php  echo $this->doc->id; ?><br />
 							<div id='RIB'></div>
 					</div>
 				</div>
@@ -225,57 +226,109 @@ class swissbibDisplay extends DisplayEntity {
 	}
 ?>
 <?php
+	if( strlen( $abstract ) > 1 || count( $urls ) ) {
+?>
+				<div style="">
+				<span style="; font-weight: bold;">Abstract & Referenzen</span><br />
+					<div class="facet" style="padding: 0px;">
+						<div class="marker" style=""></div>
+						<?php if( strlen( $abstract )) echo "<p>".nl2br( htmlspecialchars( $abstract ))."</p>\n"; ?>
+<?php
+if( @is_array( $urls_notes )) foreach( $urls_notes as $url ) {
+		$text = ( strlen( $url['note'] ) ? $url['note'] :(strlen( $url['url'] ) > 60 ? substr( $url['url'], 0, 60 ).'...' : $url['url'] ) );
+		echo "<i class=\"fa fa-external-link\" aria-hidden=\"true\"></i><a href=\"redir.php?id=".urlencode( $this->doc->id ).'&url='.urlencode( $url['url'] )."\" target=\"blank\">".htmlspecialchars( $text )."</a><br />\n";
+}
+?>
+					</div>
+				</div>
+<?php
+	}
+?>
+<?php
 // BEGIN Bereich kurz
 if( true ) {
 
 	$cquery = $solrclient->createSelect();
 	$chelper = $cquery->getHelper();
-	$cquery->setRows( 500 );
+	$cquery->setRows( 0 );
 	$filter = '';
-
+	$area = '';
+/*
 	$cats = array();
+	$fields = array();
 	foreach( $this->doc->category as $key=>$cat ) {
-		if( preg_match( '/^1!!area!!([^!]+)$/i', $cat, $matches )) {
-			$filter .= (strlen( $filter ) == 0 ? '' : ' OR ').'category: '.$helper->escapePhrase($cat);
+		if( preg_match( '/^[1-3]!!(area|field)!!(.+)$/i', $cat, $matches )) {
+			if( strpos( 'Regal', $cat  ) !== false ) continue;
+			$fields[] = $matches[1].'!!'.$matches[2];
 		}
 	}
+	sort( $fields );
+	$fields = array_reverse( $fields );
+	$fields2 = [];
+	$last = 'x';
+	foreach( $fields as $fld ) {
+		if( substr( $last, 0, strlen( $fld )) == $fld ) continue;
+		$fields2[] = $fld;
+		$last = $fld;
+	}
+
+
+	//print_r( $fields );
+	//print_r( $fields2 );
+	foreach( $fields2 as $fld ) {
+		$num = count( explode( '!!', $fld ))-1;
+		$filter .= (strlen( $filter ) == 0 ? '' : ' OR ').'category:'.$helper->escapePhrase($num.'!!'.$fld);
+	}
+*/
+	foreach( $this->doc->category as $key=>$cat ) {
+		if( preg_match( '/^1!!area!!([^!]+)$/', $cat, $matches ) ) {
+			$filter = 'category:'.$helper->escapePhrase($cat);
+			$alabel = $matches[1];
+			$area = $cat;
+		}
+	}
+
 	if( strlen( $filter )) {
 		echo "<!-- filter: {$filter} -->\n";
 		$facetSetArea = $cquery->getFacetSet();
-		$facetSetArea->createFacetField('area')->setField('category')->setPrefix( '1!!area' )->setLimit( 10 );
+		$facetSetArea->createFacetField('institute')->setField('category')->setPrefix( '1!!institute' )->setLimit( 10 );
 
-		$cquery->createFilterQuery('area')->addTag('area')->setQuery( $filter );
+		$cquery->createFilterQuery('category')->addTag('category')->setQuery( $filter );
 		$cquery->setQuery( '*:*' );
 		$rs = $solrclient->select( $cquery );
+		$facetInstitute = $rs->getFacetSet()->getFacet('institute');
+//		die( "end" );
+
 ?>
 				<div style="">
 				<span style="; font-weight: bold;">Verwandte Bereiche</span><br />
 					<div class="facet" style="">
 						<div class="marker" style=""></div>
-<?php
-								$facetArea = $rs->getFacetSet()->getFacet('area');
-								$bereich = array();
-								foreach ($facetArea as $value => $count) {
-									if( $count > 0 && preg_match( '/^2!!area!!(.*)!!(.*)/i', $value, $matches )) {
-										if( !@is_array( $bereich[$matches[1]])) $bereich[$matches[1]] = array( 'name'=>$matches[1]
-																								, 'count'=>0
-																								, 'category'=>"1!!area!!{$matches[1]}"
-																								, 'location'=>array());
-										$bereich[$matches[1]]['location'][] = array( 'name'=>$matches[2], 'category'=>$value, 'count'=>$count );
-										$bereich[$matches[1]]['count'] += $count;
-									}
-								}
-?>
 								<label>
 <?php
-								foreach ($facetArea as $value => $count) {
-									if( $count > 0 && preg_match( '/^1!!area!!(.*)/i', $value, $matches )) {
+								$first = true;
+								foreach( $this->doc->category as $key=>$cat ) {
+									if( preg_match( '/^1!!field!!(.+)$/', $cat, $matches )) {
 ?>
-									<span style="white-space: nowrap;"><a href="javascript:doSearchFull('', '', [], {'catalog':[<?php echo $this->getCatalogList(); ?>], 'area':[<?php echo htmlspecialchars( $chelper->escapePhrase( $value )); ?>]}, 0, <?php echo $pagesize; ?> );">
-										<?php echo htmlspecialchars( trim( "{$matches[1]}" )); ?>
-									</a>
-								 //</span>
+										<?php echo $first ? '': ' // '; ?><span style="white-space: nowrap;"><a href="javascript:doSearchFull('category:<?php echo htmlspecialchars( $chelper->escapePhrase( $cat )); ?>', '', [], {'catalog':[<?php echo $this->getCatalogList(); ?>]}, 0, <?php echo $pagesize; ?> );">
+											<?php echo htmlspecialchars( trim( "{$matches[1]}" )); ?>
+										</a></span>
 <?php
+										$first = false;
+									}
+								}
+								echo ($first ? '' : '<br />' )."Weitere {$alabel} in den Bereichen<br />\n";
+								$first = true;
+								foreach ($facetInstitute as $value => $count) {
+									//echo "{$value}:{$count} ";
+
+									if( $count > 0 && preg_match( '/^1!!institute!!(.*)/i', $value, $matches )) {
+?>
+									<?php echo $first ? '': ' // '; ?><span style="white-space: nowrap;"><a href="javascript:doSearchFull('category:<?php echo htmlspecialchars( $chelper->escapePhrase( $value )); ?> category:<?php echo htmlspecialchars( $chelper->escapePhrase( $area )); ?>', '', [], {'catalog':[<?php echo $this->getCatalogList(); ?>]}, 0, <?php echo $pagesize; ?> );">
+										<?php echo htmlspecialchars( trim( "{$matches[1]} ({$count})" )); ?>
+									</a></span>
+<?php
+									$first = false;
 								}
 							}
 ?>
@@ -358,25 +411,6 @@ if( DEBUG ) {
 }
 // END Bereich
 ?>
-<?php
-	if( strlen( $abstract ) > 1 || count( $urls ) ) {
-?>
-				<div style="">
-				<span style="; font-weight: bold;">Abstract & Referenzen</span><br />
-					<div class="facet" style="padding: 0px;">
-						<div class="marker" style=""></div>
-						<?php if( strlen( $abstract )) echo "<p>".nl2br( htmlspecialchars( $abstract ))."</p>\n"; ?>
-<?php
-if( @is_array( $urls_notes )) foreach( $urls_notes as $url ) {
-		$text = ( strlen( $url['note'] ) ? $url['note'] :(strlen( $url['url'] ) > 60 ? substr( $url['url'], 0, 60 ).'...' : $url['url'] ) );
-		echo "<i class=\"fa fa-external-link\" aria-hidden=\"true\"></i><a href=\"redir.php?id=".urlencode( $this->doc->id ).'&url='.urlencode( $url['url'] )."\" target=\"blank\">".htmlspecialchars( $text )."</a><br />\n";
-}
-?>
-					</div>
-				</div>
-<?php
-	}
-?>
 			</div>
 			<div class="col-md-3">
 <?php 	if( is_array( $this->doc->cluster_ss ))  { ?>
@@ -412,16 +446,16 @@ if( @is_array( $urls_notes )) foreach( $urls_notes as $url ) {
 
 			$theCats = array_unique( $this->doc->category );
 			foreach( $theCats as $cat ) {
-				if( preg_match( '/^1!!area!!([^!]*)$/i', $cat, $matches )) {
+				if( preg_match( '/^1!!field!!([^!]*)$/i', $cat, $matches )) {
 					echo "<!-- Places: $cat -->\n";
 				$cquery = $solrclient->createSelect();
 				$chelper = $cquery->getHelper();
 				$cquery->setRows( 0 );
-				$filter = 'category:'.$chelper->escapePhrase( $cat );
+				$filter = 'category:'.( $cat );
 
 				echo "<!-- filter: {$filter} -->\n";
 				$facetSetArea = $cquery->getFacetSet();
-				$facetSetArea->createFacetField('area')->setField('category')->setPrefix( $chelper->escapePhrase( '2!!'.substr( $cat, 3 )));
+				$facetSetArea->createFacetField('area')->setField('category')->setPrefix( ( '2!!'.substr( $cat, 3 ).'!!'));
 
 				$cquery->createFilterQuery('area')->addTag('area')->setQuery( $filter );
 				$cquery->setQuery( '*:*' );
@@ -435,11 +469,11 @@ if( @is_array( $urls_notes )) foreach( $urls_notes as $url ) {
 										$facetArea = $rs->getFacetSet()->getFacet('area');
 										foreach ($facetArea as $value => $count) {
 											echo "<!-- facet: {$value} ({$count}) -->\n";
-											if( $count > 0 && preg_match( '/^2!!'.preg_quote( substr( $cat, 3 )).'!!(.*)/i', $value, $matches2 )) {
+											if( $count > 0 && preg_match( '/^2!!'.preg_quote( substr( $cat, 3 )).'!!(Regal.*)/i', $value, $matches2 )) {
 		?>
 										<label>
 											<a href="javascript:doSearchFull('category:<?php echo htmlspecialchars( $chelper->escapePhrase( $value )); ?>', '', [], {'catalog':[<?php echo $this->getCatalogList(); ?>]}, 0, <?php echo $pagesize; ?> );">
-												<?php echo htmlspecialchars( "{$matches[1]} - {$matches2[1]} ({$count})" ); ?>
+												<?php echo htmlspecialchars( "{$matches2[1]} ({$count})" ); ?>
 											</a>
 										</label><br />
 		<?php
@@ -508,7 +542,61 @@ if( count( $kisten )) {
 ?>
 					</div>
 				</div>
-<?php } ?>
+<?php
+}
+else {
+	$fields = [];
+	$labels = [];
+	foreach( $this->doc->category as $key=>$cat ) {
+//		echo "{$cat} - \n";
+		if( preg_match( '/^(1!!field|2!!area)!!(.*)$/', $cat, $matches )) {
+			$fields[] = $cat;
+			$labels[] = str_replace( '!!', ':', $matches[2] );
+		}
+	}
+	if( count( $fields )) {
+	?>
+					<div style="">
+					<span style="; font-weight: bold;">Weitere Bücher in den Feldern <?php echo implode( ' // ',$labels ); ?></span><br />
+						<div class="facet" style="">
+							<div class="marker" style=""></div>
+	<?php
+		$squery->setRows( 100 );
+		$squery->setStart( 0 );
+		$qstr = '';
+		foreach( $fields as $f ) {
+			if( strlen( $qstr )) $qstr .= ' OR ';
+			$qstr .= 'category:'.$helper->escapePhrase( $f );
+		}
+
+		$isbns = array();
+		if( is_array( $this->doc->code )) foreach( $this->doc->code as $code ) {
+			echo "<!-- code: {$code} -->\n";
+			if( preg_match( '/^E?ISBN:(.+)/i', $code, $matches )) {
+				$isbns[] = 'code:'.$helper->escapeTerm($code);
+			}
+		}
+		if( count( $isbns )) $qstr = "({$qstr}) OR (".implode( ' OR ', $isbns ).")";
+		$qstr = "({$qstr}) AND -id:".$helper->escapeTerm( $this->doc->id );
+		echo "\n<!-- {$qstr} -->\n";
+		$squery->setQuery( $qstr );
+		$rs = $solrclient->select( $squery );
+		$numResults = $rs->getNumFound();
+		$numPages = floor( $numResults / 500 );
+		if( $numResults % 500 > 0 ) $numPages++;
+
+		echo "<!-- ".$qstr." (Documents: {$numResults} // Page ".(1)." of {$numPages}) -->\n";
+
+		$res = new DesktopResult( $rs, 0, 500, $db, $urlparams );
+		echo $res->getResult();
+
+	?>
+						</div>
+					</div>
+	<?php
+	}
+}
+ ?>
 
 <?php
 if( DEBUG ) {

@@ -7,7 +7,7 @@ include '../init.inc.php';
 $db->SetFetchMode(ADODB_FETCH_ASSOC);
 
 $entity = new diplomhgkEntity( $db );
-$solr = new SOLR( $solrclient );
+$solr = new SOLR( $solrclient, $db );
 
 $sql = "SELECT DISTINCT * FROM source_diplomhgk";
 $rs = $db->Execute( $sql );

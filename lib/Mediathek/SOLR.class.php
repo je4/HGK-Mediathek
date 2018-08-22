@@ -176,7 +176,7 @@ class SOLR {
               $found = true;
             }
             foreach( $src->getLocations() as $loc ) {
-              if( preg_match( '^/NEBIS:E75:([A-Z])_[0-9]{3}_[ab]/i', $loc, $matches )) {
+              if( preg_match( '/^NEBIS:E75:([A-Z])_[0-9]{3}_[ab]/i', $loc, $matches )) {
                 $categories[] = $row['category'].'!!Regal '.$matches[1];
                 $found = true;
               }
