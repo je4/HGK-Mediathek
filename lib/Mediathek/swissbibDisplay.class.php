@@ -451,7 +451,7 @@ if( DEBUG ) {
 				$cquery = $solrclient->createSelect();
 				$chelper = $cquery->getHelper();
 				$cquery->setRows( 0 );
-				$filter = 'category:'.( $cat );
+				$filter = 'category:'.$chelper->escapePhrase( $cat );
 
 				echo "<!-- filter: {$filter} -->\n";
 				$facetSetArea = $cquery->getFacetSet();
@@ -460,6 +460,7 @@ if( DEBUG ) {
 				$cquery->createFilterQuery('area')->addTag('area')->setQuery( $filter );
 				$cquery->setQuery( '*:*' );
 				$rs = $solrclient->select( $cquery );
+				
 		?>
 						<div style="">
 						<span style="; font-weight: bold;">Bereich <?php echo htmlspecialchars( $matches[1] ); ?></span><br />
