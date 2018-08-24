@@ -33,20 +33,20 @@ class springerEntity extends swissbibEntity {
 	private $node;
 
     private static $idprefix = 'springer';
-    
+
     public function loadFromArray( $id, $data ) {
     	$this->reset();
     	$this->id = $id;
     	$this->data = $data;
     }
-    
+
     public function loadFromDoc( $doc) {
     	$this->id = $doc->originalid;
     	$this->data = json_decode(( string )gzdecode( base64_decode( $doc->metagz )), true );
     	//$this->loadNode( $doc->originalid, new OAIPMHRecord( $xml ), null );
     }
-    
-    
+
+
 	function loadNode( $id, $doc, $idprefix ) {
 		$this->reset();
 		$this->data = array();
@@ -68,7 +68,7 @@ class springerEntity extends swissbibEntity {
         		$elem[$code][] = $child->textContent;
         	}
         	$this->data[$tag][$ind1][$ind2][] = $elem;
-        
+
         	// now you can use $node without going insane about parsing
         }
         if( $this->id == null ) {
@@ -92,19 +92,19 @@ class springerEntity extends swissbibEntity {
 	public function getID() {
 		return self::$idprefix.'-'.$this->id;
 	}
-	
+
 	public function getSource() {
 		return 'springer';
 	}
-	
+
 	public function getMeta() {
 		return json_encode( $this->data );
 	}
-	
+
 	public function getXML() {
 		return "";
 	}
-	
+
 	public function getCoverImg() {
 		$isbn = trim( $this->getOne( '020', null, null, '9' ));
 		if( strlen( $isbn ) > 0) {
@@ -112,7 +112,7 @@ class springerEntity extends swissbibEntity {
 		}
 		return null;
 	}
-	
-	
+
+
 }
 ?>

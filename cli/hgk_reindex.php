@@ -47,7 +47,8 @@ if(true) {
 
 	$cursormark = '*';
 
-  $entity = new swissbibEntity( $db );
+  //$entity = new swissbibEntity( $db );
+	$entities = [];
 
 	do {
 		$squery = $solrclient->createSelect();
@@ -79,6 +80,12 @@ if(true) {
 			echo sprintf( "%0.2f - %08d ", $counter*100/$numResults, $counter ).$doc->id."\n";
 			//echo $doc->id."\n";
       $source = $doc->source;
+
+			if( !array_key_exists( $source, $entities )) {
+				$class = 'Mediathek\\'.$source.'Entity';
+				$entities[$source] = new $class( $db );
+			}
+			$entity = $entities[$source];
       if( !strlen( $doc->metagz )) {
         echo "    ERROR!!!\n";
         continue;

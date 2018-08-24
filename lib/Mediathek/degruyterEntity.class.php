@@ -92,16 +92,6 @@ class degruyterEntity extends swissbibEntity {
 	}
 
 	public function getCategories() {
-		static $pattern = null;
-		if( $pattern == null ) {
-			$pattern = array();
-			$sql = "SELECT signature, category1, category2 FROM curate_signature2category ORDER BY signature, category2";
-			$rs = $this->db->Execute( $sql );
-			foreach( $rs as $row ) {
-				$pattern[] = array( 'signature'=>$row['signature'], 'field'=>$row['category1'], 'area'=>$row['category2'] );
-			}
-			$rs->Close();
-		}
 		$categories = parent::getCategories();
 		$regal = array();
 		foreach( $this->getLocations() as $loc ) {
@@ -116,23 +106,6 @@ class degruyterEntity extends swissbibEntity {
 			if( count( $s ) >= 4 ) {
 				if( $s[0] == 'barcode' ) continue;
 				$categories[] = $s[0].'!!'.$s[1].'!!'.$s[2];
-
-				if( preg_match( '/^signature:NEBIS:E75:/i', $sig )) {
-					// create automated categories based on signatures
-					foreach( $pattern as $cat ) {
-						$reg = "/^".preg_quote( $cat['signature'], '/' )."/i";
-	//					echo "[{$reg}]\n";
-						if( preg_match( $reg, $s[3] )) {
-							$categories[] = $cat['field'];
-							$categories[] = $cat['area'];
-							foreach( $regal as $r ) {
-								$categories[] = $cat['field'] .'!!Regal '.trim( $r );
-								$categories[] = $cat['area'] .'!!Regal '.trim( $r );
-								$found = true;
-							}
-						}
-					}
-				}
 			}
 		}
 		if( !$found ) $categories[] = 'area!!unknown';

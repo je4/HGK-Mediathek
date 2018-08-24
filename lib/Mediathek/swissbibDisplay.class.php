@@ -460,7 +460,7 @@ if( DEBUG ) {
 				$cquery->createFilterQuery('area')->addTag('area')->setQuery( $filter );
 				$cquery->setQuery( '*:*' );
 				$rs = $solrclient->select( $cquery );
-				
+
 		?>
 						<div style="">
 						<span style="; font-weight: bold;">Bereich <?php echo htmlspecialchars( $matches[1] ); ?></span><br />
@@ -776,6 +776,8 @@ if( DEBUG ) {
         if( @is_array( $this->doc->catalog ))
         	if( array_search( 'NATIONALLICENCE', $this->doc->catalog ) !== false )
         		$icon = $config['icon']['nationallizenz'];
+
+				if( $this->doc->openaccess == true ) $icon = $config['icon']['eopenaccess'];
 
         ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
 ?>

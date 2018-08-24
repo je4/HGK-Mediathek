@@ -35,7 +35,10 @@ class OAIPMHRecord {
 		$this->dom->LoadXML( $xml );
 
 		$tmpLst = $this->dom->getElementsByTagName( 'header' );
-		if( $tmpLst->length != 1 ) throw new \Exception( "invalid xml" );
+		if( $tmpLst->length != 1 ) {
+			//print_r( $xml );
+			throw new \Exception( "invalid xml" );
+		}
 		$this->header = $tmpLst->item(0);
 
 		$tmpLst = $this->header->getElementsByTagName( 'identifier' );
