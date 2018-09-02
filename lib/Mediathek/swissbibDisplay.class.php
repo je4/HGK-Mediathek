@@ -773,11 +773,14 @@ if( DEBUG ) {
 
         $t = strtolower( $this->doc->type );
         $icon = array_key_exists( $t, $config['icon'] ) ? $config['icon'][$t] : $config['icon']['default'];
-        if( @is_array( $this->doc->catalog ))
-        	if( array_search( 'NATIONALLICENCE', $this->doc->catalog ) !== false )
+        if( @is_array( $this->doc->catalog )) {
+        	if( array_search( 'NATIONALLICENCE', $this->doc->catalog ) !== false ) {
         		$icon = $config['icon']['nationallizenz'];
-
-				if( $this->doc->openaccess == true ) $icon = $config['icon']['eopenaccess'];
+					}
+				}
+				if( $this->doc->openaccess == true ) {
+					$icon = $config['icon']['eopenaccess'];
+				}
 
         ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
 ?>
@@ -788,7 +791,9 @@ if( DEBUG ) {
 					 if( count( $authors ) > 1) echo " et al."; ?>
                 </a>
             </td>
-            <td class="list" style="width: 5%; font-size: 20px; white-space: nowrap;"><i class="<?php echo $icon; ?>"></i></td>
+            <td class="list" style="width: 5%; font-size: 20px; white-space: nowrap;">
+							<i class="<?php echo $icon; ?>"></i><?php if( $this->doc->openaccess && false ) { ?><img src="Open_Access_logo_PLoS_transparent.svg" style="width:12px;"><?php } ?>
+						</td>
             <td class="list" style="width: 70%;">
                 <a class="entity" href="#coll_<?php echo $this->doc->id; ?>" data-toggle="collapse" aria-expanded="false" aria-controls="coll_<?php echo $this->doc->id; ?>">
                     <?php echo htmlspecialchars( str_replace( '>>', '', str_replace( '<<', '', $entity->getTitle())) ); ?>

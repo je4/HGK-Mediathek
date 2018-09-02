@@ -1,0 +1,3 @@
+[submodule "lib/BMDM"]
+	path = lib/BMDM
+	url = https://github.com/Haran/BMDMSoundex.git

@@ -15,16 +15,17 @@
  * @copyright   (C) 2016 Academy of Art and Design FHNW
  * @license     http://www.gnu.org/licenses/gpl-3.0
  * @link        http://mediathek.fhnw.ch
- * 
+ *
  */
 
 function MediathekMiner_autoload( $class ) {
     $file = str_replace( '\\', '/', strtolower($class )).'class.php';
 //    echo $file . "\n";
     if( file_exists( $file )) include( $file );
- 
-}
 
+}
 spl_autoload_register('MediathekMiner_autoload');
+
+
 
 ?>

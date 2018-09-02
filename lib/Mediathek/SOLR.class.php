@@ -31,6 +31,7 @@ namespace Mediathek;
 
 /*
 http://localhost:8983/solr/base/update?stream.body=%3Cdelete%3E%3Cquery%3Esource%3Adegruyter%3C%2Fquery%3E%3C%2Fdelete%3E
+http://localhost:8983/solr/base/update?stream.body=%3Cdelete%3E%3Cquery%3Esource%3Aeartnet%3C%2Fquery%3E%3C%2Fdelete%3E
 http://localhost:8983/solr/base/update?stream.body=%3Cdelete%3E%3Cquery%3Esource%3ADOAB%3C%2Fquery%3E%3C%2Fdelete%3E
 http://localhost:8983/solr/base/update?stream.body=%3Cdelete%3E%3Cquery%3Edeleted%3Atrue%3C%2Fquery%3E%3C%2Fdelete%3E
 http://localhost:8983/solr/base/update?stream.body=%3Cdelete%3E%3Cquery%3Ecatalog%3AKaskoArchiv%3C%2Fquery%3E%3C%2Fdelete%3E

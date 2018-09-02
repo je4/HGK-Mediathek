@@ -47,11 +47,11 @@ class eartnetEntity extends SOLRSource {
 
     function __construct( \ADOConnection $db ) {
         $this->db = $db;
-        die( "to be implemented" );
+        //die( "to be implemented" );
     }
 
     public function loadFromDoc( $doc) {
-    	$this->data = ( array )json_decode( gzdecode( base64_decode( $doc->metagz )));
+    	$this->data = ( array )json_decode( gzdecode( base64_decode( $doc->metagz )), true);
     	$this->id = $doc->originalid;
     }
 
@@ -70,21 +70,16 @@ class eartnetEntity extends SOLRSource {
 
     }
 
-    function loadFromArray( array $row ) {
+    function loadFromArray( array $rows ) {
         $this->reset();
 
-        $this->data = $row;
+        $this->data = $rows;
 
-        $this->id = "{$this->data['year']}{$this->data['IDPerson']}";
-        // $this->idprefix = $idprefix;
-
-        //echo $this->id."\n";
-
-        //var_dump( $this->data );
+        $this->id = md5( $rows[0]['bmdm_name'] );
     }
 
     public function getID() {
-        return $this->idprefix.'-'.str_pad($this->id, 12, '0', STR_PAD_LEFT );
+        return $this->idprefix.'-'.$this->id;
     }
 
 	public function getOriginalID() {
@@ -96,7 +91,21 @@ class eartnetEntity extends SOLRSource {
     }
 
     public function getType() {
-		return "project";
+        switch( trim( $this->data[0]['person_kategorie_2'] )) {
+          case '':
+          case 'person':
+          case 'Artist':
+          case 'art-critic':
+          case 'art-curator':
+		        return 'person';
+            break;
+          case 'group':
+          case 'Art-Group':
+            return 'group';
+            break;
+          default:
+            return 'institution';
+        }
 	}
 
 
@@ -114,35 +123,27 @@ class eartnetEntity extends SOLRSource {
 
     public function getTitle() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
-        $title = trim( $this->data['meta']['titel'] );
-        return $title;
+        return "European Artnet";
     }
 
     public function getPublisher() {
-        return array( 'FHNW Academy of Art and Design Basel' );
+        return array( 'European Artnet' );
     }
 
     public function getYear() {
-        return $this->data['year'];
+        return null;
     }
 
     public function getCity() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
-        return 'Basel';
+        return null;
     }
 
 	public function getTags() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
 
-        $this->tags = array( 'subject:topicalterm:hgk/1/diplom'
-                                ,'subject:topicalterm:hgk/type/diplom'.$this->data['year']
-                                ,'subject:topicalterm:hgk/fach/'.$this->data['Anlassbezeichnung']
-                               );
-        $this->cluster = array('diplom'
-                                ,'diplom'.$this->data['year']
-                                , $this->data['Anlassbezeichnung']);
-
-
+        $this->tags = array();
+        $this->cluster = array();
         return $this->tags;
 	}
 
@@ -160,7 +161,11 @@ class eartnetEntity extends SOLRSource {
 
     public function getAuthors() {
 
-        return array("{$this->data['Nachname']}, {$this->data['Vornamen']}");
+        $authors = array();
+        foreach( $this->data as $row ) {
+          $authors[] = $row['person_nachname'].', '.$row['person_vorname'];
+        }
+        return array_unique( $authors );
     }
 
     public function getLoans() {
@@ -183,24 +188,7 @@ class eartnetEntity extends SOLRSource {
     }
 
     public function getURLs() {
-
-        $doURLs = function( $str ) {
-          $_lines = explode( '\n', $str );
-          $_urls = array();
-          foreach( $_lines as $_l ) {
-            $_l = trim( $_l );
-            if( !preg_match( '/^http(s)?:\/\//', $_l )) $_l = 'http://'.$_l;
-            $_urls[] = $_l;
-          }
-          return $_urls;
-        };
-
-        $urls = array();
-        if( @strlen( $this->data['meta']['web1'] )) foreach( $doURLs( $this->data['meta']['web1'] ) as $url ) { $urls[] = 'web:'.$url; }
-        if( @strlen( $this->data['meta']['web2'] )) foreach( $doURLs( $this->data['meta']['web2'] ) as $url ) { $urls[] = 'web:'.$url; }
-        if( @strlen( $this->data['meta']['webmedia'] )) foreach( $doURLs( $this->data['meta']['webmedia'] ) as $url ) { $urls[] = 'media:'.$url; }
-
-        return $urls;
+      return array();
     }
 
     public function getSys() {
@@ -217,7 +205,7 @@ class eartnetEntity extends SOLRSource {
     }
 
    public function getAbstract() {
-        return $this->data['meta']['beschreibung'];
+        return null;
     }
 
    public function getContent() { return null; }
@@ -227,9 +215,9 @@ class eartnetEntity extends SOLRSource {
         return $codes;
     }
 
-    public function getMetaACL() { return ($this->data['year'] == 2017 ? array( 'location/fhnw' ) : array( 'global/guest' )); }
-    public function getContentACL() { return ($this->data['year'] == 2017 ? array( 'location/fhnw' ) : array( 'global/guest' )); }
-    public function getPreviewACL() { return ($this->data['year'] == 2017 ? array( 'location/fhnw' ) : array( 'global/guest' )); }
+    public function getMetaACL() { return array( 'global/user' ); }
+    public function getContentACL() { return array( 'global/user' ); }
+    public function getPreviewACL() { return array( 'global/user' ); }
 
 	public function getLanguages() { return array(); }
 	public function getIssues()  { return array(); }

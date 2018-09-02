@@ -214,6 +214,7 @@ class zoteroDisplay extends DisplayEntity {
 		<div class="facet" style="">
 			<div class="marker" style=""></div>
 			<?php
+				//var_dump( $att );
 				if( $att->getLinkMode() == 'linked_url') {
 					$url = $att->getUrl();
 					if( $att->getUrlMimetype() == null) {
@@ -264,6 +265,10 @@ class zoteroDisplay extends DisplayEntity {
 						  </p>
 						</video>
 <?php
+					}
+					elseif( strstr( $url, 'http://hdl.handle.net/20.500.11806/mediathek/inventory/') !== false ) {
+						echo "<a href=\"{$url}\">$url</a>\n";
+						//echo $att->getNote();
 					}
 				} // linkMode == linkedURL
 				elseif( preg_match( '/application\/pdf/', $att->getContentType())) {
