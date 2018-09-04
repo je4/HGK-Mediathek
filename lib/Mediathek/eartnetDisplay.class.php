@@ -113,8 +113,8 @@ class eartnetDisplay extends DisplayEntity {
           echo "<tr><td><a href=\"{$dblink}\"><img alt=\"{$row['institution_name']}\" src=\"http://www.european-art.net/media_system/logo/{$row['datenbank_logo']}\" /></a></td><td><a href=\"{$dblink}\">{$row['person_vorname']} {$row['person_nachname']}</a></td></tr>\n";
         }
 
-        $dblink =  "javascript:doSearchFull('author:&quot;".str_replace('\'', '\\\'', trim( $authors[0] ))."&quot;', '', [], {'catalog':[".$this->getCatalogList()."]}, 0, {$pagesize} );";
-        echo "<tr><td><a href=\"{$dblink}\">Mediathek</a></td><td><a href=\"{$dblink}\">{$data[0]['person_vorname']} {$data[0]['person_nachname']}</a></td></tr>\n";
+//        $dblink =  "javascript:doSearchFull('author:&quot;".str_replace('\'', '\\\'', trim( $authors[0] ))."&quot;', '', [], {'catalog':[".$this->getCatalogList()."]}, 0, {$pagesize} );";
+//        echo "<tr><td><a href=\"{$dblink}\">Mediathek</a></td><td><a href=\"{$dblink}\">{$data[0]['person_vorname']} {$data[0]['person_nachname']}</a></td></tr>\n";
 ?>
                 </table>
 				ID: <?php echo $this->doc->id; ?><br />
