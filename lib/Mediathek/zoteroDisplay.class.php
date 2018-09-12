@@ -198,7 +198,7 @@ class zoteroDisplay extends DisplayEntity {
 		$show = $session->inAnyGroup( $this->doc->acl_content ) || $session->isAdmin();
 	}
 	if( $show ) foreach( $attachments as $att ) {
-		if( !DEBUG && $att->getLinkMode() == 'linked_url' && $att->getUrlMimetype() == null ) continue;
+		//if( !DEBUG && $att->getLinkMode() == 'linked_url' && $att->getUrlMimetype() == null ) continue;
 ?>
 		<span style="; font-weight: bold;">
 			<?php

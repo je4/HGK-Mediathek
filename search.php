@@ -104,7 +104,7 @@ if( !$qobj ) {
 		$session->storeQuery( $q );
 
 		if( $search && false ) {
-			var_dump( $_REQUEST );
+			var_dump( $qobj );
 			exit;
 		}
 
