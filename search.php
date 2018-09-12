@@ -39,6 +39,7 @@ $query = isset( $_REQUEST['query'] ) ? $_REQUEST['query'] : null;
 $q = isset( $_REQUEST['q'] ) ? strtolower( trim( $_REQUEST['q'] )): null;
 $page = isset( $_REQUEST['page'] ) ? intval( $_REQUEST['page'] ) : 0;
 $pagesize = isset( $_REQUEST['pagesize'] ) ? intval( $_REQUEST['pagesize'] ) : $session->getPageSize();
+$pagesize = min( 2500, $pagesize );
 if( $page < 0 ) $page = 0;
 $qobj = null;
 $invalidQuery = false;
@@ -307,7 +308,7 @@ catch ( \Exception $e ) {
 	die();
 }
 $numResults = $rs->getNumFound();
-$numPages = $json ? min( 20, floor( $numResults / $pagesize )) : floor( $numResults / $pagesize );
+$numPages = $json ? min( 100, floor( $numResults / $pagesize )) : floor( $numResults / $pagesize );
 if( $numResults % $pagesize > 0 ) $numPages++;
 
 $debugstr[] = "<!-- ".$qstr." (Documents: {$numResults} // Page ".($page+1)." of {$numPages}) -->\n";
@@ -524,7 +525,7 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 				$i = 0;
 				foreach ($facetArea as $value => $count) {
 					if( $count == 0 ) continue;
-					if( $value == '1!!area!!unknown' ) continue; 
+					if( $value == '1!!area!!unknown' ) continue;
 					//if( $value == 'false' ) continue;
 /*
 					if(!( @is_array( $qobj['facets']['area'] )

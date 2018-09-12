@@ -262,6 +262,11 @@ class Item {
     return intval( $this->data['meta']['numChildren'] );
   }
 
+  public function getMedia() {
+    if( !array_key_exists( 'media', $this->data['data'])) return [];
+    return $this->data['data']['media'];
+  }
+
   public function addChild( $child ) {
       $this->children[] = $child;
   }

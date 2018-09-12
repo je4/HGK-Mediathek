@@ -69,6 +69,25 @@ class Zotero {
     return $mimetype;
   }
 
+  static function dataFromURL( $url ) {
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, trim($url, "'") );
+    curl_setopt($ch, CURLOPT_HEADER, 0);
+//    curl_setopt($ch, CURLOPT_NOBODY, 1);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    //curl_setopt($ch, CURLOPT_VERBOSE, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+    $ret = curl_exec($ch);
+    $code = intval( curl_getinfo( $ch, CURLINFO_RESPONSE_CODE ));
+    curl_close($ch);
+    if( $code == 404 || $code == 500 ) {
+      throw( new \Exception( "Response Error {$code}" ));
+    }
+    return $ret;
+  }
+
+
   function syncGroup( $id ) {
     $this->log( "Syncing group: {$id}" );
     $uri = $this->apiurl.'/groups/'.$id;
@@ -129,15 +148,39 @@ class Zotero {
   }
 
   function syncItem( $id, $item, $trash ) {
+    global $config;
+
     @$this->log( "   {$id}:{$item['key']} ".($trash?"[TRASH] ":"")."{$item['data']['itemType']} - {$item['data']['title']}" );
 
     if( array_key_exists( 'linkMode', $item['data'] )) {
       $linkMode = $item['data']['linkMode'];
       if( $linkMode == 'linked_url' ) {
         try {
-          $mimetype = $this->mimeFromURL( $this->db->qstr($item['data']['url'] ));
-          $item['data']['urlMimetype'] = $mimetype;
-          $item['data']['nameImageserver'] = "zotero/zotero-{$id}-{$item['key']}";
+          $url = $item['data']['url'];
+
+					if( preg_match( '/^http:\/\/hdl.handle.net\/20.500.11806\/mediathek\/inventory\/[^\/]+\/([0-9.]+)$/', $url, $matches )) {
+						$url = "{$config['mediaserver']['baseurl']}indexer{$matches[1]{0}}/indexer{$matches[1]}";
+            $item['data']['url'] = "mediaserver:indexer{$matches[1]{0}}/indexer{$matches[1]}";
+            $metaurl = $url.'/metadata';
+            if( isset( $config['mediaserver']['key'] )) {
+              $metaurl .= '?token='.jwt_encode(
+                    ['sub'=>"{$config['mediaserver']['sub_prefix']}indexer{$matches[1]{0}}/indexer{$matches[1]}/metadata", 'exp'=>time()+1000],
+                    $config['mediaserver']['key']
+                  );
+            }
+            echo "loading metadata from {$metaurl}\n";
+            $meta = $this->dataFromURL( $metaurl );
+            $metaarr = json_decode( $meta, true );
+            $item['data']['media'] = array( 'metadata'=>$metaarr );
+            $mimetype = $metaarr['mimetype'];
+            //print_r( $item );
+            //die("hdl link done");
+					}
+          else {
+            $mimetype = $this->mimeFromURL( $url );
+            $item['data']['urlMimetype'] = $mimetype;
+            $item['data']['nameImageserver'] = "zotero/zotero-{$id}-{$item['key']}";
+          }
           $sql = "REPLACE INTO dirty_image_server.image( name, mimetype, sourcetype, source )
             VALUES( ".$this->db->qstr( "zotero-{$id}-{$item['key']}" ).", ".$this->db->qstr( $mimetype ).", 'remote', ".$this->db->qstr($item['data']['url'])." )";
           //$this->db->Execute( $sql );

@@ -205,7 +205,7 @@ class zoteroDisplay extends DisplayEntity {
 		$title = $att->getTitle();
 		if( is_numeric( $title ) ) $title = '';
 		elseif( preg_match( '/^[0-9]+([^0-9].*)/', $title, $matches )) {
-			$title = $matches[1];
+//			$title = $matches[1];
 		}
 		$title = trim($title, ' -.;');
 			echo htmlspecialchars( $title );
@@ -217,7 +217,33 @@ class zoteroDisplay extends DisplayEntity {
 				//var_dump( $att );
 				if( $att->getLinkMode() == 'linked_url') {
 					$url = $att->getUrl();
-					if( $att->getUrlMimetype() == null) {
+
+
+
+					$mime = $att->getUrlMimetype();
+
+//					echo "mime: {$mime} ";
+					if( preg_match( '/^mediaserver:(.+)$/', $url, $matches )) {
+						$media = $att->getMedia();
+						$type = $media['metadata']['type'];
+						if( $type == 'video' || $type == 'pdf' ) {
+							//todo: goserver config, token basteln
+							$link = $this->mediaLink( $url.'/iframe/bgcolorffffff' );
+							?>
+							<iframe style="width: 100%; height: 400px; border:0;" border=0 src="<?php echo $link; ?>" class="video" allowfullscreen=""></iframe>
+							<?php
+						}
+						elseif( $type == 'image' ) {
+							$link = $this->mediaLink( $url.'/resize/size600x400' );
+							?>
+							<img src="<?php echo $link; ?>" style="width: 100%;" />
+							<?php
+						}
+						else {
+							echo "link: {$url}";
+						}
+					}
+					elseif( $mime == null) {
 						?>
 							Invalid URL: <a href="<?php echo $url; ?>"><?php echo $url; ?></a>
 						<?php
@@ -265,10 +291,6 @@ class zoteroDisplay extends DisplayEntity {
 						  </p>
 						</video>
 <?php
-					}
-					elseif( strstr( $url, 'http://hdl.handle.net/20.500.11806/mediathek/inventory/') !== false ) {
-						echo "<a href=\"{$url}\">$url</a>\n";
-						//echo $att->getNote();
 					}
 				} // linkMode == linkedURL
 				elseif( preg_match( '/application\/pdf/', $att->getContentType())) {

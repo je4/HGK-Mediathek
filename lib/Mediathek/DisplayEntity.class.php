@@ -118,6 +118,26 @@ abstract class DisplayEntity {
 		return $js_catlist;
 	}
 
+  public static function createToken( $sub, $validity=3600 ) {
+    global $config;
+    // next full hour
+    $exp = (time()+$validity+3600);
+    $exp -= $exp % 3600;
+    $payload = ['sub'=>strtolower( $config['mediaserver']['sub_prefix'].$sub ), 'exp'=>$exp];
+    //print_r( $payload );
+    $token = jwt_encode( $payload, $config['mediaserver']['key'] );
+    return $token;
+  }
+
+  public static function mediaLink( $url ) {
+    global $config;
+      if( preg_match( '/^mediaserver:([^\/]+\/[^\/]+\/[^\/]+)(\/[^\/]*)?$/', $url, $matches )) {
+        $link = $config['mediaserver']['baseurl'].$matches[1].(isset( $matches[2] ) ? $matches[2] : '').'?token='.self::createToken( $matches[1] );
+        return $link;
+      }
+      return null;
+   }
+
 	public abstract function getSchema( );
     public abstract function detailView();
     public abstract function desktopList();
