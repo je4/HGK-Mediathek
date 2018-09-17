@@ -197,7 +197,9 @@ class zoteroDisplay extends DisplayEntity {
 	if( @is_array( $this->doc->acl_content )) {
 		$show = $session->inAnyGroup( $this->doc->acl_content ) || $session->isAdmin();
 	}
-	if( $show ) foreach( $attachments as $att ) {
+	if( $show ) {
+		$images = [];
+		foreach( $attachments as $att ) {
 		//if( !DEBUG && $att->getLinkMode() == 'linked_url' && $att->getUrlMimetype() == null ) continue;
 ?>
 		<span style="; font-weight: bold;">
@@ -225,7 +227,8 @@ class zoteroDisplay extends DisplayEntity {
 //					echo "mime: {$mime} ";
 					if( preg_match( '/^mediaserver:(.+)$/', $url, $matches )) {
 						$media = $att->getMedia();
-						$type = $media['metadata']['type'];
+						$type = null;
+						if( array_key_exists( 'metadata', $media ))	$type = $media['metadata']['type'];
 						if( $type == 'video' || $type == 'pdf' ) {
 							//todo: goserver config, token basteln
 							$link = $this->mediaLink( $url.'/iframe/bgcolorffffff' );
@@ -240,7 +243,7 @@ class zoteroDisplay extends DisplayEntity {
 							<?php
 						}
 						else {
-							echo "link: {$url}";
+							echo "<a href=\"".$this->mediaLink( $url.'/master' )."\" target=_blank>{$url}</a>";
 						}
 					}
 					elseif( $mime == null) {
@@ -308,6 +311,7 @@ class zoteroDisplay extends DisplayEntity {
 		  -->
 		</div>
 	<?php }
+}
 
 ?>
     <?php if( strlen( $this->item->getAbstract())) { ?>
