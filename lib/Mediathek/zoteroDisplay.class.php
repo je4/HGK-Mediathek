@@ -303,6 +303,10 @@ class zoteroDisplay extends DisplayEntity {
 					<div style="text-align: center;"><a href="zotero_data.php?id=zotero-<?php echo $att->getLibraryId(); ?>.<?php echo $this->item->getKey(); ?>&key=<?php echo $att->getKey(); ?>" >Download PDF</a></div>
 <?php
 				}
+				else {
+					$url = $att->getUrl();
+					if( strlen( $url ) && substr( $url, 0, strlen( 'mediaserver:')) != 'mediaserver:' ) echo "<a href=\"{$url}\" target=_blank>{$url}</a>\n";
+				}
 			 ?>
 			<!--
 			<pre>

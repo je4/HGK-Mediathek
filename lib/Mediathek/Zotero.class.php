@@ -169,7 +169,12 @@ class Zotero {
                   );
             }
             echo "loading metadata from {$metaurl}\n";
-            $meta = $this->dataFromURL( $metaurl );
+            try {
+              $meta = $this->dataFromURL( $metaurl );
+            }
+            catch( \Exception $ex ) {
+              die( $ex->getMessage());
+            }
             $metaarr = json_decode( $meta, true );
             $item['data']['media'] = array( 'metadata'=>$metaarr );
             $mimetype = $metaarr['mimetype'];

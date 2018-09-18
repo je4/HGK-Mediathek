@@ -12,7 +12,8 @@ $urlbase = 'https://mediathek.hgk.fhnw.ch/detail.php?id=';
 //$groups = array( 2068924 ); // summe 2017 2068924
 //$groups = array( 2180340 ); // grenzgang
 $groups = array( 2171463, );  // anfaenge der kuenstlerischen forschung
-//                 2206003 );  // act
+//$groups = array( 2206003, );  // act
+
 $solr = new SOLR( $solrclient, $db );
 
 $zotero = new Zotero( $db, $config['zotero']['apiurl'], $config['zotero']['apikey'], $config['zotero']['mediapath'], STDOUT );

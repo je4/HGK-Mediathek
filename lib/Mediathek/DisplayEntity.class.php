@@ -118,7 +118,7 @@ abstract class DisplayEntity {
 		return $js_catlist;
 	}
 
-  public static function createToken( $sub, $validity=3600 ) {
+  public static function createToken( $sub, $validity=7200 ) {
     global $config;
     // next full hour
     $exp = (time()+$validity+3600);
