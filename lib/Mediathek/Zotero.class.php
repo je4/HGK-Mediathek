@@ -171,13 +171,13 @@ class Zotero {
             echo "loading metadata from {$metaurl}\n";
             try {
               $meta = $this->dataFromURL( $metaurl );
+              $metaarr = json_decode( $meta, true );
+              $item['data']['media'] = array( 'metadata'=>$metaarr );
+              $mimetype = $metaarr['mimetype'];
             }
             catch( \Exception $ex ) {
-              die( $ex->getMessage());
+              echo( $ex->getMessage());
             }
-            $metaarr = json_decode( $meta, true );
-            $item['data']['media'] = array( 'metadata'=>$metaarr );
-            $mimetype = $metaarr['mimetype'];
             //print_r( $item );
             //die("hdl link done");
 					}

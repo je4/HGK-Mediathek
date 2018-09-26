@@ -109,12 +109,16 @@ class eartnetDisplay extends DisplayEntity {
                   <table border="0">
 <?php
         foreach( $data as $row ) {
-          $dblink = str_replace( '[id]', $row['person_id_datensatz'], $row['datenbank_aufruf']);
+          $dblink = "http://service.european-art.net/redirect?db={$row['person_id_datenbank']}&p={$row['person_id_datensatz']}";
+          //print_r( $row );
+          // str_replace( '[id]', $row['person_id_datensatz'], $row['datenbank_aufruf']);
           echo "<tr><td><a href=\"{$dblink}\"><img alt=\"{$row['institution_name']}\" src=\"http://www.european-art.net/media_system/logo/{$row['datenbank_logo']}\" /></a></td><td><a href=\"{$dblink}\">{$row['person_vorname']} {$row['person_nachname']}</a></td></tr>\n";
         }
+// http://www.european-art.net/eingang_besucher/index.cfm?token_lastname=bolf&token_firstname=josef
 
-//        $dblink =  "javascript:doSearchFull('author:&quot;".str_replace('\'', '\\\'', trim( $authors[0] ))."&quot;', '', [], {'catalog':[".$this->getCatalogList()."]}, 0, {$pagesize} );";
-//        echo "<tr><td><a href=\"{$dblink}\">Mediathek</a></td><td><a href=\"{$dblink}\">{$data[0]['person_vorname']} {$data[0]['person_nachname']}</a></td></tr>\n";
+
+        $link = "http://www.european-art.net/eingang_besucher/index.cfm?token_lastname={$data[0]['person_nachname']}&token_firstname={$data[0]['person_vorname']}";
+        echo "<tr><td><a href=\"{$link}\"><img src=\"img/europeanartnet.png\" alt=\"european-art.net\" style=\"max-width: 120px; max-height=30px\" /></a></td><td><a href=\"{$link}\">{$data[0]['person_vorname']} {$data[0]['person_nachname']}</a></td></tr>\n";
 ?>
                 </table>
 				ID: <?php echo $this->doc->id; ?><br />

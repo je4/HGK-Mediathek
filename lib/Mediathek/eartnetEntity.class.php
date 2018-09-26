@@ -123,7 +123,7 @@ class eartnetEntity extends SOLRSource {
 
     public function getTitle() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
-        return "European Artnet";
+        return "european-art.net";
     }
 
     public function getPublisher() {
@@ -215,9 +215,9 @@ class eartnetEntity extends SOLRSource {
         return $codes;
     }
 
-    public function getMetaACL() { return array( 'global/user' ); }
-    public function getContentACL() { return array( 'global/user' ); }
-    public function getPreviewACL() { return array( 'global/user' ); }
+    public function getMetaACL() { return array( 'global/guest' ); }
+    public function getContentACL() { return array( 'global/guest' ); }
+    public function getPreviewACL() { return array( 'global/guest' ); }
 
 	public function getLanguages() { return array(); }
 	public function getIssues()  { return array(); }

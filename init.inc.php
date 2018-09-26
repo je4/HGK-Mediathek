@@ -42,6 +42,7 @@ function doConnectMySQL($force = false) {
             }
         }
         $db->SetCharSet('utf8');
+        $db->SetFetchMode(ADODB_FETCH_ASSOC);
     }
 }
 
