@@ -64,12 +64,14 @@ do {
 $entity = new eartnetEntity( $db );
 $solr = new SOLR( $solrclient, $db );
 
-$sql = "SELECT DISTINCT bmdm_name, person_kategorie_2 FROM european_art_net.cont_person p WHERE  p.bmdm_name <> ''";
+$sql = "SELECT DISTINCT bmdm_name FROM european_art_net.cont_person p WHERE  p.bmdm_name <> ''";
 echo "{$sql}\n";
 $rs = $db->Execute( $sql );
 foreach( $rs as $row ) {
   $sql = "SELECT * FROM european_art_net.cont_person p, european_art_net.cont_datenbank d
-            WHERE p.person_id_datenbank=d.datenbank_id AND p.person_kategorie_2=".$db->qstr( $row['person_kategorie_2'] )." AND p.bmdm_name=".$db->qstr( $row['bmdm_name'] );
+            WHERE p.person_id_datenbank=d.datenbank_id AND p.bmdm_name=".$db->qstr( $row['bmdm_name'] );
+//  $sql = "SELECT * FROM european_art_net.cont_person p, european_art_net.cont_datenbank d
+//            WHERE p.person_id_datenbank=d.datenbank_id AND p.person_kategorie_2=".$db->qstr( $row['person_kategorie_2'] )." AND p.bmdm_name=".$db->qstr( $row['bmdm_name'] );
   echo "{$sql}\n";
   $rs2 = $db->Execute( $sql );
   $data = array();
