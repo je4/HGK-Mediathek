@@ -73,13 +73,17 @@ class zoteroDisplay extends DisplayEntity {
 
 			ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
 			$title = null;
+			$url = null;
 			$lib = $this->item->getLibrary();
 			$v = array();
 			if( $lib ) $v = $lib->getVar( 'title' );
 			if( count( $v) > 0 ) $title = $v[0];
 			if( $title == null ) $title = $this->item->getLibraryName();
+			$v = array();
+			if( $lib ) $v = $lib->getVar( 'url' );
+			if( count( $v) > 0 ) $url = $v[0];
 ?>
-				<h2 class="small-heading"><?php echo htmlspecialchars($title); ?></h2>
+				<h2 class="small-heading"><?php echo ($url?"<a href=\"{$url}\">":'').htmlspecialchars($title).($url?'</a>':''); ?></h2>
 
 				<div class="container-fluid" style="margin-top: 0px; padding: 0px 20px 20px 20px;">
 <?php
@@ -89,7 +93,7 @@ class zoteroDisplay extends DisplayEntity {
 }
 
 	public function detailView() {
-      global $config, $googleservice, $googleclient, $solrclient, $db, $urlparams, $pagesize, $session;
+      global $config, $googleservice, $googleclient, $solrclient, $db, $urlparams, $pagesize, $session, $q;
 
 		$intern = $session->inGroup( 'location/fhnw');
 		$loggedin = $session->isLoggedIn();
@@ -175,7 +179,9 @@ class zoteroDisplay extends DisplayEntity {
 			usort( $attachments , function( $a, $b ) {
 				return $a->getTitle() > $b->getTitle();
 			});
-		foreach( $this->item->getImages() as $img ) { ?>
+		if( false ) foreach( $this->item->getImages() as $img ) {
+
+?>
 		<span style="; font-weight: bold;"><?php echo htmlspecialchars( $img->getTitle()); ?></span><br>
 		<div class="facet" style="">
 			<div class="marker" style=""></div>
@@ -201,6 +207,7 @@ class zoteroDisplay extends DisplayEntity {
 		$images = [];
 		foreach( $attachments as $att ) {
 		//if( !DEBUG && $att->getLinkMode() == 'linked_url' && $att->getUrlMimetype() == null ) continue;
+		if( preg_match( '/^Parent:/', $att->getTitle())) continue;
 ?>
 		<span style="; font-weight: bold;">
 			<?php
@@ -217,7 +224,7 @@ class zoteroDisplay extends DisplayEntity {
 			<div class="marker" style=""></div>
 			<?php
 				//var_dump( $att );
-				if( $att->getLinkMode() == 'linked_url') {
+				if( in_array( $att->getLinkMode(), ['linked_url', 'imported_file'] )) {
 					$url = $att->getUrl();
 
 
@@ -228,18 +235,19 @@ class zoteroDisplay extends DisplayEntity {
 					if( preg_match( '/^mediaserver:(.+)$/', $url, $matches )) {
 						$media = $att->getMedia();
 						$type = null;
-						if( array_key_exists( 'metadata', $media ))	$type = $media['metadata']['type'];
-						if( $type == 'video' || $type == 'pdf' ) {
+						if( isset( $media['metadata']['type'] ))	$type = $media['metadata']['type'];
+						if( $type == 'video' || $type == 'pdf' || $type == 'audio' || $type == 'gpx' ) {
 							//todo: goserver config, token basteln
 							$link = $this->mediaLink( $url.'/iframe/bgcolorffffff' );
 							?>
-							<iframe style="width: 100%; height: 400px; border:0;" border=0 src="<?php echo $link; ?>" class="video" allowfullscreen=""></iframe>
+							<iframe style="width: 100%; height: <?php echo ($type == 'audio' ? '70px':'400px'); ?>; border:0;" border=0 src="<?php echo $link; ?>" class="video" allowfullscreen=""></iframe>
 							<?php
 						}
 						elseif( $type == 'image' ) {
-							$link = $this->mediaLink( $url.'/resize/size600x400' );
+							$link = $this->mediaLink( $url.'/resize/size600x900' );
+							$imgserver = $this->mediaLink( $url.'/iframe' );
 							?>
-							<img src="<?php echo $link; ?>" style="width: 100%;" />
+							<a href="<?php echo $imgserver; ?>" target=_blank><img src="<?php echo $link; ?>" style="width: 100%;" />
 							<?php
 						}
 						else {
@@ -294,6 +302,13 @@ class zoteroDisplay extends DisplayEntity {
 						  </p>
 						</video>
 <?php
+					}
+					else {
+						?>
+
+							<a href="redir.php?id=<?php echo urlencode( $this->doc->id ).'&url='.urlencode( $url ); ?>" target="_blank"><?php echo htmlspecialchars( $url ); ?></a>
+						<?php
+
 					}
 				} // linkMode == linkedURL
 				elseif( preg_match( '/application\/pdf/', $att->getContentType())) {
@@ -356,6 +371,28 @@ class zoteroDisplay extends DisplayEntity {
 					</div>
 				</div>
 						<?php  } ?>
+<?php 	$rels = $this->item->getRelations();
+				if( is_array( $rels ) && count( $rels ))  { ?>
+				<div style="">
+				<span style="; font-weight: bold;">Verweise</span><br />
+					<div class="facet" style="">
+						<div class="marker" style=""></div>
+<?php
+						foreach( $rels as $rel ) {
+							if( preg_match( '/^(.+):http:\/\/zotero.org\/groups\/([0-9]+)\/items\/([A-Z0-9]+)$/', $rel, $matches)) {
+?>
+								<label>
+									<a href="<?php echo "detail.php?id=zotero-{$matches[2]}.{$matches[3]}&q={$q}"; ?>">
+										<?php echo "{$matches[2]}.{$matches[3]}"; ?>
+									</a>
+							</label><br />
+<?php
+						}
+					}
+?>
+				</div>
+			</div>
+					<?php  } ?>
 
 
 			</div>

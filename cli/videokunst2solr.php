@@ -8,7 +8,7 @@ $hdlprefix = '20.500.11806/mediathek/';
 $urlbase = 'https://mediathek.hgk.fhnw.ch/detail.php?id=';
 
 
-$solr = new SOLR( $solrclient );
+$solr = new SOLR( $solrclient, $db );
 
 $filename =  $config['tmpprefix']."videokunst_ch.html";
 $wgetfile = $config['tmpprefix']."videokunst_ch_load.sh";

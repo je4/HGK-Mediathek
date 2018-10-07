@@ -12,7 +12,7 @@
 						</select>
 						<div id="info"> </div>
 						<p><hr /></p>
-						<a href="<?php echo $data['meta:raw']; ?>" target="_blank">Download File</a>						
+						<a href="<?php echo $data['meta:raw']; ?>" target="_blank">Download File</a>
 					</div>
 				</div>
 		<!-- <script src="https://www.openlayers.org/api/OpenLayers.js"></script> -->

@@ -8,7 +8,7 @@ $hdlprefix = '20.500.11806/mediathek/';
 $urlbase = 'https://mediathek.hgk.fhnw.ch/detail.php?id=';
 
 $entity = new IKUVidEntity( $db );
-$solr = new SOLR( $solrclient );
+$solr = new SOLR( $solrclient, $db );
 
 
 $sql = "SELECT DISTINCT `Archiv-Nr` as id FROM source_ikuvid";

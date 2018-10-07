@@ -12,7 +12,7 @@ $doabClient = new \Phpoaipmh\Client('http://www.doabooks.org/oai');
 $doabEndpoint = new \Phpoaipmh\Endpoint($doabClient, \Phpoaipmh\Granularity::DATE_AND_TIME);
 
 $entity = new DOABEntity( $pg );
-$solr = new SOLR( $solrclient );
+$solr = new SOLR( $solrclient, $db );
 
 if( $argc == 1 ) {
 	$result = $doabEndpoint->identify();

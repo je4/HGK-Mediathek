@@ -318,6 +318,20 @@ class Item {
     return $attachments;
   }
 
+  public function getRelations() {
+    $ret = [];
+    if( array_key_exists( 'relations', $this->data['data'] )) {
+      foreach( $this->data['data']['relations'] as $key=>$rel ) {
+        if( is_array( $rel )) {
+          foreach( $rel as $val ) {
+            $ret[] = "{$key}:{$val}";
+          }
+        }
+      }
+    }
+    return $ret;
+  }
+
 
 
     /**

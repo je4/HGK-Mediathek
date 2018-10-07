@@ -15,7 +15,7 @@ $data = json_decode( file_get_contents( 'vww.json' ), true );
 //echo implode(', ', array_keys( $data ));
 //exit;
 $entity = new WenkenparkEntity( $db );
-$solr = new SOLR( $solrclient );
+$solr = new SOLR( $solrclient, $db );
 
 
 $sql = "SELECT DISTINCT `Publikationsnummer` as id FROM source_wenkenpark WHERE `Publikationsnummer` IS NOT NULL";

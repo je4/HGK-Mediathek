@@ -6,17 +6,20 @@ include '../init.inc.php';
 include '../init.pg.php';
 
 $sourceid=4;
+$fullindex = false;
 
 $doabClient = new \Phpoaipmh\Client('http://oai.swissbib.ch/oai/DB=2.1/');
 $doabEndpoint = new \Phpoaipmh\Endpoint($doabClient, \Phpoaipmh\Granularity::DATE_AND_TIME);
 
 $entity = new swissbibEntity( $db );
-$solr = new SOLR( $solrclient );
+$solr = new SOLR( $solrclient, $db );
 
 $result = $doabEndpoint->identify();
 
 $sql = "SELECT to_char( datestamp, 'YYYY-MM-DDXHH24:MI:SS') FROM oai_pmh_source WHERE oai_pmh_source_id={$sourceid}";
 $datestamp = $pg->GetOne( $sql );
+
+//if( $fullindex ) $datestamp = null;
 
 var_dump( $result->Identify );
 
@@ -43,7 +46,7 @@ try {
 			$datestamp = $record->getDatestamp();
 			echo "> {$id} {$datestamp}({$counter})\n";
 
-			if( $record->isDeleted() ) {
+			if( $record->isDeleted()) {
 				echo "   deleting swissbib-{$id}...\n";
 				$solr->delete( 'swissbib-'.$id);
 				//$pg->Execute($sql);
@@ -98,7 +101,7 @@ try {
 				$update->addCommit();
 
 				// this executes the query and returns the result
-				$result = $solrclient->update($update);
+				if( DEBUG ) $result = $solrclient->update($update);
 
 				$sql = "SELECT 1 as val";
 				do {
@@ -141,12 +144,10 @@ try {
 				$interval = 0;
 
 				$update = $solrclient->createUpdate();
-
 				// add commit command to the update query
 				$update->addCommit();
-
 				// this executes the query and returns the result
-				$result = $solrclient->update($update);
+				if( DEBUG ) $result = $solrclient->update($update);
 
 				$sql = "UPDATE oai_pmh_source SET datestamp=".$pg->qstr( $record->getDatestamp() )." WHERE oai_pmh_source_id={$sourceid}";
 				echo "\n------\n{$sql}\n--------\n";
@@ -176,6 +177,12 @@ try {
 		//	else exit;
 
 		//	$entity->loadFromArray( $record->getIdentifier(), $data, 'doab' );
+		$update = $solrclient->createUpdate();
+		// add commit command to the update query
+		$update->addCommit();
+		// this executes the query and returns the result
+		$result = $solrclient->update($update);
+
 		}
 
 		catch( \Exception $e ) {

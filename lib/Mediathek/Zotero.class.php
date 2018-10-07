@@ -157,8 +157,49 @@ class Zotero {
       if( $linkMode == 'linked_url' ) {
         try {
           $url = $item['data']['url'];
-
-					if( preg_match( '/^http:\/\/hdl.handle.net\/20.500.11806\/mediathek\/inventory\/[^\/]+\/([0-9.]+)$/', $url, $matches )) {
+          foreach( $config['http2regexp'] as $pattern=>$replace ) {
+            $url = preg_replace( $pattern, $replace, $url );
+          }
+          // check for nfs file
+          if( preg_match( "#file://[^/]+({$config['nfsdata']}.+)$#", $url, $matches )) {
+            // get collection id
+            $collectionname = "zotero_{$item['library']['id']}";
+            $signature = "{$item['library']['id']}.{$item['key']}";
+            $sql = "SELECT collectionid FROM mediaserver.collection WHERE name=".$this->db->qstr( $collectionname );
+            $collectionid = intval( $this->db->getOne( $sql ));
+            if( $collectionid == 0 ) die( 'library has no collection: '.$sql );
+            $sql = "INSERT INTO mediaserver.master( collectionid, signature, urn ) VALUES( {$collectionid}, ".$this->db->qstr( $signature ).", ".$this->db->qstr( $url ).")";
+            echo "{$sql}\n";
+            try {
+              $this->db->Execute( $sql );
+            }
+            catch( \Exception $e ) {
+              echo $e->getMessage()."\n";
+            }
+            $url = "{$config['mediaserver']['baseurl']}{$collectionname}/{$signature}";
+            $item['data']['url'] = "mediaserver:{$collectionname}/{$signature}";
+            $metaurl = $url.'/metadata';
+            if( isset( $config['mediaserver']['key'] )) {
+              $metaurl .= '?token='.jwt_encode(
+                    ['sub'=>"{$config['mediaserver']['sub_prefix']}{$collectionname}/{$signature}/metadata", 'exp'=>time()+1000],
+                    $config['mediaserver']['key']
+                  );
+            }
+            echo "loading metadata from {$metaurl}\n";
+            try {
+              $meta = $this->dataFromURL( $metaurl );
+              $metaarr = json_decode( $meta, true );
+              $item['data']['media'] = array( 'metadata'=>$metaarr );
+              $mimetype = array_key_exists( 'mimetype', $metaarr ) ? $metaarr['mimetype'] : 'application/octet-stream';
+              //var_dump( $metaarr );
+            }
+            catch( \Exception $ex ) {
+              echo( $ex->getMessage());
+            }
+            //die();
+          }
+          // prüfen, ob es sich um einen indexer-link handelt...
+					elseif( preg_match( '/^http:\/\/hdl.handle.net\/20.500.11806\/mediathek\/inventory\/[^\/]+\/([0-9.]+)$/', $url, $matches )) {
 						$url = "{$config['mediaserver']['baseurl']}indexer{$matches[1]{0}}/indexer{$matches[1]}";
             $item['data']['url'] = "mediaserver:indexer{$matches[1]{0}}/indexer{$matches[1]}";
             $metaurl = $url.'/metadata';
@@ -196,6 +237,77 @@ class Zotero {
       }
     }
 //    print_r( $item['data'] );
+
+if( array_key_exists( 'enclosure', $item['links'])) {
+  $enc = $item['links']['enclosure'];
+  if( !is_dir( "{$this->contentpath}/enclosure/{$id}" )) {
+    echo "mkdir {$this->contentpath}\n";
+    mkdir( "{$this->contentpath}/enclosure/{$id}" );
+    chmod( "{$this->contentpath}/enclosure/{$id}", 0777 );
+    //die();
+  }
+  $filename_rel = "enclosure/{$id}/{$item['key']}";
+  $filename = "{$this->contentpath}/{$filename_rel}";
+  $uri = $enc['href'];
+  if( !file_exists( $filename )) {
+    $this->log( "      Downloading file: {$uri}" );
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $uri);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array( 'Authorization: Bearer '.$this->apikey ));
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    /*
+    curl_setopt($ch, CURLOPT_VERBOSE, 1);
+    curl_setopt($ch, CURLOPT_HEADER, 1);
+    $response = curl_exec ($ch);
+    $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+    $header = substr($response, 0, $header_size);
+    $body = substr($response, $header_size);
+    print_r( $header );
+    */
+    $body = curl_exec ($ch);
+    file_put_contents( $filename,  $body );
+    if( filesize( $filename )) {
+      chmod( $filename, 0666 );
+    }
+  }
+  if( filesize( $filename )) {
+    $collectionname = "zotero_{$item['library']['id']}";
+    $signature = "{$item['library']['id']}.{$item['key']}_enclosure";
+    $sql = "SELECT collectionid FROM mediaserver.collection WHERE name=".$this->db->qstr( $collectionname );
+    $collectionid = intval( $this->db->getOne( $sql ));
+    if( $collectionid == 0 ) die( 'library has no collection: '.$sql );
+    $sql = "INSERT INTO mediaserver.master( collectionid, signature, urn ) VALUES( {$collectionid}, ".$this->db->qstr( $signature ).", ".$this->db->qstr( "file://ba14ns21403.fhnw.ch{$filename}" ).")";
+    echo "{$sql}\n";
+    try {
+      $this->db->Execute( $sql );
+    }
+    catch( \Exception $e ) {
+      echo $e->getMessage()."\n";
+    }
+    $url = "{$config['mediaserver']['baseurl']}{$collectionname}/{$signature}";
+    $item['data']['url'] = "mediaserver:{$collectionname}/{$signature}";
+    $metaurl = $url.'/metadata';
+    if( isset( $config['mediaserver']['key'] )) {
+      $metaurl .= '?token='.jwt_encode(
+            ['sub'=>"{$config['mediaserver']['sub_prefix']}{$collectionname}/{$signature}/metadata", 'exp'=>time()+1000],
+            $config['mediaserver']['key']
+          );
+    }
+    echo "loading metadata from {$metaurl}\n";
+    try {
+      $meta = $this->dataFromURL( $metaurl );
+      $metaarr = json_decode( $meta, true );
+      $item['data']['media'] = array( 'metadata'=>$metaarr );
+      $mimetype = $metaarr['mimetype'];
+      //var_dump( $metaarr );
+    }
+    catch( \Exception $ex ) {
+      echo( $ex->getMessage());
+    }
+  }
+}
 
 
     $replace = array(
@@ -245,107 +357,7 @@ class Zotero {
       );";
       $this->db->Execute( $sql );
     }
-    if( array_key_exists( 'enclosure', $item['links'])) {
-      $enc = $item['links']['enclosure'];
-      if( !is_dir( "{$this->contentpath}/enclosure/{$id}" )) mkdir( "{$this->contentpath}/enclosure/{$id}" );
-      $filename_rel = "enclosure/{$id}/{$item['key']}";
-      $filename = "{$this->contentpath}/{$filename_rel}";
-      $uri = $enc['href'];
-      if( !file_exists( $filename )) {
-        $this->log( "      Downloading file: {$uri}" );
-
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $uri);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array( 'Authorization: Bearer '.$this->apikey ));
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        /*
-        curl_setopt($ch, CURLOPT_VERBOSE, 1);
-        curl_setopt($ch, CURLOPT_HEADER, 1);
-        $response = curl_exec ($ch);
-        $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
-        $header = substr($response, 0, $header_size);
-        $body = substr($response, $header_size);
-        print_r( $header );
-        */
-        $body = curl_exec ($ch);
-        file_put_contents( $filename,  $body );
-        if( filesize( $filename )) {
-          $fulltext = null;
-          $pages = null;
-          switch( $enc['type'] ) {
-            case 'application/pdf':
-              $cmd = 'pdftotext '.escapeshellarg( $filename ).' '.escapeshellarg( $filename.'.txt' );
-              $this->log( "      Extracting fulltext (pdf): $filename_rel" );
-              shell_exec( $cmd );
-              /*
-              $dir = $filename.'_pages';
-              if( !is_dir( $dir )) mkdir( $dir );
-              $cmd = 'convert '.escapeshellarg( $filename ).' -resize x800 '.escapeshellarg( $dir.'/'.$item['key'].'-%03d.jpg' );
-              $this->log( "      Generating pages (pdf): $filename_rel" );
-              shell_exec( $cmd );
-              */
-              $cmd = 'pdfinfo '.escapeshellarg( $filename );
-              $this->log( "      Counting pages (pdf): $filename_rel" );
-              $ret = shell_exec( $cmd );
-              if( preg_match( '/Pages:\s*(\d+)/i', $ret, $matches )) {
-                $pages = intval( $matches[1] );
-              }
-              break;
-              case 'text/html':
-                $text = file_get_contents( $filename );
-                $text = preg_replace(
-                    array(
-                      // Remove invisible content
-                        '@<head[^>]*?>.*?</head>@siu',
-                        '@<style[^>]*?>.*?</style>@siu',
-                        '@<script[^>]*?.*?</script>@siu',
-                        '@<object[^>]*?.*?</object>@siu',
-                        '@<embed[^>]*?.*?</embed>@siu',
-                        '@<applet[^>]*?.*?</applet>@siu',
-                        '@<noframes[^>]*?.*?</noframes>@siu',
-                        '@<noscript[^>]*?.*?</noscript>@siu',
-                        '@<noembed[^>]*?.*?</noembed>@siu',
-                      // Add line breaks before and after blocks
-                        '@</?((address)|(blockquote)|(center)|(del))@iu',
-                        '@</?((div)|(h[1-9])|(ins)|(isindex)|(p)|(pre))@iu',
-                        '@</?((dir)|(dl)|(dt)|(dd)|(li)|(menu)|(ol)|(ul))@iu',
-                        '@</?((table)|(th)|(td)|(caption))@iu',
-                        '@</?((form)|(button)|(fieldset)|(legend)|(input))@iu',
-                        '@</?((label)|(select)|(optgroup)|(option)|(textarea))@iu',
-                        '@</?((frameset)|(frame)|(iframe))@iu',
-                    ),
-                    array(
-                        ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
-                        "\n\$0", "\n\$0", "\n\$0", "\n\$0", "\n\$0", "\n\$0",
-                        "\n\$0", "\n\$0",
-                    ),
-                    $text );
-                $text = strip_tags( $text );
-                file_put_contents( $filename.'.txt', $text);
-                $this->log( "      Extracting fulltext (html): $filename_rel" );
-                break;
-              case 'text/plain':
-                file_put_contents( $filename.'.txt', file_get_contents( $filename ));
-                $this->log( "      Extracting fulltext (text): $filename_rel" );
-                break;
-          }
-          $replace = array(
-            '`key`'=>$item['key'],
-            'libraryid'=>$id,
-            'type'=>array_key_exists( 'type', $enc ) ? $enc['type'] : null,
-            'href'=>array_key_exists( 'href', $enc ) ? $enc['href'] : null,
-            'title'=>array_key_exists( 'title', $enc ) ? $enc['title'] : null,
-            'pages'=>$pages,
-            'length'=>array_key_exists( 'length', $enc ) ? $enc['length'] : null,
-            'filename'=>$filename_rel,
-            '`fulltext`'=> null,
-          );
-          $this->db->Replace( 'zotero.enclosures', $replace, array( '`key`', 'libraryid' ), $autoquote = true );
-          $this->db->UpdateBlob( 'zotero.enclosures', '`fulltext`', file_exists( $filename.'.txt' ) ? gzencode( file_get_contents( $filename.'.txt' )) : null, "`key`=".$this->db->qstr( $item['key'] )." AND libraryid={$id}" );
-        }
-      }
-    }
+    //if( $item['key'] == 'ISH7TPLH') die( 'ISH7TPLH' );
   }
 
   function syncItems( $id ) {

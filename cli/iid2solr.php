@@ -8,7 +8,7 @@ $hdlprefix = '20.500.11806/mediathek/';
 $urlbase = 'https://mediathek.hgk.fhnw.ch/detail.php?id=';
 
 $entity = new IIDWorkEntity( $db );
-$solr = new SOLR( $solrclient );
+$solr = new SOLR( $solrclient, $db );
 
 /*
  localhost:8983/solr/base/update?stream.body=<delete><query>source:IIDWork</query></delete>

@@ -9,7 +9,7 @@ include '../init.inc.php';
  */
 
 $entity = new EZBEntity( $db );
-$solr = new SOLR( $solrclient );
+$solr = new SOLR( $solrclient, $db );
 
 if(( $handle = fopen( "ezb.csv", "r" )) === false ) {
     echo "fehler beim oeffnen von ezb.csv\n";
@@ -20,56 +20,56 @@ $titles = null;
 while (($data = fgetcsv($handle, 0, "\t"))) {
     // print_r( $data );
     if( count( $data ) < 10 ) continue;
-    
+
     if( $titles == null ) {
         $titles = $data;
         continue;
     }
-    
+
     $row = array();
     foreach( $data as $key=>$value ) {
         $row[$titles[$key]] = utf8_encode( $value );
     }
 //    var_dump( $row );
-    
+
 //    exit;
-    
+
     $entity->loadFromArray( $row, 'ezb' );
-    
+
     //$xml = $entity->getXML();
     //echo $xml->saveXML();
-    
+
     $title = $entity->getTitle();
     echo "Title: ".$title."\n";
-    
+
     $tags = $entity->getTags();
     echo "Tags: ";
     print_r( $tags );
-    
+
     $cluster = $entity->getCluster();
     echo "Cluster: ";
     print_r( $cluster );
-    
+
     $authors = $entity->getAuthors();
     echo "Authors: ";
     print_r( $authors );
-    
+
     $loans = $entity->getLoans();
     echo "Loans: ";
     print_r( $loans );
-    
+
     $licenses = $entity->getLicenses();
     echo "Licenses: ";
     print_r( $licenses );
-    
+
     $signatures = $entity->getSignatures();
     echo "Signatures: ";
     print_r( $signatures );
-    
+
     $urls = $entity->getURLs();
     echo "URLs: ";
     print_r( $urls );
-    
+
     $solr->import( $entity );
 
 }

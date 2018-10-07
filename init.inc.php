@@ -49,7 +49,7 @@ function doConnectMySQL($force = false) {
 doConnectMySQL();
 
 $session = new Mediathek\Session( $db, $_SERVER );
-$solrclient = new Solarium\Client($config['solarium']);
+$solrclient = new Solarium\Client(DEBUG ? $config['solariumdev']:$config['solarium']);
 $solrclient->getPlugin('postbigrequest');
 
 require 'lib/Phpoaipmh/Autoloader.php';

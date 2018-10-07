@@ -12,7 +12,7 @@ $doajClient = new \Phpoaipmh\Client('http://www.doaj.org/oai.article');
 $doajEndpoint = new \Phpoaipmh\Endpoint($doajClient, \Phpoaipmh\Granularity::DATE_AND_TIME);
 
 $entity = new DOAJArticleEntity( $pg );
-$solr = new SOLR( $solrclient );
+$solr = new SOLR( $solrclient, $db );
 
 if( $argc == 1 ) {
 
