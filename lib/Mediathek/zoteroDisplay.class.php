@@ -417,8 +417,9 @@ class zoteroDisplay extends DisplayEntity {
 			foreach( $categories as $key=>$cat ) {
 				$qstr .= ($key == 0 ? '' : ' OR ').'category: '.$helper->escapePhrase($cat);
 			}
-			if( strlen( $qstr )) $qstr = "({$qstr})";
-		//	$qstr = "({$qstr}) AND -id:".$helper->escapeTerm( $this->doc->id );
+			$qstr = trim( $qstr );
+			if( strlen( $qstr )) $qstr = "({$qstr}) AND ";
+			$qstr .= "-id:".$helper->escapeTerm( $this->doc->id );
 			//echo "\n<!-- {$qstr} -->\n";
 			$squery->setQuery( $qstr );
 	//		$squery->createFilterQuery('source')->setQuery('source: zotero');
