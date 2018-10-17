@@ -247,7 +247,7 @@ class zoteroDisplay extends DisplayEntity {
 							$link = $this->mediaLink( $url.'/resize/size500x700' );
 							$imgserver = $this->mediaLink( $url.'/iframe' );
 							?>
-							<a href="<?php echo $imgserver; ?>" target=_blank><img src="<?php echo $link; ?>" style="width: 100%;" />
+							<a href="<?php echo $imgserver; ?>" target=_blank><img src="<?php echo $link; ?>" style="width: 100%;" /></a>
 							<?php
 						}
 						else {
