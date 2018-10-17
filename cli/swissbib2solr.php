@@ -22,12 +22,11 @@ $datestamp = $pg->GetOne( $sql );
 //if( $fullindex ) $datestamp = null;
 
 var_dump( $result->Identify );
-
 if( $datestamp == null )
 	$datestamp = (string) $result->Identify->earliestDatestamp;
 $datestamp = str_replace( 'X', 'T', $datestamp );
 
-echo "Starting with: ".$datestamp."\n";
+echo "Starting with: {$datestamp}\n";
 try {
 	$recs = $doabEndpoint->listRecords( 'm21-xml/oaitp', new \DateTime( $datestamp ));
 	$counter = $interval = $interval2 =  0;

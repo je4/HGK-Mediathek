@@ -132,7 +132,13 @@ abstract class DisplayEntity {
   public static function mediaLink( $url ) {
     global $config;
       if( preg_match( '/^mediaserver:([^\/]+\/[^\/]+\/[^\/]+)(\/[^\/]*)?$/', $url, $matches )) {
-        $link = $config['mediaserver']['baseurl'].$matches[1].(isset( $matches[2] ) ? $matches[2] : '').'?token='.self::createToken( $matches[1] );
+        $paramstring = '';
+        if( isset( $matches[2] )) {
+          $ps = explode( '/', strtolower( trim( $matches[2], '/' )));
+          sort( $ps );
+          $paramstring = '/'.implode( '/', $ps );
+        }
+        $link = $config['mediaserver']['baseurl'].$matches[1].$paramstring.'?token='.self::createToken( $matches[1].$paramstring );
         return $link;
       }
       return null;
