@@ -15,7 +15,7 @@
  * @copyright   (C) 2016 Academy of Art and Design FHNW
  * @license     http://www.gnu.org/licenses/gpl-3.0
  * @link        http://mediathek.fhnw.ch
- * 
+ *
  */
 
 /**
@@ -26,31 +26,43 @@ namespace Mediathek;
 class RIB {
     private $baseurl;
     private $data;
-    
+    private $sys;
+
     public function __construct( $baseurl ) {
         $this->baseurl = $baseurl;
         $this->data = null;
+        $this->sys = null;
     }
-    
+
     public function hasData() {
-        return isset( $this->data['result']);
+        return isset( $this->data['holdings']);
     }
-    
+
     public function load( $sys ) {
-        $url = $this->baseurl.'/documents?q=ebi01_prod'.$sys.'&aleph_items=true&searchfield=rid';
+      $this->sys = $sys;
+        $url = $this->baseurl.'/search/ebi01_prod'.$sys.'?holdings=true&lang=de_DE';
         $rd = file_get_contents( $url );
-        $this->data = (array)json_decode( $rd );
+        $this->data = json_decode( $rd, true );
     }
-    
-    public function getAvailability( $signature ) {
-        if( !isset( $this->data['result'])) return null;
-        foreach( $this->data['result']->document as $doc ) {
-            if( isset( $doc->availability->itemList ) && is_array( $doc->availability->itemList )) {
-                foreach( $doc->availability->itemList as $item ) {
-                    $item = (array)$item;
-                    if( $item['z30-call-no'] == $signature ) return $item;
-                }
+
+    public function getAvailability() {
+      if( !isset( $this->data['delivery'])) return null;
+      foreach( $this->data['delivery']['holding'] as $holding ) {
+          if( $holding['ilsApiId'] == 'EBI01'.$this->sys ) {
+            if( isset( $holding['availabilityStatus'] )) return $holding['availabilityStatus'];
+          }
+          break;
+      }
+        return null;
+    }
+
+    public function getStatus() {
+        if( !isset( $this->data['holdings'])) return null;
+        foreach( $this->data['holdings']['items'] as $item ) {
+            if( $item['ilsapiid'] == 'EBI01'.$this->sys ) {
+              if( isset( $item['z30-item-status'] )) return $item['z30-item-status'];
             }
+            break;
         }
         return null;
     }
