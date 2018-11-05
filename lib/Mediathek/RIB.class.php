@@ -49,6 +49,15 @@ class RIB {
     }
 
     public function getAvailability( $signature ) {
+      if( !isset( $this->data['holdings'])) return null;
+      foreach( $this->data['holdings']['items'] as $item ) {
+          if( $item['ilsapiid'] == 'EBI01'.$this->sys ) {
+            if( isset( $item['status'] )) return $item['status'];
+          }
+          break;
+      }
+      return null;
+
       if( !isset( $this->data['delivery'])) return null;
       foreach( $this->data['delivery']['holding'] as $holding ) {
           if( $holding['ilsApiId'] == 'EBI01'.$this->sys && $holding['libraryCode'] == 'E75' ) {

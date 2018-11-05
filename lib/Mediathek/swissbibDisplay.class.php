@@ -193,7 +193,7 @@ class swissbibDisplay extends DisplayEntity {
 										.'" target="_blank">'.htmlspecialchars( $signature )."</a><br />\n";
 										$availability = $rib ? $rib->getAvailability($signature) : null;
 										if( $availability ) {
-											echo "<span style=\"font-size: 80%; line-height: 80%\">&nbsp;&nbsp; Status: {$availability}<br />\n";
+											echo "<span style=\"font-size: 80%; line-height: 80%\">&nbsp;&nbsp; Ausleihstatus: {$availability}<br />\n";
 											echo "&nbsp;&nbsp; Benutzung: ".$rib->getStatus()	."<br /></span>\n";
 										}
 									}
