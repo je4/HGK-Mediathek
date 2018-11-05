@@ -420,7 +420,7 @@ class zoteroDisplay extends DisplayEntity {
 			$qstr = trim( $qstr );
 			if( strlen( $qstr )) $qstr = "({$qstr}) AND ";
 			$qstr .= "-id:".$helper->escapeTerm( $this->doc->id );
-			$qstr = "{$qstr} AND catalog:".$helper->escapeTerm( $libname );
+			$qstr = "{$qstr} AND catalog:".$helper->escapePhrase( $libname );
 			echo "\n<!-- {$qstr} -->\n";
 			$squery->setQuery( $qstr );
 	//		$squery->createFilterQuery('source')->setQuery('source: zotero');

@@ -36,9 +36,11 @@ http://localhost:8983/solr/base/update?stream.body=%3Cdelete%3E%3Cquery%3Esource
 http://localhost:8983/solr/base/update?stream.body=%3Cdelete%3E%3Cquery%3Edeleted%3Atrue%3C%2Fquery%3E%3C%2Fdelete%3E
 http://localhost:8983/solr/base/update?stream.body=%3Cdelete%3E%3Cquery%3Ecatalog%3AKaskoArchiv%3C%2Fquery%3E%3C%2Fdelete%3E
 http://localhost:8983/solr/base/update?stream.body=%3Cdelete%3E%3Cquery%3Esource%3Adiplomhgk%3C%2Fquery%3E%3C%2Fdelete%3E
+http://localhost:8983/solr/cataloguecoll/update?stream.body=%3Cdelete%3E%3Cquery%3Eid%3Azotero-2171465.*%3C%2Fquery%3E%3C%2Fdelete%3E
+
 
 "source":"DOAB"
-http://localhost:8983/solr/base/update?stream.body=%3Ccommit/%3E
+http://localhost:8983/solr/cataloguecoll/update?stream.body=%3Ccommit/%3E
 */
 
 class SOLR {

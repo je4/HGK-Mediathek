@@ -7,14 +7,17 @@ include '../init.inc.php';
 $hdlprefix = '20.500.11806/mediathek/';
 $urlbase = 'https://mediathek.hgk.fhnw.ch/detail.php?id=';
 //$groups = array( 1387750, 1510019, 1510009, 1624911, 1803850, 2061687 );
-//$groups = array( 1510019 ); // Institut Kunst
-//$groups = array( 2066935 );  // RIMAB
+$groups = array( 1510009 ); // Institut Kunst
 //$groups = array( 1624911 ); // IKUVid
-$groups = array( 2068924 ); // summe 2017 2068924
+//$groups = array( 2068924 ); // summe 2017 2068924
 //$groups = array( 2180340 ); // grenzgang
 //$groups = array( 2171463, );  // anfaenge der kuenstlerischen forschung
 //$groups = array( 2206003, );  // act
 //$groups = array( 1510019, );  // Hyperwerk
+//$groups = array( 2066935, );  // RIMAB
+//$groups = array( 2171465, );  // Basle Bibliography for Historical Performance Practice
+
+
 //$groups = array( 1387750, 1510019, 1510009, 1624911, 1803850, 2061687, 2066935, 1624911, 2068924, 2180340, 2206003 );
 
 $solr = new SOLR( $solrclient, $db );
