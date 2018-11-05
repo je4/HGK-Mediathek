@@ -6,7 +6,7 @@ include '../init.inc.php';
 
 
 $entity = new GrenzgangEntity( $db );
-$solr = new SOLR( $solrclient );
+$solr = new SOLR( $solrclient, $db );
 
 
 $sql = "SELECT DISTINCT `ID` as id FROM source_grenzgang"; // WHERE Berechtigung IS NOT NULL";
@@ -40,4 +40,7 @@ foreach( $rs as $row ) {
     $solr->import( $entity );
 }
 $rs->Close();
-?>
+
+$update = $solrclient->CreateUpdate();
+$update->addCommit();
+$result = $solrclient->update( $update );

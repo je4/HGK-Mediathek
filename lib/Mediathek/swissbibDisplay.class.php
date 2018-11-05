@@ -178,9 +178,6 @@ class swissbibDisplay extends DisplayEntity {
 							if( isset( $config['RIB'] )) {
 								$rib = new RIB( $config['RIB'] );
 								$rib->load( $nebisid );
-								echo "<!-- RIB";
-								print_r( $rib );
-								echo  "ENDRIB -->";
 							}
 							else
 							{
@@ -194,13 +191,17 @@ class swissbibDisplay extends DisplayEntity {
 										echo 'Signatur: <a href="redir.php?id='.urlencode( $this->doc->id ).'&url='
 										.urlencode( 'https://recherche.nebis.ch/primo-explore/fulldisplay?docid=ebi01_prod'.urlencode( $nebisid ).'&context=L&vid=NEBIS&lang=de_DE&search_scope=default_scope&adaptor=Local%20Search%20Engine&tab=default_tab' )
 										.'" target="_blank">'.htmlspecialchars( $signature )."</a><br />\n";
-										$availability = $rib ? $rib->getAvailability() : null;
+										$availability = $rib ? $rib->getAvailability($signature) : null;
 										if( $availability ) {
 											echo "<span style=\"font-size: 80%; line-height: 80%\">&nbsp;&nbsp; Status: {$availability}<br />\n";
 											echo "&nbsp;&nbsp; Benutzung: ".$rib->getStatus()	."<br /></span>\n";
 										}
 									}
 								}
+							}
+							$thumb = $rib->getThumb();
+							if( $thumb ) {
+								echo "<img src=\"{$thumb}\" /><br />\n";
 							}
 /*
 							foreach( $this->entity->getBibs() as $bib ) {

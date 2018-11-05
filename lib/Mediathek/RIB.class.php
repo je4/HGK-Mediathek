@@ -43,18 +43,32 @@ class RIB {
         $url = $this->baseurl.'/search/ebi01_prod'.$sys.'?holdings=true&lang=de_DE';
         $rd = file_get_contents( $url );
         $this->data = json_decode( $rd, true );
+        echo "<!-- RIB";
+        echo json_encode( $this->data, JSON_PRETTY_PRINT );
+        echo  "ENDRIB -->";
     }
 
-    public function getAvailability() {
+    public function getAvailability( $signature ) {
       if( !isset( $this->data['delivery'])) return null;
       foreach( $this->data['delivery']['holding'] as $holding ) {
-          if( $holding['ilsApiId'] == 'EBI01'.$this->sys ) {
+          if( $holding['ilsApiId'] == 'EBI01'.$this->sys && $holding['libraryCode'] == 'E75' ) {
             if( isset( $holding['availabilityStatus'] )) return $holding['availabilityStatus'];
           }
           break;
       }
         return null;
     }
+
+    public function getThumb() {
+      if( !isset( $this->data['delivery'])) return null;
+      foreach( $this->data['delivery']['link'] as $link ) {
+          if( $link['displayLabel'] == 'thumbnail' ) {
+            return $link['linkURL'];
+          }
+          break;
+      }
+      return null;
+  }
 
     public function getStatus() {
         if( !isset( $this->data['holdings'])) return null;
