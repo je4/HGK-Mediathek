@@ -329,6 +329,7 @@ class zoteroEntity extends SOLRSource {
     $cats = array_merge( $cats, $this->item->getVar( 'catalog' ));
     $cats[] = $this->getSource();
     $cats[] = $this->item->getLibraryName();
+    //$cats[] = 'HGKplus';
     return $cats;
   }
 

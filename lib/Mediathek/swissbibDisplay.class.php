@@ -97,8 +97,8 @@ class swissbibDisplay extends DisplayEntity {
 
 
         if( DEBUG && $session->isLoggedIn()) {
-        	$solr = new SOLR( $solrclient, $this->db );
-        	$solr->import( $entity, true );
+        	//$solr = new SOLR( $solrclient, $this->db );
+        	//$solr->import( $entity, true );
         }
 
         ob_start(null, 0, PHP_OUTPUT_HANDLER_CLEANABLE | PHP_OUTPUT_HANDLER_REMOVABLE);
@@ -176,8 +176,10 @@ class swissbibDisplay extends DisplayEntity {
 								if( strncmp( $sourceid, '(NEBIS)', 7 ) == 0 ) $nebisid = substr( $sourceid, 7 );
 							}
 							if( isset( $config['RIB'] )) {
-								$rib = new RIB( $config['RIB'] );
-								$rib->load( $nebisid );
+								if( strlen( $nebisid )) {
+									$rib = new RIB( $config['RIB'] );
+									$rib->load( $nebisid );
+								}
 							}
 							else
 							{
@@ -199,7 +201,7 @@ class swissbibDisplay extends DisplayEntity {
 									}
 								}
 							}
-							$thumb = $rib->getThumb();
+							$thumb = $rib ? $rib->getThumb() : null;
 							if( $thumb ) {
 								echo "<img src=\"{$thumb}\" /><br />\n";
 							}

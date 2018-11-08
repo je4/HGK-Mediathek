@@ -15,6 +15,9 @@ if( $map === null ) {
 	$squery->setRows( 5 );
 	$squery->setStart( $page * $pagesize );
 	$squery->setFields(array('id'));
+	$squery->createFilterQuery('acl_meta')->setQuery("acl_meta:global/guest");
+	$squery->createFilterQuery('source')->setQuery("source:zotero OR source:ikuvid OR source:Wenkenpark OR catalog:HGK");
+	$squery->createFilterQuery('not')->setQuery("source:zotero OR source:ikuvid OR source:Wenkenpark OR catalog:HGK");
 	$qstr = '*:*';
 	$squery->setQuery( $qstr );
 	$rs = $solrclient->select( $squery );
@@ -45,11 +48,12 @@ else{
 		$squery = $solrclient->createSelect();
 		$squery->setRows( $pagesize );
 		$squery->setStart( $first );
-		$squery->setFields(array('id'));
+		$squery->setFields(['id', 'creation_date']);
+		$squery->createFilterQuery('acl_meta')->setQuery("acl_meta:global/guest");
+		$squery->createFilterQuery('source')->setQuery("source:zotero OR source:ikuvid OR source:Wenkenpark OR catalog:HGK");
 		$qstr = '*:*';
-			
 		$squery->setQuery( $qstr );
-		
+
 		$rs = $solrclient->select( $squery );
 		$numResults = $rs->getNumFound();
 		foreach( $rs as $doc ) {
@@ -58,5 +62,3 @@ else{
 		$page++;
 	} while( $last < min( $numResults, ($map+1)*$mapsize-1 ));
 }
-
-
