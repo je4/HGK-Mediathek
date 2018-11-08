@@ -22,7 +22,7 @@ if( $map === null ) {
 	$squery->setQuery( $qstr );
 	$rs = $solrclient->select( $squery );
 	$numResults = $rs->getNumFound();
-	$num = floor( $numResults / (real)$mapsize );
+	$num = ceil( $numResults / (real)$mapsize );
 	if( $numResults % $mapsize > 0 ) $num++;
 	header( 'Content-type: text/xml' );
 ?>
@@ -32,7 +32,7 @@ if( $map === null ) {
 	for( $i = 0; $i < $num; $i++ ) {
 ?>
 		<sitemap>
-		   <loc>https://mediathek.hgk.fhnw.ch/sljfsdljf.php?map=<?php echo $i; ?></loc>
+		   <loc>https://mediathek.hgk.fhnw.ch/sljfsdljfq.php?map=<?php echo $i; ?></loc>
 		</sitemap>
 <?php
 	}
