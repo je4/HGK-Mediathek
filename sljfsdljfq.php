@@ -30,9 +30,10 @@ if( $map === null ) {
    <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <?php
 	for( $i = 0; $i < $num; $i++ ) {
+		$file = "sljfsdljfq_map{$i}.gz";
 ?>
 		<sitemap>
-		   <loc>https://mediathek.hgk.fhnw.ch/sljfsdljfq.php?map=<?php echo $i; ?></loc>
+		   <loc>https://mediathek.hgk.fhnw.ch/<?php echo $file; ?>/loc>
 		</sitemap>
 <?php
 	}
