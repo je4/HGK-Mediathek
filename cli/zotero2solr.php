@@ -15,7 +15,8 @@ $groups = array(
 // 2206003,   // act
 // 1510019,   // Hyperwerk
 // 2066935,   // RIMAB
- 2171465,   // Basle Bibliography for Historical Performance Practice
+// 2171465,   // Basle Bibliography for Historical Performance Practice
+ 2250437, // Grenzgang (neu)
 );
 
 //$groups = array( 1387750, 1510019, 1510009, 1624911, 1803850, 2061687, 2066935, 1624911, 2068924, 2180340, 2206003 );
