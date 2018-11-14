@@ -52,10 +52,10 @@ Um aufzeigen und diskutieren zu können, wie sich Wissen in einem Projekt generi
 <p>
   <ul>
 
-    <li><a target="_blank" href="https://ba14ns21403-sec1.fhnw.ch/mediasrv/zotero_2250437/2250437.2XH6UNCD_enclosure/master">Schlussbericht Schweizer Nationalfond</a></li>
+    <li><a target="_blank" href="https://ba14ns21403-sec1.fhnw.ch/mediasrv/zotero_2250437/2250437.2XH6UNCD_enclosure/iframe">Schlussbericht Schweizer Nationalfond</a></li>
     <li><a target="_blank" href="https://link.springer.com/chapter/10.1007/978-3-319-76992-9_11">Springer Text Grenzgang. When Promenadology Meets Library</a></li>
-    <li><a target="_blank" href="https://ba14ns21403-sec1.fhnw.ch/mediasrv/zotero_2250437/2250437.3WG4QMQU_enclosure/master">Ortszeit DE: Grenzgang. Vom Dreispitz in den trinationalen Raum</a></li>
-    <li><a target="_blank" href="https://ba14ns21403-sec1.fhnw.ch/mediasrv/zotero_2250437/2250437.5LZJ3Q26_enclosure/master">Ortszeit EN: Grenzgang. From Dreispitz to the space of the trinational region</a></li>
+    <li><a target="_blank" href="https://ba14ns21403-sec1.fhnw.ch/mediasrv/zotero_2250437/2250437.3WG4QMQU_enclosure/iframe">Ortszeit DE: Grenzgang. Vom Dreispitz in den trinationalen Raum</a></li>
+    <li><a target="_blank" href="https://ba14ns21403-sec1.fhnw.ch/mediasrv/zotero_2250437/2250437.5LZJ3Q26_enclosure/iframe">Ortszeit EN: Grenzgang. From Dreispitz to the space of the trinational region</a></li>
     <li><a target="_blank" href="https://mediathek.hgk.fhnw.ch/detail.php?id=zotero-2250437.FHAWAZ6M">Grenzgang – Laying a Keyword Path. 15th ELIA Biennial Conference Rotterdam: Resilience and the City</a></li>
   </ul>
 </p>
