@@ -35,7 +35,7 @@ echo mediathekheader('gatekeeper', 'Feministisches* Improvisatorium', '', array(
       <div class="col-md-6">
 
 					<div class="container-fluid" style="margin-top: 0px; padding: 0px 20px 20px 20px;">
-<h4>Dienstag, 14. August 2018</h4>
+<h4>14. bis 28. August 2018</h4>
 <p>
   Was wollen wir gemeinsam auf die Beine stellen? Es ist Raum und Zeit für Vergessenes, Neues,
   Planungs- und Handlungsperspektiven. Es gibt Präsentationen, eine wachsende Fotosammlung, wofür
