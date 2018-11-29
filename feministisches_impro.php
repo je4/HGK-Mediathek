@@ -60,7 +60,7 @@ echo mediathekheader('gatekeeper', 'Feministisches* Improvisatorium', '', array(
         <a href="https://mediathek.hgk.fhnw.ch/detail.php?id=zotero-2260611.C7JP4BQS&q=9a343249ec50f056677b4cbb3cec5e06">Ingrid Rusterholz befragt von Chris Regn</a><br />
         <a href="https://mediathek.hgk.fhnw.ch/detail.php?id=zotero-2260611.WQGHXPMW&q=9a343249ec50f056677b4cbb3cec5e06">Lovis befragt von Chris Regn</a><br />
         <a href="https://mediathek.hgk.fhnw.ch/detail.php?id=zotero-2260611.2DYZS6XY&q=9a343249ec50f056677b4cbb3cec5e06">Marianne Mattmüller befragt von Chris Regn</a><br />
-        <a href="https://mediathek.hgk.fhnw.ch/detail.php?id=zotero-2260611.IJYPYT3I&q=9a343249ec50f056677b4cbb3cec5e06">Line Boser & Lysan König Befragen Sich.</a><br />
+        <a href="https://mediathek.hgk.fhnw.ch/detail.php?id=zotero-2260611.IJYPYT3I&q=9a343249ec50f056677b4cbb3cec5e06">Line Boser & Lysan König befragen sich</a><br />
       </td>
     </tr>
   </table></center>
