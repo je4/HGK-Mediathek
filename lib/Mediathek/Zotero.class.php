@@ -200,12 +200,12 @@ class Zotero {
           }
           // prüfen, ob es sich um einen indexer-link handelt...
           elseif( preg_match( '/^http:\/\/hdl.handle.net\/20.500.11806\/mediathek\/inventory\/[^\/]+\/([0-9.]+)$/', $url, $matches )) {
-						$url = "{$config['mediaserver']['baseurl']}indexer{$matches[1]{0}}/indexer{$matches[1]}";
-            $item['data']['url'] = "mediaserver:indexer{$matches[1]{0}}/indexer{$matches[1]}";
+						$url = "{$config['mediaserver']['baseurl']}zotero_{$item['library']['id']}/indexer{$matches[1]}";
+            $item['data']['url'] = "mediaserver:zotero_{$item['library']['id']}/indexer{$matches[1]}";
             $metaurl = $url.'/metadata';
             if( isset( $config['mediaserver']['key'] )) {
               $metaurl .= '?token='.jwt_encode(
-                    ['sub'=>"{$config['mediaserver']['sub_prefix']}indexer{$matches[1]{0}}/indexer{$matches[1]}/metadata", 'exp'=>time()+1000],
+                    ['sub'=>"{$config['mediaserver']['sub_prefix']}zotero_{$item['library']['id']}/indexer{$matches[1]}/metadata", 'exp'=>time()+1000],
                     $config['mediaserver']['key']
                   );
             }
@@ -232,6 +232,30 @@ class Zotero {
             if( isset( $config['mediaserver']['key'] )) {
               $metaurl .= '?token='.jwt_encode(
                     ['sub'=>"{$config['mediaserver']['sub_prefix']}{$collection}/{$signature}/metadata", 'exp'=>time()+1000],
+                    $config['mediaserver']['key']
+                  );
+            }
+            echo "loading metadata from {$metaurl}\n";
+            try {
+              $meta = $this->dataFromURL( $metaurl );
+              $metaarr = json_decode( $meta, true );
+              $item['data']['media'] = array( 'metadata'=>$metaarr );
+              $mimetype = $metaarr['mimetype'];
+            }
+            catch( \Exception $ex ) {
+              echo( $ex->getMessage());
+            }
+            //print_r( $item );
+            //die("hdl link done");
+					}
+          elseif( preg_match( '/^http:\/\/media\/(.+)$/', $url, $matches )) {
+            $coll_sig = $matches[1];
+						$url = "{$config['mediaserver']['baseurl']}{$coll_sig}";
+            $item['data']['url'] = "mediaserver:{$coll_sig}";
+            $metaurl = $url.'/metadata';
+            if( isset( $config['mediaserver']['key'] )) {
+              $metaurl .= '?token='.jwt_encode(
+                    ['sub'=>"{$config['mediaserver']['sub_prefix']}{$coll_sig}/metadata", 'exp'=>time()+1000],
                     $config['mediaserver']['key']
                   );
             }
