@@ -206,6 +206,24 @@ class zoteroDisplay extends DisplayEntity {
 	if( $show ) {
 		$images = [];
 		foreach( $attachments as $att ) {
+			if( in_array( $att->getLinkMode(), ['linked_url', 'imported_file'] )) {
+				$url = $att->getUrl();
+				$mime = $att->getUrlMimetype();
+
+//					echo "mime: {$mime} ";
+				if( preg_match( '/^mediaserver:(.+)$/', $url, $matches )) {
+					$media = $att->getMedia();
+					$type = null;
+					if( isset( $media['metadata']['type'] ))	$type = $media['metadata']['type'];
+					if( $type == 'image' ) {
+						$images[] = $url;
+//						$link = $this->mediaLink( $url.'/resize/size800x1000' );
+//						$imgserver = $this->mediaLink( $url.'/iframe' );
+					}
+				}
+			}
+		}
+		foreach( $attachments as $att ) {
 		//if( !DEBUG && $att->getLinkMode() == 'linked_url' && $att->getUrlMimetype() == null ) continue;
 		if( preg_match( '/^Parent:/', $att->getTitle())) continue;
 ?>

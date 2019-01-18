@@ -9,11 +9,13 @@ $urlbase = 'https://mediathek.hgk.fhnw.ch/detail.php?id=';
 $groups = array(
 // 1510009,  // Institut Kunst
 // 1624911,  // IKUVid
-// 2068924,  // summe 2017 2068924
+ //// 2068924,  // summe 2017 2068924
 // 2180340,  // grenzgang
-// 2171463,   // anfaenge der kuenstlerischen forschung
- 2206003,   // act
-// 2260611,  // DigitaleSee
+ //// 2171463,   // anfaenge der kuenstlerischen forschung
+//// 2206003,   // act
+ 2260611,  // DigitaleSee
+ //// 1803850, // Kasko
+ ///// 1624911, // PCB Basel
 // 1510019,   // Hyperwerk
 // 2066935,   // RIMAB
 // 2171465,   // Basle Bibliography for Historical Performance Practice
@@ -21,6 +23,11 @@ $groups = array(
 );
 
 //$groups = array( 1387750, 1510019, 1510009, 1624911, 1803850, 2061687, 2066935, 1624911, 2068924, 2180340, 2206003 );
+
+$sql = "DELETE FROM zotero.groups WHERE id IN (".implode( $groups, ', ').")";
+echo $sql."\n";
+$db->Execute( $sql );
+//exit;
 
 $solr = new SOLR( $solrclient, $db );
 

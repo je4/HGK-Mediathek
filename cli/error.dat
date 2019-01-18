@@ -1,0 +1,3 @@
+invalid xml
+#0 /data/www/vhosts/mediathek.fhnw.ch/html/dev/cli/swissbib2solr.php(42): Mediathek\OAIPMHRecord->__construct('')
+#1 {main}
