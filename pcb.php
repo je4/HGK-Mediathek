@@ -65,7 +65,7 @@ echo mediathekheader('gatekeeper', 'Performance Chronik Basel', '', array( '../c
   ermöglichen und es in diesen Feldern (Lehre, Forschung, künstlerische Recherche)
   uneingeschränkt veröffentlichen und sichtbar machen zu können.
 </p>
-<a href="http://www.performacechronikbasel.ch">www.performacechronikbasel.ch</a>
+<a href="http://www.performancechronikbasel.ch">www.performancechronikbasel.ch</a>
 <p>
   <section style="column-count: 3;">
     <!-- Andereggen, Ariane --><a href="search.php?query=%7B%22area%22%3A%22%22%2C%22filter%22%3A%5B%5D%2C%22facets%22%3A%7B%22catalog%22%3A%5B%22PCB_Basel%22%5D%7D%2C%22query%22%3A%22author%3A%5C%22Andereggen%2C+Ariane%5C%22%22%7D">Andereggen, Ariane</a><br />
