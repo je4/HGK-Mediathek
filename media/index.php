@@ -1221,7 +1221,7 @@ include( '../config.inc.php' );
     <script src="theme/lib/jquery.sparkline.bower/jquery.sparkline.min.js"></script>
     <script src="theme/lib/echarts/echarts.min.js"></script>
     <script src="theme/lib/select2/js/select2.full.min.js"></script>
-    <script src="http://maps.google.com/maps/api/js?key=AIzaSyCuWEQWfVkWfcUoSIZeGw5JioT9LVCwYkE"></script>
+    <script src="https://maps.google.com/maps/api/js?key=AIzaSyCuWEQWfVkWfcUoSIZeGw5JioT9LVCwYkE"></script>
     <script src="theme/lib/gmaps/gmaps.js"></script>
 
     <script src="theme/js/bracket.js"></script>
