@@ -104,8 +104,8 @@ class Zotero {
       'name'=>$g['data']['name'],
       'type'=>$g['data']['type'],
       'numItems'=>$g['meta']['numItems'],
-      'dateAdded'=>$g['meta']['created'],
-      'dateModified'=>$g['meta']['lastModified'],
+      'dateAdded'=>preg_replace( '/[TZ]/', ' ', $g['meta']['created'] ),
+      'dateModified'=>preg_replace( '/[TZ]/', ' ', $g['meta']['lastModified'] ),
       'data'=>null,
     );
     $this->db->Replace( 'zotero.groups', $replace, array( 'id' ), $autoquote=true );
@@ -368,9 +368,9 @@ if( array_key_exists( 'enclosure', $item['links'])) {
       'itemType'=>$item['data']['itemType'],
       'linkMode'=>array_key_exists( 'linkMode', $item['data'] ) ? $item['data']['linkMode'] : null,
       'title'=>array_key_exists( 'title', $item['data'] ) ? $item['data']['title'] : null,
-      'trash'=>$trash,
-      'dateModified'=>$item['data']['dateModified'],
-      'dateAdded'=>$item['data']['dateAdded'],
+      'trash'=>intval( $trash ),
+      'dateModified'=>preg_replace( '/[TZ]/', ' ', $item['data']['dateModified'] ),
+      'dateAdded'=>preg_replace( '/[TZ]/', ' ', $item['data']['dateAdded'] ),
       'data'=>null,
     );
     $this->db->Replace( 'zotero.items', $replace, array( '`key`', 'libraryid' ), $autoquote = true );

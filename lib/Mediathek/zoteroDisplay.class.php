@@ -258,7 +258,7 @@ class zoteroDisplay extends DisplayEntity {
 							//todo: goserver config, token basteln
 							$link = $this->mediaLink( $url.'/iframe/bgcolorffffff' );
 							?>
-							<iframe style="width: 100%; height: <?php echo ($type == 'audio' ? '70px':'400px'); ?>; border:0;" border=0 src="<?php echo $link; ?>" class="video" allowfullscreen=""></iframe>
+							<iframe style="width: calc(100% - 5px); height: <?php echo ($type == 'audio' ? '130px':'400px'); ?>; border:0;" border=0 src="<?php echo $link; ?>" class="video" allowfullscreen=""></iframe>
 							<?php
 						}
 						elseif( $type == 'image' ) {
