@@ -24,7 +24,8 @@ function mediathekheader( $current, $title, $area, $csss = array() ) {
 
 
     <!--necessary stylesheets -->
-
+    <!-- link rel="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css" type="text/css" / -->
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css" type="text/css" />
     <link type="text/css" rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="assets/css/font-awesome.min.css">
     <link type="text/css" rel="stylesheet" href="assets/css/ionicons.min.css">
@@ -32,8 +33,7 @@ function mediathekheader( $current, $title, $area, $csss = array() ) {
     <link type="text/css" rel="stylesheet" href="assets/css/owl.carousel.css">
     <link type="text/css" rel="stylesheet" href="assets/css/owl.theme.css">
     <link type="text/css" rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="/unica/css/stylesheet.css" type="text/css" />
-
+    <link rel="text/css" href="/unica/css/stylesheet.css" type="text/css" />
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -95,7 +95,7 @@ foreach( $csss as $css ) {
     <input type="hidden" name="area" value="<?php echo $area  ; ?>" />
 	</form>
 
-	<!-- general purpos modal dialog box -->
+	<!-- general purpose modal dialog box -->
 	<div class="modal fade" id="MTModal" tabindex="-1" role="dialog" aria-labelledby="MTModal" aria-hidden="true">
 	  <div class="modal-dialog modal-lg">
 		<div class="modal-content">

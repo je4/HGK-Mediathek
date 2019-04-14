@@ -1,3 +1,12 @@
 invalid xml
 #0 /data/www/vhosts/mediathek.fhnw.ch/html/dev/cli/swissbib2solr.php(42): Mediathek\OAIPMHRecord->__construct('')
-#1 {main}
+#1 {main}Solr HTTP error: HTTP request failed, Could not resolve host: asarb269.adm.ds.fhnw.ch
+#0 /data/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/src/Core/Client/Adapter/Curl.php(54): Solarium\Core\Client\Adapter\Curl->check('', Array, Resource id #445040)
+#1 /data/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/src/Core/Client/Adapter/Curl.php(176): Solarium\Core\Client\Adapter\Curl->getResponse(Resource id #445040, false)
+#2 /data/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/src/Core/Client/Adapter/Curl.php(30): Solarium\Core\Client\Adapter\Curl->getData(Object(Solarium\Core\Client\Request), Object(Solarium\Core\Client\Endpoint))
+#3 /data/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/src/Core/Client/Client.php(789): Solarium\Core\Client\Adapter\Curl->execute(Object(Solarium\Core\Client\Request), Object(Solarium\Core\Client\Endpoint))
+#4 /data/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/src/Core/Client/Client.php(758): Solarium\Core\Client\Client->executeRequest(Object(Solarium\Core\Client\Request), Object(Solarium\Core\Client\Endpoint))
+#5 /data/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/src/Core/Client/Client.php(844): Solarium\Core\Client\Client->execute(Object(Solarium\QueryType\Update\Query\Query), NULL)
+#6 /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/SOLR.class.php(264): Solarium\Core\Client\Client->update(Object(Solarium\QueryType\Update\Query\Query))
+#7 /data/www/vhosts/mediathek.fhnw.ch/html/dev/cli/swissbib2solr.php(79): Mediathek\SOLR->import(Object(Mediathek\swissbibEntity))
+#8 {main}

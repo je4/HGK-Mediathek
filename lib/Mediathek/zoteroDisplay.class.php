@@ -92,6 +92,26 @@ class zoteroDisplay extends DisplayEntity {
 	return $html;
 }
 
+private function beginBox( $title ) {
+?>
+<!-- BEGIN BOX **** <?php echo $title; ?> -->
+			<span style="font-weight: bold;">
+<?php
+				echo htmlspecialchars( $title );
+?>
+		</span><br>
+			<div class="facet" style="">
+				<div class="marker" style=""></div>
+<?php
+}
+
+private function endBox( $title ) {
+?>
+			</div>
+			<!-- END BOX **** <?php echo $title; ?> -->
+<?php
+}
+
 	public function detailView() {
       global $config, $googleservice, $googleclient, $solrclient, $db, $urlparams, $pagesize, $session, $q;
 
@@ -214,77 +234,177 @@ class zoteroDisplay extends DisplayEntity {
 				if( preg_match( '/^mediaserver:(.+)$/', $url, $matches )) {
 					$media = $att->getMedia();
 					$type = null;
-					if( isset( $media['metadata']['type'] ))	$type = $media['metadata']['type'];
+					if( isset( $media['metadata']['type'] ))	{
+						$type = $media['metadata']['type'];
+					}
+					$copyright = null;
+					if( isset( $media['metadata']['image']['properties']['exif:Copyright'] ))	{
+						$copyright = $media['metadata']['image']['properties']['exif:Copyright'];
+					}
+					$width = 0;
+					if( isset( $media['metadata']['width'] ))	{
+						$width = $media['metadata']['width'];
+					}
+					$height = 0;
+					if( isset( $media['metadata']['height'] ))	{
+						$height = $media['metadata']['height'];
+					}
 					if( $type == 'image' ) {
-						$images[] = $url;
+
+						$images[] = [
+							'url'=>$url,
+							'copyright'=>$copyright,
+							'width'=>$width,
+							'height'=>$height,
+						 ];
 //						$link = $this->mediaLink( $url.'/resize/size800x1000' );
 //						$imgserver = $this->mediaLink( $url.'/iframe' );
 					}
 				}
 			}
 		}
+		$doGallery = count( $images ) > 4;
+		if( $doGallery ) {
+		// now lets build three cols
+		$cols = [[], [], []];
+		$colheight = [0, 0, 0];
+		foreach( $images as $img ) {
+			$col = array_search(min($colheight), $colheight);
+			$cols[$col][] = $img;
+			$colheight[$col] = $colheight[$col] + $img['height'];
+		}
+//		echo "<!-- GALLERY \n";
+//		print_r( $colheight );
+//		print_r( $cols );
+//		echo "-->\n";
+
+		$title = "Gallery";
+		$this->beginBox( $title );
+?>
+<style>
+.img-container {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+}
+
+.img-row {
+	justify-content: center !important;
+	flex-wrap: wrap !important;
+	flex-direction: row !important;
+	display: flex !important;
+}
+
+.img-col {
+	max-width: 260px;
+	flex-direction: column !important;
+	display: flex !important;
+}
+
+        img {
+            margin: 5px;
+					  transition: all 2s;
+				}
+
+				img:hover {
+					 transform: scale (1.1);
+				}
+
+        .scale {
+            transform: scaleY(1.05);
+            padding-top: 5px;
+        }
+</style>
+<div class="img-container">
+  <div class="img-row">
+<?php
+	foreach( $cols as $col ) {
+		echo '		<div class="img-col">'."\n";
+		foreach( $col as $img ) {
+			$link = $this->mediaLink( $img['url'].'/resize/size200x' );
+			$biglink = $this->mediaLink( $img['url'].'/resize/size800x1000' );
+			$imgserver = $this->mediaLink( $img['url'].'/iframe' );
+			?>
+				<a href="<?php echo $biglink; ?>" data-toggle="lightbox" data-footer="<?php echo $img['copyright']; ?> data-type="image"">
+					<img src="<?php echo $link; ?>" class="img-fluid" />
+				</a>
+			<?php
+		}
+		echo '		</div>'."\n";
+	}
+?>
+	</div>
+</div>
+<?php
+		$this->endBox( $title );
+
+}
 		foreach( $attachments as $att ) {
 		//if( !DEBUG && $att->getLinkMode() == 'linked_url' && $att->getUrlMimetype() == null ) continue;
 		if( preg_match( '/^Parent:/', $att->getTitle())) continue;
-?>
-		<span style="; font-weight: bold;">
-			<?php
+
 		$title = $att->getTitle();
 		if( is_numeric( $title ) ) $title = '';
-		elseif( preg_match( '/^[0-9]+([^0-9].*)/', $title, $matches )) {
+//		elseif( preg_match( '/^[0-9]+([^0-9].*)/', $title, $matches )) {
 //			$title = $matches[1];
-		}
+//		}
 		$title = trim($title, ' -.;');
-			echo htmlspecialchars( $title );
-		?>
-	</span><br>
-		<div class="facet" style="">
-			<div class="marker" style=""></div>
-			<?php
+//		$this->beginBox( $title );
 				//var_dump( $att );
 				if( in_array( $att->getLinkMode(), ['linked_url', 'imported_file'] )) {
 					$url = $att->getUrl();
-
-
-
 					$mime = $att->getUrlMimetype();
-
-//					echo "mime: {$mime} ";
 					if( preg_match( '/^mediaserver:(.+)$/', $url, $matches )) {
 						$media = $att->getMedia();
 						$type = null;
 						if( isset( $media['metadata']['type'] ))	$type = $media['metadata']['type'];
 						if( $type == 'video' || $type == 'pdf' || $type == 'audio' || $type == 'gpx' ) {
+							$this->beginBox( $title );
+
 							//todo: goserver config, token basteln
 							$link = $this->mediaLink( $url.'/iframe/bgcolorffffff' );
 							?>
 							<iframe style="width: calc(100% - 5px); height: <?php echo ($type == 'audio' ? '130px':'400px'); ?>; border:0;" border=0 src="<?php echo $link; ?>" class="video" allowfullscreen=""></iframe>
 							<?php
+							$this->endBox( $title );
 						}
 						elseif( $type == 'image' ) {
-							$link = $this->mediaLink( $url.'/resize/size800x1000' );
-							$imgserver = $this->mediaLink( $url.'/iframe' );
-							?>
-							<a href="<?php echo $imgserver; ?>" target=_blank><img src="<?php echo $link; ?>" style="width: 100%;" /></a>
-							<?php
+							if( !$doGallery ) {
+								$this->beginBox( $title );
+
+								$link = $this->mediaLink( $url.'/resize/size800x1000' );
+								$imgserver = $this->mediaLink( $url.'/iframe' );
+								?>
+								<a href="<?php echo $imgserver; ?>" target=_blank><img src="<?php echo $link; ?>" style="width: 100%;" /></a>
+								<?php
+								$this->endBox( $title );
+							}
 						}
 						else {
+							$this->beginBox( $title );
 							echo "<a href=\"".$this->mediaLink( $url.'/master' )."\" target=_blank>{$url}</a>";
+							$this->endBox( $title );
 						}
 					}
 					elseif( $mime == null) {
+						$this->beginBox( $title );
 						?>
 							Invalid URL: <a href="<?php echo $url; ?>"><?php echo $url; ?></a>
 						<?php
+						$this->endBox( $title );
 					}
 					elseif( preg_match( '/^image\//', $att->getUrlMimetype())) {
+						$this->beginBox( $title );
 ?>
-						<center>
+					<center>
 						<img src="<?php echo $config['imageserver'].$att->getNameImageserver().'/640x480/fit'; ?>" />
 					</center>
 <?php
+						$this->endBox( $title );
 					}
 					elseif( preg_match( '/^application\/pdf/', $att->getUrlMimetype())) {
+						$this->beginBox( $title );
+
 						$refPdfs[] = $att;
 ?>
 											<div id="pdf_<?php echo $att->getLibraryId(); ?>_<?php echo $att->getKey(); ?>">
@@ -292,8 +412,11 @@ class zoteroDisplay extends DisplayEntity {
 											<div style="text-align: center;">
 												<a href="<?php echo $config['imageserver'].$att->getNameImageserver(); ?>" >Download PDF</a></div>
 <?php
+						$this->endBox( $title );
 					}
 					elseif( preg_match( '/^text\/html/', $att->getUrlMimetype()) && preg_match( '/\.gpx$/', $url )) {
+						$this->beginBox( $title );
+
 							$refMaps[] = $att->getLibraryId().'_'.$att->getKey();
 ?>
 										<link rel="stylesheet" href="https://openlayers.org/en/v4.0.1/css/ol.css" type="text/css">
@@ -307,8 +430,10 @@ class zoteroDisplay extends DisplayEntity {
 										<p><hr /></p>
 										<a href="<?php echo $config['imageserver'].$att->getNameImageserver(); ?>" target="_blank">Download File</a>
 <?php
+							$this->endBox( $title );
 					}
 					elseif( strstr( $url, 'https://ba14ns21403.fhnw.ch/video') !== false ) {
+						$this->beginBox( $title );
 ?>
 						<video id="my-video" class="video-js" controls preload="auto" width="550"
 						data-setup="{}"
@@ -320,34 +445,45 @@ class zoteroDisplay extends DisplayEntity {
 						  </p>
 						</video>
 <?php
+						$this->endBox( $title );
 					}
 					else {
+						$this->beginBox( $title );
 						?>
 
 							<a href="redir.php?id=<?php echo urlencode( $this->doc->id ).'&url='.urlencode( $url ); ?>" target="_blank"><?php echo htmlspecialchars( $url ); ?></a>
 						<?php
-
+						$this->endBox( $title );
 					}
 				} // linkMode == linkedURL
 				elseif( preg_match( '/application\/pdf/', $att->getContentType())) {
+					$this->beginBox( $title );
 ?>
 					<div id="pdf_<?php echo $att->getLibraryId(); ?>_<?php echo $att->getKey(); ?>">
 					</div>
 					<div style="text-align: center;"><a href="zotero_data.php?id=zotero-<?php echo $att->getLibraryId(); ?>.<?php echo $this->item->getKey(); ?>&key=<?php echo $att->getKey(); ?>" >Download PDF</a></div>
 <?php
+					$this->endBox( $title );
 				}
 				else {
+					$this->beginBox( $title );
+
 					$url = $att->getUrl();
 					if( strlen( $url ) && substr( $url, 0, strlen( 'mediaserver:')) != 'mediaserver:' ) echo "<a href=\"{$url}\" target=_blank>{$url}</a>\n";
+					$this->endBox( $title );
 				}
+
+			if( false ) {
 			 ?>
 			<!--
 			<pre>
 				<?php print_r( $att->getData()); ?>
 			</pre>
 		  -->
-		</div>
-	<?php }
+	<?php
+			}
+//	   $this->endBox( $title );
+	}
 }
 
 ?>
@@ -533,7 +669,10 @@ class zoteroDisplay extends DisplayEntity {
 		    var flipBook = container.flipBook(pdf, options);
 
 		<?php } ?>
-
+				$(document).on('click', '[data-toggle="lightbox"]', function(event) {
+				                event.preventDefault();
+				                $(this).ekkoLightbox();
+				            });
 			}
 		</script>
 
@@ -543,6 +682,7 @@ class zoteroDisplay extends DisplayEntity {
         $html .= ob_get_contents();
         ob_end_clean();
 				addJS( "js/dflip/dflip.js");
+				addJS( "https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js" );
 		return $html;
 	}
 

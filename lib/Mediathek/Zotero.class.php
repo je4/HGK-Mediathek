@@ -272,6 +272,31 @@ class Zotero {
             //print_r( $item );
             //die("hdl link done");
 					}
+          elseif( preg_match( '/^https:\/\/ba14ns21403-sec1.fhnw.ch\/mediasrv\/(.+)\/(.+)\/master$/', $url, $matches )) {
+            $coll = $matches[1];
+            $sig = $matches[2];
+						$url = "{$config['mediaserver']['baseurl']}{$coll}/{$sig}";
+            $item['data']['url'] = "mediaserver:{$coll}/{$sig}";
+            $metaurl = $url.'/metadata';
+            if( isset( $config['mediaserver']['key'] )) {
+              $metaurl .= '?token='.jwt_encode(
+                    ['sub'=>"{$config['mediaserver']['sub_prefix']}{$coll}/{$sig}/metadata", 'exp'=>time()+1000],
+                    $config['mediaserver']['key']
+                  );
+            }
+            echo "loading metadata from {$metaurl}\n";
+            try {
+              $meta = $this->dataFromURL( $metaurl );
+              $metaarr = json_decode( $meta, true );
+              $item['data']['media'] = array( 'metadata'=>$metaarr );
+              $mimetype = $metaarr['mimetype'];
+            }
+            catch( \Exception $ex ) {
+              echo( $ex->getMessage());
+            }
+            //print_r( $item );
+            //die("hdl link done");
+					}
           else {
             $mimetype = $this->mimeFromURL( $url );
             $item['data']['urlMimetype'] = $mimetype;

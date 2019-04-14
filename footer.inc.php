@@ -1,5 +1,5 @@
 <?php
-global $session;
+global $session, $current;
 
 $footer_js = array(
   "assets/js/jquery-2.1.3.min.js",
@@ -16,8 +16,7 @@ $footer_js = array(
   "js/md5.min.js",
   "js/tether.min.js",
   "js/bootstrap-editable.js",
-  "js/jstree.min.js"
-
+  "js/jstree.min.js",
 );
 
 function addJS( $js ) {

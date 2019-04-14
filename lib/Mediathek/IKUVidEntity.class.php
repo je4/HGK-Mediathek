@@ -869,9 +869,9 @@ class IKUVidEntity extends SOLRSource {
        return $l;
    }
 
-    public function getMetaACL() { return array( 'global/guest' ); }
+    public function getMetaACL() { return array( 'fhnw.ch_14/user' ); }
     public function getContentACL() { return array( 'fhnw.ch_14/user' ); }
-    public function getPreviewACL() { return array( 'location/fhnw' ); }
+    public function getPreviewACL() { return array( 'fhnw.ch_14/user' ); }
     public function getCatalogs() { return array( $this->getSource() ); }
 
 }
