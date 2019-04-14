@@ -325,7 +325,7 @@ private function endBox( $title ) {
 			$biglink = $this->mediaLink( $img['url'].'/resize/size800x1000' );
 			$imgserver = $this->mediaLink( $img['url'].'/iframe' );
 			?>
-				<a href="<?php echo $biglink; ?>" data-toggle="lightbox" data-footer="<?php echo $img['copyright']; ?> data-type="image"">
+				<a href="<?php echo $biglink; ?>" data-toggle="lightbox" data-footer="<?php echo $img['copyright']; ?>" data-gallery="main_gallery" data-type="image"">
 					<img src="<?php echo $link; ?>" class="img-fluid" />
 				</a>
 			<?php
@@ -682,7 +682,7 @@ private function endBox( $title ) {
         $html .= ob_get_contents();
         ob_end_clean();
 				addJS( "js/dflip/dflip.js");
-				addJS( "https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js" );
+				addJS( "js/ekko-lightbox.js" );
 		return $html;
 	}
 

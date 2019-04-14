@@ -494,11 +494,11 @@ var Lightbox = (function ($) {
 			value: function _isExternal(url) {
 				var match = url.match(/^([^:\/?#]+:)?(?:\/\/([^\/?#]*))?([^?#]+)?(\?[^#]*)?(#.*)?/);
 				if (typeof match[1] === "string" && match[1].length > 0 && match[1].toLowerCase() !== location.protocol) return true;
-
-				if (typeof match[2] === "string" && match[2].length > 0 && match[2].replace(new RegExp(':(' + ({
+				var daHost = match[2].replace(new RegExp(':(' + ({
 					"http:": 80,
 					"https:": 443
-				})[location.protocol] + ')?$'), "") !== location.host) return true;
+				})[location.protocol] + ')?$'), "")
+				if (typeof match[2] === "string" && match[2].length > 0 && !(daHost == location.host /* || daHost == "ba14ns21403-sec1.fhnw.ch" */ )) return true;
 
 				return false;
 			}
