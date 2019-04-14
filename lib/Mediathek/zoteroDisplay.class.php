@@ -210,10 +210,10 @@ private function endBox( $title ) {
 	<?php } ?>
 	<?php
 		foreach( $this->item->getNotes() as $note ) { ?>
-	<span style="; font-weight: bold;">Note</span><br>
+	<span style="font-weight: bold;">Note</span><br>
 	<div class="facet" style="">
 		<div class="marker" style=""></div>
-		<?php echo $note->getNote(); ?>
+		<?php echo strip_tags($note->getNote(), '<br><p>'); ?>
 	</div>
 	<?php } ?>
 	</div>
