@@ -268,10 +268,13 @@ private function endBox( $title ) {
 		// now lets build three cols
 		$cols = [[], [], []];
 		$colheight = [0, 0, 0];
-		foreach( $images as $img ) {
-			$col = array_search(min($colheight), $colheight);
+		foreach( array_keys( $images ) as $idx ) {
+//		foreach( $images as $img ) {
+			$img = $images[$idx];
+			$minheight = min($colheight);
+			$col = array_search($minheight, $colheight);
 			$cols[$col][] = $img;
-			$colheight[$col] = $colheight[$col] + $img['height'];
+			$colheight[$col] = $colheight[$col] + round( $img['height']*200/$img['width'] ) + 10;
 		}
 //		echo "<!-- GALLERY \n";
 //		print_r( $colheight );
@@ -326,7 +329,7 @@ private function endBox( $title ) {
 			$imgserver = $this->mediaLink( $img['url'].'/iframe' );
 			?>
 				<a href="<?php echo $biglink; ?>" data-toggle="lightbox" data-footer="<?php echo $img['copyright']; ?>" data-gallery="main_gallery" data-type="image"">
-					<img src="<?php echo $link; ?>" class="img-fluid" />
+					<img width="200", height="<?php echo round( $img['height']*200/$img['width'] ); ?>" src="<?php echo $link; ?>" class="img-fluid" />
 				</a>
 			<?php
 		}
