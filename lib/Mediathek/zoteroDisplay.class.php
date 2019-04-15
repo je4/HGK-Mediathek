@@ -263,7 +263,7 @@ private function endBox( $title ) {
 				}
 			}
 		}
-		$doGallery = count( $images ) > 4;
+		$doGallery = count( $images ) > 2;
 		if( $doGallery ) {
 		// now lets build three cols
 		$cols = [[], [], []];
