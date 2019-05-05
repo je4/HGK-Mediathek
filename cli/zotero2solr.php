@@ -4,6 +4,8 @@ namespace Mediathek;
 
 include '../init.inc.php';
 
+$cleanup = false;
+
 $hdlprefix = '20.500.11806/mediathek/';
 $urlbase = 'https://mediathek.hgk.fhnw.ch/detail.php?id=';
 $groups = array(
@@ -12,7 +14,7 @@ $groups = array(
  //// 2068924,  // summe 2017 2068924
 // 2180340,  // grenzgang
  //// 2171463,   // anfaenge der kuenstlerischen forschung
-//// 2206003,   // act
+2206003,   // act
 // 2260611,  // DigitaleSee
  //// 1803850, // Kasko
  ///// 1624911, // PCB Basel
@@ -21,19 +23,24 @@ $groups = array(
 // 2171465,   // Basle Bibliography for Historical Performance Practice
 // 2250437, // Grenzgang (neu)
 // 2315925, // Integrative Gestaltung / Masterstudio
-2317722, // Archive des Ephemeren
+// 2317722, // Archive des Ephemeren
 );
 
 //$groups = array( 1387750, 1510019, 1510009, 1624911, 1803850, 2061687, 2066935, 1624911, 2068924, 2180340, 2206003 );
 
 
 
-$sql = "DELETE FROM zotero.groups WHERE id IN (".implode( $groups, ', ').")";
-echo $sql."\n";
-$db->Execute( $sql );
-//exit;
-
 $solr = new SOLR( $solrclient, $db );
+
+$entity = new zoteroEntity( $db );
+$cnt = 0;
+if( $cleanup ) {
+  foreach( $groups as $group ) {
+    $sql = "DELETE FROM zotero.groups WHERE id='{$group}'";
+    echo $sql."\n";
+    $db->Execute( $sql );
+  }
+}
 
 $zotero = new Zotero( $db, $config['zotero']['apiurl'], $config['zotero']['apikey'], $config['zotero']['mediapath'], STDOUT );
 try {
@@ -45,11 +52,18 @@ try {
   adodb_backtrace($e->gettrace());
 }
 
+
 $entity = new zoteroEntity( $db );
 $cnt = 0;
 foreach( $groups as $group ) {
+  if( $cleanup ) {
+    $update = $solrclient->CreateUpdate();
+    $update->addDeleteQuery("id:zotero-{$group}.*");
+    $result = $solrclient->update( $update );
+  }
   foreach( $zotero->loadChildren( $group ) as $item ) {
-    echo $item; if( $item->isTrashed()) echo "  [TRASH]\n";
+    echo $item;
+    if( $item->isTrashed()) echo "  [TRASH]\n";
     $entity->reset();
     $data = $item->getData();
 //    var_dump( $data );

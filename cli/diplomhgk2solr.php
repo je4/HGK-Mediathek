@@ -35,6 +35,8 @@ foreach( $rs as $row ) {
     //continue;
   }
 
+  echo "{$row['Nachname']}, {$row['Vornamen']}\n";
+
   if( $data['done'] != 1 ) {
     $_id = 'diplomhgk-'.str_pad("{$data['year']}{$data['IDPerson']}", 12, '0', STR_PAD_LEFT );
     echo "   deleting {$_id}...\n";

@@ -9,4 +9,9 @@ invalid xml
 #5 /data/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/src/Core/Client/Client.php(844): Solarium\Core\Client\Client->execute(Object(Solarium\QueryType\Update\Query\Query), NULL)
 #6 /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/SOLR.class.php(264): Solarium\Core\Client\Client->update(Object(Solarium\QueryType\Update\Query\Query))
 #7 /data/www/vhosts/mediathek.fhnw.ch/html/dev/cli/swissbib2solr.php(79): Mediathek\SOLR->import(Object(Mediathek\swissbibEntity))
-#8 {main}
+#8 {main}mysqli error: [2002: Connection refused] in PCONNECT(v000306.adm.ds.fhnw.ch, 'rfid', '****', rfid)
+
+#0 /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/adodb5/adodb.inc.php(747): adodb_throw('mysqli', 'PCONNECT', 2002, 'Connection refu...', 'v000306.adm.ds....', 'rfid', Object(ADODB_mysqli2))
+#1 /data/www/vhosts/mediathek.fhnw.ch/html/dev/init.inc.php(36): ADOConnection->PConnect('v000306.adm.ds....', 'rfid', 'NuKodYchx63eTxB...', 'rfid')
+#2 /data/www/vhosts/mediathek.fhnw.ch/html/dev/cli/swissbib2solr.php(85): doConnectMySQL(true)
+#3 {main}
