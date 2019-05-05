@@ -196,7 +196,7 @@ class Zotero {
             catch( \Exception $ex ) {
               echo( $ex->getMessage());
             }
-            //die();
+//            if( $signature == '2206003.22EKIGZP') die();
           }
           // prüfen, ob es sich um einen indexer-link handelt...
           elseif( preg_match( '/^http:\/\/hdl.handle.net\/20.500.11806\/mediathek\/inventory\/[^\/]+\/([0-9.]+)$/', $url, $matches )) {
@@ -456,6 +456,7 @@ if( array_key_exists( 'enclosure', $item['links'])) {
       $items = json_decode( $response, true );
       foreach( $items as $i ) {
         $i['group'] = $library->getData();
+        echo "{$i['group']['id']}.{$i['key']}\n";
         $this->syncItem( $id, $i, false );
       }
       $start += $limit;

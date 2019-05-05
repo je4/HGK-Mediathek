@@ -39,6 +39,8 @@ http://localhost:8983/solr/cataloguecoll/update?stream.body=%3Cdelete%3E%3Cquery
 http://localhost:8983/solr/cataloguecoll/update?stream.body=%3Cdelete%3E%3Cquery%3Esource%3Agrenzgang%3C%2Fquery%3E%3C%2Fdelete%3E
 http://localhost:8983/solr/cataloguecoll/update?stream.body=%3Cdelete%3E%3Cquery%3Eid%3Azotero-2171465.*%3C%2Fquery%3E%3C%2Fdelete%3E
 
+http://localhost:8983/solr/cataloguecoll/uidstream.body=%3Cdelete%3E%3Cquery%3Eid%diplomhgk-2019*%3C%2Fquery%3E%3C%2Fdelete%3E
+
 
 "source":"DOAB"
 http://localhost:8983/solr/cataloguecoll/update?stream.body=%3Ccommit/%3E
