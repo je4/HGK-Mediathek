@@ -122,6 +122,7 @@ class Zotero {
     $limit = 100;
     do {
       $uri = $this->apiurl.'/groups/'.$id."/collections?limit={$limit}&start={$start}&since={$lastversion}";
+      echo "[{$this->apikey}] {$uri}\n";
       $response = Request::get( $uri )
         ->addHeader( 'Authorization', 'Bearer '.$this->apikey )
         ->send();
@@ -447,38 +448,58 @@ if( array_key_exists( 'enclosure', $item['links'])) {
     $sql = "SELECT MAX(version) FROM zotero.items WHERE trash=false AND libraryid={$id}";
     $lastversion = intval($this->db->GetOne( $sql ));
     //$lastversion = 0;
+    $num = 0;
     do {
       $uri = "{$this->apiurl}/groups/{$id}/items?limit={$limit}&start={$start}&since={$lastversion}";
       $response = Request::get( $uri )
         ->addHeader( 'Authorization', 'Bearer '.$this->apikey )
         ->send();
+      $headers = $response->headers;
+      $total = intval( $headers['Total-Results'] );
 
-      $items = json_decode( $response, true );
+      $items = json_decode( $response->raw_body, true );
       foreach( $items as $i ) {
         $i['group'] = $library->getData();
-        echo "{$i['group']['id']}.{$i['key']}\n";
-        $this->syncItem( $id, $i, false );
+        echo sprintf( "% 3d%% - %06d/%06d", intval( $num*100.0/$total), $num, $total)." - {$i['group']['id']}.{$i['key']}\n";
+//        file_put_contents( '/hgkstore/temp/x.json', $response );
+       try {
+          $this->syncItem( $id, $i, false );
+        } catch( \Exception $e ) {
+          var_dump( $e );
+        }
+        $num++;
       }
       $start += $limit;
-    } while( count( $items ) == 100 );
+  } while( count( $items ) == 100 );
 
     $start = 0;
     $limit = 100;
     $sql = "SELECT MAX(version) FROM zotero.items WHERE libraryid={$id} AND trash=true";
     $lastversion = intval($this->db->GetOne( $sql ));
 
+    $num = 0;
     do {
       $uri = "{$this->apiurl}/groups/{$id}/items/trash?limit={$limit}&start={$start}&since={$lastversion}";
       $response = Request::get( $uri )
         ->addHeader( 'Authorization', 'Bearer '.$this->apikey )
         ->send();
+        $headers = $response->headers;
+        $total = intval( $headers['Total-Results'] );
 
-      $items = json_decode( $response, true );
+        $items = json_decode( $response->raw_body, true );
+
       foreach( $items as $i ) {
         $i['group'] = $library->getData();
-        $this->syncItem( $id, $i, true );
+        echo sprintf( "% 3d%% - %06d/%06d", intval( $num*100.0/$total), $num, $total)." - {$i['group']['id']}.{$i['key']}\n";
+        try {
+           $this->syncItem( $id, $i, true );
+         } catch( \Exception $e ) {
+           var_dump( $e );
+         }
+        $num++;
       }
       $start += $limit;
+//    } while( $num < $total );
     } while( count( $items ) == 100 );
   }
 

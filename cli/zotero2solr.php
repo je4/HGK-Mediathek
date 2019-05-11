@@ -14,7 +14,7 @@ $groups = array(
  //// 2068924,  // summe 2017 2068924
 // 2180340,  // grenzgang
  //// 2171463,   // anfaenge der kuenstlerischen forschung
-2206003,   // act
+// 2206003,   // act
 // 2260611,  // DigitaleSee
  //// 1803850, // Kasko
  ///// 1624911, // PCB Basel
@@ -23,7 +23,7 @@ $groups = array(
 // 2171465,   // Basle Bibliography for Historical Performance Practice
 // 2250437, // Grenzgang (neu)
 // 2315925, // Integrative Gestaltung / Masterstudio
-// 2317722, // Archive des Ephemeren
+2317722, // Archive des Ephemeren
 );
 
 //$groups = array( 1387750, 1510019, 1510009, 1624911, 1803850, 2061687, 2066935, 1624911, 2068924, 2180340, 2206003 );
@@ -43,15 +43,15 @@ if( $cleanup ) {
 }
 
 $zotero = new Zotero( $db, $config['zotero']['apiurl'], $config['zotero']['apikey'], $config['zotero']['mediapath'], STDOUT );
-try {
   foreach( $groups as $group ) {
+    try {
         $zotero->syncItems( $group );
+    } catch (\Exception $e) {
+      var_dump($e);
+    }
   }
-} catch (\ADODB_Exception $e) {
-  var_dump($e);
-  adodb_backtrace($e->gettrace());
-}
 
+// die();
 
 $entity = new zoteroEntity( $db );
 $cnt = 0;
