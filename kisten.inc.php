@@ -1,8 +1,8 @@
 <?php
 
 $kisten = array(
-'A'=> array( 
-	'point'=> array( 
+'A'=> array(
+	'point'=> array(
 		array( 'x'=>1774, 'y'=>1666),
 		array( 'x'=>1773, 'y'=>1576),
 		array( 'x'=>1786, 'y'=>1509),
@@ -43,8 +43,8 @@ $kisten = array(
 			),
 */
 		),
-'B'=> array( 
-	'point'=> array( 
+'B'=> array(
+	'point'=> array(
 		array( 'x'=>1936, 'y'=>1282),
 		array( 'x'=>1935, 'y'=>1185),
 		array( 'x'=>1906, 'y'=>1111),
@@ -72,8 +72,8 @@ $kisten = array(
 			),
 		),
     ),
-'C'=> array( 
-	'point'=> array( 
+'C'=> array(
+	'point'=> array(
 		array( 'x'=>1913, 'y'=>1018),
 		array( 'x'=>1892, 'y'=>935),
 		array( 'x'=>1893, 'y'=>880),
@@ -97,8 +97,8 @@ $kisten = array(
 			),
 		),
 	),
-'D'=> array( 
-	'point'=> array( 
+'D'=> array(
+	'point'=> array(
 		array( 'x'=>1907, 'y'=>818),
 		array( 'x'=>1926, 'y'=>774),
 		array( 'x'=>1944, 'y'=>716),
@@ -121,8 +121,8 @@ $kisten = array(
 			),
 		),
 	),
-'E'=> array( 
-	'point'=> array( 
+'E'=> array(
+	'point'=> array(
 		array( 'x'=>1776, 'y'=>701),
 		array( 'x'=>1779, 'y'=>612),
 		array( 'x'=>1755, 'y'=>551),
@@ -150,8 +150,8 @@ $kisten = array(
 			),
 		),
 	),
-'F'=> array( 
-	'point'=> array( 
+'F'=> array(
+	'point'=> array(
 		array( 'x'=>1634, 'y'=>341),
 		array('x'=>1583, 'y'=>308),
 		array( 'x'=>1459, 'y'=>286),
@@ -179,8 +179,8 @@ $kisten = array(
 			),
 		),
 	),
-'G'=> array( 
-	'point'=> array( 
+'G'=> array(
+	'point'=> array(
 		array( 'x'=>1525, 'y'=>105),
 		array( 'x'=>1482, 'y'=>150),
 		array( 'x'=>1423, 'y'=>185),
@@ -207,8 +207,8 @@ $kisten = array(
 			),
 		),
 	),
-'H'=> array( 
-	'point'=> array( 
+'H'=> array(
+	'point'=> array(
 		array( 'x'=>818, 'y'=>220),
 		array( 'x'=>851, 'y'=>163),
 		array( 'x'=>892, 'y'=>119),
@@ -232,8 +232,8 @@ $kisten = array(
 			),
 		),
 	),
-'I'=> array( 
-	'point'=> array( 
+'I'=> array(
+	'point'=> array(
 		array( 'x'=>629, 'y'=>473),
 		array( 'x'=>562, 'y'=>469),
 		array( 'x'=>510, 'y'=>423),
@@ -263,8 +263,8 @@ $kisten = array(
 			),
 		),
 	),
-'J'=> array( 
-	'point'=> array( 
+'J'=> array(
+	'point'=> array(
 		array( 'x'=>791, 'y'=>393),
 		array( 'x'=>705, 'y'=>519),
 		array( 'x'=>584, 'y'=>562),
@@ -294,8 +294,8 @@ $kisten = array(
 			),
 		),
 	),
-'K'=> array( 
-	'point'=> array( 
+'K'=> array(
+	'point'=> array(
 		array( 'x'=>579, 'y'=>663),
 		array( 'x'=>486, 'y'=>657),
 		array( 'x'=>401, 'y'=>608),
@@ -325,8 +325,8 @@ $kisten = array(
 			),
 		),
 	),
-'L'=> array( 
-	'point'=> array( 
+'L'=> array(
+	'point'=> array(
 		array( 'x'=>203, 'y'=>542),
 		array( 'x'=>218, 'y'=>487),
 		array( 'x'=>229, 'y'=>398),
@@ -351,8 +351,8 @@ $kisten = array(
 			),
 		),
 	),
-'M'=> array( 
-	'point'=> array( 
+'M'=> array(
+	'point'=> array(
 		array( 'x'=>73, 'y'=>250),
 		array( 'x'=>68, 'y'=>311),
 		array( 'x'=>68, 'y'=>374),
@@ -380,8 +380,8 @@ $kisten = array(
 			),
 		),
 	),
-'N'=> array( 
-	'point'=> array( 
+'N'=> array(
+	'point'=> array(
 		array( 'x'=>499, 'y'=>981),
 		array( 'x'=>517, 'y'=>921),
 		array( 'x'=>514, 'y'=>855),
@@ -411,8 +411,8 @@ $kisten = array(
 			),
 		),
 	),
-'O'=> array( 
-	'point'=> array( 
+'O'=> array(
+	'point'=> array(
 		array( 'x'=>429, 'y'=>952),
 		array( 'x'=>417, 'y'=>890),
 		array( 'x'=>378, 'y'=>841),
@@ -444,8 +444,8 @@ $kisten = array(
 			),
 		),
 	),
-'P'=> array( 
-	'point'=> array( 
+'P'=> array(
+	'point'=> array(
 		array( 'x'=>462, 'y'=>1084),
 		array( 'x'=>539, 'y'=>1073),
 		array( 'x'=>591, 'y'=>1083),
@@ -475,8 +475,8 @@ $kisten = array(
 			),
 		),
 	),
-'Q'=> array( 
-	'point'=> array( 
+'Q'=> array(
+	'point'=> array(
 		array( 'x'=>563, 'y'=>1358),
 		array( 'x'=>504, 'y'=>1400),
 		array( 'x'=>443, 'y'=>1416),
@@ -508,8 +508,8 @@ $kisten = array(
 			),
 		),
 	),
-'R'=> array( 
-	'point'=> array( 
+'R'=> array(
+	'point'=> array(
 		array( 'x'=>94, 'y'=>1168),
 		array( 'x'=>216, 'y'=>1266),
 		array( 'x'=>255, 'y'=>1370),
@@ -534,8 +534,8 @@ $kisten = array(
 			),
 		),
 	),
-'S'=> array( 
-	'point'=> array( 
+'S'=> array(
+	'point'=> array(
 		array( 'x'=>733, 'y'=>1248),
 		array( 'x'=>686, 'y'=>1361),
 		array( 'x'=>619, 'y'=>1463),
@@ -562,6 +562,40 @@ $kisten = array(
 		4=> array(
 			'indent'=>1.5,
 			'boxes'=>5,
+			),
+		),
+	),
+	'T'=>array(
+		'point' => array(
+			array( 'x'=> 1100, 'y'=>600 ),
+			array( 'x'=> 1700, 'y'=>600 ),
+		),
+		'aside' => 'right',
+		'area' => 'Regal',
+		'level'=> array(
+			1=> array(
+				'indent'=>0,
+				'boxes'=>8,
+			),
+			2=> array(
+				'indent'=>0,
+				'boxes'=>8,
+			),
+			3=> array(
+				'indent'=>0,
+				'boxes'=>8,
+			),
+			4=> array(
+				'indent'=>0,
+				'boxes'=>8,
+			),
+			5=> array(
+				'indent'=>0,
+				'boxes'=>8,
+			),
+			6=> array(
+				'indent'=>0,
+				'boxes'=>8,
 			),
 		),
 	),
