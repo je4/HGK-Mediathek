@@ -448,12 +448,35 @@ class swissbibEntity extends SOLRSource {
 					}
 				}
 			}
+
+			$fld909_7 = $this->findField('909', ' ', '7');
+			foreach( $fld909_7 as $sub ) {
+				if( !array_key_exists( 'a', $sub )) continue;
+				if( !is_array( $sub['a'])) continue;
+				if( count( $sub['a']) == 0) continue;
+				if( preg_match( '/([A-Z0-9]{3})-([0-9]{4})([0-9]{2})([0-9]{2})/', $sub['a'][0], $matches )) {
+					try {
+						$d = GregorianToJD(intval($matches[3]), intval($matches[4]), intval($matches[2]));
+						$now = UnixToJD();
+						$diff = $now - $d;
+						if( $diff <= 31 ) $this->tags[] = "acquisition:31:{$matches[1]}";
+						if( $diff <= 100 ) $this->tags[] = "acquisition:100:{$matches[1]}";
+					}
+					catch( \Exception $ex ) {
+						echo $ex."\n";
+					}
+				}
+			}
+
 			$this->tags = array_unique( $this->tags );
 			$this->cluster = array();
 			foreach( $this->tags as $tag ) {
 				//echo $tag."---\n";
 				if( preg_match( '/^(subject:topicalterm|subject:localsubjectaccess:gnd|index:genreform)[^\/]+\/[^\/]+\/(.*)$/', $tag, $matches )) {
 					$this->cluster[] = $matches[2];
+				}
+				if( preg_match( '/^(acquisition):([0-9]+):([A-Z0-9]{3})$/', $tag, $matches )) {
+					$this->cluster[] = "{$matches[1]}{$matches[2]}_{$matches[3]}";
 				}
 			}
 			$this->cluster = array_unique( $this->cluster );

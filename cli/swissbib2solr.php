@@ -19,7 +19,7 @@ $result = $doabEndpoint->identify();
 $sql = "SELECT to_char( datestamp, 'YYYY-MM-DDXHH24:MI:SS') FROM oai_pmh_source WHERE oai_pmh_source_id={$sourceid}";
 $datestamp = $pg->GetOne( $sql );
 
-//if( $fullindex ) $datestamp = null;
+if( $fullindex ) $datestamp = null;
 
 var_dump( $result->Identify );
 if( $datestamp == null )
@@ -39,6 +39,12 @@ try {
 
 		    $xml = str_replace( '<record', '<record xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"', $xmlrec );
 
+				if( strlen( $xml ) == 0 ) {
+					echo "ERROR: empty XML!!!\n";
+					echo "{$xmlrec}\n";
+					var_dump( $recs );
+					continue;
+				}
 			$record = new OAIPMHRecord( $xml );
 
 			$id = $record->getIdentifier();
