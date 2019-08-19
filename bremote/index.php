@@ -20,7 +20,7 @@ if( !file_exists($bin)) {
 chdir( $datadir );
 $files = glob("certs/mediathek_*");
 $files[] = "client_{$machine}.toml";
-$files[] = "{$os}/{$arch}/client";
+$files[] = "{$os}/{$arch}/client" . ($os == 'windows' ? '.exe' : '');
 
 ob_start();
 include( 'toml.php' );
