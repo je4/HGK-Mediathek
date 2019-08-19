@@ -1,0 +1,13 @@
+logfile = "" # log file location
+loglevel = "DEBUG" # CRITICAL|ERROR|WARNING|NOTICE|INFO|DEBUG
+instancename = "<?php echo $machine; ?>" # instance name
+#proxy = "localhost:7777" # proxy addr:port
+proxy = "vpn-de2.info-age.net:80" # proxy addr:port
+certpem = "certs/mediathek_client.pem" # tls client certificate file in PEM format
+keypem = "certs/mediathek_client.key" # tls client key file in PEM format
+capem = "certs/mediathek_ca.pem" # tls root certificate file in PEM format
+httpscertpem = "certs/mediathek_server.pem" # tls client certificate file in PEM format
+httpskeypem = "certs/mediathek_server.key" # tls client key file in PEM format
+httpstatic = "data/static" # folder for static html files
+httpsaddr = "localhost:8443"
+httptemplates = "templates" # folder for html templates

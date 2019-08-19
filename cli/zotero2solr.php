@@ -14,7 +14,7 @@ $groups = array(
  //// 2068924,  // summe 2017 2068924
 // 2180340,  // grenzgang
  //// 2171463,   // anfaenge der kuenstlerischen forschung
- 2206003,   // act
+// 2206003,   // act
 // 2260611,  // DigitaleSee
  //// 1803850, // Kasko
  ///// 1624911, // PCB Basel
@@ -23,7 +23,7 @@ $groups = array(
 // 2171465,   // Basle Bibliography for Historical Performance Practice
 // 2250437, // Grenzgang (neu)
 // 2315925, // Integrative Gestaltung / Masterstudio
-// 2317722, // Archive des Ephemeren
+ 2317722, // Archive des Ephemeren
 // 2260611, // feministisches Improvisatorium
 //2327162, // Digital Brainstorming
 );
