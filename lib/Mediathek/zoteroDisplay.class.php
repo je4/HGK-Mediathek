@@ -369,7 +369,11 @@ private function endBox( $title ) {
 							?>
 							<iframe style="width: calc(100% - 5px); height: <?php echo ($type == 'audio' ? '130px':'400px'); ?>; border:0;" border=0 src="<?php echo $link; ?>" class="video" allowfullscreen=""></iframe>
 							<?php
+
 							$this->endBox( $title );
+							if( DEBUG && $loggedin ) {
+								echo "<a href=\"{$link}\">{$link}</a><br />\n";
+							} 
 						}
 						elseif( $type == 'image' ) {
 							if( !$doGallery ) {
