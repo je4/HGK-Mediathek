@@ -278,7 +278,8 @@ foreach( $rs as $row ) {
 <div style="margin-top: 100px;" id="filecontent"></div>
 <?php
 }
-else {
+//else
+	{
   echo '<h2>'.htmlentities( "{$user['Vornamen']} {$user['Nachname']} ({$user['IDPerson']})" ).'</h2>';
   echo '<h3>'.htmlentities( "{$user['Anlassbezeichnung']}" ).'</h3>';
 echo "<p />";
