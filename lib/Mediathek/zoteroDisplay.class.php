@@ -156,8 +156,7 @@ private function endBox( $title ) {
         <?php
         echo '<br />'.htmlentities( $this->item->getTitle() );
 				if( $this->item->getYear() ) {
-						?>
-							<span style="font-size: 80%;"><?php echo htmlspecialchars( $this->item->getYear() );?></span>
+						?>, <span style="font-size: 80%;"><?php echo htmlspecialchars( $this->item->getYear() );?></span>
 						<?php
 				}
 				?>
@@ -188,7 +187,14 @@ private function endBox( $title ) {
 					}
 				}
 			}
-			?>
+	
+			if( $this->item->getUrl()) { 
+				?><i class="fa fa-external-link" aria-hidden="true"></i><a href="redir.php?id=<?php echo urlencode( $this->doc->id ).'&url='.urlencode( $this->item->getUrl())."\" target=\"blank\" style=\"word-wrap: break-word;\">".htmlspecialchars( $this->item->getUrl() )."</a>"; ?>
+				<br />
+<?php 
+			}
+?>			
+
 		</div>
     </span>
 		</div>
@@ -744,10 +750,16 @@ private function endBox( $title ) {
 									?>
 													</i></p>
 									<?php
+				if( $this->item->getYear() ) {
+						?>
+							Jahr: <?php echo htmlspecialchars( $this->item->getYear() );?><br />
+						<?php
+				}									
                   ?>
-					<?php if( $this->item->getUrl()) { ?><i class="fa fa-external-link" aria-hidden="true"></i><a href="redir.php?id=<?php echo urlencode( $this->doc->id ).'&url='.urlencode( $this->item->getUrl())."\" target=\"blank\">".htmlspecialchars( $this->item->getUrl() )."</a>"; ?>
+					<?php if( $this->item->getUrl()) { ?><i class="fa fa-external-link" aria-hidden="true"></i><a href="redir.php?id=<?php echo urlencode( $this->doc->id ).'&url='.urlencode( $this->item->getUrl())."\" target=\"blank\" style=\"word-wrap: break-word;\">".htmlspecialchars( $this->item->getUrl() )."</a>"; ?>
 					<br />
           <?php }
+
 						$cat = $item->getLibraryCatalog();
 						if( strlen( $cat )) echo "Quelle: ".htmlspecialchars( $cat )."<br />\n";
 					?>

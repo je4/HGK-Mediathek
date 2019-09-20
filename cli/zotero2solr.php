@@ -18,12 +18,12 @@ $groups = array(
 // 2260611,  // DigitaleSee
  //// 1803850, // Kasko
  ///// 1624911, // PCB Basel
-1510019,   // Hyperwerk
+//1510019,   // Hyperwerk
 // 2066935,   // RIMAB
 // 2171465,   // Basle Bibliography for Historical Performance Practice
 // 2250437, // Grenzgang (neu)
 // 2315925, // Integrative Gestaltung / Masterstudio
-// 2317722, // Archive des Ephemeren
+2317722, // Archive des Ephemeren
 // 2260611, // feministisches Improvisatorium
 //2327162, // Digital Brainstorming
 );
