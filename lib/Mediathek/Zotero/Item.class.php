@@ -326,12 +326,13 @@ class Item {
           foreach( $rel as $val ) {
             $ret[] = "{$key}:{$val}";
           }
-        }
-      }
-    }
-    return $ret;
+        } else {
+			$ret[] = "{$key}:{$rel}";
+ 	    }
+	  }
+	  return $ret;
+	}
   }
-
 
 
     /**

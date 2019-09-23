@@ -537,8 +537,8 @@ private function endBox( $title ) {
 ?>
 					</div>
 				</div>
-						<?php  } ?>
-<?php 	$rels = $this->item->getRelations();
+						<?php  }
+				$rels = $this->item->getRelations();
 				if( is_array( $rels ) && count( $rels ))  { ?>
 				<div style="">
 				<span style="; font-weight: bold;">Verweise</span><br />
