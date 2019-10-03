@@ -14,7 +14,7 @@ require 'footer.inc.php';
 
 include( 'init.inc.php' );
 
-echo mediathekheader('gatekeeper', 'Videowochen im Wenkenpark', '', array( '../css/dataTables.bootstrap4.min.css' ));
+echo mediathekheader('gatekeeper', 'Videowochen im Wenkenpark', '', array( '../css/dataTables.bootstrap4.min.css' ), ['robots'=>'nofollow']);
 ?>
 
 <div class="back-btn"><i class="ion-ios-search"></i></div>

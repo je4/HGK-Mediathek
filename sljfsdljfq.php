@@ -14,6 +14,13 @@ $mapsize = 20000;
 $map = isset( $_REQUEST['map'] ) ? intval( $_REQUEST['map'] ) : null;
 $list = isset( $_REQUEST['list'] );
 
+
+$static = [
+'https://mediathek.hgk.fhnw.ch/wenkenpark.php',
+'https://mediathek.hgk.fhnw.ch/pcb.php',
+'https://mediathek.hgk.fhnw.ch/femministisches_impro.php',
+];
+
 if( $map === null ) {
 	$squery = $solrclient->createSelect();
 	$squery->setRows( 5 );
@@ -96,6 +103,17 @@ else{
 		//echo "$last < min( $numResults, (($map+1)*$mapsize)-1 )\n";
 		$page++;
 	} while( $last < min( $numResults, (($map+1)*$mapsize)-1 ));
+	if( $map == 0 ) {
+		foreach( $static as $url ) {
+			if( $list ) {
+				echo $url."\n";
+			} else {
+			echo "<url>\n";
+			echo '   <loc>'.$url."</loc>\n";
+			echo "</url>\n";
+			}
+		}
+	}
 	if( !$list ) {
 ?>
 </urlset>
