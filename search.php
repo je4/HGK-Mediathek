@@ -44,6 +44,34 @@ if( $page < 0 ) $page = 0;
 $qobj = null;
 $invalidQuery = false;
 
+
+$cachestr = '';
+foreach( $session->getGroups() as $grp ) {
+	$cachestr .= $grp;
+}
+$cachefile = md5($cachestr."-{$q}-{$page}").".dat";
+$fullcachepath = "{$config['cachedir']}/{$cachefile{0}}/{$cachefile{1}}/search-{$q}-{$page}-{$cachefile}";
+
+if( file_exists( $fullcachepath )) {
+	$gzipoutput = file_get_contents( $fullcachepath );
+	$headers = getallheaders();
+	//var_dump( $headers );
+	if( array_key_exists('Accept-Encoding', $headers)) {
+		if( strpos($headers['Accept-Encoding'], 'gzip' ) !== false ) {
+			header('Content-Encoding: gzip');
+			header('Content-Length: '.strlen($gzipoutput));
+			echo $gzipoutput;
+			exit;
+		}
+	}
+	echo gzdecode($gzipoutput);
+	exit;
+}
+
+ob_start(); // segment 1
+$pagestr = '';
+
+
 $urlparams = array( 'q'=>$q,
 	'page'=>$page,
 	'pagesize'=>$pagesize,
@@ -339,7 +367,7 @@ if( $json ) {
 	exit;
 }
 
-echo mediathekheader('search', 'mediathek - Suche - '.$qobj['query'], $qobj['area'], array(), $qconfig );
+echo mediathekheader('search', 'mediathek - Suche - '.$qobj['query'], $qobj['area'], array(), ['robots'=>'noindex'] );
 ?>
 <div class="home-btn"><i class="ion-ios-close-circle-outline"></i></div>
 <div class="setting-btn"><i class="<?php echo $session->isLoggedIn() ? 'ion-ios-settings': 'ion-ios-log-in'; ?>"></i></div>
@@ -365,11 +393,15 @@ echo mediathekheader('search', 'mediathek - Suche - '.$qobj['query'], $qobj['are
 		<div class="row" style="margin-bottom: 30px;">
 		  <div class="col-md-offset-2 col-md-8">
 <?php
+$pagestr .= ob_get_contents();
+ob_flush();
 
 foreach( $debugstr as $str ) echo $str."\n";
 
 $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 
+$pagestr .= ob_get_contents();
+ob_flush();
 
 ?>
 		</div>
@@ -447,6 +479,8 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 			</div>
 			</div>
 <?php
+$pagestr .= ob_get_contents();
+ob_flush();
 
 		if( DEBUG ) {
 
@@ -618,7 +652,12 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 			</div>
 
 
-<?php if( DEBUG ) { ?>
+<?php 
+$pagestr .= ob_get_contents();
+ob_flush();
+
+	if( DEBUG ) { 
+?>
 			<div style="overflow:hidden;">
 			<span style="; font-weight: bold;">Kategorien</span><br />
 			<div class="facet" style="">
@@ -682,6 +721,9 @@ $res = new DesktopResult( $rs, $page * $pagesize, $pagesize, $db, $urlparams );
 </div>
 
 <?php
+$pagestr .= ob_get_contents();
+ob_flush();
+
 //include( 'bgimage.inc.php' );
 ?>
 <script>
@@ -769,4 +811,11 @@ function init() {
 
 <?php
 echo mediathekfooter();
+
+$pagestr .= ob_get_contents();
+ob_end_flush();
+
+file_put_contents($fullcachepath, gzencode($pagestr));
+
+
 ?>

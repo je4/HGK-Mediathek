@@ -4,6 +4,24 @@ namespace Mediathek;
 
 include '../init.inc.php';
 
+$chars = '0123456789abcdef';
+
+$dir = $config['cachedir'];
+
+for( $i = 0; $i < strlen($chars); $i++ ) {
+	$h = "{$dir}/{$chars{$i}}";
+	echo "{$h}\n";
+	mkdir($h);
+	for( $j = 0; $j < strlen($chars); $j++ ) {
+		$h = "{$dir}/{$chars{$i}}/{$chars{$j}}";
+		echo "{$h}\n";
+		mkdir($h);
+	}
+}
+
+exit;
+
+
 
 $entity = new MarcEntity( $db );
 $solr = new SOLR( $solrclient );

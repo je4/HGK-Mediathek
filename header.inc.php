@@ -1,5 +1,5 @@
 <?php
-function mediathekheader( $current, $title, $area, $csss = array() ) {
+function mediathekheader( $current, $title, $area, $csss = array(), $metas = array() ) {
     ob_start();
 ?>
 <!doctype html>
@@ -16,6 +16,14 @@ function mediathekheader( $current, $title, $area, $csss = array() ) {
 	<meta name="description" content="HGK Mediathek am Campus der Künste">
 	<meta name="keywords" content="art, book, media, video, audio">
 	<meta name="author" content="Tabea Lurk and Jürgen Enge">
+<?php
+foreach( $metas as $meta=>$val ) {
+?>
+    <meta name="<?php echo $meta; ?>" content="<?php echo $val; ?>">
+<?php
+}
+ ?>
+	
 
     <!-- title and favicon -->
 
