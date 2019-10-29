@@ -189,7 +189,7 @@ private function endBox( $title ) {
 			}
 	
 			if( $this->item->getUrl()) { 
-				?><i class="fa fa-external-link" aria-hidden="true"></i><a href="redir.php?id=<?php echo urlencode( $this->doc->id ).'&url='.urlencode( $this->item->getUrl())."\" target=\"blank\" style=\"word-wrap: break-word;\">".htmlspecialchars( $this->item->getUrl() )."</a>"; ?>
+				?><i class="fa fa-external-link" aria-hidden="true"></i><a href="<?php echo $this->item->getUrl(); ?>" target="blank" style="word-wrap: break-word;"><?php echo htmlspecialchars( $this->item->getUrl()); ?></a>
 				<br />
 <?php 
 			}
@@ -463,8 +463,7 @@ private function endBox( $title ) {
 					else {
 						$this->beginBox( $title );
 						?>
-
-							<a href="redir.php?id=<?php echo urlencode( $this->doc->id ).'&url='.urlencode( $url ); ?>" target="_blank"><?php echo htmlspecialchars( $url ); ?></a>
+							<i class="fa fa-external-link" aria-hidden="true"></i><a href="<?php echo $url; ?>" target="blank" style="word-wrap: break-word;"><?php echo htmlspecialchars( $url ); ?></a>
 						<?php
 						$this->endBox( $title );
 					}
@@ -756,7 +755,10 @@ private function endBox( $title ) {
 						<?php
 				}									
                   ?>
-					<?php if( $this->item->getUrl()) { ?><i class="fa fa-external-link" aria-hidden="true"></i><a href="redir.php?id=<?php echo urlencode( $this->doc->id ).'&url='.urlencode( $this->item->getUrl())."\" target=\"blank\" style=\"word-wrap: break-word;\">".htmlspecialchars( $this->item->getUrl() )."</a>"; ?>
+					<?php if( $this->item->getUrl()) { ?>
+					
+					<i class="fa fa-external-link" aria-hidden="true"></i><a href="<?php echo $this->item->getUrl(); ?>" target="blank" style="word-wrap: break-word;"><?php echo htmlspecialchars( $this->item->getUrl());?></a>
+					
 					<br />
           <?php }
 

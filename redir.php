@@ -9,6 +9,9 @@ require 'footer.inc.php';
 include( 'init.inc.php' );
 
 
+header( 'Location: https://mediathek.hgk.fhnw.ch/search.php' );
+exit;
+
 global $db, $config;
 
 $url = isset( $_REQUEST['url'] ) ? trim( $_REQUEST['url'] ) : null;

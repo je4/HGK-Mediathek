@@ -1,10 +1,17 @@
 <?php
 
 $datadir = "/data/www/vhosts/mediathek.fhnw.ch/bremote";
+$devmachine = 'ba14nc2109x';
 
 $machine = $_REQUEST['machine'];
+$machine = str_replace('.local', '', strtolower($machine));
 $os = $_REQUEST['os'];
 $arch = $_REQUEST['arch'];
+ 
+
+if( $machine == $devmachine ) {
+	$datadir .= '/new';
+}
 
 $toml = "{$datadir}/client_{$machine}.toml";
 //if( !file_exists($toml)) {
@@ -18,12 +25,24 @@ if( !file_exists($bin)) {
 }
 
 chdir( $datadir );
-$files = glob("certs/mediathek_*");
+//$files = glob("certs/mediathek_*");
+
+$files = [
+	'certs/info_age_ca.pem',
+	'certs/info_age_localhost.key',
+	'certs/info_age_localhost.pem',
+	"certs/info_age_{$machine}.key",
+	"certs/info_age_{$machine}.pem",
+];
 $files[] = "client_{$machine}.toml";
 $files[] = "{$os}/{$arch}/client" . ($os == 'windows' ? '.exe' : '');
 
 ob_start();
-include( 'toml.php' );
+if( $machine == $devmachine ) {
+	include( 'toml_new.php' );
+} else {
+	include( 'toml.php' );
+}
 $data = ob_get_clean();
 file_put_contents( $toml, $data );
 

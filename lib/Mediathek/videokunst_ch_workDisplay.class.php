@@ -169,7 +169,7 @@ class videokunst_ch_workDisplay extends DisplayEntity {
 ?>
 	&nbsp;<br />
 	<b>Direktlink auf videokunst.ch</b><br />
-	<i class="fa fa-external-link" aria-hidden="true"></i><a href="redir.php?id=<?php echo urlencode( $this->doc->id ).'&url='.urlencode( $this->metadata['vidhtml'] )."\" target=\"blank\">".htmlspecialchars( $this->metadata['vidhtml'] ); ?></a><br />
+	<i class="fa fa-external-link" aria-hidden="true"></i><a href="<?php echo $this->metadata['vidhtml']; ?>" target="blank"><?php echo htmlspecialchars( $this->metadata['vidhtml'] ); ?></a><br />
 </div>
 </div>
 <div style="">
@@ -323,7 +323,7 @@ class videokunst_ch_workDisplay extends DisplayEntity {
                   				}
                   				if( count( $authors ) > 0 ) echo "<br />\n";
                   ?>
-					<i class="fa fa-external-link" aria-hidden="true"></i><a href="redir.php?id=<?php echo urlencode( $this->doc->id ).'&url='.urlencode( $this->metadata['vidhtml'] )."\" target=\"blank\">".htmlspecialchars( $this->metadata['vidhtml'] ); ?></a><br />
+					<i class="fa fa-external-link" aria-hidden="true"></i><a href="<?php echo $this->metadata['vidhtml']; ?>" target="blank"><?php echo htmlspecialchars( $this->metadata['vidhtml'] ); ?></a><br />
 
 					ID: <?php echo $this->doc->id; ?><br />
 					<a href="detail.php?<?php echo "id=".urlencode( $this->doc->id ); foreach( $this->urlparams as $key=>$val ) echo '&'.$key.'='.urlencode($val); ?>"><i class="fa fa-folder-open" aria-hidden="true"></i> Details</a><br />

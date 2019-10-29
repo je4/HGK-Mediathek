@@ -167,7 +167,7 @@ class DOAJArticleDisplay extends DisplayEntity {
 
 							$signatures = $this->doc->signature;
 							if( is_array( $signatures )) foreach( $signatures as $sig )
-								if( substr( $sig, 0, 10 ) == 'nebis:E75:' ) echo 'Signatur: <a href="redir.php?id='.urlencode( $this->doc->id ).'&url='.urlencode( 'http://recherche.nebis.ch/primo_library/libweb/action/search.do?fn=search&ct=search&vl(freeText0)='.urlencode( $this->doc->originalid ).'&vid=NEBIS&fn=change_lang&prefLang=de_DE&prefBackUrl=http://recherche.nebis.ch/nebis/action/search.do?fn=search&ct=search&vl(freeText0)='.urlencode( $this->doc->originalid ).'&search=&backFromPreferences=true.' ).'"
+								if( substr( $sig, 0, 10 ) == 'nebis:E75:' ) echo 'Signatur: <a href="'.'http://recherche.nebis.ch/primo_library/libweb/action/search.do?fn=search&ct=search&vl(freeText0)='.urlencode( $this->doc->originalid ).'&vid=NEBIS&fn=change_lang&prefLang=de_DE&prefBackUrl=http://recherche.nebis.ch/nebis/action/search.do?fn=search&ct=search&vl(freeText0)='.urlencode( $this->doc->originalid ).'&search=&backFromPreferences=true"
 										target="_blank">'.htmlspecialchars( substr( $sig, 10 ))."</a><br />\n";
 
 
@@ -175,7 +175,7 @@ class DOAJArticleDisplay extends DisplayEntity {
 							$doajident = null;
 							foreach( $this->doc->url as $url ) if( substr( $url, 0, 11 ) == 'identifier:' ) $doajident = substr( $url, 11 );
 							if( $doajident ) {
-								echo "<a href=\"redir.php?id=".urlencode( $this->doc->id ).'&url='.urlencode( $doajident )."\" target=\"_blank\">DOAJ Link</a><br />\n";
+								echo "<a href=\"".$doajident."\" target=\"_blank\">DOAJ Link</a><br />\n";
 							}
 
 ?>
@@ -196,7 +196,7 @@ class DOAJArticleDisplay extends DisplayEntity {
 						<?php echo $abstract."<p />&nbsp;<br />\n";
 							echo "<b>Referenzen</b><br />\n";
 							foreach( $this->doc->url as $url ) if( substr( $url, 0, 9 ) == 'relation:' ) {
-								echo "<a style=\"word-break: break-all;\"href=\"redir.php?id=".urlencode( $this->doc->id ).'&url='.urlencode( substr( $url, 9 ))."\" target=\"_blank\">".htmlspecialchars( substr( $url, 9 ))."</a><br />\n";
+								echo "<a style=\"word-break: break-all;\"href=\"".substr( $url, 9 )."\" target=\"_blank\">".htmlspecialchars( substr( $url, 9 ))."</a><br />\n";
 							}
 
 						?>
@@ -373,7 +373,7 @@ echo print_r( $this->metadata, true);
 						$us = explode( ':', $u );
 						if( substr( $us[1], 0, 4 ) == 'http' ) {
 							$url = substr( $u, strlen( $us[0])+1 );
-							echo ($us[0] == 'unknown' ? '' : $us[0].':')."<i class=\"fa fa-external-link\" aria-hidden=\"true\"></i><a href=\"redir.php?id=".urlencode( $this->doc->id ).'&url='.urlencode( $url )."\" target=\"blank\">{$url}</a><br />\n";
+							echo ($us[0] == 'unknown' ? '' : $us[0].':')."<i class=\"fa fa-external-link\" aria-hidden=\"true\"></i><a href=\"".$url."\" target=\"blank\">{$url}</a><br />\n";
 						}
 					}
 ?>

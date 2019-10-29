@@ -94,7 +94,7 @@ class DOABDisplay extends DisplayEntity {
                     <?php if( @count( $this->metadata['DC:LANGUAGE'] )) echo 'Sprache: '.htmlspecialchars( implode( '; ', $this->metadata['DC:LANGUAGE'] ))."<br />\n"; ?>
                     <?php if( @count( $this->metadata['DC:RIGHT'] )) echo 'Lizenz: '.htmlspecialchars( implode( '; ', $this->metadata['DC:RIGHT'] ))."<br />\n"; ?>
                     <?php if( isset( $this->doc->code )) echo htmlspecialchars( implode( "<br />\n", $this->doc->code ))."<br />\n"; ?>
-                    <?php if( isset( $this->doc->url )) foreach( $this->doc->url as $url ) echo 'URL: <i class="fa fa-external-link" aria-hidden="true"></i><a href="redir.php?id='.urlencode( $this->doc->id ).'&url='.urlencode($url).'" target="_blank">'.htmlspecialchars( $url )."</a><br />\n"; ?>
+                    <?php if( isset( $this->doc->url )) foreach( $this->doc->url as $url ) echo 'URL: <i class="fa fa-external-link" aria-hidden="true"></i><a href="'.$url.'" target="_blank">'.htmlspecialchars( $url )."</a><br />\n"; ?>
 					
 					ID: <?php echo $this->doc->id; ?>
 					<p>

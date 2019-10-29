@@ -153,7 +153,7 @@ class diplomhgkDisplay extends DisplayEntity {
           echo "<b>Referenzen</b><br />\n";
             if( is_array( $this->doc->url )) foreach( $this->doc->url as $url ) {
               if( preg_match( '/^([a-z]+):(.*)$/', $url, $matches )) {
-                echo "{$matches[1]}:<a href=\"redir.php?id=".urlencode( $this->doc->id ).'&url='.urlencode( $matches[2] )."\" target=\"_blank\">{$matches[2]}</a><br />";
+                echo "{$matches[1]}:<a href=\"".$matches[2]."\" target=\"_blank\">{$matches[2]}</a><br />";
               }
           }
 
@@ -316,7 +316,7 @@ var_dump( $this->doc->getFields());
 					$us = explode( ':', $u );
 					if( substr( $us[1], 0, 4 ) == 'http' ) {
 						$url = substr( $u, strlen( $us[0])+1 );
-						echo ($us[0] == 'unknown' ? '' : $us[0].':')."<i class=\"fa fa-external-link\" aria-hidden=\"true\"></i><a href=\"redir.php?id=".urlencode( $this->doc->id ).'&url='.urlencode( $url )."\" target=\"blank\">{$url}</a><br />\n";
+						echo ($us[0] == 'unknown' ? '' : $us[0].':')."<i class=\"fa fa-external-link\" aria-hidden=\"true\"></i><a href=\"".$url."\" target=\"blank\">{$url}</a><br />\n";
 					}
 				}
 

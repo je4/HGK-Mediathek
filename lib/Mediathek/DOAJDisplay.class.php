@@ -108,7 +108,7 @@ class DOAJDisplay extends DisplayEntity {
 						if( preg_match( '/^([^:]+):(.*)$/', $url, $matches ))
 						$t = $matches[1];
 						$t{0} = strtoupper( $t{0} );
-						echo $t.': <a style="word-break: break-all;" href="redir.php?id='.urlencode( $this->doc->id ).'&url='.urlencode($matches[2]).'" target="_blank">'.$matches[2].'</a><br />'."\n";
+						echo $t.': <a style="word-break: break-all;" href="'.$matches[2].'" target="_blank">'.$matches[2].'</a><br />'."\n";
 					}
 				?>
                     <?php if( isset( $this->metadata['Full text formats'] )) echo 'Volltextformate: '.htmlspecialchars( $this->metadata['Full text formats'] )."<br />\n"; ?>
@@ -116,7 +116,7 @@ class DOAJDisplay extends DisplayEntity {
                     <?php if( isset( $this->metadata['Journal license'] )) echo 'Lizenz: '.htmlspecialchars( $this->metadata['Journal license'] )."<br />\n"; ?>
                     <?php if( isset( $this->metadata['Journal ISSN (print version)'] )) echo 'ISSN: '.htmlspecialchars( $this->metadata['Journal ISSN (print version)'] )."<br />\n"; ?>
                     <?php if( isset( $this->metadata['Journal EISSN (online version)'] )) echo 'EISSN: '.htmlspecialchars( $this->metadata['Journal EISSN (online version)'] )."<br />\n"; ?>
-                    <?php if( isset( $this->metadata['Journal URL'] )) echo 'URL: <i class="fa fa-external-link" aria-hidden="true"></i><a href="redir.php?id='.urlencode( $this->doc->id ).'&url='.urlencode($this->metadata['Journal URL']).'" target="_blank">'.htmlspecialchars( $this->metadata['Journal URL'] )."</a><br />\n"; ?>
+                    <?php if( isset( $this->metadata['Journal URL'] )) echo 'URL: <i class="fa fa-external-link" aria-hidden="true"></i><a href="'.urlencode($this->metadata['Journal URL'].'" target="_blank">'.htmlspecialchars( $this->metadata['Journal URL'] )."</a><br />\n"; ?>
 					
 					ID: <span style="word-break: break-all;"><?php echo $this->doc->id; ?></span>
 					<p>

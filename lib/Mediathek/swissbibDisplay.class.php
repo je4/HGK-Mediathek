@@ -190,8 +190,7 @@ class swissbibDisplay extends DisplayEntity {
 								foreach( $config['swissbibsig'] as $prefix ) {
 									if( strncmp( $sig, $prefix, strlen( $prefix) ) == 0 ) {
 										$signature = substr( $sig, strlen( $prefix ));
-										echo 'Signatur: <a href="redir.php?id='.urlencode( $this->doc->id ).'&url='
-										.urlencode( 'https://recherche.nebis.ch/primo-explore/fulldisplay?docid=ebi01_prod'.urlencode( $nebisid ).'&context=L&vid=NEBIS&lang=de_DE&search_scope=default_scope&adaptor=Local%20Search%20Engine&tab=default_tab' )
+										echo 'Signatur: <a href="'.'https://recherche.nebis.ch/primo-explore/fulldisplay?docid=ebi01_prod'.urlencode( $nebisid.'&context=L&vid=NEBIS&lang=de_DE&search_scope=default_scope&adaptor=Local%20Search%20Engine&tab=default_tab' )
 										.'" target="_blank">'.htmlspecialchars( $signature )."</a><br />\n";
 										$availability = $rib ? $rib->getAvailability($signature) : null;
 										if( $availability ) {
@@ -242,7 +241,7 @@ class swissbibDisplay extends DisplayEntity {
 <?php
 if( @is_array( $urls_notes )) foreach( $urls_notes as $url ) {
 		$text = ( strlen( $url['note'] ) ? $url['note'] :(strlen( $url['url'] ) > 60 ? substr( $url['url'], 0, 60 ).'...' : $url['url'] ) );
-		echo "<i class=\"fa fa-external-link\" aria-hidden=\"true\"></i><a href=\"redir.php?id=".urlencode( $this->doc->id ).'&url='.urlencode( $url['url'] )."\" target=\"blank\">".htmlspecialchars( $text )."</a><br />\n";
+		echo "<i class=\"fa fa-external-link\" aria-hidden=\"true\"></i><a href=\"".$url['url']."\" target=\"blank\">".htmlspecialchars( $text )."</a><br />\n";
 }
 ?>
 					</div>
@@ -877,18 +876,9 @@ if( DEBUG ) {
 				$urls_notes = $this->entity->getURLsNotes();
 				if( @is_array( $urls_notes )) foreach( $urls_notes as $url ) {
 					$text = ( strlen( $url['note'] ) ? $url['note'] :(strlen( $url['url'] ) > 60 ? substr( $url['url'], 0, 60 ).'...' : $url['url'] ) );
-					echo "<i class=\"fa fa-external-link\" aria-hidden=\"true\"></i><a href=\"redir.php?id=".urlencode( $this->doc->id ).'&url='.urlencode( $url['url'] )."\" target=\"blank\">".htmlspecialchars( $text )."</a><br />\n";
+					echo "<i class=\"fa fa-external-link\" aria-hidden=\"true\"></i><a href=\"".$url['url']."\" target=\"blank\">".htmlspecialchars( $text )."</a><br />\n";
 				}
 
-/*
-				if( is_array( $this->doc->url )) foreach( $this->doc->url as $u ) {
-					$us = explode( ':', $u );
-					if( substr( $us[1], 0, 4 ) == 'http' ) {
-						$url = substr( $u, strlen( $us[0])+1 );
-						echo  ($us[0] == 'unknown' ? '' : $us[0].':')."<i class=\"fa fa-external-link\" aria-hidden=\"true\"></i><a href=\"redir.php?id=".urlencode( $this->doc->id ).'&url='.urlencode( $url )."\" target=\"blank\">".(strlen( $url ) > 40 ? substr( $url, 0, 40 ).'...':$url)."</a><br />\n";
-					}
-				}
-*/
 ?>
 				Quelle: <a href="https://www.swissbib.ch/Record/<?php  echo $this->doc->originalid; ?>">swissbib</a></a><br />
 <?php

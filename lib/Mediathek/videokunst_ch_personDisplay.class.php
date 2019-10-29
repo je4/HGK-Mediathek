@@ -118,7 +118,7 @@ class videokunst_ch_personDisplay extends DisplayEntity {
 		<div class="facet" style="padding-bottom: 5px;">
 			<div class="marker" style=""></div>
 			<b>Direktlink auf videokunst.ch</b><br />
-			<i class="fa fa-external-link" aria-hidden="true"></i><a href="redir.php?id=<?php echo urlencode( $this->doc->id ).'&url='.urlencode( $this->metadata['artistlink'] )."\" target=\"blank\">".htmlspecialchars( $this->metadata['artistlink'] ); ?></a><br />
+			<i class="fa fa-external-link" aria-hidden="true"></i><a href="<?php echo $this->metadata['artistlink']; ?>" target="blank"><?php echo htmlspecialchars( $this->metadata['artistlink'] ); ?></a><br />
 			<?php if( strlen( trim($this->metadata['artisttext']))) { ?>
 			&nbsp;<br />
 			<?php echo $this->metadata['artisttext']; ?><br />
