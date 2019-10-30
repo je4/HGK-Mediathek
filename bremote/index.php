@@ -33,6 +33,7 @@ $files = [
 	'certs/info_age_localhost.pem',
 	"certs/info_age_{$machine}.key",
 	"certs/info_age_{$machine}.pem",
+	"startup.sh",
 ];
 $files[] = "client_{$machine}.toml";
 $files[] = "{$os}/{$arch}/client" . ($os == 'windows' ? '.exe' : '');

@@ -36,6 +36,11 @@ $solr = new SOLR( $solrclient, $db );
 
 $entity = new zoteroEntity( $db );
 $cnt = 0;
+
+$zotero = new Zotero( $db, $config['zotero']['apiurl'], $config['zotero']['apikey'], $config['zotero']['mediapath'], STDOUT );
+
+if( false ) {
+
 if( $cleanup ) {
   foreach( $groups as $group ) {
     $sql = "DELETE FROM zotero.groups WHERE id='{$group}'";
@@ -44,7 +49,6 @@ if( $cleanup ) {
   }
 }
 
-$zotero = new Zotero( $db, $config['zotero']['apiurl'], $config['zotero']['apikey'], $config['zotero']['mediapath'], STDOUT );
   foreach( $groups as $group ) {
     try {
         $zotero->syncItems( $group );
@@ -54,17 +58,22 @@ $zotero = new Zotero( $db, $config['zotero']['apiurl'], $config['zotero']['apike
   }
 
 // die();
+}
 
 $entity = new zoteroEntity( $db );
 $cnt = 0;
 foreach( $groups as $group ) {
   if( $cleanup ) {
+	  echo "deleting id:zotero-{$group}.*\n";
     $update = $solrclient->CreateUpdate();
     $update->addDeleteQuery("id:zotero-{$group}.*");
+	$update->addCommit();
     $result = $solrclient->update( $update );
   }
+  
   foreach( $zotero->loadChildren( $group ) as $item ) {
     echo $item;
+
     if( $item->isTrashed()) echo "  [TRASH]\n";
     $entity->reset();
     $data = $item->getData();

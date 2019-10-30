@@ -186,13 +186,13 @@ class Zotero {
                     $config['mediaserver']['key']
                   );
             }
-            echo "loading metadata from {$metaurl}\n";
+            echo "loading metadata from {$metaurl}...\n";
             try {
               $meta = $this->dataFromURL( $metaurl );
               $metaarr = json_decode( $meta, true );
               $item['data']['media'] = array( 'metadata'=>$metaarr );
               $mimetype = array_key_exists( 'mimetype', $metaarr ) ? $metaarr['mimetype'] : 'application/octet-stream';
-              //var_dump( $metaarr );
+              var_dump( $metaarr );
             }
             catch( \Exception $ex ) {
               echo( $ex->getMessage());
@@ -210,12 +210,13 @@ class Zotero {
                     $config['mediaserver']['key']
                   );
             }
-            echo "loading metadata from {$metaurl}\n";
+            echo "loading metadata from {$metaurl}...\n";
             try {
               $meta = $this->dataFromURL( $metaurl );
               $metaarr = json_decode( $meta, true );
               $item['data']['media'] = array( 'metadata'=>$metaarr );
               $mimetype = $metaarr['mimetype'];
+			  var_dump( $metaarr );
             }
             catch( \Exception $ex ) {
               echo( $ex->getMessage());
@@ -236,12 +237,13 @@ class Zotero {
                     $config['mediaserver']['key']
                   );
             }
-            echo "loading metadata from {$metaurl}\n";
+            echo "loading metadata from {$metaurl}...\n";
             try {
               $meta = $this->dataFromURL( $metaurl );
               $metaarr = json_decode( $meta, true );
               $item['data']['media'] = array( 'metadata'=>$metaarr );
               $mimetype = $metaarr['mimetype'];
+			  var_dump( $metaarr );
             }
             catch( \Exception $ex ) {
               echo( $ex->getMessage());
@@ -291,6 +293,7 @@ class Zotero {
               $metaarr = json_decode( $meta, true );
               $item['data']['media'] = array( 'metadata'=>$metaarr );
               $mimetype = $metaarr['mimetype'];
+			  //var_dump( $metaarr );
             }
             catch( \Exception $ex ) {
               echo( $ex->getMessage());

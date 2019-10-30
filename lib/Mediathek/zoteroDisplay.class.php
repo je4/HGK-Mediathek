@@ -359,12 +359,13 @@ private function endBox( $title ) {
 //		}
 		$title = trim($title, ' -.;');
 //		$this->beginBox( $title );
-				//var_dump( $att );
+//				var_dump( $att );
 				if( in_array( $att->getLinkMode(), ['linked_url', 'imported_file'] )) {
 					$url = $att->getUrl();
 					$mime = $att->getUrlMimetype();
-					if( preg_match( '/^mediaserver:(.+)$/', $url, $matches )) {
+					if( preg_match( '/^(mediaserver|mediasrv):(.+)$/', $url, $matches )) {
 						$media = $att->getMedia();
+//						var_dump( $media );
 						$type = null;
 						if( isset( $media['metadata']['type'] ))	$type = $media['metadata']['type'];
 						if( $type == 'video' || $type == 'pdf' || $type == 'audio' || $type == 'gpx' ) {
