@@ -39,7 +39,7 @@ $cnt = 0;
 
 $zotero = new Zotero( $db, $config['zotero']['apiurl'], $config['zotero']['apikey'], $config['zotero']['mediapath'], STDOUT );
 
-if( false ) {
+if( true ) {
 
 if( $cleanup ) {
   foreach( $groups as $group ) {

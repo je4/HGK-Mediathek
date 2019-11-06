@@ -219,7 +219,12 @@ private function endBox( $title ) {
 	<span style="font-weight: bold;">Note</span><br>
 	<div class="facet" style="">
 		<div class="marker" style=""></div>
-		<?php echo strip_tags($note->getNote(), '<br><p>'); ?>
+		<?php
+		$str = strip_tags($note->getNote(), '<br><p>');
+		$str = preg_replace('/(?i)\b((?:https?:\/\/|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:\'".,<>?«»“”‘’]))/', '<a href="$1">$1</a>', $str);		
+		
+		echo $str; 
+		?>
 	</div>
 	<?php } ?>
 	</div>

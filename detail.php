@@ -90,7 +90,7 @@ if( $json ) {
 $title = 'Mediathek - Detail - '.($doc ? $doc->title : '').' ['.$id.']';
 $robots = 'noindex';
 foreach( $config['seo'] as $field=>$vals ) {
-	if( count(array_intersect($doc[$field], $vals )) > 0 ) {
+	if( !is_array($doc[$field]) || count(array_intersect($doc[$field], $vals )) > 0 ) {
 		$robots = 'nofollow';
 		break;
 	}
