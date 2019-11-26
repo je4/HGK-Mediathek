@@ -24,6 +24,8 @@
 
 namespace Mediathek;
 
+include( 'encoding.php' );
+
 class zoteroDisplay extends DisplayEntity {
 	private $metadata;
   private $entity;
@@ -252,6 +254,14 @@ private function endBox( $title ) {
 					if( isset( $media['metadata']['image']['properties']['exif:Copyright'] ))	{
 						$copyright = $media['metadata']['image']['properties']['exif:Copyright'];
 					}
+					if( isset( $media['metadata']['exif'][0]['Copyright'] ))	{
+						$copyright = $media['metadata']['exif'][0]['Copyright'];
+					}
+					$copyright = \ForceUTF8\Encoding::fixUTF8($copyright);
+					$orientation = 1;
+					if( isset( $media['metadata']['image']['properties']['exif:Orientation'] ))	{
+						$orientation = max(intval($media['metadata']['image']['properties']['exif:Orientation']), 1);
+					}
 					$width = 0;
 					if( isset( $media['metadata']['width'] ))	{
 						$width = $media['metadata']['width'];
@@ -261,13 +271,32 @@ private function endBox( $title ) {
 						$height = $media['metadata']['height'];
 					}
 					if( $type == 'image' ) {
-
-						$images[] = [
+						$_img = [
 							'url'=>$url,
 							'copyright'=>$copyright,
 							'width'=>$width,
 							'height'=>$height,
+							'orientation'=>$orientation,
 						 ];
+						 switch( $orientation ) {
+							 case 1:
+							 case 2:
+							 case 3:
+							 case 4:
+							 $_img['realwidth'] = $_img['width'];
+							 $_img['realheight'] = $_img['height'];
+							 break;
+							 // rotation 90 or -90
+							 // flip width and height
+							 case 5:
+							 case 6:
+							 case 7:
+							 case 8:
+							 $_img['realwidth'] = $_img['height'];
+							 $_img['realheight'] = $_img['width'];
+							 break;
+						 }
+						$images[] = $_img;
 //						$link = $this->mediaLink( $url.'/resize/size800x1000' );
 //						$imgserver = $this->mediaLink( $url.'/iframe' );
 					}
@@ -296,6 +325,68 @@ private function endBox( $title ) {
 		$this->beginBox( $title );
 ?>
 <style>
+<?php 
+/*
+.exif-orientation-1 {
+}
+
+.exif-orientation-2 {
+  -webkit-transform: scaleX(-1);
+  -moz-transform: scaleX(-1);
+  -o-transform: scaleX(-1);
+  -ms-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+
+.exif-orientation-3 {
+	-webkit-transform: rotate(180deg);
+	-moz-transform: rotate(180deg);
+	-o-transform: rotate(180deg);
+	-ms-transform: rotate(180deg);
+	transform: rotate(180deg);
+}
+
+.exif-orientation-4 {
+	-webkit-transform: rotate(180deg) scaleX(-1);
+	-moz-transform: rotate(180deg) scaleX(-1);
+	-o-transform: rotate(180deg) scaleX(-1);
+	-ms-transform: rotate(180deg) scaleX(-1);
+	transform: rotate(180deg) scaleX(-1);
+}
+
+.exif-orientation-5 {
+	-webkit-transform: rotate(90deg);
+	-moz-transform: rotate(90deg);
+	-o-transform: rotate(90deg);
+	-ms-transform: rotate(90deg);
+	transform: rotate(90deg);
+}
+
+.exif-orientation-6 {
+	-webkit-transform: rotate(90deg) scaleX(-1);
+	-moz-transform: rotate(90deg) scaleX(-1);
+	-o-transform: rotate(90deg) scaleX(-1);
+	-ms-transform: rotate(90deg) scaleX(-1);
+	transform: rotate(90deg) scaleX(-1);
+}
+
+.exif-orientation-7 {
+	-webkit-transform: rotate(270deg);
+	-moz-transform: rotate(270deg);
+	-o-transform: rotate(270deg);
+	-ms-transform: rotate(270deg);
+	transform: rotate(270deg);
+}
+
+.exif-orientation-8 {
+	-webkit-transform: rotate(270deg) scaleX(-1);
+	-moz-transform: rotate(270deg) scaleX(-1);
+	-o-transform: rotate(270deg) scaleX(-1);
+	-ms-transform: rotate(270deg) scaleX(-1);
+	transform: rotate(270deg) scaleX(-1);
+}
+*/
+?>
 .img-container {
 		display: flex;
 		flex-wrap: wrap;
@@ -339,9 +430,9 @@ private function endBox( $title ) {
 			$biglink = $this->mediaLink( $img['url'].'/resize/size800x1000' );
 			$imgserver = $this->mediaLink( $img['url'].'/iframe' );
 			?>
-				<a href="<?php echo $biglink; ?>" data-toggle="lightbox" data-footer="<?php echo $img['copyright']; ?>" data-gallery="main_gallery" data-type="image"">
-					<img width="200", height="<?php echo round( $img['height']*200/$img['width'] ); ?>" src="<?php echo $link; ?>" class="img-fluid" />
-				</a>
+					<a href="<?php echo $biglink; ?>" class="" data-toggle="lightbox" data-footer="<?php echo $img['copyright']; ?>" data-gallery="main_gallery" data-type="image"">
+						<img width="200", height="<?php echo round( $img['height']*200/$img['width'] ); ?>" src="<?php echo $link; ?>" class="img-fluid exif-orientation-<?php echo $img['orientation']; ?>" />
+					</a>
 			<?php
 		}
 		echo '		</div>'."\n";
@@ -368,6 +459,8 @@ private function endBox( $title ) {
 				if( in_array( $att->getLinkMode(), ['linked_url', 'imported_file'] )) {
 					$url = $att->getUrl();
 					$mime = $att->getUrlMimetype();
+					if( $mime == null ) {
+					}
 					if( preg_match( '/^(mediaserver|mediasrv):(.+)$/', $url, $matches )) {
 						$media = $att->getMedia();
 //						var_dump( $media );
@@ -404,13 +497,6 @@ private function endBox( $title ) {
 							echo "<a href=\"".$this->mediaLink( $url.'/master' )."\" target=_blank>{$url}</a>";
 							$this->endBox( $title );
 						}
-					}
-					elseif( $mime == null) {
-						$this->beginBox( $title );
-						?>
-							Invalid URL: <a href="<?php echo $url; ?>"><?php echo $url; ?></a>
-						<?php
-						$this->endBox( $title );
 					}
 					elseif( preg_match( '/^image\//', $att->getUrlMimetype())) {
 						$this->beginBox( $title );
@@ -464,6 +550,13 @@ private function endBox( $title ) {
 						  </p>
 						</video>
 <?php
+						$this->endBox( $title );
+					}
+					elseif( $mime == null) {
+						$this->beginBox( $title );
+						?>
+							Invalid URL: <a href="<?php echo $url; ?>"><?php echo $url; ?></a>
+						<?php
 						$this->endBox( $title );
 					}
 					else {

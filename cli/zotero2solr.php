@@ -23,9 +23,10 @@ $groups = array(
 // 2171465,   // Basle Bibliography for Historical Performance Practice
 // 2250437, // Grenzgang (neu)
 // 2315925, // Integrative Gestaltung / Masterstudio
-2317722, // Archive des Ephemeren
+//2317722, // Archive des Ephemeren
 // 2260611, // feministisches Improvisatorium
 //2327162, // Digital Brainstorming
+2329831, // HGK Fotos
 );
 
 //$groups = array( 1387750, 1510019, 1510009, 1624911, 1803850, 2061687, 2066935, 1624911, 2068924, 2180340, 2206003 );

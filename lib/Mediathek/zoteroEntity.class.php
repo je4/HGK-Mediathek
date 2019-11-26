@@ -203,6 +203,17 @@ class zoteroEntity extends SOLRSource {
             $sigs[] = $tag;
           }
         }
+		if( isset($this->data['data']['call-number'])) {
+			$cns = $this->data['data']['call-number'];
+			if( is_array( $cns )) {
+				$sigs = array_merge( $sigs, $cns );
+			} else {
+				$sigs[] = $cns;
+			}
+			
+		}
+		var_dump( array_keys( $this->data['data']));
+		var_dump( $sigs );
         return $sigs;
     }
 
