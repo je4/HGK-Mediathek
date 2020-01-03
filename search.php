@@ -99,9 +99,8 @@ if( $query ) {
 					&& array_key_exists( 'filter', $qobj )
 					&& array_key_exists( 'facets', $qobj )
 	   );
-
 	if( !$invalidQuery ) {
-		$md5 = md5($query);
+	$md5 = md5($query);
 		Helper::writeQuery( $md5, $qobj, $query );
 
 		// md5-sum not valid for query
@@ -144,7 +143,7 @@ if( !$qobj ) {
 		$session->storeQuery( $q );
 		$sql = "SELECT config FROM web_query_config WHERE area=".$db->qstr( $qobj['area'] );
 		$qconfig = $db->GetOne( $sql );
-//		var_dump( $qobj );
+		//echo json_encode( $qobj );
 	}
 }
 

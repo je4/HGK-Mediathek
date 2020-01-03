@@ -32,7 +32,7 @@ foreach( $session->getGroups() as $grp ) {
 $cachefile = md5($cachestr."_{$id}{$barcode}").".dat";
 $fullcachepath = "{$config['cachedir']}/{$cachefile{0}}/{$cachefile{1}}/detail_{$id}{$barcode}_{$cachefile}";
 
-if( !DEBUG && file_exists( $fullcachepath )) {
+if( !$json && !DEBUG && file_exists( $fullcachepath )) {
 	$gzipoutput = file_get_contents( $fullcachepath );
 	$headers = getallheaders();
 	//var_dump( $headers );
