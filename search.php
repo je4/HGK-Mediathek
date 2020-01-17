@@ -52,7 +52,7 @@ foreach( $session->getGroups() as $grp ) {
 $cachefile = md5($cachestr."-{$q}-{$page}").".dat";
 $fullcachepath = "{$config['cachedir']}/{$cachefile{0}}/{$cachefile{1}}/search-{$q}-{$page}-{$cachefile}";
 
-if( false && file_exists( $fullcachepath )) {
+if( file_exists( $fullcachepath )) {
 	$gzipoutput = file_get_contents( $fullcachepath );
 	$headers = getallheaders();
 	//var_dump( $headers );
