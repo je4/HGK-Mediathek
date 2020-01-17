@@ -42,84 +42,87 @@ class Session implements \SessionHandlerInterface
    public function startSession() {
 	    global $_SERVER;
 
-    session_start();
+	if( $this->shibGetSessionID() != null )
+	{
+		session_start();
 
-    $this->id = session_id();
-
-    $sql = "SELECT *, UNIX_TIMESTAMP( lastaccess) AS unix_lastaccess FROM session WHERE php_session_id=".$this->db->qstr( $this->id );
-//	echo $sql;
-    $row = $this->db->GetRow( $sql );
-//	var_dump( $row );
-
-	if( isset( $_SERVER['SSL_CLIENT_S_DN'])) {
-		if( $_SERVER['SSL_CLIENT_I_DN'] == 'CN=Mediathek CA,OU=Certification Authority,O=Mediathek,O=FHNW Academy of Art and Design,L=Basel,ST=Basel Stadt,C=CH'
-			&& $_SERVER['SSL_CLIENT_VERIFY'] == 'SUCCESS'
-			&& isset( $_SERVER['SSL_CLIENT_S_DN_Email'] ) ) {
-			$this->certEmail = $_SERVER['SSL_CLIENT_S_DN_Email'];
-		}
-	}
-
-    // Fall 1: php session ist abgelaufen
-    if( $row != null && (( time() - $row['unix_lastaccess']) > self::$timeout )) {
-        // start new session
-        session_regenerate_id();
 		$this->id = session_id();
-        $sql = 'INSERT INTO session (`uniqueID`, `Shib-Session-ID`, certEmail, `php_session_id`, clientip )
-            VALUES (
-                '.$this->db->qstr($this->shibGetUniqueID()).'
-                , '.$this->db->qstr($this->shibGetSessionID()).'
-                , '.$this->db->qstr($this->certEmail).'
-                , '.$this->db->qstr($this->id).'
-                , '.$this->db->qstr($_SERVER['REMOTE_ADDR']).'
-                )';
-//		echo $sql;
-        $this->db->Execute( $sql );
-    }
-    // Fall 2: keine Session
-    elseif( $row == null ) {
-        $sql = 'INSERT INTO session (`uniqueID`, `Shib-Session-ID`, certEmail, `php_session_id`, clientip )
-            VALUES (
-                '.$this->db->qstr($this->shibGetUniqueID()).'
-                , '.$this->db->qstr($this->shibGetSessionID()).'
-                , '.$this->db->qstr($this->certEmail).'
-                , '.$this->db->qstr($this->id).'
-                , '.$this->db->qstr(isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : null).'
-                )';
-//		echo $sql;
-        $this->db->Execute( $sql );
-    }
-    // Fall 3: Shibboleth-Session existiert, ist aber noch nicht eingetragen
-    elseif( $this->shibGetSessionID() != null && $row['Shib-Session-ID'] == null ) {
-        $sql = "UPDATE session
-            SET `uniqueID`=".$this->db->qstr($this->shibGetUniqueID()).", `Shib-Session-ID`=".$this->db->qstr($this->shibGetSessionID())."
-            WHERE php_session_id=".$this->db->qstr( $this->id );
-//		echo $sql;
-        $this->db->Execute( $sql );
-    }
-    // Fall 4: Shibboleth-Session existiert, entspricht aber nicht der gespeicherten Shib-Session-ID
-    // Fall 5: Shibboleth-Session existiert, PHP Session ist abgelaufen
-    elseif(( $this->shibGetSessionID() != null && $row['Shib-Session-ID'] != $this->shibGetSessionID() )
-           || ($this->shibGetSessionID() != null && ((( time() - $row['unix_lastaccess']) > self::$timeout )
-                                                    || $row['end'] != null )))
-    {
-        // start new session
-        $this->id = session_regenerate_id();
-        $sql = 'INSERT INTO session (`uniqueID`, `Shib-Session-ID`, certEmail, `php_session_id`, clientip )
-            VALUES (
-                '.$this->db->qstr($this->shibGetUniqueID()).'
-                , '.$this->db->qstr($this->shibGetSessionID()).'
-                , '.$this->db->qstr($this->certEmail).'
-                , '.$this->db->qstr($this->id).'
-                , '.$this->db->qstr($_SERVER['REMOTE_ADDR']).'
-                )';
-//		echo $sql;
-        $this->db->Execute( $sql );
-    }
-    else {
-        $sql = "UPDATE session SET lastaccess=NOW() WHERE php_session_id=".$this->db->qstr($this->id);
-//		echo $sql;
-        $this->db->Execute( $sql );
-    }
+
+		$sql = "SELECT *, UNIX_TIMESTAMP( lastaccess) AS unix_lastaccess FROM session WHERE php_session_id=".$this->db->qstr( $this->id );
+	//	echo $sql;
+		$row = $this->db->GetRow( $sql );
+	//	var_dump( $row );
+
+		if( isset( $_SERVER['SSL_CLIENT_S_DN'])) {
+			if( $_SERVER['SSL_CLIENT_I_DN'] == 'CN=Mediathek CA,OU=Certification Authority,O=Mediathek,O=FHNW Academy of Art and Design,L=Basel,ST=Basel Stadt,C=CH'
+				&& $_SERVER['SSL_CLIENT_VERIFY'] == 'SUCCESS'
+				&& isset( $_SERVER['SSL_CLIENT_S_DN_Email'] ) ) {
+				$this->certEmail = $_SERVER['SSL_CLIENT_S_DN_Email'];
+			}
+		}
+
+		// Fall 1: php session ist abgelaufen
+		if( $row != null && (( time() - $row['unix_lastaccess']) > self::$timeout )) {
+			// start new session
+			session_regenerate_id();
+			$this->id = session_id();
+			$sql = 'INSERT INTO session (`uniqueID`, `Shib-Session-ID`, certEmail, `php_session_id`, clientip )
+				VALUES (
+					'.$this->db->qstr($this->shibGetUniqueID()).'
+					, '.$this->db->qstr($this->shibGetSessionID()).'
+					, '.$this->db->qstr($this->certEmail).'
+					, '.$this->db->qstr($this->id).'
+					, '.$this->db->qstr($_SERVER['REMOTE_ADDR']).'
+					)';
+	//		echo $sql;
+			$this->db->Execute( $sql );
+		}
+		// Fall 2: keine Session
+		elseif( $row == null ) {
+			$sql = 'INSERT INTO session (`uniqueID`, `Shib-Session-ID`, certEmail, `php_session_id`, clientip )
+				VALUES (
+					'.$this->db->qstr($this->shibGetUniqueID()).'
+					, '.$this->db->qstr($this->shibGetSessionID()).'
+					, '.$this->db->qstr($this->certEmail).'
+					, '.$this->db->qstr($this->id).'
+					, '.$this->db->qstr(isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : null).'
+					)';
+	//		echo $sql;
+			$this->db->Execute( $sql );
+		}
+		// Fall 3: Shibboleth-Session existiert, ist aber noch nicht eingetragen
+		elseif( $this->shibGetSessionID() != null && $row['Shib-Session-ID'] == null ) {
+			$sql = "UPDATE session
+				SET `uniqueID`=".$this->db->qstr($this->shibGetUniqueID()).", `Shib-Session-ID`=".$this->db->qstr($this->shibGetSessionID())."
+				WHERE php_session_id=".$this->db->qstr( $this->id );
+	//		echo $sql;
+			$this->db->Execute( $sql );
+		}
+		// Fall 4: Shibboleth-Session existiert, entspricht aber nicht der gespeicherten Shib-Session-ID
+		// Fall 5: Shibboleth-Session existiert, PHP Session ist abgelaufen
+		elseif(( $this->shibGetSessionID() != null && $row['Shib-Session-ID'] != $this->shibGetSessionID() )
+			   || ($this->shibGetSessionID() != null && ((( time() - $row['unix_lastaccess']) > self::$timeout )
+														|| $row['end'] != null )))
+		{
+			// start new session
+			$this->id = session_regenerate_id();
+			$sql = 'INSERT INTO session (`uniqueID`, `Shib-Session-ID`, certEmail, `php_session_id`, clientip )
+				VALUES (
+					'.$this->db->qstr($this->shibGetUniqueID()).'
+					, '.$this->db->qstr($this->shibGetSessionID()).'
+					, '.$this->db->qstr($this->certEmail).'
+					, '.$this->db->qstr($this->id).'
+					, '.$this->db->qstr($_SERVER['REMOTE_ADDR']).'
+					)';
+	//		echo $sql;
+			$this->db->Execute( $sql );
+		}
+		else {
+			$sql = "UPDATE session SET lastaccess=NOW() WHERE php_session_id=".$this->db->qstr($this->id);
+	//		echo $sql;
+			$this->db->Execute( $sql );
+		}
+   }
   }
 
   public function checkUser() {
@@ -235,13 +238,30 @@ class Session implements \SessionHandlerInterface
   }
 
   function storeQuery( $queryid ) {
-  	$sql = "SELECT count(*) FROM session_query WHERE php_session_id=".$this->db->qstr( $this->id )." AND queryid=".$this->db->qstr( $queryid );
-  	$num = intval( $this->db->GetOne( $sql ));
-  	if( !$num )
-  		$sql = "INSERT INTO session_query VALUES( ".$this->db->qstr( $this->id ).", ".$this->db->qstr( $queryid ).", 1, NOW())";
-  		else
-  			$sql = "UPDATE session_query SET counter=counter+1, accesstime=NOW() WHERE php_session_id=".$this->db->qstr( $this->id )." AND queryid=".$this->db->qstr( $queryid );
-  	  $this->db->Execute( $sql );
+	 if( $this->shibGetSessionID() == null ) {
+		// unset cookies
+		if (isset($_SERVER['HTTP_COOKIE'])) {
+			var_dump( $_SERVER['HTTP_COOKIE'] );
+			$cookies = explode(';', $_SERVER['HTTP_COOKIE']);
+			foreach($cookies as $cookie) {
+				$parts = explode('=', $cookie);
+				$name = trim($parts[0]);
+				setcookie($name, '', time()-1000);
+				setcookie($name, '', time()-1000, '/');
+			}
+		}	 
+	} 
+	 else 
+	{
+
+		$sql = "SELECT count(*) FROM session_query WHERE php_session_id=".$this->db->qstr( $this->id )." AND queryid=".$this->db->qstr( $queryid );
+		$num = intval( $this->db->GetOne( $sql ));
+		if( !$num )
+			$sql = "INSERT INTO session_query VALUES( ".$this->db->qstr( $this->id ).", ".$this->db->qstr( $queryid ).", 1, NOW())";
+		else
+			$sql = "UPDATE session_query SET counter=counter+1, accesstime=NOW() WHERE php_session_id=".$this->db->qstr( $this->id )." AND queryid=".$this->db->qstr( $queryid );
+		$this->db->Execute( $sql );
+	}
   }
 
   function storeCustom( $task ) {

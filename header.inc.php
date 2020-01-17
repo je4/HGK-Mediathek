@@ -72,29 +72,17 @@ foreach( $csss as $css ) {
 		</style>
 	<![endif]-->
 
-	<!-- Matomo -->
-	<script type="text/javascript">
-	  var _paq = window._paq || [];
-	  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-	  _paq.push(['trackPageView']);
-	  _paq.push(['enableLinkTracking']);
-	  (function() {
-		var u="//intern.hgk.fhnw.ch/matomo/";
-		_paq.push(['setTrackerUrl', u+'matomo.php']);
-		_paq.push(['setSiteId', '2']);
-		var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-		g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
-	  })();
-	</script>
-	<!-- End Matomo Code -->
 
 
 </head>
 
 
 <body>
-<?php include_once("analyticstracking.php") ?>
-
+<?php 
+//	include_once("matomotracking.php") 
+//	include_once("analyticstracking.php") 
+?>
+ 
 <div id="fhnwtop" style="background-color: black; height: 40px; vertical-align: middle; position: fixed; width: 100%;">
 	<div style="float: left;">&nbsp;<img src="img/fhnwhgk_white_x35.png" style="left: 30px;"></div>
 	<div style="color: white; vertical-align: middle; top: 0px; float: right;"><a style="color: white;" href=".">Mediathek</a>&nbsp;&nbsp;&nbsp;</div>
