@@ -241,7 +241,7 @@ class Session implements \SessionHandlerInterface
 	 if( $this->shibGetSessionID() == null ) {
 		// unset cookies
 		if (isset($_SERVER['HTTP_COOKIE'])) {
-			var_dump( $_SERVER['HTTP_COOKIE'] );
+			//var_dump( $_SERVER['HTTP_COOKIE'] );
 			$cookies = explode(';', $_SERVER['HTTP_COOKIE']);
 			foreach($cookies as $cookie) {
 				$parts = explode('=', $cookie);
