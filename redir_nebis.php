@@ -13,10 +13,10 @@ global $db, $config;
 
 $barcode = isset( $_REQUEST['barcode'] ) ? trim( $_REQUEST['barcode'] ) : null;
 
-if( $barcode ) {
+if( $barcode ) {	
     $sql = "INSERT INTO session_extlink( php_session_id, objectid, nebis, targeturl, accesstime )
         VALUES(".$db->qstr( $session->getID()).", ".$db->qstr( $barcode ).", 1, ".$db->qstr( 'nebis' ).", NOW())";
-    $db->Execute( $sql );
+    $db->Execute( $sql );	
     $url = 'https://mediathek.hgk.fhnw.ch/detail.php?barcode='.$barcode;
 }
 else {

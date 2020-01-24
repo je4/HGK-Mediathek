@@ -156,6 +156,7 @@ class Session implements \SessionHandlerInterface
   }
 
   public function getID() {
+	if( $this->id == null || $this->id == "" ) return "rnd-".time();
 	return $this->id;
   }
 
