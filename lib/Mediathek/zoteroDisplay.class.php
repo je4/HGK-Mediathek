@@ -454,6 +454,10 @@ private function endBox( $title ) {
 //		elseif( preg_match( '/^[0-9]+([^0-9].*)/', $title, $matches )) {
 //			$title = $matches[1];
 //		}
+
+		// ignore strange files
+		if( preg_match( '/.DS_Store$/', $title )) continue;
+		
 		$title = trim($title, ' -.;');
 //		$this->beginBox( $title );
 //				var_dump( $att );
