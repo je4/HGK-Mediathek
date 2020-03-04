@@ -37,6 +37,7 @@ $files = [
 ];
 $files[] = "client_{$machine}.toml";
 $files[] = "{$os}/{$arch}/client" . ($os == 'windows' ? '.exe' : '');
+$files[] = "{$os}/{$arch}/client-old" . ($os == 'windows' ? '.exe' : '');
 
 ob_start();
 if( $machine == $devmachine ) {

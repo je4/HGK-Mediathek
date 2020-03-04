@@ -429,6 +429,7 @@ private function endBox( $title ) {
 			$link = $this->mediaLink( $img['url'].'/resize/size200x' );
 			$biglink = $this->mediaLink( $img['url'].'/resize/size800x1000' );
 			$imgserver = $this->mediaLink( $img['url'].'/iframe' );
+		echo "<!-- {$img['url']}  --  {$link} -->\n";
 			?>
 					<a href="<?php echo $biglink; ?>" class="" data-toggle="lightbox" data-footer="<?php echo $img['copyright']; ?>" data-gallery="main_gallery" data-type="image"">
 						<img width="200", height="<?php echo round( $img['height']*200/$img['width'] ); ?>" src="<?php echo $link; ?>" class="img-fluid exif-orientation-<?php echo $img['orientation']; ?>" />

@@ -212,6 +212,7 @@ Mit freundlichen Grüssen / kind regards,
 						.", ".$db->qstr( $session->shibGetGivenName().' '.$session->shibGetSurname())
 						.")";
 			}
+			//echo "<!-- $sql -->\n";
 			$db->Execute( $sql );
 			$serial = $db->insert_ID();
 		}

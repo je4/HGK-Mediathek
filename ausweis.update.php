@@ -11,7 +11,7 @@ $itemid = isset( $_REQUEST['pk'] ) ? trim( ($_REQUEST['pk'])) : null;
 
 list( $serial, $passid ) = explode( '-', $itemid );
 
-$sql = "SELECT group FROM wallet.pass WHERE id=".intval( $passid );
+$sql = "SELECT `group` FROM wallet.pass WHERE id=".intval( $passid );
 $grp = $db->GetOne( $sql );
 if(!$session->inGroup( $grp )) {
 	header( "HTTP/1.1 403 Forbidden" );
