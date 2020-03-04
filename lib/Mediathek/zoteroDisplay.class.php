@@ -456,7 +456,7 @@ private function endBox( $title ) {
 //		}
 
 		// ignore strange files
-		if( preg_match( '/.DS_Store$/', $title )) continue;
+		if( preg_match( '/\.DS_Store/', $title )) continue;
 		
 		$title = trim($title, ' -.;');
 //		$this->beginBox( $title );
