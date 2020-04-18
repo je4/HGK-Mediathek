@@ -27,7 +27,8 @@ $groups = array(
 // 2260611, // feministisches Improvisatorium
 //2327162, // Digital Brainstorming
 //2329831, // HGK Fotos
-2358931, // Julia
+//2358931, // Julia
+2486551, // ACT2020
 );
 
 //$groups = array( 1387750, 1510019, 1510009, 1624911, 1803850, 2061687, 2066935, 1624911, 2068924, 2180340, 2206003 );
