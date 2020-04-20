@@ -235,6 +235,7 @@ private function endBox( $title ) {
 	$show = true;
 	if( @is_array( $this->doc->acl_content )) {
 		$show = $session->inAnyGroup( $this->doc->acl_content ) || $session->isAdmin();
+		
 	}
 	if( $show ) {
 		$images = [];

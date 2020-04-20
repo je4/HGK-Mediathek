@@ -331,15 +331,18 @@ class Session implements \SessionHandlerInterface
   public function inGroup( $grp ) {
 	$grp = strtolower( $grp );
 	foreach( $this->getGroups() as $g ) {
+	  // echo "[{$g}] == [{$grp}]<br/>";
 	  if( $g == $grp ) return true;
 	}
 	return false;
   }
 
   public function inAnyGroup( $grps ) {
-	foreach( $grps as $grp )
-	  if( $this->inGroup( $grp ))
+	foreach( $grps as $grp ) {
+	  //echo $grp."<br />";
+	  if( $this->inGroup( trim($grp) ))
 		return true;
+        }
 
 	return false;
   }
