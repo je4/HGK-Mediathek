@@ -10,7 +10,7 @@ $hdlprefix = '20.500.11806/mediathek/';
 $urlbase = 'https://mediathek.hgk.fhnw.ch/detail.php?id=';
 $groups = array(
 // 1510009,  // Institut Kunst
-// 1624911,  // IKUVid
+ 1624911,  // PCB_Basel
  //// 2068924,  // summe 2017 2068924
 // 2180340,  // grenzgang
  //// 2171463,   // anfaenge der kuenstlerischen forschung
@@ -23,12 +23,15 @@ $groups = array(
 // 2171465,   // Basle Bibliography for Historical Performance Practice
 // 2250437, // Grenzgang (neu)
 // 2315925, // Integrative Gestaltung / Masterstudio
-//2317722, // Archive des Ephemeren
+// 2317722, // Archive des Ephemeren
 // 2260611, // feministisches Improvisatorium
-//2327162, // Digital Brainstorming
+// 2327162, // Digital Brainstorming
 //2329831, // HGK Fotos
 //2358931, // Julia
-2486551, // ACT2020
+//2486551, // ACT2020
+//2331508, // Videocity 2020
+//2497586, // Pascale Grau
+// 2483850, // Albena
 );
 
 //$groups = array( 1387750, 1510019, 1510009, 1624911, 1803850, 2061687, 2066935, 1624911, 2068924, 2180340, 2206003 );

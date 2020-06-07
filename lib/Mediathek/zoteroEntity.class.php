@@ -311,6 +311,11 @@ class zoteroEntity extends SOLRSource {
 		  return $acls;
     }
 
+	public function getMediaTypes() {
+      if( $this->item == null ) throw new \Exception( "no entity loaded" );
+	  return $this->item->getMediaTypes();
+	}
+
     public function getPreviewACL() {
       if( $this->item == null ) throw new \Exception( "no entity loaded" );
       $acls = $this->item->getVar( 'acl_preview' );

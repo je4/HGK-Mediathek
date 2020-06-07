@@ -131,6 +131,10 @@ class SOLR {
 		foreach( $src->getLocations() as $loc ) {
 			$doc->addField( 'location', $loc );
 		}
+		
+		if( method_exists( $src, 'getMediaTypes' )) foreach( $src->getMediaTypes() as $mt ) {
+			$doc->addField( 'mediatype', $mt );
+		}
 
 
         $doc->setField( 'title', /* utf8_encode */( $src->getTitle()));

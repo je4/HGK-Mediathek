@@ -116,11 +116,24 @@ class Item {
   }
 
   public function getType() {
+	  if( @strlen($this->data['data']['videoRecordingFormat']) > 0 ) {
+		  return $this->data['data']['videoRecordingFormat'];
+	  }
     return $this->data['data']['itemType'];
   }
 
   public function getNote() {
     return $this->data['data']['note'];
+  }
+
+  public function getMediaTypes() {
+	 $mediaTypes = [];
+	 if( is_array( $this->data['children'] )) foreach( $this->data['children'] as $child ) {
+		 if( isset( $child['data']['media']['metadata']['type'] )) {
+			 $mediaTypes[] = $child['data']['media']['metadata']['type'];
+		 }
+	 }
+    return array_unique( $mediaTypes );
   }
 
   public function getTitle() {
