@@ -27,14 +27,15 @@ $groups = array(
 // 2317722, // Archive des Ephemeren
 // 2260611, // feministisches Improvisatorium
 // 2327162, // Digital Brainstorming
-//2329831, // HGK Fotos
+2329831, // HGK Fotos
 // 2358931, // Julia
-2486551, // ACT2020
+//2486551, // ACT2020
 //2331508, // Videocity 2020
 //2497586, // Pascale Grau
 //2483850, // Albena
 //2488157, // Kasko Digital
-1510034, // Institut Mode Design
+//1510034, // Institut Mode Design
+//2474728, // Armin
 );
 
 //$groups = array( 1387750, 1510019, 1510009, 1624911, 1803850, 2061687, 2066935, 1624911, 2068924, 2180340, 2206003 );
