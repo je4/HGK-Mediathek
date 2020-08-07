@@ -136,10 +136,15 @@ class diplomhgkEntity extends SOLRSource {
         $this->tags = array( 'subject:topicalterm:hgk/1/diplom'
                                 ,'subject:topicalterm:hgk/type/diplom'.$this->data['year']
                                 ,'subject:topicalterm:hgk/fach/'.$this->data['anlassbezeichnung']
+                                ,'subject:topicalterm:hgk/institut/'.$this->data['institut']
+                                ,'subject:topicalterm:hgk/abschluss/'.$this->data['abschluss']
                                );
         $this->cluster = array('diplom'
                                 ,'diplom'.$this->data['year']
-                                , $this->data['anlassbezeichnung']);
+                                , $this->data['anlassbezeichnung']
+								, $this->data['institut']
+								, $this->data['abschluss']
+								);
 
 
         return $this->tags;
@@ -225,6 +230,16 @@ class diplomhgkEntity extends SOLRSource {
 
         return $codes;
     }
+	
+	public function getMediaTypes() {
+			$types = [];
+		   foreach( $this->data['files'] as $f ) {
+			   $types[] = $f['metadata']['type'];
+		   }
+		   
+		   $types = array_unique( $types );
+		   return $types;
+	}
 
     public function getMetaACL() { return ($this->data['year'] == 2017 ? array( 'location/fhnw' ) : array( 'global/guest' )); }
     public function getContentACL() { return ($this->data['year'] == 2017 ? array( 'location/fhnw' ) : array( 'global/guest' )); }

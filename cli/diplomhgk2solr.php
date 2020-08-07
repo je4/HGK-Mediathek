@@ -22,6 +22,26 @@ $institut_map = array(
   'test'=>'Testing 123',
 );
 
+
+function dataFromURL( $url ) {
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, trim($url, "'") );
+    curl_setopt($ch, CURLOPT_HEADER, 0);
+//    curl_setopt($ch, CURLOPT_NOBODY, 1);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    //curl_setopt($ch, CURLOPT_VERBOSE, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+    $ret = curl_exec($ch);
+    $code = intval( curl_getinfo( $ch, CURLINFO_RESPONSE_CODE ));
+    curl_close($ch);
+    if( $code == 404 || $code == 500 ) {
+      throw( new \Exception( "Response Error {$code}" ));
+    }
+    return $ret;
+  }
+
+
 $db->SetFetchMode(ADODB_FETCH_ASSOC);
 
 $entity = new diplomhgkEntity( $db );
@@ -163,6 +183,27 @@ foreach( $rs as $row ) {
       catch( \ADODB_Exception $ex ) {
         echo "already in mediaserver\n";
       }
+            $url = "{$config['mediaserver']['baseurl']}{$collname}/{$signature}";
+            $metaurl = $url.'/metadata';
+            if( isset( $config['mediaserver']['key'] )) {
+              $metaurl .= '?token='.jwt_encode(
+                    ['sub'=>"{$config['mediaserver']['sub_prefix']}{$collname}/{$signature}/metadata", 'exp'=>time()+1000],
+                    $config['mediaserver']['key']
+                  );
+            }
+            echo "loading metadata from {$url}/metadata...\n";
+            try {
+              $meta = dataFromURL( $metaurl );
+              $metaarr = json_decode( $meta, true );
+              $row2['metadata'] = $metaarr;
+			  $row2['url'] = "mediaserver:{$collname}/{$signature}";
+              $mimetype = array_key_exists( 'mimetype', $metaarr ) ? $metaarr['mimetype'] : 'application/octet-stream';
+              //var_dump( $metaarr );
+            }
+            catch( \Exception $ex ) {
+              echo( $ex->getMessage()."\n");
+            }
+	  
 	
 	  $ext = pathinfo( $target, PATHINFO_EXTENSION );
       $mimetype = mime_content_type( $target );
