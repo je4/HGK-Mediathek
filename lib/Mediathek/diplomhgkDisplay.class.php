@@ -98,7 +98,7 @@ class diplomhgkDisplay extends DisplayEntity {
           ?>
 
           <br />
-          <?php echo htmlspecialchars( str_replace( '>>', '', str_replace( '<<', '', strip_tags( $meta['Anlassbezeichnung'])))); ?><br />
+          <?php echo htmlspecialchars( str_replace( '>>', '', str_replace( '<<', '', strip_tags( $meta['anlassbezeichnung'])))); ?><br />
 <?php
           $publishers = $entity->getPublisher();
           $city = $entity->getCity();
@@ -195,7 +195,7 @@ if( preg_match( '/^(.*,) [^,]+$/', $issue, $matches ))
 }
 }
 ?>
-    <span style="; font-weight: bold;"><?php echo htmlspecialchars( "{$meta['Anlassbezeichnung']} (Diplom {$meta['year']})"); ?></span><br />
+    <span style="; font-weight: bold;"><?php echo htmlspecialchars( "{$meta['anlassbezeichnung']} (Diplom {$meta['year']})"); ?></span><br />
       <div class="facet" style="">
         <div class="marker" style=""></div>
 <?php
@@ -206,7 +206,7 @@ $squery->setRows( 500 );
 $squery->setStart( 0 );
 $phrase = 'source:'.$helper->escapePhrase( 'diplomhgk' )
   .' AND year:'.$helper->escapePhrase( $meta['year'] )
-  .' AND cluster:'.$helper->escapePhrase( $meta['Anlassbezeichnung'] );
+  .' AND cluster:'.$helper->escapePhrase( $meta['anlassbezeichnung'] );
 
 // Issue: 452º F : Revista de Teoría de la Literatura y Literatura Comparada, Iss 2, Pp 127-136 (2010)
 $qstr = $phrase . ' AND -id:'.$helper->escapeTerm( $this->doc->id );
@@ -311,7 +311,7 @@ var_dump( $this->doc->getFields());
 
 <?php
         echo "Diplom: ".$meta['year']."<br />\n";
-        echo $meta['Anlassbezeichnung']."<br />\n";
+        echo $meta['anlassbezeichnung']."<br />\n";
 				if( is_array( $this->doc->url )) foreach( $this->doc->url as $u ) {
 					$us = explode( ':', $u );
 					if( substr( $us[1], 0, 4 ) == 'http' ) {

@@ -74,7 +74,7 @@ class diplomhgkEntity extends SOLRSource {
 
         $this->data = $row;
 
-        $this->id = "{$this->data['year']}{$this->data['IDPerson']}";
+        $this->id = "{$this->data['year']}{$this->data['idperson']}";
         // $this->idprefix = $idprefix;
 
         //echo $this->id."\n";
@@ -135,11 +135,11 @@ class diplomhgkEntity extends SOLRSource {
 
         $this->tags = array( 'subject:topicalterm:hgk/1/diplom'
                                 ,'subject:topicalterm:hgk/type/diplom'.$this->data['year']
-                                ,'subject:topicalterm:hgk/fach/'.$this->data['Anlassbezeichnung']
+                                ,'subject:topicalterm:hgk/fach/'.$this->data['anlassbezeichnung']
                                );
         $this->cluster = array('diplom'
                                 ,'diplom'.$this->data['year']
-                                , $this->data['Anlassbezeichnung']);
+                                , $this->data['anlassbezeichnung']);
 
 
         return $this->tags;
@@ -159,7 +159,7 @@ class diplomhgkEntity extends SOLRSource {
 
     public function getAuthors() {
 
-        return array("{$this->data['Nachname']}, {$this->data['Vornamen']}");
+        return array("{$this->data['nachname']}, {$this->data['vornamen']}");
     }
 
     public function getLoans() {
