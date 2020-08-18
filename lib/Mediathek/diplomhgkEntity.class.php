@@ -133,17 +133,17 @@ class diplomhgkEntity extends SOLRSource {
 	public function getTags() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
 
-        $this->tags = array( 'subject:topicalterm:hgk/1/diplom'
-                                ,'subject:topicalterm:hgk/type/diplom'.$this->data['year']
-                                ,'subject:topicalterm:hgk/fach/'.$this->data['anlassbezeichnung']
-                                ,'subject:topicalterm:hgk/institut/'.$this->data['institut']
-                                ,'subject:topicalterm:hgk/abschluss/'.$this->data['abschluss']
+        $this->tags = array( 'diplom'
+                                ,'diplom'.$this->data['year']
+                                ,strtolower($this->data['anlassbezeichnung'])
+                                ,strtolower($this->data['institut'])
+                                ,strtolower($this->data['abschluss'])
                                );
         $this->cluster = array('diplom'
                                 ,'diplom'.$this->data['year']
-                                , $this->data['anlassbezeichnung']
-								, $this->data['institut']
-								, $this->data['abschluss']
+                                , strtolower($this->data['anlassbezeichnung'])
+				, strtolower($this->data['institut'])
+				, strtolower($this->data['abschluss'])
 								);
 
 

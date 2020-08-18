@@ -143,48 +143,83 @@ class zoteroEntity extends SOLRSource {
 	   public function getTags() {
         if( $this->data == null ) throw new \Exception( "no entity loaded" );
 
-        //$this->tags = array('index:type/'.md5( $this->item->getType() ).'/'.$this->item->getType() );
+		$tags = [];
+
+        //$tags = array('index:type/'.md5( $this->item->getType() ).'/'.$this->item->getType() );
+
+        $tags = $this->item->getLibrary()->getVar( 'tag' );
+        $tags = array_merge( $this->tags, $tags);
+
 
         foreach( $this->item->getTags() as $tag ) {
+        echo "tag:{$tag}\n";
           if( !preg_match( '/^(signature|barcode):[^:]+:[^:]+:/i', $tag )
             && !preg_match( '/^(doi|isbn|issn|acl_meta|acl_content|acl_preview|catalog):/i', $tag )) {
             if( preg_match( '/^[^:]+:[^\/]+\/[^\/]+\//', $tag)) {
-              $this->tags[] = $tag;
+              $tags[] = $tag;
             }
             elseif( preg_match( '/^([^:\/]+)(:|\/)([^:\/]+)(:|\/)(.*)$/', $tag, $matches )) {
-              $this->tags[] = $matches[1].':'.$matches[3].'/'.md5( $matches[5] ).'/'.$matches[5];
+              $tags[] = $matches[1].':'.$matches[3].'/'.md5( $matches[5] ).'/'.$matches[5];
             }
             elseif( preg_match( '/^([^:\/]+)(:|\/)(.*)$/', $tag, $matches )) {
-              $this->tags[] = $matches[1].':unknown/'.md5( $matches[3] ).'/'.$matches[3];
+              //$tags[] = $matches[1].':unknown/'.md5( $matches[3] ).'/'.$matches[3];
+              $tags[] = $tag;
             }
             else {
-              $this->tags[] = 'index:unknown/'.md5( $tag ).'/'.$tag;
+              //$tags[] = 'index:unknown/'.md5( $tag ).'/'.$tag;
+              $tags[] = $tag;
             }
 
           }
         }
 
-        $this->tags[] = 'index:unknown/'.md5( $this->item->getLibraryName() ).'/'.$this->item->getLibraryName();
+        //$tags[] = 'index:unknown/'.md5( $this->item->getLibraryName() ).'/'.$this->item->getLibraryName();
+        $tags[] = 'Collection:'.$this->item->getLibraryName();
+        $tags[] = $this->item->getLibraryName();
 
         foreach( $this->item->getCollections() as $coll ) {
           $tag = $coll->getFullName();
-          $this->tags[] = 'coll:unknown/'.md5( $tag ).'/'.$tag;
+          //$tags[] = 'coll:unknown/'.md5( $tag ).'/'.$tag;
+          $tags[] = 'Path:'.$tag;
 
           foreach( $coll->getNames() as $tag ) {
-            $this->tags[] = 'subcoll:unknown/'.md5( $tag ).'/'.$tag;
+           // $tags[] = 'subcoll:unknown/'.md5( $tag ).'/'.$tag;
+           $tags[] = 'subcoll:'.$tag;
           }
-        }
-
+		}
+        $tags = array_map('strtolower', $tags);
+        $tags = array_unique( $tags );
+		foreach( $tags as $tag ) {
+		  $this->tags[] = $tag;
+          $pp = explode( ':', $tag );
+          $lastIndex = count($pp)-1;
+          if( $lastIndex > 0 ) {
+             for( $i = $lastIndex; $i > 0; $i-- ) {
+                $this->tags[] = implode(':', array_slice($pp, 1, $i));
+                $this->tags[] = $pp[$i];
+             }
+          }
+		}
         $this->tags = array_unique( $this->tags );
+	
         $this->cluster = array();
         foreach( $this->tags as $tag ) {
-              $ts = explode( '/', $tag );
-              if( !in_array( $ts[0], array( 'coll:unknown' ))) {
-                $this->cluster[] = $ts[count( $ts )-1];
+//              $ts = explode( '/', $tag );
+//              if( !in_array( $ts[0], array( 'coll:unknown' ))) {
+//                $this->cluster[] = $ts[count( $ts )-1];
+//              }
+              if( preg_match( '/^[^:]+:(.+)$/', $tag, $matches )) {
+                 $ts = explode(':', $matches[1]);
+                 $this->cluster[] = array_merge($this->cluster, $ts);
               }
         }
         $this->cluster = array_unique( $this->cluster );
 
+        if( count($this->tags) > 1 ) {
+          var_dump( $this->tags );
+          var_dump( $this->cluster );
+//          exit;
+        }
         return $this->tags;
 	}
 

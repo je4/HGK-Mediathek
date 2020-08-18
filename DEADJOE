@@ -1,0 +1,47 @@
+
+*** These modified files were found in JOE when it aborted on Wed Aug 12 12:25:38 2020
+*** JOE was aborted because the terminal closed
+
+*** File '(Unnamed)'
+/apps
+e-medien.mab-bs
+4422
+4423
+4424
+4425
+4426
+4427
+4428
+/hgkstore/amp
+
+*** File '(Unnamed)'
+acl_content
+inAnyGr
+Type(
+getType(
+C:/daten/go/src/gitlab.fhnw.ch/mediathek/search/gsearch
+md5
+md5
+ba14ns
+alias
+alias
+
+*** File '(Unnamed)'
+createmd2.php
+/root/diplomhgk/populate/2020/diploma/.git/COMMIT_EDITMSG
+createmd2.php
+createmd2.php
+createmd2.php
+/root/diplomhgk/populate/2020/diploma/.git/COMMIT_EDITMSG
+config.inc.php
+config.inc.php
+config.inc.php
+/data/www/vhosts/mediathek.fhnw.ch/html/dev/.git/COMMIT_EDITMSG
+../diplomhgk/config.inc.php
+../diplomhgk/config.inc.php
+
+*** File '* Startup Log *'
+Processing '/etc/joe/joerc'...
+Processing '/etc/joe/ftyperc'...
+Finished processing /etc/joe/ftyperc
+Finished processing /etc/joe/joerc

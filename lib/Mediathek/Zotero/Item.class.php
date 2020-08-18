@@ -119,6 +119,9 @@ class Item {
 	  if( @strlen($this->data['data']['videoRecordingFormat']) > 0 ) {
 		  return $this->data['data']['videoRecordingFormat'];
 	  }
+	  if( @strlen($this->data['data']['audioRecordingFormat']) > 0 ) {
+		  return $this->data['data']['audioRecordingFormat'];
+	  }
     return $this->data['data']['itemType'];
   }
 

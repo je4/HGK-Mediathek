@@ -48,6 +48,7 @@ $entity = new diplomhgkEntity( $db );
 $solr = new SOLR( $solrclient, $db );
 
 $sql = "SELECT DISTINCT * FROM source_diplomhgk";
+//$sql = "SELECT DISTINCT * FROM source_diplomhgk WHERE year='2020'";
 $rs = $db->Execute( $sql );
 
 foreach( $rs as $row ) {
