@@ -17,7 +17,7 @@ $groups = array(
 // 2206003,   // act
 // 2260611,  // DigitaleSee
 // 1803850, // Kasko alt
-// 1624911, // PCB Basel
+//1624911, // PCB Basel
 // 510019,   // Hyperwerk
 // 2066935,   // RIMAB
 // 2171465,   // Basle Bibliography for Historical Performance Practice
@@ -39,6 +39,7 @@ $groups = array(
 // 2545256, // Collections
 // 1387750, // Kataloge
  2545256, // HGK Collections
+//2553473, // HGK Publikationen
 );
 
 //$groups = array( 1387750, 1510019, 1510009, 1624911, 1803850, 2061687, 2066935, 1624911, 2068924, 2180340, 2206003 );

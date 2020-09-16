@@ -31,8 +31,8 @@ $files = [
 	'certs/info_age_ca.pem',
 	'certs/info_age_localhost.key',
 	'certs/info_age_localhost.pem',
-	"certs/info_age_{$machine}.key",
-	"certs/info_age_{$machine}.pem",
+	"certs/info_age_mediathek_{$machine}.key",
+	"certs/info_age_mediathek_{$machine}.pem",
 	"startup.sh",
 ];
 $files[] = "client_{$machine}.toml";

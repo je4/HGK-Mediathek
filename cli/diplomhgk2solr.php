@@ -47,8 +47,8 @@ $db->SetFetchMode(ADODB_FETCH_ASSOC);
 $entity = new diplomhgkEntity( $db );
 $solr = new SOLR( $solrclient, $db );
 
-$sql = "SELECT DISTINCT * FROM source_diplomhgk";
-//$sql = "SELECT DISTINCT * FROM source_diplomhgk WHERE year='2020'";
+//$sql = "SELECT DISTINCT * FROM source_diplomhgk";
+$sql = "SELECT DISTINCT * FROM source_diplomhgk WHERE year='2020'";
 $rs = $db->Execute( $sql );
 
 foreach( $rs as $row ) {
@@ -229,7 +229,7 @@ foreach( $rs as $row ) {
     }
 
     sort( $data['videos'] );
-    $data['videos'] = array_reverse( $data['videos'] );
+    //$data['videos'] = array_reverse( $data['videos'] );
 
 	
     $data['files'][] = $row2;

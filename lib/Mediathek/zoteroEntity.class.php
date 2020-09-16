@@ -204,7 +204,7 @@ class zoteroEntity extends SOLRSource {
 	
         $this->cluster = array();
         foreach( $this->tags as $tag ) {
-//              $ts = explode( '/', $tag );
+              $ts = explode( '/', $tag );
 //              if( !in_array( $ts[0], array( 'coll:unknown' ))) {
 //                $this->cluster[] = $ts[count( $ts )-1];
 //              }
@@ -369,6 +369,7 @@ class zoteroEntity extends SOLRSource {
 
 	public function getCategories() {
 		$categories = parent::getCategories();
+		$categories[] = 'fhnw!!hgk!!pub!!'.$this->item->getLibrary()->GetName();
     foreach( $this->item->getCollections() as $coll ) {
       $categories[] = 'fhnw!!hgk!!pub!!'.$this->item->getLibraryName().'!!'.str_replace( ':', '!!', $coll->getFullName() );
     }
