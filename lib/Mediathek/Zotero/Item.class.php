@@ -187,7 +187,16 @@ class Item {
 
   public function getYear() {
     //print_r($this->data['meta']['parsedDate'] );
-    return array_key_exists( 'parsedDate', $this->data['meta'] ) ? intval( $this->data['meta']['parsedDate'] ) : null;
+    if( array_key_exists( 'parsedDate', $this->data['meta'] )) {
+    	$matches = [];
+    	if( preg_match( '/^([0-9]{4}).*$/', $this->data['meta']['parsedDate'], $matches )) {
+    	   return intval( $matches[1] );
+    	}
+    } else {
+    	return null; 
+    }
+ 
+    return intval( $this->data['meta']['parsedDate'] );
   }
 
   public function getPlace() {

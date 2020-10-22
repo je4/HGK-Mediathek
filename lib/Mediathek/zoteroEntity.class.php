@@ -210,7 +210,7 @@ class zoteroEntity extends SOLRSource {
 //              }
               if( preg_match( '/^[^:]+:(.+)$/', $tag, $matches )) {
                  $ts = explode(':', $matches[1]);
-                 $this->cluster[] = array_merge($this->cluster, $ts);
+                 $this->cluster = array_merge($this->cluster, $ts);
               }
         }
         $this->cluster = array_unique( $this->cluster );

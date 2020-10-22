@@ -243,7 +243,7 @@ class Zotero {
               $metaarr = json_decode( $meta, true );
               $item['data']['media'] = array( 'metadata'=>$metaarr );
               $mimetype = $metaarr['mimetype'];
-			  var_dump( $metaarr );
+   	      //var_dump( $metaarr );
             }
             catch( \Exception $ex ) {
               echo( $ex->getMessage());

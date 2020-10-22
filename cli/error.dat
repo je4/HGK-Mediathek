@@ -1,0 +1,62 @@
+Solr HTTP error: OK (400)
+{
+  "responseHeader":{
+    "status":400,
+    "QTime":120271},
+  "error":{
+    "metadata":[
+      "error-class","org.apache.solr.common.SolrException",
+      "root-error-class","java.util.concurrent.TimeoutException"],
+    "msg":"java.util.concurrent.TimeoutException: Idle timeout expired: 120000/120000 ms",
+    "code":400}}
+
+#0 /data/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/src/Core/Client/Client.php(727): Solarium\Core\Query\Result\Result->__construct(Object(Solarium\QueryType\Update\Query\Query), Object(Solarium\Core\Client\Response))
+#1 /data/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/src/Core/Client/Client.php(759): Solarium\Core\Client\Client->createResult(Object(Solarium\QueryType\Update\Query\Query), Object(Solarium\Core\Client\Response))
+#2 /data/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/src/Core/Client/Client.php(844): Solarium\Core\Client\Client->execute(Object(Solarium\QueryType\Update\Query\Query), NULL)
+#3 /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/SOLR.class.php(270): Solarium\Core\Client\Client->update(Object(Solarium\QueryType\Update\Query\Query))
+#4 /data/www/vhosts/mediathek.fhnw.ch/html/dev/cli/swissbib2solr.php(85): Mediathek\SOLR->import(Object(Mediathek\swissbibEntity))
+#5 {main}Solr HTTP error: OK (400)
+{
+  "responseHeader":{
+    "status":400,
+    "QTime":120005},
+  "error":{
+    "metadata":[
+      "error-class","org.apache.solr.common.SolrException",
+      "root-error-class","java.util.concurrent.TimeoutException"],
+    "msg":"java.util.concurrent.TimeoutException: Idle timeout expired: 120000/120000 ms",
+    "code":400}}
+
+#0 /data/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/src/Core/Client/Client.php(727): Solarium\Core\Query\Result\Result->__construct(Object(Solarium\QueryType\Update\Query\Query), Object(Solarium\Core\Client\Response))
+#1 /data/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/src/Core/Client/Client.php(759): Solarium\Core\Client\Client->createResult(Object(Solarium\QueryType\Update\Query\Query), Object(Solarium\Core\Client\Response))
+#2 /data/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/src/Core/Client/Client.php(844): Solarium\Core\Client\Client->execute(Object(Solarium\QueryType\Update\Query\Query), NULL)
+#3 /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/SOLR.class.php(270): Solarium\Core\Client\Client->update(Object(Solarium\QueryType\Update\Query\Query))
+#4 /data/www/vhosts/mediathek.fhnw.ch/html/dev/cli/swissbib2solr.php(85): Mediathek\SOLR->import(Object(Mediathek\swissbibEntity))
+#5 {main}Solr HTTP error: HTTP request failed, Failed to connect to asara269.adm.ds.fhnw.ch port 8983: No route to host
+#0 /data/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/src/Core/Client/Adapter/Curl.php(54): Solarium\Core\Client\Adapter\Curl->check('', Array, Resource id #489780)
+#1 /data/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/src/Core/Client/Adapter/Curl.php(176): Solarium\Core\Client\Adapter\Curl->getResponse(Resource id #489780, false)
+#2 /data/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/src/Core/Client/Adapter/Curl.php(30): Solarium\Core\Client\Adapter\Curl->getData(Object(Solarium\Core\Client\Request), Object(Solarium\Core\Client\Endpoint))
+#3 /data/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/src/Core/Client/Client.php(789): Solarium\Core\Client\Adapter\Curl->execute(Object(Solarium\Core\Client\Request), Object(Solarium\Core\Client\Endpoint))
+#4 /data/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/src/Core/Client/Client.php(758): Solarium\Core\Client\Client->executeRequest(Object(Solarium\Core\Client\Request), Object(Solarium\Core\Client\Endpoint))
+#5 /data/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/src/Core/Client/Client.php(844): Solarium\Core\Client\Client->execute(Object(Solarium\QueryType\Update\Query\Query), NULL)
+#6 /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/SOLR.class.php(270): Solarium\Core\Client\Client->update(Object(Solarium\QueryType\Update\Query\Query))
+#7 /data/www/vhosts/mediathek.fhnw.ch/html/dev/cli/swissbib2solr.php(85): Mediathek\SOLR->import(Object(Mediathek\swissbibEntity))
+#8 {main}Solr HTTP error: HTTP request failed, Failed to connect to asara269.adm.ds.fhnw.ch port 8983: No route to host
+#0 /data/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/src/Core/Client/Adapter/Curl.php(54): Solarium\Core\Client\Adapter\Curl->check('', Array, Resource id #126)
+#1 /data/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/src/Core/Client/Adapter/Curl.php(176): Solarium\Core\Client\Adapter\Curl->getResponse(Resource id #126, false)
+#2 /data/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/src/Core/Client/Adapter/Curl.php(30): Solarium\Core\Client\Adapter\Curl->getData(Object(Solarium\Core\Client\Request), Object(Solarium\Core\Client\Endpoint))
+#3 /data/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/src/Core/Client/Client.php(789): Solarium\Core\Client\Adapter\Curl->execute(Object(Solarium\Core\Client\Request), Object(Solarium\Core\Client\Endpoint))
+#4 /data/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/src/Core/Client/Client.php(758): Solarium\Core\Client\Client->executeRequest(Object(Solarium\Core\Client\Request), Object(Solarium\Core\Client\Endpoint))
+#5 /data/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/src/Core/Client/Client.php(844): Solarium\Core\Client\Client->execute(Object(Solarium\QueryType\Update\Query\Query), NULL)
+#6 /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/SOLR.class.php(270): Solarium\Core\Client\Client->update(Object(Solarium\QueryType\Update\Query\Query))
+#7 /data/www/vhosts/mediathek.fhnw.ch/html/dev/cli/swissbib2solr.php(85): Mediathek\SOLR->import(Object(Mediathek\swissbibEntity))
+#8 {main}Solr HTTP error: HTTP request failed, Failed to connect to asara269.adm.ds.fhnw.ch port 8983: No route to host
+#0 /data/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/src/Core/Client/Adapter/Curl.php(54): Solarium\Core\Client\Adapter\Curl->check('', Array, Resource id #126)
+#1 /data/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/src/Core/Client/Adapter/Curl.php(176): Solarium\Core\Client\Adapter\Curl->getResponse(Resource id #126, false)
+#2 /data/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/src/Core/Client/Adapter/Curl.php(30): Solarium\Core\Client\Adapter\Curl->getData(Object(Solarium\Core\Client\Request), Object(Solarium\Core\Client\Endpoint))
+#3 /data/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/src/Core/Client/Client.php(789): Solarium\Core\Client\Adapter\Curl->execute(Object(Solarium\Core\Client\Request), Object(Solarium\Core\Client\Endpoint))
+#4 /data/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/src/Core/Client/Client.php(758): Solarium\Core\Client\Client->executeRequest(Object(Solarium\Core\Client\Request), Object(Solarium\Core\Client\Endpoint))
+#5 /data/www/vhosts/mediathek.fhnw.ch/html/dev/vendor/solarium/solarium/src/Core/Client/Client.php(844): Solarium\Core\Client\Client->execute(Object(Solarium\QueryType\Update\Query\Query), NULL)
+#6 /data/www/vhosts/mediathek.fhnw.ch/html/dev/lib/Mediathek/SOLR.class.php(270): Solarium\Core\Client\Client->update(Object(Solarium\QueryType\Update\Query\Query))
+#7 /data/www/vhosts/mediathek.fhnw.ch/html/dev/cli/swissbib2solr.php(85): Mediathek\SOLR->import(Object(Mediathek\swissbibEntity))
+#8 {main}
