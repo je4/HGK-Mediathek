@@ -572,10 +572,10 @@ switch( $lang ) {
 
 ?><html>
 <head>
-	<title>eInclusion</title>
+	<title>Imageset eInclusion FHNW</title>
 </head>
 <body>
-<h1>eInclusion</h1>
+<h1>Imageset eInclusion FHNW</h1>
 <?php
 if( $sub == '' ) {
 	?>
