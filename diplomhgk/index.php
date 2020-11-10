@@ -39,8 +39,9 @@ static $badge = array(
 
 $mail = $session->shibGetMail();
 //$sql = "SELECT IDPerson FROM source_diplomhgk_map WHERE `Partition`=".$db->qstr( 'edu' )." AND sam=".$db->qstr( $session->shibGetUID());
-//$number = intval($db->GetOne( $sql ));
-$number = intval($session->shibGetEmployeenumber());
+$sql = "SELECT IDPerson FROM source_diplomhgk_map WHERE sam=".$db->qstr( $session->shibGetUID());
+$number = intval($db->GetOne( $sql ));
+//$number = intval($session->shibGetEmployeenumber());
 $username = $session->shibGetUsername();
 
  ?><html>
