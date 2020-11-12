@@ -109,7 +109,7 @@ $username = $session->shibGetUsername();
 
 if( array_key_exists( $mail, $auth )) {
   foreach( $auth[$mail] as $anlass ) {
-    $sql = "SELECT * FROM source_diplomhgk WHERE year={$year} AND Anlassnummer=".$db->qstr( $anlass )." ORDER BY Nachname, Vornamen";
+    $sql = "SELECT * FROM source_diplomhgk WHERE year>={$year} AND Anlassnummer=".$db->qstr( $anlass )." ORDER BY Nachname, Vornamen";
     echo "<!-- $sql -->\n";
     $rs = $db->Execute( $sql );
     $num = $rs->RecordCount();
@@ -120,7 +120,7 @@ if( array_key_exists( $mail, $auth )) {
   } // foreach
 } // if auth
 else {
-    $sql = "SELECT * FROM source_diplomhgk WHERE year={$year} AND IDPerson=".$db->qstr($number);
+    $sql = "SELECT * FROM source_diplomhgk WHERE year>={$year} AND IDPerson=".$db->qstr($number);
     echo "<!-- $sql -->\n";
     $rs = $db->Execute( $sql );
     $num = $rs->RecordCount();
