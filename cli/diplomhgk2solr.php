@@ -48,7 +48,8 @@ $entity = new diplomhgkEntity( $db );
 $solr = new SOLR( $solrclient, $db );
 
 //$sql = "SELECT DISTINCT * FROM source_diplomhgk";
-$sql = "SELECT DISTINCT * FROM source_diplomhgk WHERE year='2020'";
+$sql = "SELECT DISTINCT * FROM source_diplomhgk WHERE year='12020'";
+echo $sql."\n";
 $rs = $db->Execute( $sql );
 
 foreach( $rs as $row ) {
@@ -59,19 +60,23 @@ foreach( $rs as $row ) {
 
   $data['meta'] = array();
   $sql = "SELECT * FROM source_diplomhgk_data WHERE year={$data['year']} AND idperson={$data['idperson']}";
+  echo $sql."\n";
   $rs2 = $db->Execute( $sql );
   foreach( $rs2 as $row2 ) {
     $data['meta'][strtolower($row2['name'])] = $row2['value'];
   }
   $rs2->Close();
-  
+
+	echo "{$data['nachname']}\n";
+	
     $idperson = $data['idperson'];
     $year = $data['year'];
     $anlassnummer = str_replace( '/', '_', $data['anlassnummer'] );
     $char = strtoupper( $data['nachname']{0} );
     $inst = null;
     $mb = null;
-    if( preg_match( '/^[0-9]+-[A-Z]+-([BMAS]+)-([A-Za-z0-9]+)[_\/]/', $anlassnummer, $matches )) {
+//    if( preg_match( '/[0-9]+-[A-Z]+-([BMAS]+)-([A-Za-z0-9]+)[-_\/]/', $anlassnummer, $matches )) {
+    if( preg_match( '/[A-Z]+-([BMAS]+)-([A-Za-z0-9]+)[-_\/]/', $anlassnummer, $matches )) {
       $inst = $matches[2];
       $mb = $matches[1];
       if( $mb == 'MAS') $mb = 'M';
@@ -130,6 +135,7 @@ foreach( $rs as $row ) {
     else {
       $data['institut']='Unbekannt';
       print_r( $data );
+	  echo "{$inst}\n";
       die();
     }
     //$data['institut']=array_key_exists(strtolower($inst), $institut_map ) ? $institut_map[strtolower($inst)] : 'Unbekannt';
@@ -168,16 +174,20 @@ foreach( $rs as $row ) {
   $data["videos"] = array();
   $data["references"] = array();
   $sql = "SELECT * FROM source_diplomhgk_files WHERE year={$data['year']} AND idperson={$data['idperson']}";
+  echo "{$sql}\n";
   $rs2 = $db->Execute( $sql );
   foreach( $rs2 as $row2 ) {
 	  $counter++;
 	  $target = "{$filedir}/{$row2['filename']}";
       if( !file_exists( $target )) continue;
 
+		$fn = iconv("UTF-8", "ISO-8859-1//TRANSLIT", $row2['name']);
+		$fn = preg_replace( '/[^a-zA-Z0-9-_]/', '_', $fn );
+
       $furl = "https://mediathek.hgk.fhnw.ch/mediaintern/diplomhgk{$year}/{$row2['filename']}";
-      $signature = substr( $slug, 0, 50 ).'-'.$counter;
+      $signature = substr( $slug, 0, 50 )."-{$fn}-".$counter;
       $sql = "INSERT INTO mediaserver.master (collectionid, signature, urn ) VALUES( {$mediaserver_collection}, ".$db->qstr( $signature ).", ".$db->qstr( $furl ).")";
-      //echo "{$sql}\n";
+      echo "{$sql}\n";
       try {
         $db->Execute( $sql );
       }

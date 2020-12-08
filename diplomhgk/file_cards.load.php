@@ -5,8 +5,11 @@
 
 include( '../init.inc.php' );
 $id = @intval($_GET['id']);
+$_year = @intval($_GET['year']);
+if( $_year > 0 ) $year = $_year;
 
 $sql = "SELECT * FROM source_diplomhgk_files WHERE year={$year} AND idperson=".$id;
+echo "<!-- {$sql} -->\n";
 $rs = $db->Execute( $sql );
 foreach( $rs as $row ) {
   $bg = '';

@@ -6,6 +6,8 @@ $mail = $session->shibGetMail();
 $number = $session->shibGetEmployeenumber();
 
 $id = @intval( $_REQUEST['id']);
+$_year = @intval( $_REQUEST['year']);
+if( $_year > 0 ) { $year = $_year; }
 
 $submit = array_key_exists( 'submit', $_REQUEST );
 $save = array_key_exists( 'save', $_REQUEST );
@@ -248,6 +250,7 @@ function formSelect( $id, $label, $descr, $required, $sel ) {
     <div class="container">
       <form method="POST" action="form.php" role="form" id="apply">
         <input type="hidden" name="id" value="<?php echo $id; ?>" />
+        <input type="hidden" name="year" value="<?php echo $year; ?>" />
         <div class="error alert alert-danger" role="alert">
           <span>&nbsp;</span>
         </div>
@@ -340,16 +343,16 @@ https://soundcloud.com/fhnw-hgk-iku/mah02448mp4-dance', false, 6, valof( $vals, 
     $("#uploader").fineUploader({
         debug: true,
         request: {
-            endpoint: 'endpoint.php?id=<?php echo $id; ?>'
+            endpoint: 'endpoint.php?id=<?php echo $id; ?>&year=<?php echo $year; ?>'
         },
         chunking: {
           enabled: true,
-          success: {endpoint: 'endpoint.php?done&id=<?php echo $id; ?>'},
+          success: {endpoint: 'endpoint.php?done&id=<?php echo $id; ?>&year=<?php echo $year; ?>'},
           concurrent: {enabled: true}
         }
     }).on('complete', function (event, id, filename, responseJSON) {
         var path = responseJSON.uuid+"/"+filename;
-        $( "#filecontent" ).load( "file_cards.load.php?id=<?php echo $id; ?>" );
+        $( "#filecontent" ).load( "file_cards.load.php?id=<?php echo $id; ?>&year=<?php echo $year; ?>" );
         $('#submitButton').attr("disabled", false);
         //alert( path );
     }).on('submit', function (event, id, filename, responseJSON) {
@@ -357,7 +360,7 @@ https://soundcloud.com/fhnw-hgk-iku/mah02448mp4-dance', false, 6, valof( $vals, 
 
     });
 
-    $( "#filecontent" ).load( "file_cards.load.php?id=<?php echo $id; ?>" );
+    $( "#filecontent" ).load( "file_cards.load.php?id=<?php echo $id; ?>&year=<?php echo $year; ?>" );
 
     $('#bpers').on( 'click', function( event ) {
       $('#awerk').tab('show');

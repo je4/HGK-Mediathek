@@ -24,6 +24,15 @@ $id = isset( $_REQUEST['id'] ) ? trim( $_REQUEST['id'] ) : null;
 $barcode = isset( $_REQUEST['barcode'] ) ? strtolower( trim( $_REQUEST['barcode'] )) : null;
 $json = isset( $_REQUEST['json'] );
 
+if( preg_match('/zotero-([0-9]+)\.(.+)$/', $id, $matches )) {
+	foreach( $config['launch']['groups'] as $grp ) {
+		if( "{$grp}" == $matches[1] ) {
+			header("HTTP/1.1 301 Moved Permanently"); 
+			header("Location: {$config['launch']['detail']}/zotero2-{$matches[1]}.{$matches[2]}"); 
+			exit();
+		}
+	}
+}
 
 $cachestr = '';
 foreach( $session->getGroups() as $grp ) {

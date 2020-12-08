@@ -15,9 +15,9 @@ static $badge = array(
   if( $id > 0 ) {
 ?>
 <tr>
-<td><a href="form.php?id=<?php echo $id; ?>"><?php echo htmlspecialchars( $row['Anlassbezeichnung']); ?></a></td>
-<td><a href="form.php?id=<?php echo $id; ?>"><?php echo htmlspecialchars( $row['Nachname']); ?></a></td>
-<td><a href="form.php?id=<?php echo $id; ?>"><?php echo htmlspecialchars( $row['Vornamen']); ?></a></td>
+<td><a href="form.php?id=<?php echo $id; ?>&year=<?php echo $row['year']?>"><?php echo htmlspecialchars( $row['Anlassbezeichnung']); ?></a></td>
+<td><a href="form.php?id=<?php echo $id; ?>&year=<?php echo $row['year']?>"><?php echo htmlspecialchars( $row['Nachname']); ?></a></td>
+<td><a href="form.php?id=<?php echo $id; ?>&year=<?php echo $row['year']?>"><?php echo htmlspecialchars( $row['Vornamen']); ?></a></td>
 <td><span class="badge badge-<?php echo $badge[$row['done']]['type']; ?>"><?php echo $badge[$row['done']]['title']; ?></span></td>
 </tr>
 <?php
