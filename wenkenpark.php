@@ -97,7 +97,11 @@ die Sammlung der Produktionen der Videowochen.
   foreach( $names as $name ) {
     $query['query'] = 'author:"'.$name.'"';
     $query['facets']['cluster'] = array( 'Videowoche im Wenkenpark '.$thema );
-    echo "<!-- {$row['name']} --><a href=\"search.php?query=".urlencode( json_encode( $query ))."\">".htmlspecialchars( $name )."</a><br />\n";
+          echo "<!-- {$row['name']} --><a href=\"https://mediathek.hgk.fhnw.ch/amp/search/zotero2-2545256.VC83GM36?searchtext=".
+			urlencode( "author:\"{$name}\" tag:\"{$thema}\"" ).
+			"\">".
+			htmlspecialchars( $name ).
+			"</a><br />\n";
   }
 ?>
       </td>
@@ -120,7 +124,11 @@ die Sammlung der Produktionen der Videowochen.
         foreach( $names as $name ) {
           $query['query'] = 'author:"'.$name.'"';
           $query['facets']['cluster'] = array( 'Videowoche im Wenkenpark '.$thema );
-          echo "<!-- {$row['name']} --><a href=\"search.php?query=".urlencode( json_encode( $query ))."\">".htmlspecialchars( $name )."</a><br />\n";
+          echo "<!-- {$row['name']} --><a href=\"https://mediathek.hgk.fhnw.ch/amp/search/zotero2-2545256.VC83GM36?searchtext=".
+			urlencode( "author:\"{$name}\" tag:\"{$thema}\"" ).
+			"\">".
+			htmlspecialchars( $name ).
+			"</a><br />\n";
         }
         ?>
       </td>
@@ -143,7 +151,11 @@ die Sammlung der Produktionen der Videowochen.
         foreach( $names as $name ) {
           $query['query'] = 'author:"'.$name.'"';
           $query['facets']['cluster'] = array( 'Videowoche im Wenkenpark '.$thema );
-          echo "<!-- {$row['name']} --><a href=\"search.php?query=".urlencode( json_encode( $query ))."\">".htmlspecialchars( $name )."</a><br />\n";
+          echo "<!-- {$row['name']} --><a href=\"https://mediathek.hgk.fhnw.ch/amp/search/zotero2-2545256.VC83GM36?searchtext=".
+			urlencode( "author:\"{$name}\" tag:\"{$thema}\"" ).
+			"\">".
+			htmlspecialchars( $name ).
+			"</a><br />\n";
         }
         ?>
       </td>

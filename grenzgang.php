@@ -56,7 +56,7 @@ Um aufzeigen und diskutieren zu können, wie sich Wissen in einem Projekt generi
     <li><a target="_blank" href="https://link.springer.com/chapter/10.1007/978-3-319-76992-9_11">Springer Text Grenzgang. When Promenadology Meets Library</a></li>
     <li><a target="_blank" href="https://ba14ns21403-sec1.fhnw.ch/mediasrv/zotero_2250437/2250437.3WG4QMQU_enclosure/iframe">Ortszeit DE: Grenzgang. Vom Dreispitz in den trinationalen Raum</a></li>
     <li><a target="_blank" href="https://ba14ns21403-sec1.fhnw.ch/mediasrv/zotero_2250437/2250437.5LZJ3Q26_enclosure/iframe">Ortszeit EN: Grenzgang. From Dreispitz to the space of the trinational region</a></li>
-    <li><a target="_blank" href="https://mediathek.hgk.fhnw.ch/detail.php?id=zotero-2250437.FHAWAZ6M">Grenzgang – Laying a Keyword Path. 15th ELIA Biennial Conference Rotterdam: Resilience and the City</a></li>
+    <li><a target="_blank" href="https://mediathek.hgk.fhnw.ch/amp/detail/zotero2-2250437.FHAWAZ6M">Grenzgang – Laying a Keyword Path. 15th ELIA Biennial Conference Rotterdam: Resilience and the City</a></li>
   </ul>
 </p>
 <p>
@@ -77,22 +77,22 @@ Um aufzeigen und diskutieren zu können, wie sich Wissen in einem Projekt generi
       </td>
       <td style="vertical-align: top;">
         <h4>Fundus</h4>
-        <a target="_blank" href="https://mediathek.hgk.fhnw.ch/detail.php?id=zotero-2250437.BZMJ8X2H">Balades-de-Bâle (Markus Schwander)</a></br>
-        <!-- a target="_blank" href="https://mediathek.hgk.fhnw.ch/detail.php?id=zotero-2250437.5FQCFRLB" -->Miniatures (Amadis Brugnoni)<!-- /a --></br>
-        <a target="_blank" href="https://mediathek.hgk.fhnw.ch/detail.php?id=zotero-2250437.BQQIGAZ6">Nullmeterzeichnungen (Markus Schwander)</a></br>
-        <a target="_blank" href="https://mediathek.hgk.fhnw.ch/detail.php?id=zotero-2250437.6ZMQS5QV">Raumklangskizzen (Daniel Brefin)</a></br>
-        <a target="_blank" href="https://mediathek.hgk.fhnw.ch/detail.php?id=zotero-2250437.73GBIEA5">Videos entlang (Simone Etter)</a>
+        <a target="_blank" href="https://mediathek.hgk.fhnw.ch/amp/detail/zotero2-2250437.BZMJ8X2H">Balades-de-Bâle (Markus Schwander)</a></br>
+        <!-- a target="_blank" href="https://mediathek.hgk.fhnw.ch/amp/detail/zotero2-2250437.5FQCFRLB" -->Miniatures (Amadis Brugnoni)<!-- /a --></br>
+        <a target="_blank" href="https://mediathek.hgk.fhnw.ch/amp/detail/zotero2-2250437.BQQIGAZ6">Nullmeterzeichnungen (Markus Schwander)</a></br>
+        <a target="_blank" href="https://mediathek.hgk.fhnw.ch/amp/detail/zotero2-2250437.6ZMQS5QV">Raumklangskizzen (Daniel Brefin)</a></br>
+        <a target="_blank" href="https://mediathek.hgk.fhnw.ch/amp/detail/zotero2-2250437.73GBIEA5">Videos entlang (Simone Etter)</a>
       </td>
       <td style="vertical-align: top;">
         <h4>Walks</h4>
-        <a target="_blank" href="https://mediathek.hgk.fhnw.ch/detail.php?id=zotero-2250437.QPSVJZYD">Walk 1</a></br>
+        <a target="_blank" href="https://mediathek.hgk.fhnw.ch/amp/detail/zotero2-2250437.QPSVJZYD">Walk 1</a></br>
 
         Walk 2</br>
-        <a target="_blank" href="https://mediathek.hgk.fhnw.ch/detail.php?id=zotero-2250437.VNCJN3PN">Walk 3</a></br>
+        <a target="_blank" href="https://mediathek.hgk.fhnw.ch/amp/detail/zotero2-2250437.VNCJN3PN">Walk 3</a></br>
 
-        <a target="_blank" href="https://mediathek.hgk.fhnw.ch/detail.php?id=zotero-2250437.PSSMPXG3">Walk 4</a></br>
+        <a target="_blank" href="https://mediathek.hgk.fhnw.ch/amp/detail/zotero2-2250437.PSSMPXG3">Walk 4</a></br>
 
-        <a target="_blank" href="https://mediathek.hgk.fhnw.ch/detail.php?id=zotero-2250437.3A9T6FYM">Walk 5</a></br>
+        <a target="_blank" href="https://mediathek.hgk.fhnw.ch/amp/detail/zotero2-2250437.3A9T6FYM">Walk 5</a></br>
 
         Walk 6<br />
         Walk 7<br />
