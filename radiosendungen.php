@@ -50,18 +50,18 @@ echo mediathekheader('gatekeeper', 'Texte aus dem Dunstkreis • nun gehört!', 
   <center><table border=0 style="width: 100%;">
     <tr>
       <td style="width: 100%; vertical-align: top; text-align: center;">
-        <a href="https://mediathek.hgk.fhnw.ch/detail.php?id=zotero-2260611.F5XJ3PVL&q=b40fe40f207a22d4b76a1a472b46bb71">Alice Wilke liest aus "13"</a><br />
-        <a href="https://mediathek.hgk.fhnw.ch/detail.php?id=zotero-2260611.GDQTUDW3&q=b40fe40f207a22d4b76a1a472b46bb71">Ariane Koch liest aus Venus Electra Ryter: Aus einem freien Gestus inszenierter Weichheit, 2011-2017.</a><br />
-        <a href="https://mediathek.hgk.fhnw.ch/detail.php?id=zotero-2260611.ZVSZDX4N&q=b40fe40f207a22d4b76a1a472b46bb71">Birgit Kempker liest aus Renate Rasp: Ein ungeratener Sohn</a><br />
-        <a href="https://mediathek.hgk.fhnw.ch/detail.php?id=zotero-2260611.GIHLRUM6&q=b40fe40f207a22d4b76a1a472b46bb71">Chantal Küng liest "Im Dunstkreis"</a><br />
-        <a href="https://mediathek.hgk.fhnw.ch/detail.php?id=zotero-2260611.L33DECM2&q=b40fe40f207a22d4b76a1a472b46bb71">Christa Ziegler liest aus Quinn Latimer: Zeichen, Laute, Metalle, Feuer: oder die Ökonomie ihrer Leser_innen.</a><br />
-        <a href="https://mediathek.hgk.fhnw.ch/detail.php?id=zotero-2260611.IPIUXV79&q=b40fe40f207a22d4b76a1a472b46bb71">Daniel Brugger liest aus Gregor Weichbrodt: Dictionary of non-notable Artists.</a><br />
-        <a href="https://mediathek.hgk.fhnw.ch/detail.php?id=zotero-2260611.WEWUJ73M&q=b40fe40f207a22d4b76a1a472b46bb71">Linda Cassens liest "Im Dunstkreis"</a><br />
-        <a href="https://mediathek.hgk.fhnw.ch/detail.php?id=zotero-2260611.VTZ25V3T&q=b40fe40f207a22d4b76a1a472b46bb71">Lorenz Wiederkehr liest "Im Dunstkreis"</a><br />
-        <a href="https://mediathek.hgk.fhnw.ch/detail.php?id=zotero-2260611.HAULP53X&q=b40fe40f207a22d4b76a1a472b46bb71">Lysann König liest "Im Dunstkreis"</a><br />
-        <a href="https://mediathek.hgk.fhnw.ch/detail.php?id=zotero-2260611.TJV799JY&q=b40fe40f207a22d4b76a1a472b46bb71">Sabine Gebhardt Fink liest "Im Dunstkreis"</a><br />
-        <a href="https://mediathek.hgk.fhnw.ch/detail.php?id=zotero-2260611.XNP6VRDL&q=b40fe40f207a22d4b76a1a472b46bb71">Susan Kobler liest "Im Dunstkreis"</a><br />
-        <a href="https://mediathek.hgk.fhnw.ch/detail.php?id=zotero-2260611.VNWDJWAT&q=b40fe40f207a22d4b76a1a472b46bb71">Katharina Bochsler und Margarit Lehmann lesen "Im Dunstkreis"</a><br />
+        <a href="https://mediathek.hgk.fhnw.ch/amp/detail/zotero2-2260611.F5XJ3PVL">Alice Wilke liest aus "13"</a><br />
+        <a href="https://mediathek.hgk.fhnw.ch/amp/detail/zotero2-2260611.GDQTUDW3">Ariane Koch liest aus Venus Electra Ryter: Aus einem freien Gestus inszenierter Weichheit, 2011-2017.</a><br />
+        <a href="https://mediathek.hgk.fhnw.ch/amp/detail/zotero2-2260611.ZVSZDX4N">Birgit Kempker liest aus Renate Rasp: Ein ungeratener Sohn</a><br />
+        <a href="https://mediathek.hgk.fhnw.ch/amp/detail/zotero2-2260611.GIHLRUM6">Chantal Küng liest "Im Dunstkreis"</a><br />
+        <a href="https://mediathek.hgk.fhnw.ch/amp/detail/zotero2-2260611.L33DECM2">Christa Ziegler liest aus Quinn Latimer: Zeichen, Laute, Metalle, Feuer: oder die Ökonomie ihrer Leser_innen.</a><br />
+        <a href="https://mediathek.hgk.fhnw.ch/amp/detail/zotero2-2260611.IPIUXV79">Daniel Brugger liest aus Gregor Weichbrodt: Dictionary of non-notable Artists.</a><br />
+        <a href="https://mediathek.hgk.fhnw.ch/amp/detail/zotero2-2260611.WEWUJ73M">Linda Cassens liest "Im Dunstkreis"</a><br />
+        <a href="https://mediathek.hgk.fhnw.ch/amp/detail/zotero2-2260611.VTZ25V3T">Lorenz Wiederkehr liest "Im Dunstkreis"</a><br />
+        <a href="https://mediathek.hgk.fhnw.ch/amp/detail/zotero2-2260611.HAULP53X">Lysann König liest "Im Dunstkreis"</a><br />
+        <a href="https://mediathek.hgk.fhnw.ch/amp/detail/zotero2-2260611.TJV799JY">Sabine Gebhardt Fink liest "Im Dunstkreis"</a><br />
+        <a href="https://mediathek.hgk.fhnw.ch/amp/detail/zotero2-2260611.XNP6VRDL">Susan Kobler liest "Im Dunstkreis"</a><br />
+        <a href="https://mediathek.hgk.fhnw.ch/amp/detail/zotero2-2260611.VNWDJWAT">Katharina Bochsler und Margarit Lehmann lesen "Im Dunstkreis"</a><br />
 
       </td>
     </tr>

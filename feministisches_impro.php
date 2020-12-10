@@ -50,17 +50,17 @@ echo mediathekheader('gatekeeper', 'Feministisches* Improvisatorium', '', array(
   <center><table border=0 style="width: 100%;">
     <tr>
       <td style="width: 100%; vertical-align: top; text-align: center;">
-        <a href="https://mediathek.hgk.fhnw.ch/detail.php?id=zotero-2260611.4GL9DPE5&q=9a343249ec50f056677b4cbb3cec5e06">Anita Fetz befragt von Katha Baur</a><br />
-        <a href="https://mediathek.hgk.fhnw.ch/detail.php?id=zotero-2260611.RRLF6HUA&q=9a343249ec50f056677b4cbb3cec5e06">Katha Baur befragt von Anita Fetz</a><br />
-        <a href="https://mediathek.hgk.fhnw.ch/detail.php?id=zotero-2260611.XXBIJ746&q=9a343249ec50f056677b4cbb3cec5e06">Kathrin Ginggen befragt von Muda Mathis</a><br />
-        <a href="https://mediathek.hgk.fhnw.ch/detail.php?id=zotero-2260611.MGB6WSAD&q=9a343249ec50f056677b4cbb3cec5e06">Lena Rérat befragt von Muda Mathis</a><br />
-        <a href="https://mediathek.hgk.fhnw.ch/detail.php?id=zotero-2260611.AY5QBK5Y&q=9a343249ec50f056677b4cbb3cec5e06">Patricia Purtschert befragt von Muda Mathis</a><br />
-        <a href="https://mediathek.hgk.fhnw.ch/detail.php?id=zotero-2260611.4H8EE32H&q=9a343249ec50f056677b4cbb3cec5e06">Annemarie Pfister befragt von Chis Regn</a><br />
-        <a href="https://mediathek.hgk.fhnw.ch/detail.php?id=zotero-2260611.4WDVVEWY&q=9a343249ec50f056677b4cbb3cec5e06">Elisabeth Freivogel befragt von Chris Regn</a><br />
-        <a href="https://mediathek.hgk.fhnw.ch/detail.php?id=zotero-2260611.C7JP4BQS&q=9a343249ec50f056677b4cbb3cec5e06">Ingrid Rusterholtz befragt von Chris Regn</a><br />
-        <a href="https://mediathek.hgk.fhnw.ch/detail.php?id=zotero-2260611.WQGHXPMW&q=9a343249ec50f056677b4cbb3cec5e06">Lovis befragt von Chris Regn</a><br />
-        <a href="https://mediathek.hgk.fhnw.ch/detail.php?id=zotero-2260611.2DYZS6XY&q=9a343249ec50f056677b4cbb3cec5e06">Marianne Mattmüller befragt von Chris Regn</a><br />
-        <a href="https://mediathek.hgk.fhnw.ch/detail.php?id=zotero-2260611.IJYPYT3I&q=9a343249ec50f056677b4cbb3cec5e06">Line Boser & Lysan König befragen sich</a><br />
+        <a href="https://mediathek.hgk.fhnw.ch/amp/detail/zotero2-2260611.4GL9DPE5">Anita Fetz befragt von Katha Baur</a><br />
+        <a href="https://mediathek.hgk.fhnw.ch/amp/detail/zotero2-2260611.RRLF6HUA">Katha Baur befragt von Anita Fetz</a><br />
+        <a href="https://mediathek.hgk.fhnw.ch/amp/detail/zotero2-2260611.XXBIJ746">Kathrin Ginggen befragt von Muda Mathis</a><br />
+        <a href="https://mediathek.hgk.fhnw.ch/amp/detail/zotero2-2260611.MGB6WSAD">Lena Rérat befragt von Muda Mathis</a><br />
+        <a href="https://mediathek.hgk.fhnw.ch/amp/detail/zotero2-2260611.AY5QBK5Y">Patricia Purtschert befragt von Muda Mathis</a><br />
+        <a href="https://mediathek.hgk.fhnw.ch/amp/detail/zotero2-2260611.4H8EE32H">Annemarie Pfister befragt von Chis Regn</a><br />
+        <a href="https://mediathek.hgk.fhnw.ch/amp/detail/zotero2-2260611.4WDVVEWY">Elisabeth Freivogel befragt von Chris Regn</a><br />
+        <a href="https://mediathek.hgk.fhnw.ch/amp/detail/zotero2-2260611.C7JP4BQS">Ingrid Rusterholtz befragt von Chris Regn</a><br />
+        <a href="https://mediathek.hgk.fhnw.ch/amp/detail/zotero2-2260611.WQGHXPMW">Lovis befragt von Chris Regn</a><br />
+        <a href="https://mediathek.hgk.fhnw.ch/amp/detail/zotero2-2260611.2DYZS6XY">Marianne Mattmüller befragt von Chris Regn</a><br />
+        <a href="https://mediathek.hgk.fhnw.ch/amp/detail/zotero2-2260611.IJYPYT3I">Line Boser & Lysan König befragen sich</a><br />
       </td>
     </tr>
   </table></center>
