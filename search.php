@@ -118,6 +118,10 @@ if( $query ) {
 
 if( !$qobj ) {
 	if( !$q ) {
+		if( $search != "" ) {
+			header("Location: https://mediathek.hgk.fhnw.ch/amp/search?searchtext=".urlencode($search));
+			exit;
+		}
 		$qobj = array();
 		$qobj['facets'] = array();
 		$qobj['filter'] = array();
