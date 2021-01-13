@@ -94,12 +94,34 @@ function buildPagination() {
 if( $query ) {
 	// query prüfen
 	$qobj = json_decode( $query, true );
+	
+	
 	$invalidQuery = !( array_key_exists( 'query', $qobj )
 					&& array_key_exists( 'area', $qobj )
 					&& array_key_exists( 'filter', $qobj )
 					&& array_key_exists( 'facets', $qobj )
 	   );
 	if( !$invalidQuery ) {
+	
+	$query = $qobj['query'];
+	$facets = $qobj['facets'];
+	$catalogs = [];
+	if( array_key_exists('catalog', $facets )) {
+	   if( is_array($qobj['catalog'])) {
+	      $catalogs = $qobj['catalog'];
+	   } else {
+	      $catalogs[] = $qobj['catalog'];
+	   }
+	}
+	
+	$str = "{$search}";
+	foreach( $catalog as $cat ) {
+	   $str += " catalog:\"{$cat}\"";
+	}
+	header("Location: https://mediathek.hgk.fhnw.ch/amp/search?searchtext=".urlencode($str));
+	exit;
+
+	
 	$md5 = md5($query);
 		Helper::writeQuery( $md5, $qobj, $query );
 
