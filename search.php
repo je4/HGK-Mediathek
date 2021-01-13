@@ -114,7 +114,7 @@ if( $query ) {
 	   }
 	}
 	
-	$str = "{$search}";
+	$str = "{$query}";
 	foreach( $catalog as $cat ) {
 	   $str += " catalog:\"{$cat}\"";
 	}
