@@ -16,10 +16,16 @@ class Session implements \SessionHandlerInterface
 
   private $subnetsFHNW = array();
   private $subnets = array();
+  
+  private $remoteAddr = null;
   //private $localFHNW = false;
 
   function __construct( $db, $server )
   {
+  $this->remoteAddr = isset($_SERVER['HTTP_X_FORWARDED_FOR']) 
+    ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $_SERVER['REMOTE_ADDR'];
+  //if( $this->remoteAddr != '' ) $this->remoteAddr = $_SERVER['REMOTE_ADDR'];
+
   $this->subnets['fhnw'] = array();
   $this->subnets['fhnw'][] = new IPv6Net( "10.0.0.0/8" );
 	$this->subnets['fhnw'][] = new IPv6Net( "192.168.0.0/16" );
@@ -72,7 +78,7 @@ class Session implements \SessionHandlerInterface
 					, '.$this->db->qstr($this->shibGetSessionID()).'
 					, '.$this->db->qstr($this->certEmail).'
 					, '.$this->db->qstr($this->id).'
-					, '.$this->db->qstr($_SERVER['REMOTE_ADDR']).'
+					, '.$this->db->qstr($this->remoteAddr).'
 					)';
 	//		echo $sql;
 			$this->db->Execute( $sql );
@@ -85,7 +91,7 @@ class Session implements \SessionHandlerInterface
 					, '.$this->db->qstr($this->shibGetSessionID()).'
 					, '.$this->db->qstr($this->certEmail).'
 					, '.$this->db->qstr($this->id).'
-					, '.$this->db->qstr(isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : null).'
+					, '.$this->db->qstr(isset( $this->remoteAddr ) ? $this->remoteAddr : null).'
 					)';
 	//		echo $sql;
 			$this->db->Execute( $sql );
@@ -112,7 +118,7 @@ class Session implements \SessionHandlerInterface
 					, '.$this->db->qstr($this->shibGetSessionID()).'
 					, '.$this->db->qstr($this->certEmail).'
 					, '.$this->db->qstr($this->id).'
-					, '.$this->db->qstr($_SERVER['REMOTE_ADDR']).'
+					, '.$this->db->qstr($this->remoteAddr).'
 					)';
 	//		echo $sql;
 			$this->db->Execute( $sql );
@@ -286,7 +292,7 @@ class Session implements \SessionHandlerInterface
 
 	foreach( $this->subnets as $loc=>$net ) {
     foreach( $net as $sub ) {
-  	  if( $sub->contains( $_SERVER['REMOTE_ADDR'])) {
+  	  if( $sub->contains( $this->remoteAddr)) {
     		$this->groups[] = "location/{$loc}";
 //    		$this->localFHNW = true;
     		break;
