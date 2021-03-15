@@ -812,12 +812,12 @@ function init() {
 		  return false;    //<---- Add this line
 		}
 	 });
-
+ 
 	$('body').on('click', '.setting-btn', function () {
 		<?php if( $session->isLoggedIn()) { ?>
 		window.location="settings.php";
 		<?php } else { ?>
-		window.location="auth/?target=<?php echo urlencode( $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']); ?>";
+		window.location="https://intern.hgk.fhnw.ch/ango/shib/auth/mediathek?callback=<?php echo urlencode( 'https://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'].'&token=_JWT_'); ?>";
 		<?php } ?>
 
 	});

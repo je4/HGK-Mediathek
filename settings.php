@@ -43,7 +43,7 @@ echo mediathekheader('search', 'Mediathek - Settings', '');
 
 <h4><a href="<?php echo $_SERVER['Meta-organizationURL']; ?>"><?php
 	if( isset( $_SERVER['Meta-largeLogo'])) echo $_SERVER['Meta-largeLogo'];
-	echo "&nbsp;&nbsp;".$_SERVER['Meta-displayName'];
+	if( isset( $_SERVER['Meta-displayName'])) echo "&nbsp;&nbsp;".$_SERVER['Meta-displayName'];
 ?></a></h4>
 <h3><?php echo htmlspecialchars( $session->shibGetUsername()); ?></h3>
 <h4><a href="mailto:<?php echo $session->shibGetMail(); ?>"><?php echo $session->shibGetMail(); ?></a></h4>

@@ -1,6 +1,13 @@
 <?php
 namespace Mediathek;
 
+use \Firebase\JWT\JWT;
+
+include( dirname(__DIR__).'/Firebase/JWT/JWT.php' );
+include( dirname(__DIR__).'/Firebase/JWT/ExpiredException.php' );
+include( dirname(__DIR__).'/Firebase/JWT/BeforeValidException.php' );
+include( dirname(__DIR__).'/Firebase/JWT/SignatureInvalidException.php' );
+
 class Session implements \SessionHandlerInterface
 {
     // session timeout in sekunden
@@ -16,12 +23,15 @@ class Session implements \SessionHandlerInterface
 
   private $subnetsFHNW = array();
   private $subnets = array();
+  private $decoded_token = null;
   
   private $remoteAddr = null;
   //private $localFHNW = false;
 
   function __construct( $db, $server )
   {
+	  global $config;
+	  
   $this->remoteAddr = isset($_SERVER['HTTP_X_FORWARDED_FOR']) 
     ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $_SERVER['REMOTE_ADDR'];
   //if( $this->remoteAddr != '' ) $this->remoteAddr = $_SERVER['REMOTE_ADDR'];
@@ -39,6 +49,36 @@ class Session implements \SessionHandlerInterface
 
     $this->db = $db;
     $this->server = $server;
+	
+	$token = null;
+	if( isset( $_REQUEST['token'] )) {
+		$token = $_REQUEST['token'];
+//		var_dump( $token );
+//		die();
+	} elseif( isset( $_COOKIE['token'] )) {
+		$token = $_COOKIE['token'];
+	}
+
+	if( $token != null ) {
+		$key = $config['jwtkey'];
+		try {
+			$this->decoded_token = JWT::decode($token, $key, array('HS256',
+			'HS384'));
+			$this->id = $this->decoded_token->userId;
+			$this->decoded_token->exp = time()+3600;
+			$token = JWT::encode($this->decoded_token, $key );
+			setcookie("token", $token, time()+3600, "", "mediathek.hgk.fhnw.ch", 1);
+			//die( "cookie set" );
+		}
+		catch( \Exception $ex ) {
+			setcookie("token", "", 0 );
+			$this->decoded_token = null;
+			//die( $ex );
+		}
+		//$this->decoded_token = jwt_decode($token, $key);	
+		//var_dump( $this->decoded_token );
+		//die();
+	}
     session_set_save_handler( $this, true );
 
     $this->startSession();
@@ -133,6 +173,8 @@ class Session implements \SessionHandlerInterface
 
   public function checkUser() {
 
+	return;
+	
     static $fields = array( 'uniqueID', 'mail', 'homeOrganization', 'homeOrganizationType', 'uid', 'givenName', 'surname', 'telephoneNumber', 'affiliation', 'entitlement', 'employeeNumber', 'orgunit-dn' );
 
     if( $this->shibGetUniqueID() == null ) return;
@@ -167,7 +209,7 @@ class Session implements \SessionHandlerInterface
   }
 
   public function isLoggedIn() {
-    return $this->shibGetSessionID() != null;
+    return $this->decoded_token != null;
   }
 
   public function isAdmin() {
@@ -175,7 +217,7 @@ class Session implements \SessionHandlerInterface
     return $this->inGroup( $config['admingroup'] );
   }
   public function shibGetSessionID() {
-    return isset( $this->server['Shib-Session-ID'] ) ? $this->server['Shib-Session-ID'] : null;
+    return isset( $this->decoded_token ) ? $this->decoded_token->userId.$this->decoded_token->nbf : null;
   }
 
   public function shibGetUniqueID() {
@@ -183,19 +225,19 @@ class Session implements \SessionHandlerInterface
   }
 
   public function shibGetMail() {
-    return isset( $this->server['mail'] ) ? $this->server['mail'] : null;
+    return isset( $this->decoded_token ) ? $this->decoded_token->email : null;
   }
 
   public function shibGetUsername() {
-    return (isset( $this->server['givenName'] ) ? "{$this->server['givenName']} " : "" ).(isset( $this->server['surname'] ) ? $this->server['surname'] : "");
+    return (isset( $this->decoded_token ) ? "{$this->decoded_token->firstName} {$this->decoded_token->lastName}" : "" );
   }
 
   public function shibGetGivenName() {
-    return (isset( $this->server['givenName'] ) ? "{$this->server['givenName']}" : "" );
+    return (isset( $this->decoded_token ) ? $this->decoded_token->firstName : "" );
   }
 
   public function shibGetSurname() {
-    return (isset( $this->server['surname'] ) ? $this->server['surname'] : "");
+    return (isset( $this->decoded_token ) ? $this->decoded_token->lastName : "" );
   }
 
   public function shibGetLogoSmall() {
@@ -284,10 +326,13 @@ class Session implements \SessionHandlerInterface
   function getGroups() {
 	global $_SERVER;
 
-//    if( !$this->isLoggedIn() ) return array('global/guest');
+    if( !$this->isLoggedIn() ) return array('global/guest');
 
     if( $this->groups != null ) return $this->groups;
 
+	$this->groups = explode( ';', $this->decoded_token->groups );
+	return $this->groups;
+	
     $this->groups = array( 'global/guest' );
 
 	foreach( $this->subnets as $loc=>$net ) {
