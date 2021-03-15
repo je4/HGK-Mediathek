@@ -133,9 +133,9 @@ class Session implements \SessionHandlerInterface
 					, '.$this->db->qstr($this->id).'
 					, '.$this->db->qstr(isset( $this->remoteAddr ) ? $this->remoteAddr : null).'
 					)';
-	//		echo $sql;
+	//		echo $sql; 
 			$this->db->Execute( $sql );
-		}
+		} 
 		// Fall 3: Shibboleth-Session existiert, ist aber noch nicht eingetragen
 		elseif( $this->shibGetSessionID() != null && $row['Shib-Session-ID'] == null ) {
 			$sql = "UPDATE session
@@ -161,7 +161,14 @@ class Session implements \SessionHandlerInterface
 					, '.$this->db->qstr($this->remoteAddr).'
 					)';
 	//		echo $sql;
-			$this->db->Execute( $sql );
+			try {
+				$this->db->Execute( $sql );
+			}
+			catch( \Exception $ex ) {
+				$sql = "UPDATE session SET lastaccess=NOW() WHERE php_session_id=".$this->db->qstr($this->id);
+		//		echo $sql;
+				$this->db->Execute( $sql );
+			}
 		}
 		else {
 			$sql = "UPDATE session SET lastaccess=NOW() WHERE php_session_id=".$this->db->qstr($this->id);
