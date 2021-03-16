@@ -337,7 +337,11 @@ class Session implements \SessionHandlerInterface
 
     if( $this->groups != null ) return $this->groups;
 
-	$this->groups = explode( ';', $this->decoded_token->groups );
+	$this->groups = [];
+	foreach( explode( ';', $this->decoded_token->groups ) as $group ) {
+		$this->groups[] = preg_replace('#^mediathek/([^/]+)/([^/]+)$#', '$1/$2', $group);
+	}
+	$this->groups = array_unique($this->groups);
 	return $this->groups;
 	
     $this->groups = array( 'global/guest' );
