@@ -50,7 +50,7 @@ foreach( $rs as $row ) {
   //echo "<dt>".str_replace('_', ' ', $row['name'])."</dt><dd><a target=\"_blank\" href=\"{$hdl}\">{$hdl}</a></dd>\n";
   $name = str_replace( '_', ' ', pathinfo( $row['name'], PATHINFO_FILENAME ));
   if( preg_match( '/^[^-]+\-(.+)$/', $name, $matches )) $name = trim( $matches[1] );
-  echo "<code>\$\$u{$hdl}\$\$zBasel Musik-Akademie: Onlinezugriff {$name}\$\$x".date( 'd.m.Y')."/A332/{$kuerzel[$session->shibGetUniqueID()]}</code><br />\n";
+  echo "<code>\$\$u{$hdl}\$\$zBasel Musik-Akademie: Onlinezugriff {$name}\$\$x".date( 'd.m.Y')."/A332/B-CDE</code><br />\n";
 }
 //echo "</dl>\n";
 $rs->Close();

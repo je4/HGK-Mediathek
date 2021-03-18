@@ -228,7 +228,7 @@ class Session implements \SessionHandlerInterface
   }
 
   public function shibGetUniqueID() {
-    return isset( $this->server['uniqueID'] ) ? $this->server['uniqueID'] : null;
+    return isset( $this->server['uniqueID'] ) ? $this->server['uniqueID'] : $this->getId();
   }
 
   public function shibGetMail() {

@@ -4,7 +4,7 @@ namespace Mediathek;
   include( '../init.inc.php' );
 
 if( !$session->isLoggedIn()) {
-  header( 'Location: https://mediathek.hgk.fhnw.ch/auth?target='.urlencode($_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']) );
+  header( 'Location: https://mediathek.hgk.fhnw.ch/auth/?target='.urlencode($_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']).urlencode('?'));
   exit;
 }
 if( !$session->inAnyGroup( array( 'mab/upload' ))) {
