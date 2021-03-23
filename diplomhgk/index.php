@@ -4,6 +4,11 @@ namespace Mediathek;
 
 include( '../init.inc.php' );
 
+if( !$session->isLoggedIn()) {
+	header( 'Location: https://intern.hgk.fhnw.ch/ango/shib/auth/mediathek?callback='.urlencode( 'https://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'].'?token=_JWT_'));
+	exit;
+}
+
 function personRow( $row ) {
 static $badge = array(
   -1=>array('type'=>'default', 'title'=>'gespeichert'),
@@ -40,6 +45,7 @@ static $badge = array(
 $mail = $session->shibGetMail();
 //$sql = "SELECT IDPerson FROM source_diplomhgk_map WHERE `Partition`=".$db->qstr( 'edu' )." AND sam=".$db->qstr( $session->shibGetUID());
 $sql = "SELECT IDPerson FROM source_diplomhgk_map WHERE sam=".$db->qstr( $session->shibGetUID());
+//echo "\n<!--\n{$sql}\n-->\n";
 $number = intval($db->GetOne( $sql ));
 //$number = intval($session->shibGetEmployeenumber());
 $username = $session->shibGetUsername();
@@ -106,11 +112,15 @@ $username = $session->shibGetUsername();
 </thead>
 <tbody>
 <?php
-
+/*
+echo "\n<!--\n"; 
+var_dump( $auth );
+echo "\n-->\n";
+*/
 if( array_key_exists( $mail, $auth )) {
   foreach( $auth[$mail] as $anlass ) {
     $sql = "SELECT * FROM source_diplomhgk WHERE year>={$year} AND Anlassnummer=".$db->qstr( $anlass )." ORDER BY Nachname, Vornamen";
-    echo "<!-- $sql -->\n";
+	echo "\n<!--\n{$sql}\n-->\n";
     $rs = $db->Execute( $sql );
     $num = $rs->RecordCount();
     foreach( $rs as $row ) {
@@ -121,7 +131,7 @@ if( array_key_exists( $mail, $auth )) {
 } // if auth
 else {
     $sql = "SELECT * FROM source_diplomhgk WHERE year>={$year} AND IDPerson=".$db->qstr($number);
-    echo "<!-- $sql -->\n";
+	echo "\n<!--\n{$sql}\n-->\n";
     $rs = $db->Execute( $sql );
     $num = $rs->RecordCount();
     foreach( $rs as $row ) {
