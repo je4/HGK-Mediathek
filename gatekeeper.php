@@ -15,7 +15,7 @@ require 'footer.inc.php';
 include( 'init.inc.php' );
 
 if( !$session->isLoggedIn()) {
-	header( 'Location: auth/?target='.urlencode( $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']) );
+  header( 'Location: https://mediathek.hgk.fhnw.ch/auth/?target='.urlencode($_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']).urlencode('?'));
 }
 
 echo mediathekheader('gatekeeper', 'Mediathek - Gatekeeper', '', array( 'css/dataTables.bootstrap4.min.css' ));
