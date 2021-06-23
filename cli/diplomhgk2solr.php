@@ -264,6 +264,7 @@ foreach( $rs as $row ) {
 
   echo $entity->getTitle()."\n";
   //print_r( $entity->getURLs());
+//  $solr->delete( $entity->getId());
   $solr->import( $entity );
 }
 $rs->Close();

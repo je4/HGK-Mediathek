@@ -119,7 +119,8 @@ echo "\n-->\n";
 */
 if( array_key_exists( $mail, $auth )) {
   foreach( $auth[$mail] as $anlass ) {
-    $sql = "SELECT * FROM source_diplomhgk WHERE year>={$year} AND Anlassnummer=".$db->qstr( $anlass )." ORDER BY Nachname, Vornamen";
+//    $sql = "SELECT * FROM source_diplomhgk WHERE year>={$year} AND Anlassnummer=".$db->qstr( $anlass )." ORDER BY Nachname, Vornamen";
+    $sql = "SELECT * FROM source_diplomhgk WHERE year={$year} AND Anlassnummer=".$db->qstr( $anlass )." ORDER BY Nachname, Vornamen";
 	echo "\n<!--\n{$sql}\n-->\n";
     $rs = $db->Execute( $sql );
     $num = $rs->RecordCount();
@@ -130,7 +131,8 @@ if( array_key_exists( $mail, $auth )) {
   } // foreach
 } // if auth
 else {
-    $sql = "SELECT * FROM source_diplomhgk WHERE year>={$year} AND IDPerson=".$db->qstr($number);
+//    $sql = "SELECT * FROM source_diplomhgk WHERE year>={$year} AND IDPerson=".$db->qstr($number);
+    $sql = "SELECT * FROM source_diplomhgk WHERE year={$year} AND `E-Mail`=".$db->qstr($mail);
 	echo "\n<!--\n{$sql}\n-->\n";
     $rs = $db->Execute( $sql );
     $num = $rs->RecordCount();
@@ -146,7 +148,7 @@ else {
 if( $num == 0 ) {
 ?>
   <div class="alert alert-danger" role="alert">
-    keinen Diplomeintrag für <?php echo htmlspecialchars( $session->shibGetUsername()); ?> gefunden.
+		Keinen Diplomeintrag für <?php echo htmlspecialchars( $session->shibGetUsername()); ?> gefunden.
   </div>
 <?php
 }
