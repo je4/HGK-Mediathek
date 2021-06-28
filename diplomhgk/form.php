@@ -6,6 +6,7 @@ $mail = $session->shibGetMail();
 $number = $session->shibGetEmployeenumber();
 
 $id = @intval( $_REQUEST['id']);
+$canUpload = @intval( $_REQUEST['canupload']);
 $_year = @intval( $_REQUEST['year']);
 if( $_year > 0 ) { $year = $_year; }
 
@@ -304,7 +305,9 @@ https://soundcloud.com/fhnw-hgk-iku/mah02448mp4-dance', false, 6, valof( $vals, 
 //formCheck( 'rights', 'Hiermit erlaube ich der HGK sämtliche hochgeladenen Medien in allen Veröffentlichungskanälen zu nutzen', 'Rights', true, valof( $vals, 'rights' ) );
  ?>
 <p>
+<?php if( !$canUpload ) echo "<!--"; ?>
   <div id="uploader"> </div>
+<?php if( !$canUpload ) echo "-->"; ?>
 </p>
 <p>
   Mit der Einreichung erwirbt die Hochschule für Gestaltung und Kunst FHNW unentgeltlich das unbeschränkte Recht, die hochgeladenen Bilder sowie die erfassten Metadaten (Titel, Name der Absolvierenden, eMail-Adresse sowie die weiteren Formulardaten) zu publizieren (insb. Online-Publikationen), zu vervielfältigen und zu verbreiten.

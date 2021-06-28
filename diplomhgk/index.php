@@ -9,7 +9,7 @@ if( !$session->isLoggedIn()) {
 	exit;
 }
 
-function personRow( $row ) {
+function personRow( $row, $canUpload ) {
 static $badge = array(
   -1=>array('type'=>'default', 'title'=>'gespeichert'),
   0=>array('type'=>'warning', 'title'=>'neu'),
@@ -20,9 +20,9 @@ static $badge = array(
   if( $id > 0 ) {
 ?>
 <tr>
-<td><a href="form.php?id=<?php echo $id; ?>&year=<?php echo $row['year']?>"><?php echo htmlspecialchars( $row['Anlassbezeichnung']); ?></a></td>
-<td><a href="form.php?id=<?php echo $id; ?>&year=<?php echo $row['year']?>"><?php echo htmlspecialchars( $row['Nachname']); ?></a></td>
-<td><a href="form.php?id=<?php echo $id; ?>&year=<?php echo $row['year']?>"><?php echo htmlspecialchars( $row['Vornamen']); ?></a></td>
+<td><a href="form.php?id=<?php echo $id; ?>&year=<?php echo $row['year']?>&canupload=<?php echo intval($canUpload); ?>"><?php echo htmlspecialchars( $row['Anlassbezeichnung']); ?></a></td>
+<td><a href="form.php?id=<?php echo $id; ?>&year=<?php echo $row['year']?>&canupload=<?php echo intval($canUpload); ?>"><?php echo htmlspecialchars( $row['Nachname']); ?></a></td>
+<td><a href="form.php?id=<?php echo $id; ?>&year=<?php echo $row['year']?>&canupload=<?php echo intval($canUpload); ?>"><?php echo htmlspecialchars( $row['Vornamen']); ?></a></td>
 <td><span class="badge badge-<?php echo $badge[$row['done']]['type']; ?>"><?php echo $badge[$row['done']]['title']; ?></span></td>
 </tr>
 <?php
@@ -117,18 +117,20 @@ echo "\n<!--\n";
 var_dump( $auth );
 echo "\n-->\n";
 */
-if( array_key_exists( $mail, $auth )) {
-  foreach( $auth[$mail] as $anlass ) {
-//    $sql = "SELECT * FROM source_diplomhgk WHERE year>={$year} AND Anlassnummer=".$db->qstr( $anlass )." ORDER BY Nachname, Vornamen";
-    $sql = "SELECT * FROM source_diplomhgk WHERE year={$year} AND Anlassnummer=".$db->qstr( $anlass )." ORDER BY Nachname, Vornamen";
-	echo "\n<!--\n{$sql}\n-->\n";
-    $rs = $db->Execute( $sql );
-    $num = $rs->RecordCount();
-    foreach( $rs as $row ) {
-      personRow( $row );
-    } // foreach
-    $rs->Close();
-  } // foreach
+$num = 0;
+
+if( array_key_exists( $mail, $auth ) && count($auth[$mail]) > 0) {
+	  foreach( $auth[$mail] as $anlass ) {
+	//    $sql = "SELECT * FROM source_diplomhgk WHERE year>={$year} AND Anlassnummer=".$db->qstr( $anlass )." ORDER BY Nachname, Vornamen";
+		$sql = "SELECT * FROM source_diplomhgk WHERE year={$year} AND Anlassnummer=".$db->qstr( $anlass )." ORDER BY Nachname, Vornamen";
+		echo "\n<!--\n{$sql}\n-->\n";
+		$rs = $db->Execute( $sql );
+		$num = $rs->RecordCount();
+		foreach( $rs as $row ) {
+		  personRow( $row, true );
+		} // foreach
+		$rs->Close();
+	  } // foreach
 } // if auth
 else {
 //    $sql = "SELECT * FROM source_diplomhgk WHERE year>={$year} AND IDPerson=".$db->qstr($number);
@@ -137,7 +139,7 @@ else {
     $rs = $db->Execute( $sql );
     $num = $rs->RecordCount();
     foreach( $rs as $row ) {
-      personRow( $row );
+      personRow( $row, false );
     }
     $rs->Close();
 }
