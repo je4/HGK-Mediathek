@@ -289,19 +289,22 @@ foreach( $rs as $row ) {
 echo "<p />";
 formString( 'email', 'Email Adresse', 'Emailadresse für die DiplomHGK Seite', false, valof( $vals, 'email' ) );
 formString( 'web1', 'Webseite #1', 'Kontakt Webseite (persönliche Website)', false, valof( $vals, 'web1' ) );
-formString( 'web2', 'Webseite #2', 'Zusätzliche Webseite (Projektseite etc...)', false, valof( $vals, 'web2' ) );
+formString( 'web2', 'Webseite #2', 'Zusätzliche Webseite (Projektseite, Instagram etc...)', false, valof( $vals, 'web2' ) );
 formString( 'titel', 'Titel (Diplomarbeit)', 'Bsp: Complexity', true, valof( $vals, 'titel' ) );
 formString( 'untertitel', 'Untertitel (Diplomarbeit)', 'Bsp: Der Reichtum der Unterschiede', false, valof( $vals, 'untertitel' ) );
-formString( 'betreuer1', 'Betreuer/in #1', 'Prüfer/in, Betreuer/in', false, valof( $vals, 'betreuer1' ) );
-formString( 'betreuer2', 'Betreuer/in #2', 'Prüfer/in, Betreuer/in', false, valof( $vals, 'betreuer2' ) );
-formText( 'beschreibung', 'Beschreibung', 'Projektbeschrieb (Diplomarbeit) #hashtags sind hier möglich', true, 6, valof( $vals, 'beschreibung' ) );
+formString( 'betreuer1', 'Mentor*in #1', 'Mentor*in', false, valof( $vals, 'betreuer1' ) );
+formString( 'betreuer2', 'Mentor*in #2', 'Mentor*in', false, valof( $vals, 'betreuer2' ) );
+formString( 'betreuer3', 'Mentor*in #3', 'Mentor*in', false, valof( $vals, 'betreuer3' ) );
+//formString( 'betreuer2', 'Betreuer/in #2', 'Prüfer/in, Betreuer/in', false, valof( $vals, 'betreuer2' ) );
+formText( 'beschreibung', 'Beschreibung (max. 1000 Zeichen)', 'Projektbeschrieb (Diplomarbeit) #hashtags sind hier möglich', true, 6, valof( $vals, 'beschreibung' ) );
 formText( 'tags', 'Tags', 'nur #hashtags, die nicht in der Beschreibung auftauchen', false, 2, valof( $vals, 'tags' ) );
-formText( 'webmedia', 'Webadressen', 'Webadressen für Video, Audio und Pdf: Vimeo, YouTube, Issuu, Soundcloud
+/*formText( 'webmedia', 'Webadressen', 'Webadressen für Video, Audio und Pdf: Vimeo, YouTube, Issuu, Soundcloud
 Z.B.:
 https://vimeo.com/39825378
 https://youtu.be/Yyl1xxdatn8
 http://issuu.com/interiordesignandscenography/docs/iis_yearbook2013/1
 https://soundcloud.com/fhnw-hgk-iku/mah02448mp4-dance', false, 6, valof( $vals, 'webmedia' ) );
+*/
 //formCheck( 'rights', 'Hiermit erlaube ich der HGK sämtliche hochgeladenen Medien in allen Veröffentlichungskanälen zu nutzen', 'Rights', true, valof( $vals, 'rights' ) );
  ?>
 <p>
