@@ -8,16 +8,20 @@ include( 'init.inc.php' );
 $signatur = null;
 if( isset( $_REQUEST['signatur'] )) $signatur = trim( ($_REQUEST['signatur']));
 
+if (strtolower(substr($signatur, 0, strlen("E75BI "))) == "e75bi ") {
+    $signatur = substr($signatur, strlen("E75BI "));
+} 
+
 if( !strlen( $signatur ) ) return;
 
 $canEdit = $session->inGroup( 'mediathek/inventory' );
 
-$sql = "SELECT DISTINCT a.`Signatur` AS signatur, i.itemid, i.marker
-			FROM inventory_cache i LEFT JOIN ARC a ON a.`Strichcode`=i.itemid
-			WHERE (a.`Signatur` LIKE ".$db->qstr("%{$signatur}%")."
+$sql = "SELECT DISTINCT a.`signatur` AS signatur, a.`mms` AS mms, i.itemid, i.marker
+			FROM inventory_cache i LEFT JOIN alma a ON a.`barcode`=i.itemid
+			WHERE (a.`signatur` LIKE ".$db->qstr("%{$signatur}%")."
 			OR i.itemid LIKE ".$db->qstr("{$signatur}%")."
 			OR i.marker LIKE ".$db->qstr("{$signatur}%").")
-			ORDER BY a.`Signatur` ASC LIMIT 0, 600";
+			ORDER BY a.`signatur` ASC LIMIT 0, 600";
 //echo "<--\n {$sql}\n -->\n";
 $rs = $db->Execute( $sql );
 ?>
@@ -30,6 +34,7 @@ $rs = $db->Execute( $sql );
 <?php
 foreach( $rs as $row ) {
 	$box = $row['marker'];
+	$mms = $row['mms'];
 	echo "<tr>\n";  // E75:Kiste
 	if( $canEdit ) {
 		echo '<td class="list" style="width: 30%;"><a href="#" data-pk="'.$row['itemid'].'" data-type="text" data-url="inventory.update.php" data-name="marker" id="'.$row['itemid'].'" class="x-editable" )">'.$box."</a></td>\n";
@@ -40,10 +45,10 @@ foreach( $rs as $row ) {
 		if( file_exists( $config['3djsondir']."/{$kbox}.json" )) {
 			$boxjson = file_get_contents( $config['3djsondir']."/{$kbox}.json" );
 		}
-		echo '<td class="list" style="width: 30%;"><a href="#" onClick="doSearchFull( \'location:NEBIS:E75:'.$box.'\', \'\', [], [], 0, '.$session->getPageSize().' )">'.$box.'</a>
+		echo '<td class="list" style="width: 30%;">'.$box.'</a>
 				<a style="padding: 0px;" href="#" class="btn btn-default" data-toggle="modal" data-target="#MTModal" data-kiste="'.urlencode(str_replace( '_', '', $box)).'" data-json="'.htmlspecialchars( $boxjson, ENT_QUOTES ).'"> <i class="fa fa-street-view" aria-hidden="true"></i></a>'."</td>\n";
 	}
-	echo '<td class="list" style="width: 30%;">'.htmlspecialchars(/* utf8_encode */($row['signatur']))."</td>\n";
+	echo '<td class="list" style="width: 30%;">'.($mms != "" ? '<a href="https://fhnw.swisscovery.slsp.ch/permalink/41SLSP_FNW/dglg56/alma'.$mms.'" target="_blank">' : '').htmlspecialchars(/* utf8_encode */($row['signatur'])).($mms != "" ? '</a>':'')."</td>\n";
 	echo '<td class="list" style="width: 40%;">'.htmlspecialchars(utf8_encode($row['itemid']))."</td>\n";
 	echo "</tr>\n";
 }

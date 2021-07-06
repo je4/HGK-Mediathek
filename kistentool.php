@@ -36,7 +36,9 @@ echo mediathekheader('kiste', null, '');
 					</button>
 				  </span>
 			</div>
-
+			<div>
+Bitte Signatur eingeben. z.B.: 740(091) BRAN. // Please insert call number. e.g.: 740(091) BRAN. 
+			</div>
 			<div id="result"></div>
 <?php
 ?>
