@@ -48,7 +48,8 @@ $entity = new diplomhgkEntity( $db );
 $solr = new SOLR( $solrclient, $db );
 
 //$sql = "SELECT DISTINCT * FROM source_diplomhgk";
-$sql = "SELECT DISTINCT * FROM source_diplomhgk WHERE year IN ('12020', '12017', '12018', '12019')";
+//$sql = "SELECT DISTINCT * FROM source_diplomhgk WHERE year IN ('12020', '12017', '12018', '12019')";
+$sql = "SELECT DISTINCT * FROM source_diplomhgk WHERE year IN ('2021')";
 echo $sql."\n";
 $rs = $db->Execute( $sql );
 

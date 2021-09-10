@@ -36,13 +36,13 @@ foreach( $rs as $row ) {
 <?php
     if( preg_match( '/^(audio|video)\//', $row['mimetype'])) {
       $ffprobe = json_decode( $row['tech'], true );
-      if( array_key_exists( 'format', $ffprobe )) {
+      if( $ffprobe && array_key_exists( 'format', $ffprobe )) {
         $format = $ffprobe['format'];
         echo "format<br />";
         if( array_key_exists( 'format_long_name', $format )) echo "&nbsp;&nbsp;&nbsp;container: {$format['format_long_name']}<br />";
         if( array_key_exists( 'duration', $format )) echo "&nbsp;&nbsp;&nbsp;duration:".intval($format['duration'])."sec<br />";
       }
-      foreach( $ffprobe['streams'] as $stream ) {
+      if( $ffprobe ) foreach( $ffprobe['streams'] as $stream ) {
         echo "stream #{$stream['index']}:<br />";
         if( array_key_exists( 'codec_long_name', $stream )) echo "&nbsp;&nbsp;&nbsp;codec: {$stream['codec_long_name']}<br />";
         echo "&nbsp;&nbsp;&nbsp;type:  {$stream['codec_type']}<br />";

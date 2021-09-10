@@ -3,6 +3,16 @@
 $kisten = array(
 'A'=> array(
 	'point'=> array(
+		array( 'x'=>1776, 'y'=>1695),
+		array( 'x'=>1773, 'y'=>1576),
+		array( 'x'=>1786, 'y'=>1509),
+//		array( 'x'=>1821, 'y'=>1453),
+//		array( 'x'=>1863, 'y'=>1425),
+//		array( 'x'=>1870, 'y'=>1350),
+		array( 'x'=>1900, 'y'=>1360),
+		array( 'x'=>1925, 'y'=>1310),
+		array( 'x'=>1936, 'y'=>1282)
+/*
 		array( 'x'=>1774, 'y'=>1666),
 		array( 'x'=>1773, 'y'=>1576),
 		array( 'x'=>1786, 'y'=>1509),
@@ -11,17 +21,18 @@ $kisten = array(
 		array( 'x'=>1929, 'y'=>1417),
 		array( 'x'=>1978, 'y'=>1421),
 		array( 'x'=>2030, 'y'=>1440),
+*/	
 		),
 	'aside' => 'right',
 	'area' => 'Backoffice',
 	'level'=> array(
 		1=> array(
 			'indent'=>0,
-			'boxes'=>7,
+			'boxes'=>8,
 			),
 		2=> array(
 			'indent'=>0.5,
-			'boxes'=>6,
+			'boxes'=>7,
 			),
 		3=> array(
 			'indent'=>1,
@@ -596,6 +607,28 @@ $kisten = array(
 			6=> array(
 				'indent'=>0,
 				'boxes'=>8,
+			),
+		),
+	),
+	'U'=>array(
+		'point' => array(
+			array( 'x'=> 2012, 'y'=>1333 ),
+			array( 'x'=> 1973, 'y'=>1333 ),
+		),
+		'aside' => 'right',
+		'area' => 'Regal',
+		'level'=> array(
+			1=> array(
+				'indent'=>0,
+				'boxes'=>1,
+			),
+			2=> array(
+				'indent'=>0,
+				'boxes'=>1,
+			),
+			3=> array(
+				'indent'=>0,
+				'boxes'=>1,
 			),
 		),
 	),

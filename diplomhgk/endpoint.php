@@ -109,6 +109,7 @@ if ($method == "POST") {
         $tech = $cmd."\n".$tech;
         $tdata = json_decode( $tech, true );
         $isVideo = false;
+        //echo $cmd . "\n";
         foreach( $tdata['streams'] as $stream ) {
           if( $stream['codec_type'] == 'video') $isVideo = true;
         }
