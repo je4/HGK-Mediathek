@@ -28,9 +28,9 @@ chdir( $datadir );
 //$files = glob("certs/mediathek_*");
 
 $files = [
-	'certs/info_age_ca.pem',
-	'certs/info_age_localhost.key',
-	'certs/info_age_localhost.pem',
+	'certs/info_age_mediathek_ca.pem',
+	'certs/info_age_mediathek_localhost.key',
+	'certs/info_age_mediahtek_localhost.pem',
 	"certs/info_age_mediathek_{$machine}.key",
 	"certs/info_age_mediathek_{$machine}.pem",
 	"startup.sh",
