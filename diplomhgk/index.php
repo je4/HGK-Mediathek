@@ -121,8 +121,10 @@ $num = 0;
 
 if( array_key_exists( $mail, $auth ) && count($auth[$mail]) > 0) {
 	  foreach( $auth[$mail] as $anlass ) {
-	//    $sql = "SELECT * FROM source_diplomhgk WHERE year>={$year} AND Anlassnummer=".$db->qstr( $anlass )." ORDER BY Nachname, Vornamen";
-		$sql = "SELECT * FROM source_diplomhgk WHERE year={$year} AND Anlassnummer=".$db->qstr( $anlass )." ORDER BY Nachname, Vornamen";
+	  // für Erinnerungsraum alle Jahre anzeigen
+	    $sql = "SELECT * FROM source_diplomhgk WHERE year>={$year} AND Anlassnummer=".$db->qstr( $anlass )." ORDER BY Nachname, Vornamen";
+	    // next generation default
+	//	$sql = "SELECT * FROM source_diplomhgk WHERE year={$year} AND Anlassnummer=".$db->qstr( $anlass )." ORDER BY Nachname, Vornamen";
 		echo "\n<!--\n{$sql}\n-->\n";
 		$rs = $db->Execute( $sql );
 		$num = $rs->RecordCount();
@@ -133,8 +135,10 @@ if( array_key_exists( $mail, $auth ) && count($auth[$mail]) > 0) {
 	  } // foreach
 } // if auth
 else {
-//    $sql = "SELECT * FROM source_diplomhgk WHERE year>={$year} AND IDPerson=".$db->qstr($number);
-    $sql = "SELECT * FROM source_diplomhgk WHERE year={$year} AND `E-Mail`=".$db->qstr($mail);
+  // Erinnerungsraum
+    $sql = "SELECT * FROM source_diplomhgk WHERE year>={$year} AND IDPerson=".$db->qstr($number);
+    // nextgeneration
+ //    $sql = "SELECT * FROM source_diplomhgk WHERE year={$year} AND `E-Mail`=".$db->qstr($mail);
 	echo "\n<!--\n{$sql}\n-->\n";
     $rs = $db->Execute( $sql );
     $num = $rs->RecordCount();
