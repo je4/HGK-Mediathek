@@ -47,9 +47,9 @@ des Mediums im Kunstkontext bei.
 </p>
 
 <p>
-  <form class="form-inline" method=GET action="search.php">
+  <form class="form-inline" method=GET action="https://mediathek.hgk.fhnw.ch/amp/search/zotero2-2545256.VC83GM36">
     <input type="hidden" name="facets[catalog][]" value="Wenkenpark" />
-    <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="Suchbegriff" name="search">
+    <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="Suchbegriff" name="searchtext">
     <button type="submit" class="btn btn-primary">Suchen</button>
   </form>
 </p>

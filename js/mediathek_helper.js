@@ -269,7 +269,7 @@ function init3D( boxes, camJSON, renderer ) {
 				if( b ) mediathek.controls.target.copy( b.position );
 			}
 			else {
-				mediathek.setCamJSON( camJSON );
+	//			mediathek.setCamJSON( camJSON );
 			}
 			$(document).keyup( function( event ) {
 				return;

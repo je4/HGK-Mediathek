@@ -30,7 +30,7 @@ chdir( $datadir );
 $files = [
 	'certs/info_age_mediathek_ca.pem',
 	'certs/info_age_mediathek_localhost.key',
-	'certs/info_age_mediahtek_localhost.pem',
+	'certs/info_age_mediathek_localhost.pem',
 	"certs/info_age_mediathek_{$machine}.key",
 	"certs/info_age_mediathek_{$machine}.pem",
 	"startup.sh",
