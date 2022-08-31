@@ -11,9 +11,7 @@ $kisten = array(
 //		array( 'x'=>1870, 'y'=>1350),
 		array( 'x'=>1900, 'y'=>1360),
 		array( 'x'=>1925, 'y'=>1310),
-//		array( 'x'=>1936, 'y'=>1282)
-		array( 'x'=>1935, 'y'=>1185),
-		array( 'x'=>1906, 'y'=>1111),
+		array( 'x'=>1936, 'y'=>1282)
 /*
 		array( 'x'=>1774, 'y'=>1666),
 		array( 'x'=>1773, 'y'=>1576),
@@ -29,23 +27,23 @@ $kisten = array(
 	'area' => 'Backoffice',
 	'level'=> array(
 		1=> array(
-			'indent'=>1,
-			'boxes'=>7,
+			'indent'=>0,
+			'boxes'=>8,
 			),
 		2=> array(
-			'indent'=>1.5,
+			'indent'=>0.5,
 			'boxes'=>7,
 			),
 		3=> array(
-			'indent'=>2,
-			'boxes'=>7,
-			),
-		4=> array(
-			'indent'=>2.5,
+			'indent'=>1,
 			'boxes'=>5,
 			),
+		4=> array(
+			'indent'=>1.5,
+			'boxes'=>4,
+			),
 		5=> array(
-			'indent'=>3,
+			'indent'=>2,
 			'boxes'=>3,
 			),
 		),
@@ -612,10 +610,10 @@ $kisten = array(
 			),
 		),
 	),
-	'Y'=>array(
+	'U'=>array(
 		'point' => array(
-			array( 'x'=> 1953, 'y'=>1333 ),
-			array( 'x'=> 1992, 'y'=>1333 ),
+			array( 'x'=> 2012, 'y'=>1333 ),
+			array( 'x'=> 1973, 'y'=>1333 ),
 		),
 		'aside' => 'right',
 		'area' => 'Regal',
